@@ -119,14 +119,14 @@
         let db = [];
         let activeTicker = null;
         let chartInstance = null;
-        let currentSort = 'earnings'; // Default sort state
+        let currentSort = 'earnings';
 
         async function init() {
             try {
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
                 document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
-                applySort(); // Sorts and renders immediately on load
+                applySort(); 
             } catch (e) { 
                 console.error("Data load failed", e);
                 document.getElementById('last-update').innerText = 'Data Fetch Failed';
@@ -143,19 +143,20 @@
 
         function applySort() {
             currentSort = document.getElementById('sort-select').value;
-            
-            // Create a fresh copy to sort
             let sortedDb = [...db];
 
             sortedDb.sort((a, b) => {
                 if (currentSort === 'earnings') {
-                    // Convert date strings to sortable timestamps
-                    const dateA = new Date(a.calendar.date).getTime();
-                    const dateB = new Date(b.calendar.date).getTime();
-                    // Push invalid dates/TBDs to the very bottom
-                    const timeA = isNaN(dateA) ? Infinity : dateA;
-                    const timeB = isNaN(dateB) ? Infinity : dateB;
-                    return timeA - timeB;
+                    // SAFE FALLBACK: Checks if a.calendar exists before looking for the date
+                    const dateStrA = a.calendar?.date || a.release_gmt || '';
+                    const dateStrB = b.calendar?.date || b.release_gmt || '';
+                    
+                    const timeA = new Date(dateStrA).getTime();
+                    const timeB = new Date(dateStrB).getTime();
+                    
+                    const finalA = isNaN(timeA) ? Infinity : timeA;
+                    const finalB = isNaN(timeB) ? Infinity : timeB;
+                    return finalA - finalB;
                 } 
                 else if (currentSort === 'alpha') {
                     return a.company.localeCompare(b.company);
@@ -163,12 +164,10 @@
                 else if (currentSort === 'exchange') {
                     const exA = getExchangeGroup(a.ticker);
                     const exB = getExchangeGroup(b.ticker);
-                    // If same exchange, alphabetize within that group
                     if (exA === exB) return a.company.localeCompare(b.company);
                     return exA.localeCompare(exB);
                 } 
                 else if (currentSort === 'beat') {
-                    // Sort by highest beat descending. Nulls go to the bottom.
                     const beatA = (a.eps_beat_miss_pct !== null && a.eps_beat_miss_pct !== undefined) ? a.eps_beat_miss_pct : -999;
                     const beatB = (b.eps_beat_miss_pct !== null && b.eps_beat_miss_pct !== undefined) ? b.eps_beat_miss_pct : -999;
                     return beatB - beatA;
@@ -185,9 +184,10 @@
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
                 const isBeat = s.eps_beat_miss_pct > 0;
                 const beatColor = isBeat ? 'text-green-600' : 'text-red-500';
-                const period = s.actuals.period || 'Q4 25';
                 
-                // Optional: If grouped by exchange, show the exchange in the header instead of base country
+                // SAFE FALLBACKS
+                const period = s.actuals?.period || 'Q4 25';
+                const earningsDate = s.calendar?.date || (s.release_gmt ? new Date(s.release_gmt).toLocaleDateString() : 'TBD');
                 const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
                 
                 return `
@@ -199,26 +199,26 @@
                                     <p class="text-[10px] font-mono text-slate-400">${s.ticker} • ${locationLabel}</p>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-lg font-bold text-slate-900">${s.last_price}</div>
+                                    <div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div>
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals.revenue}</span></div>
-                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${beatColor}">${isBeat ? '▲' : '▼'} ${Math.abs(s.eps_beat_miss_pct)}%</span></div>
+                                <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue || 'N/A'}</span></div>
+                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${beatColor}">${isBeat ? '▲' : '▼'} ${Math.abs(s.eps_beat_miss_pct || 0)}%</span></div>
                             </div>
                         </div>
 
                         <div>
                             <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100">
                                 <span>🗓️ NEXT EARNINGS:</span>
-                                <span class="text-blue-600">${s.calendar.date}</span>
+                                <span class="text-blue-600">${earningsDate}</span>
                             </div>
 
-                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment}%"></div></div>
+                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
                             <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
                                 <span>Sentiment</span>
-                                <span>${s.sentiment}%</span>
+                                <span>${s.sentiment || 50}%</span>
                             </div>
                         </div>
                     </div>
@@ -229,35 +229,38 @@
         function openModal(ticker) {
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
-            const period = s.actuals.period || 'Q4 25';
+            
+            // SAFE FALLBACKS
+            const period = s.actuals?.period || 'Q4 25';
+            const earningsDate = s.calendar?.date || 'TBD';
+            const reportTime = s.calendar?.report_time || 'TBD';
+            const callTime = s.calendar?.call_time || 'TBD';
 
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerText = `${ticker} | ${s.base_country} Based`;
             
-            // Populate Calendar Strip
-            document.getElementById('modal-earnings-date').innerText = s.calendar.date;
-            document.getElementById('modal-report-time').innerText = s.calendar.report_time;
-            document.getElementById('modal-call-time').innerText = s.calendar.call_time;
+            document.getElementById('modal-earnings-date').innerText = earningsDate;
+            document.getElementById('modal-report-time').innerText = reportTime;
+            document.getElementById('modal-call-time').innerText = callTime;
 
-            // Populate Modal Financials Strip
             document.getElementById('modal-financials').innerHTML = `
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act vs Est)</div><div class="font-mono text-sm font-bold">${s.actuals.eps_actual} <span class="text-slate-400">/ ${s.actuals.eps_forecast}</span></div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">REV (${period})</div><div class="font-mono text-sm font-bold">${s.actuals.revenue}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals.ebitda}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">Net Income</div><div class="font-mono text-sm font-bold ${s.actuals.net_income.includes('-') ? 'text-red-500' : ''}">${s.actuals.net_income}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">FCF</div><div class="font-mono text-sm font-bold">${s.actuals.fcf}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act vs Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">REV (${period})</div><div class="font-mono text-sm font-bold">${s.actuals?.revenue || 'N/A'}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">Net Income</div><div class="font-mono text-sm font-bold ${(s.actuals?.net_income || '').includes('-') ? 'text-red-500' : ''}">${s.actuals?.net_income || 'N/A'}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
             `;
             
-            const newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
-            document.getElementById('news-summary').innerHTML = newsHtml;
+            const newsHtml = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+            document.getElementById('news-summary').innerHTML = newsHtml || '<li>No news available.</li>';
             
             const sentLabel = document.getElementById('sentiment-label');
-            sentLabel.innerText = s.sentiment + '%';
-            sentLabel.className = 'text-2xl font-bold ' + (s.sentiment > 60 ? 'text-emerald-600' : (s.sentiment < 40 ? 'text-rose-600' : 'text-amber-600'));
+            sentLabel.innerText = (s.sentiment || 50) + '%';
+            sentLabel.className = 'text-2xl font-bold ' + ((s.sentiment || 50) > 60 ? 'text-emerald-600' : ((s.sentiment || 50) < 40 ? 'text-rose-600' : 'text-amber-600'));
             
             const sentFill = document.getElementById('modal-sentiment-fill');
-            sentFill.style.width = s.sentiment + '%';
-            sentFill.className = 'sentiment-fill ' + (s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500'));
+            sentFill.style.width = (s.sentiment || 50) + '%';
+            sentFill.className = 'sentiment-fill ' + ((s.sentiment || 50) > 60 ? 'bg-emerald-500' : ((s.sentiment || 50) < 40 ? 'bg-rose-500' : 'bg-amber-500'));
 
             document.getElementById('modal').classList.remove('hidden');
             updateMainChart();
@@ -295,7 +298,6 @@
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
         
-        // Close modal on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
