@@ -1,19 +1,19 @@
 import requests
 import json
 import urllib.parse
+import urllib.request  # FIX: Explicitly required for the Google News bypass
 import os
 import pandas as pd
 import feedparser
 import time
 import yfinance as yf
 import re
+import traceback       # FIX: To print exact error logs if a fatal crash occurs
+import sys
 from google import genai
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
-client = genai.Client(api_key=GEMINI_API_KEY)
-
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
@@ -87,6 +87,7 @@ def fetch_stock_history(ticker):
     
     try:
         ytk = yf.Ticker(fetch_ticker)
+        
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
             last_price_str = f"{sym}{round(df_1d['Close'].iloc[-1], 2)}"
@@ -111,61 +112,45 @@ def fetch_stock_history(ticker):
     return history, last_price_str
 
 def ai_process_intelligence(company_name, ticker):
-    """Bulletproof News Engine: Tries Yahoo, then Google, then aggressively parses JSON."""
     print(f"  -> Analyzing News for {company_name}...")
-    headlines = []
+    
+    # FIX: Initialize the AI Client safely inside the function to prevent global crashes
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return {"summary": ["API KEY ERROR: GEMINI_API_KEY secret is missing in GitHub Actions."], "sentiment": 50}
     
     try:
-        # 1. Primary Source: Yahoo Finance RSS (Highly reliable for US/Global)
-        clean_ticker = ticker.split('.')[0] 
-        try:
-            rss_url = f"https://finance.yahoo.com/rss/headline?s={clean_ticker}"
-            feed = feedparser.parse(rss_url)
-            if feed.entries:
-                headlines = [entry.title for entry in feed.entries[:5]]
-        except Exception:
-            pass
+        client = genai.Client(api_key=api_key)
+        
+        query = urllib.parse.quote(f'"{company_name}" stock OR gambling news')
+        google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+        
+        # Explicit urllib usage
+        req = urllib.request.Request(google_rss, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req) as response:
+            feed = feedparser.parse(response.read())
             
-        # 2. Secondary Source: Google News (Fallback if Yahoo is empty)
+        headlines = [entry.title for entry in feed.entries[:6]]
         if not headlines:
-            query = urllib.parse.quote(f'"{company_name}" stock')
-            google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-            res = requests.get(google_rss, headers=headers, timeout=10)
-            feed = feedparser.parse(res.text)
-            if feed.entries:
-                headlines = [entry.title for entry in feed.entries[:5]]
+            return {"summary": ["No recent headlines found."], "sentiment": 50}
 
-        if not headlines:
-            return {"summary": [f"No news articles found on RSS feeds for {company_name}."], "sentiment": 50}
-
-        # 3. AI Processing using gemini-1.5-flash with forced JSON config
-        prompt = f"Act as an iGaming analyst. Based on: {' | '.join(headlines)}. Return ONLY a JSON object containing two keys: 'summary' (a list of 3 short bullet points) and 'sentiment' (integer 0-100)."
+        prompt = f"Act as an iGaming analyst. Based on: {' | '.join(headlines)}. Return ONLY a raw JSON object like this: {{\"summary\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"sentiment\": 75}}. Do not use code blocks."
         
         ai_resp = client.models.generate_content(
             model='gemini-1.5-flash', 
-            contents=prompt,
-            config={"response_mime_type": "application/json"}
+            contents=prompt
         )
         
-        # 4. Aggressive Scrubber
         raw_text = ai_resp.text.strip()
-        # Find the first { and last } to strictly isolate the JSON
-        start = raw_text.find('{')
-        end = raw_text.rfind('}')
-        if start != -1 and end != -1:
-            clean_json = raw_text[start:end+1]
-            data = json.loads(clean_json)
-            if "summary" in data and "sentiment" in data:
-                return data
-                
-        raise ValueError("AI Output did not match JSON schema.")
+        match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+        if match:
+            return json.loads(match.group(0))
+            
+        return {"summary": ["News analysis parsing error."], "sentiment": 50}
         
     except Exception as e:
         print(f"  ❌ AI/News failed for {company_name}: {e}")
-        # DIAGNOSTIC UI: Prints the exact Python error to your dashboard!
-        error_msg = str(e).replace('"', "'")[:80]
-        return {"summary": [f"Engine Error: {error_msg}"], "sentiment": 50}
+        return {"summary": [f"News API Error: {str(e)[:50]}"], "sentiment": 50}
 
 # --- 3. PIPELINE EXECUTION ---
 
@@ -191,8 +176,37 @@ def run_pipeline():
             history, last_price = fetch_stock_history(ticker)
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": [f"System Crash: {str(e)[:50]}"], "sentiment": 50}
+            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
             history, last_price = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
 
         master_db.append({
             "ticker": ticker,
+            "company": co["name"],
+            "base_country": co["base_country"],
+            "release_gmt": VERIFIED_CALENDAR.get(ticker, ""),
+            "last_price": last_price,
+            "actuals": fin,
+            "eps_beat_miss_pct": beat_miss,
+            "news_summary": intel.get("summary", ["Data parsing failed."]),
+            "sentiment": intel.get("sentiment", 50),
+            "jurisdictions": fin.get("jurisdictions", []),
+            "history": history
+        })
+        
+        time.sleep(5)
+
+    if master_db:
+        with open('gambling_stocks_live.json', 'w') as f:
+            json.dump(master_db, f, indent=4)
+        print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
+    else:
+        print("\n❌ Pipeline Error: No data collected.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    try:
+        run_pipeline()
+    except Exception as e:
+        print("\n❌ FATAL CRASH: The script encountered a module-level error.")
+        traceback.print_exc()
+        sys.exit(1)
