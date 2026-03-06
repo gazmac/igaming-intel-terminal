@@ -24,11 +24,11 @@
         },
         "eps_beat_miss_pct": -8.9,
         "news_summary": [
-            "Flutter Entertainment's stock recently fell by 7.0% following projections of a 2025 loss and a challenging 2026 guide.",
-            "Jefferies significantly reduced its price target for Flutter by 45% due to market expectations of zero US growth, although it maintained a 'buy' rating.",
-            "Flutter's FanDuel unit is reportedly facing significant pressures in its US expansion, struggling to balance growth with profitability."
+            "Flutter Entertainment's stock dropped 7.0% following a reported 2025 loss and a conservative 2026 guidance, likely tied to ongoing US expansion costs.",
+            "Jefferies significantly reduced Flutter's price target by 45% but maintained a 'buy' rating, noting that the market might be overly pessimistic by pricing in zero US growth.",
+            "The company's FanDuel division is navigating growth versus profit pressures in its US expansion, with new product initiatives like 'FanDuel Predicts' contributing to short-term losses but aiming for long-term market share."
         ],
-        "sentiment": 25,
+        "sentiment": 28,
         "jurisdictions": [
             "US",
             "UK",
@@ -3088,11 +3088,11 @@
         },
         "eps_beat_miss_pct": 38.89,
         "news_summary": [
-            "DraftKings is aggressively expanding into prediction markets with a 'super app' as a potential new avenue for growth.",
-            "This strategic push into prediction markets is raising concerns due to potential ethical implications and legal risks.",
-            "Despite some competitive comparisons suggesting better alternative investments, Cathie Wood of Ark Invest may have recently added DraftKings to her portfolio, signaling investor interest."
+            "DraftKings is strategically expanding into prediction markets and developing a 'super app' as a new potential growth driver.",
+            "This new business direction is accompanied by significant scrutiny regarding potential ethical and legal risks that DraftKings may face.",
+            "Despite a prominent investor (Cathie Wood) potentially 'bargain hunting' in related stocks, some market commentators suggest that other investment opportunities, like AI stocks, might offer superior returns compared to companies focused on prediction markets."
         ],
-        "sentiment": 40,
+        "sentiment": 45,
         "jurisdictions": [
             "US",
             "Ontario",
@@ -6151,11 +6151,11 @@
         },
         "eps_beat_miss_pct": 37.78,
         "news_summary": [
-            "Entain PLC is projecting strong financial performance for Full Year 2025.",
-            "The Ladbrokes owner has revealed a significant financial hit of \u00a3500 million stemming from a tax raid.",
-            "The broader UK gaming market is experiencing a shift due to higher gaming taxes, which could pose ongoing challenges for companies like Entain."
+            "Entain PLC projects strong financial performance for Full Year 2025, as highlighted in recent earnings calls.",
+            "The company has revealed a substantial financial hit of \u00a3500 million, attributed to a 'tax raid' related to increased UK gaming duties.",
+            "The broader UK gaming industry, including Entain, is experiencing a shifting landscape due to higher gaming taxes, impacting profitability and market narratives."
         ],
-        "sentiment": 40,
+        "sentiment": 35,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -9106,9 +9106,9 @@
         },
         "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "Evolution AB's Q4 2025 earnings are a focal point for investors, with an upcoming report preview setting market expectations.",
-            "The earnings call is anticipated to address the challenges the company faced during the fourth quarter of 2025.",
-            "Despite challenges, the company is expected to highlight strategic initiatives and opportunities for future growth and market expansion."
+            "Evolution AB (EVVTY) has recently concluded its Q4 2025 earnings call, providing insights into its performance and strategic outlook.",
+            "The company's discussions highlighted its efforts in navigating current market challenges while simultaneously outlining plans for future growth and market expansion.",
+            "Analysts and investors are actively reviewing the earnings call highlights and preparing for the full Q4 2025 earnings report, focusing on key performance indicators."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -12117,11 +12117,11 @@
         },
         "eps_beat_miss_pct": 98.21,
         "news_summary": [
-            "MGM Resorts saw its stock price increase by 7.6% following several positive announcements.",
-            "The rise is driven by details on share buyback programs, successful payouts from its BetMGM iGaming venture, and progress on the integrated resort project in Osaka.",
-            "Despite the recent rebound and positive news, analysts are scrutinizing whether the current stock pricing fully reflects the company's valuation given potentially mixed signals."
+            "MGM Resorts saw a significant 7.6% increase in its stock price, driven by strategic announcements.",
+            "The positive stock movement is attributed to the company detailing share buyback programs, strong payouts from its BetMGM iGaming venture, and progress on its Osaka development.",
+            "Despite the recent share rebound, there are mixed signals regarding MGM's current valuation, prompting ongoing analysis of its pricing."
         ],
-        "sentiment": 88,
+        "sentiment": 90,
         "jurisdictions": [
             "US",
             "Macau",
@@ -15178,11 +15178,11 @@
         },
         "eps_beat_miss_pct": -440.0,
         "news_summary": [
-            "Market sentiment is influenced by significant M&A speculation, with Kalshi traders estimating a 68% chance of Caesars being acquired this year.",
-            "The company is experiencing contrasting institutional investor activity, marked by at least $70 million in exits (including Nut Tree Capital dumping its entire stake) amid a volatile year, alongside ongoing operational growth like the new sportsbook opening in Summerlin.",
-            "The narrative surrounding Caesars is evolving, with increased scrutiny on cash flow dynamics and potential risks within the Las Vegas market."
+            "Caesars Entertainment is facing a shifting market narrative regarding its cash flow and potential risks associated with its Las Vegas operations.",
+            "The company has seen significant institutional exits, including a $54 million stake dump by Nut Tree Capital and another $16 million exit, indicating investor caution amid a volatile year.",
+            "Despite the investor exits, prediction markets like Kalshi see a 68% chance of Caesars being acquired this year, while the company continues to expand its operations with the opening of a new Race & Sportsbook."
         ],
-        "sentiment": 40,
+        "sentiment": 45,
         "jurisdictions": [
             "US",
             "Canada"
@@ -18238,9 +18238,9 @@
         },
         "eps_beat_miss_pct": 250.0,
         "news_summary": [
-            "Penn Entertainment's stock experienced a significant decline.",
-            "The stock drop was primarily driven by a miss on its Q3 earnings expectations.",
-            "News surrounding its ESPN partnership further contributed to the negative market sentiment."
+            "PENN Entertainment's stock experienced a decline following its third-quarter financial results.",
+            "The company reported an earnings miss for Q3, indicating performance below market expectations.",
+            "A notable strategic development was PENN's announced exit from its partnership with ESPN."
         ],
         "sentiment": 18,
         "jurisdictions": [
@@ -21298,11 +21298,11 @@
         },
         "eps_beat_miss_pct": 18.18,
         "news_summary": [
-            "Las Vegas Sands is frequently highlighted as both a strong value stock and a top long-term momentum stock, indicating diverse positive investment perspectives.",
-            "The company's stock has shown positive recent performance, rising 6.2% since its last earnings report, suggesting favorable market reaction to recent financial updates.",
-            "While the company displays strong upside potential, there are ongoing discussions and conflicting signals regarding its fair valuation and mixed returns."
+            "Las Vegas Sands (LVS) is being highlighted as both a strong value stock and a top long-term momentum play, indicating positive investor sentiment and growth potential.",
+            "The company has demonstrated recent strength with a 6.2% increase in stock price since its last earnings report.",
+            "Sands China is investing in responsible gaming through a new academy and collaboration with the University of Macau, enhancing its ESG profile, despite some conflicting signals regarding the stock's current fair pricing."
         ],
-        "sentiment": 80,
+        "sentiment": 85,
         "jurisdictions": [
             "Macau",
             "Singapore"
@@ -23335,7 +23335,7 @@
                 ],
                 [
                     1622332800000,
-                    54.85
+                    54.86
                 ],
                 [
                     1622937600000,
@@ -24359,11 +24359,11 @@
         },
         "eps_beat_miss_pct": 14.29,
         "news_summary": [
-            "Wynn Resorts reported steady financial results for its fourth quarter.",
-            "The company's significant development project in the UAE is advancing as planned, indicating future growth prospects.",
-            "Other headlines reviewed focused on unrelated investment activities by Kettle Hill in companies such as Braze, SentinelOne, and RH, rather than Wynn Resorts."
+            "Wynn Resorts (WYNN) has reported steady Q4 results, reflecting stable operational performance for the period.",
+            "The company's critical UAE project is advancing, signaling progress on future growth initiatives and market expansion in a key region.",
+            "Most other headlines provided pertain to investment firm Kettle Hill's activities in unrelated tech and retail stocks (Braze, SentinelOne, RH) and are not directly relevant to Wynn Resorts' financial performance or outlook."
         ],
-        "sentiment": 85,
+        "sentiment": 75,
         "jurisdictions": [
             "US",
             "Macau",
@@ -27421,11 +27421,11 @@
         },
         "eps_beat_miss_pct": -600.0,
         "news_summary": [
-            "Evoke plc is facing significant strategic changes driven by recent UK gaming tax revisions and broader regulatory review plans.",
-            "The company's outlook is being redefined by discussions or developments related to potential takeover terms, suggesting active M&A considerations.",
-            "Analysts and investors are closely monitoring these evolving factors, which collectively indicate a major shift in Evoke's story and investment prospects."
+            "Evoke plc's market narrative is undergoing significant changes due to recent revisions in UK gaming tax policies, which are expected to impact its financial performance.",
+            "The company's future story is also being reshaped by ongoing discussions and terms related to a potential takeover, signaling a major corporate event on the horizon.",
+            "Analysts are actively evaluating how these developments, alongside internal review plans, collectively alter the investment outlook and valuation for Evoke (LSE:EVOK)."
         ],
-        "sentiment": 60,
+        "sentiment": 65,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -30352,2954 +30352,2955 @@
         }
     },
     {
-        "ticker": "FDJ.PA",
-        "company": "La Fran\u00e7aise des Jeux",
-        "base_country": "France",
-        "release_gmt": "2026-04-15T16:30:00Z",
-        "last_price": "N/A",
+        "ticker": "SRAD",
+        "company": "Sportradar",
+        "base_country": "Switzerland",
+        "release_gmt": "2026-05-12T12:00:00Z",
+        "last_price": "$18.55",
         "actuals": {
-            "period": "H2 25",
-            "eps_actual": 1.45,
-            "eps_forecast": 1.3,
-            "revenue": "\u20ac2.6B",
-            "net_income": "\u20ac425M",
-            "ebitda": "\u20ac670M",
-            "ngr": "\u20ac2.6B",
-            "fcf": "\u20ac480M",
+            "period": "Q4 25",
+            "eps_actual": 0.14,
+            "eps_forecast": 0.1,
+            "revenue": "$280M",
+            "net_income": "$35M",
+            "ebitda": "$55M",
+            "ngr": "$280M",
+            "fcf": "$40M",
             "jurisdictions": [
-                "France",
-                "Ireland",
+                "Global B2B",
+                "US",
                 "Europe"
             ]
         },
-        "eps_beat_miss_pct": 11.54,
+        "eps_beat_miss_pct": 40.0,
         "news_summary": [
-            "Headlines cover developments in the mining sector (Cobalt Blue, Green Bridge Metals) and a reverse stock split for an investment trust (XAI Octagon).",
-            "Further news includes inducement grants for Nektar Therapeutics and a change of directors for THE EELLEET NETWORK.",
-            "None of the provided headlines are directly relevant to La Fran\u00e7aise des Jeux (FDJ) or the iGaming industry, offering no specific insights into FDJ's financial performance or market position."
+            "Sportradar has renewed its significant integrity partnership with FIFA, strengthening its market reach and data advantage.",
+            "The company announced record revenue during its Q4 2025 earnings call, indicating strong financial performance.",
+            "Macquarie adjusted its price target for Sportradar Group downwards from $34 to $30, yet maintained an 'Outperform' rating on the stock."
         ],
-        "sentiment": 50,
+        "sentiment": 80,
         "jurisdictions": [
-            "France",
-            "Ireland",
+            "Global B2B",
+            "US",
             "Europe"
         ],
         "history": {
-            "1d": [],
-            "1w": [
+            "1d": [
                 [
-                    1772064000000,
-                    29.64
+                    1772807400000,
+                    18.95
                 ],
                 [
+                    1772808300000,
+                    18.75
+                ],
+                [
+                    1772809200000,
+                    18.7
+                ],
+                [
+                    1772810100000,
+                    18.7
+                ],
+                [
+                    1772811000000,
+                    18.72
+                ],
+                [
+                    1772811900000,
+                    18.79
+                ],
+                [
+                    1772812800000,
+                    18.64
+                ],
+                [
+                    1772813700000,
+                    18.59
+                ],
+                [
+                    1772814600000,
+                    18.66
+                ],
+                [
+                    1772815500000,
+                    18.71
+                ],
+                [
+                    1772816400000,
+                    18.61
+                ],
+                [
+                    1772817300000,
+                    18.69
+                ],
+                [
+                    1772818200000,
+                    18.68
+                ],
+                [
+                    1772819100000,
+                    18.67
+                ],
+                [
+                    1772820000000,
+                    18.68
+                ],
+                [
+                    1772820900000,
+                    18.61
+                ],
+                [
+                    1772821800000,
+                    18.61
+                ],
+                [
+                    1772822700000,
+                    18.71
+                ],
+                [
+                    1772823600000,
+                    18.66
+                ],
+                [
+                    1772824500000,
+                    18.61
+                ],
+                [
+                    1772825400000,
+                    18.71
+                ],
+                [
+                    1772826300000,
+                    18.73
+                ],
+                [
+                    1772827200000,
+                    18.65
+                ],
+                [
+                    1772828100000,
+                    18.58
+                ],
+                [
+                    1772829000000,
+                    18.53
+                ],
+                [
+                    1772829900000,
+                    18.53
+                ]
+            ],
+            "1w": [
+                [
                     1772150400000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772409600000,
-                    29.48
+                    19.58
                 ],
                 [
                     1772496000000,
-                    29.48
+                    17.67
                 ],
                 [
                     1772582400000,
-                    30.57
+                    19.23
                 ],
                 [
                     1772668800000,
-                    30.57
+                    19.25
+                ],
+                [
+                    1772755200000,
+                    18.55
                 ]
             ],
             "1m": [
                 [
-                    1770076800000,
-                    26.95
-                ],
-                [
                     1770163200000,
-                    26.95
+                    17.68
                 ],
                 [
                     1770249600000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770336000000,
-                    26.95
+                    16.99
                 ],
                 [
                     1770595200000,
-                    26.95
+                    17.26
                 ],
                 [
                     1770681600000,
-                    26.95
+                    17.39
                 ],
                 [
                     1770768000000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770854400000,
-                    26.15
+                    16.35
                 ],
                 [
                     1770940800000,
-                    26.15
+                    16.47
                 ],
                 [
                     1771286400000,
-                    26.15
+                    16.84
                 ],
                 [
                     1771372800000,
-                    26.15
+                    17.19
                 ],
                 [
                     1771459200000,
-                    28.34
+                    17.46
                 ],
                 [
                     1771545600000,
-                    28.34
+                    17.76
                 ],
                 [
                     1771804800000,
-                    31.15
+                    17.17
                 ],
                 [
                     1771891200000,
-                    31.42
+                    17.75
                 ],
                 [
                     1771977600000,
-                    31.42
+                    17.79
                 ],
                 [
                     1772064000000,
-                    29.64
+                    18.41
                 ],
                 [
                     1772150400000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772409600000,
-                    29.48
+                    19.58
                 ],
                 [
                     1772496000000,
-                    29.48
+                    17.67
                 ],
                 [
                     1772582400000,
-                    30.57
+                    19.23
                 ],
                 [
                     1772668800000,
-                    30.57
+                    19.25
+                ],
+                [
+                    1772755200000,
+                    18.55
                 ]
             ],
             "3m": [
                 [
-                    1764892800000,
-                    27.72
-                ],
-                [
                     1765152000000,
-                    25.68
+                    22.94
                 ],
                 [
                     1765238400000,
-                    25.68
+                    23.5
                 ],
                 [
                     1765324800000,
-                    25.68
+                    22.91
                 ],
                 [
                     1765411200000,
-                    26.21
+                    23.14
                 ],
                 [
                     1765497600000,
-                    26.21
+                    23.11
                 ],
                 [
                     1765756800000,
-                    26.21
+                    22.79
                 ],
                 [
                     1765843200000,
-                    26.64
+                    22.53
                 ],
                 [
                     1765929600000,
-                    26.64
+                    22.6
                 ],
                 [
                     1766016000000,
-                    26.64
+                    22.92
                 ],
                 [
                     1766102400000,
-                    26.64
+                    22.86
                 ],
                 [
                     1766361600000,
-                    26.64
+                    23.35
                 ],
                 [
                     1766448000000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766534400000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766707200000,
-                    27.55
+                    23.1
                 ],
                 [
                     1766966400000,
-                    27.55
+                    23.41
                 ],
                 [
                     1767052800000,
-                    27.55
+                    24.17
                 ],
                 [
                     1767139200000,
-                    27.55
+                    23.77
                 ],
                 [
                     1767312000000,
-                    27.55
+                    23.32
                 ],
                 [
                     1767571200000,
-                    27.55
+                    23.05
                 ],
                 [
                     1767657600000,
-                    27.75
+                    21.98
                 ],
                 [
                     1767744000000,
-                    27.75
+                    21.06
                 ],
                 [
                     1767830400000,
-                    27.75
+                    21.23
                 ],
                 [
                     1767916800000,
-                    27.75
+                    20.88
                 ],
                 [
                     1768176000000,
-                    27.75
+                    20.34
                 ],
                 [
                     1768262400000,
-                    26.75
+                    20.0
                 ],
                 [
                     1768348800000,
-                    27.0
+                    19.85
                 ],
                 [
                     1768435200000,
-                    27.0
+                    19.82
                 ],
                 [
                     1768521600000,
-                    27.0
+                    18.97
                 ],
                 [
                     1768867200000,
-                    26.69
+                    18.62
                 ],
                 [
                     1768953600000,
-                    26.69
+                    18.25
                 ],
                 [
                     1769040000000,
-                    26.69
+                    18.57
                 ],
                 [
                     1769126400000,
-                    26.95
+                    18.16
                 ],
                 [
                     1769385600000,
-                    26.95
+                    18.14
                 ],
                 [
                     1769472000000,
-                    26.95
+                    18.52
                 ],
                 [
                     1769558400000,
-                    26.95
+                    18.58
                 ],
                 [
                     1769644800000,
-                    26.95
+                    18.48
                 ],
                 [
                     1769731200000,
-                    26.95
+                    18.11
                 ],
                 [
                     1769990400000,
-                    26.95
+                    18.24
                 ],
                 [
                     1770076800000,
-                    26.95
+                    18.12
                 ],
                 [
                     1770163200000,
-                    26.95
+                    17.68
                 ],
                 [
                     1770249600000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770336000000,
-                    26.95
+                    16.99
                 ],
                 [
                     1770595200000,
-                    26.95
+                    17.26
                 ],
                 [
                     1770681600000,
-                    26.95
+                    17.39
                 ],
                 [
                     1770768000000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770854400000,
-                    26.15
+                    16.35
                 ],
                 [
                     1770940800000,
-                    26.15
+                    16.47
                 ],
                 [
                     1771286400000,
-                    26.15
+                    16.84
                 ],
                 [
                     1771372800000,
-                    26.15
+                    17.19
                 ],
                 [
                     1771459200000,
-                    28.34
+                    17.46
                 ],
                 [
                     1771545600000,
-                    28.34
+                    17.76
                 ],
                 [
                     1771804800000,
-                    31.15
+                    17.17
                 ],
                 [
                     1771891200000,
-                    31.42
+                    17.75
                 ],
                 [
                     1771977600000,
-                    31.42
+                    17.79
                 ],
                 [
                     1772064000000,
-                    29.64
+                    18.41
                 ],
                 [
                     1772150400000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772409600000,
-                    29.48
+                    19.58
                 ],
                 [
                     1772496000000,
-                    29.48
+                    17.67
                 ],
                 [
                     1772582400000,
-                    30.57
+                    19.23
                 ],
                 [
                     1772668800000,
-                    30.57
+                    19.25
+                ],
+                [
+                    1772755200000,
+                    18.55
                 ]
             ],
             "6m": [
                 [
                     1757289600000,
-                    33.0
+                    30.99
                 ],
                 [
                     1757376000000,
-                    33.0
+                    31.18
                 ],
                 [
                     1757462400000,
-                    33.0
+                    31.24
                 ],
                 [
                     1757548800000,
-                    33.0
+                    30.0
                 ],
                 [
                     1757635200000,
-                    32.83
+                    30.33
                 ],
                 [
                     1757894400000,
-                    32.83
+                    29.95
                 ],
                 [
                     1757980800000,
-                    32.83
+                    30.24
                 ],
                 [
                     1758067200000,
-                    34.69
+                    28.93
                 ],
                 [
                     1758153600000,
-                    32.87
+                    29.47
                 ],
                 [
                     1758240000000,
-                    32.87
+                    30.14
                 ],
                 [
                     1758499200000,
-                    32.87
+                    29.73
                 ],
                 [
                     1758585600000,
-                    32.87
+                    30.08
                 ],
                 [
                     1758672000000,
-                    32.87
+                    29.54
                 ],
                 [
                     1758758400000,
-                    32.87
+                    29.32
                 ],
                 [
                     1758844800000,
-                    32.87
+                    28.97
                 ],
                 [
                     1759104000000,
-                    32.87
+                    28.56
                 ],
                 [
                     1759190400000,
-                    32.87
+                    26.9
                 ],
                 [
                     1759276800000,
-                    32.87
+                    26.51
                 ],
                 [
                     1759363200000,
-                    34.27
+                    26.58
                 ],
                 [
                     1759449600000,
-                    34.27
+                    26.42
                 ],
                 [
                     1759708800000,
-                    34.27
+                    25.58
                 ],
                 [
                     1759795200000,
-                    34.27
+                    25.43
                 ],
                 [
                     1759881600000,
-                    34.27
+                    25.51
                 ],
                 [
                     1759968000000,
-                    34.27
+                    25.28
                 ],
                 [
                     1760054400000,
-                    34.27
+                    24.25
                 ],
                 [
                     1760313600000,
-                    32.32
+                    25.19
                 ],
                 [
                     1760400000000,
-                    32.32
+                    26.43
                 ],
                 [
                     1760486400000,
-                    32.32
+                    27.51
                 ],
                 [
                     1760572800000,
-                    32.32
+                    26.91
                 ],
                 [
                     1760659200000,
-                    30.2
+                    26.35
                 ],
                 [
                     1760918400000,
-                    30.2
+                    26.2
                 ],
                 [
                     1761004800000,
-                    30.2
+                    27.01
                 ],
                 [
                     1761091200000,
-                    30.2
+                    27.5
                 ],
                 [
                     1761177600000,
-                    30.2
+                    27.43
                 ],
                 [
                     1761264000000,
-                    30.2
+                    27.03
                 ],
                 [
                     1761523200000,
-                    30.2
+                    27.11
                 ],
                 [
                     1761609600000,
-                    30.2
+                    26.64
                 ],
                 [
                     1761696000000,
-                    30.2
+                    26.14
                 ],
                 [
                     1761782400000,
-                    30.2
+                    25.49
                 ],
                 [
                     1761868800000,
-                    30.2
+                    25.61
                 ],
                 [
                     1762128000000,
-                    29.5
+                    26.09
                 ],
                 [
                     1762214400000,
-                    29.5
+                    25.58
                 ],
                 [
                     1762300800000,
-                    29.5
+                    23.38
                 ],
                 [
                     1762387200000,
-                    29.5
+                    22.86
                 ],
                 [
                     1762473600000,
-                    29.5
+                    22.97
                 ],
                 [
                     1762732800000,
-                    29.5
+                    22.71
                 ],
                 [
                     1762819200000,
-                    29.5
+                    22.88
                 ],
                 [
                     1762905600000,
-                    29.5
+                    22.99
                 ],
                 [
                     1762992000000,
-                    29.5
+                    22.64
                 ],
                 [
                     1763078400000,
-                    29.5
+                    22.33
                 ],
                 [
                     1763337600000,
-                    29.5
+                    21.81
                 ],
                 [
                     1763424000000,
-                    29.5
+                    22.1
                 ],
                 [
                     1763510400000,
-                    29.5
+                    21.7
                 ],
                 [
                     1763596800000,
-                    29.5
+                    21.11
                 ],
                 [
                     1763683200000,
-                    27.72
+                    21.65
                 ],
                 [
                     1763942400000,
-                    27.72
+                    21.52
                 ],
                 [
                     1764028800000,
-                    27.72
+                    21.71
                 ],
                 [
                     1764115200000,
-                    27.72
+                    21.71
                 ],
                 [
                     1764288000000,
-                    27.72
+                    22.0
                 ],
                 [
                     1764547200000,
-                    27.72
+                    21.94
                 ],
                 [
                     1764633600000,
-                    27.72
+                    21.99
                 ],
                 [
                     1764720000000,
-                    27.72
+                    22.85
                 ],
                 [
                     1764806400000,
-                    27.72
+                    22.81
                 ],
                 [
                     1764892800000,
-                    27.72
+                    22.46
                 ],
                 [
                     1765152000000,
-                    25.68
+                    22.94
                 ],
                 [
                     1765238400000,
-                    25.68
+                    23.5
                 ],
                 [
                     1765324800000,
-                    25.68
+                    22.91
                 ],
                 [
                     1765411200000,
-                    26.21
+                    23.14
                 ],
                 [
                     1765497600000,
-                    26.21
+                    23.11
                 ],
                 [
                     1765756800000,
-                    26.21
+                    22.79
                 ],
                 [
                     1765843200000,
-                    26.64
+                    22.53
                 ],
                 [
                     1765929600000,
-                    26.64
+                    22.6
                 ],
                 [
                     1766016000000,
-                    26.64
+                    22.92
                 ],
                 [
                     1766102400000,
-                    26.64
+                    22.86
                 ],
                 [
                     1766361600000,
-                    26.64
+                    23.35
                 ],
                 [
                     1766448000000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766534400000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766707200000,
-                    27.55
+                    23.1
                 ],
                 [
                     1766966400000,
-                    27.55
+                    23.41
                 ],
                 [
                     1767052800000,
-                    27.55
+                    24.17
                 ],
                 [
                     1767139200000,
-                    27.55
+                    23.77
                 ],
                 [
                     1767312000000,
-                    27.55
+                    23.32
                 ],
                 [
                     1767571200000,
-                    27.55
+                    23.05
                 ],
                 [
                     1767657600000,
-                    27.75
+                    21.98
                 ],
                 [
                     1767744000000,
-                    27.75
+                    21.06
                 ],
                 [
                     1767830400000,
-                    27.75
+                    21.23
                 ],
                 [
                     1767916800000,
-                    27.75
+                    20.88
                 ],
                 [
                     1768176000000,
-                    27.75
+                    20.34
                 ],
                 [
                     1768262400000,
-                    26.75
+                    20.0
                 ],
                 [
                     1768348800000,
-                    27.0
+                    19.85
                 ],
                 [
                     1768435200000,
-                    27.0
+                    19.82
                 ],
                 [
                     1768521600000,
-                    27.0
+                    18.97
                 ],
                 [
                     1768867200000,
-                    26.69
+                    18.62
                 ],
                 [
                     1768953600000,
-                    26.69
+                    18.25
                 ],
                 [
                     1769040000000,
-                    26.69
+                    18.57
                 ],
                 [
                     1769126400000,
-                    26.95
+                    18.16
                 ],
                 [
                     1769385600000,
-                    26.95
+                    18.14
                 ],
                 [
                     1769472000000,
-                    26.95
+                    18.52
                 ],
                 [
                     1769558400000,
-                    26.95
+                    18.58
                 ],
                 [
                     1769644800000,
-                    26.95
+                    18.48
                 ],
                 [
                     1769731200000,
-                    26.95
+                    18.11
                 ],
                 [
                     1769990400000,
-                    26.95
+                    18.24
                 ],
                 [
                     1770076800000,
-                    26.95
+                    18.12
                 ],
                 [
                     1770163200000,
-                    26.95
+                    17.68
                 ],
                 [
                     1770249600000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770336000000,
-                    26.95
+                    16.99
                 ],
                 [
                     1770595200000,
-                    26.95
+                    17.26
                 ],
                 [
                     1770681600000,
-                    26.95
+                    17.39
                 ],
                 [
                     1770768000000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770854400000,
-                    26.15
+                    16.35
                 ],
                 [
                     1770940800000,
-                    26.15
+                    16.47
                 ],
                 [
                     1771286400000,
-                    26.15
+                    16.84
                 ],
                 [
                     1771372800000,
-                    26.15
+                    17.19
                 ],
                 [
                     1771459200000,
-                    28.34
+                    17.46
                 ],
                 [
                     1771545600000,
-                    28.34
+                    17.76
                 ],
                 [
                     1771804800000,
-                    31.15
+                    17.17
                 ],
                 [
                     1771891200000,
-                    31.42
+                    17.75
                 ],
                 [
                     1771977600000,
-                    31.42
+                    17.79
                 ],
                 [
                     1772064000000,
-                    29.64
+                    18.41
                 ],
                 [
                     1772150400000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772409600000,
-                    29.48
+                    19.58
                 ],
                 [
                     1772496000000,
-                    29.48
+                    17.67
                 ],
                 [
                     1772582400000,
-                    30.57
+                    19.23
                 ],
                 [
                     1772668800000,
-                    30.57
+                    19.25
+                ],
+                [
+                    1772755200000,
+                    18.55
                 ]
             ],
             "1y": [
                 [
-                    1741132800000,
-                    37.02
-                ],
-                [
                     1741219200000,
-                    37.02
+                    20.59
                 ],
                 [
                     1741305600000,
-                    37.02
+                    20.28
                 ],
                 [
                     1741564800000,
-                    37.02
+                    19.47
                 ],
                 [
                     1741651200000,
-                    37.02
+                    20.13
                 ],
                 [
                     1741737600000,
-                    31.86
+                    20.33
                 ],
                 [
                     1741824000000,
-                    31.86
+                    19.61
                 ],
                 [
                     1741910400000,
-                    31.86
+                    20.08
                 ],
                 [
                     1742169600000,
-                    30.1
+                    20.36
                 ],
                 [
                     1742256000000,
-                    31.34
+                    20.08
                 ],
                 [
                     1742342400000,
-                    31.34
+                    22.8
                 ],
                 [
                     1742428800000,
-                    29.23
+                    22.3
                 ],
                 [
                     1742515200000,
-                    29.23
+                    22.32
                 ],
                 [
                     1742774400000,
-                    29.23
+                    22.99
                 ],
                 [
                     1742860800000,
-                    29.23
+                    22.83
                 ],
                 [
                     1742947200000,
-                    29.23
+                    22.43
                 ],
                 [
                     1743033600000,
-                    29.23
+                    22.5
                 ],
                 [
                     1743120000000,
-                    29.23
+                    21.98
                 ],
                 [
                     1743379200000,
-                    29.23
+                    21.62
                 ],
                 [
                     1743465600000,
-                    29.23
+                    21.73
                 ],
                 [
                     1743552000000,
-                    29.23
+                    22.2
                 ],
                 [
                     1743638400000,
-                    29.23
+                    21.19
                 ],
                 [
                     1743724800000,
-                    29.23
+                    20.32
                 ],
                 [
                     1743984000000,
-                    29.23
+                    20.67
                 ],
                 [
                     1744070400000,
-                    29.23
+                    20.74
                 ],
                 [
                     1744156800000,
-                    29.42
+                    22.45
                 ],
                 [
                     1744243200000,
-                    29.42
+                    22.02
                 ],
                 [
                     1744329600000,
-                    30.84
+                    22.57
                 ],
                 [
                     1744588800000,
-                    31.25
+                    22.96
                 ],
                 [
                     1744675200000,
-                    31.25
+                    23.32
                 ],
                 [
                     1744761600000,
-                    31.47
+                    23.86
                 ],
                 [
                     1744848000000,
-                    31.47
+                    23.96
                 ],
                 [
                     1745193600000,
-                    31.47
+                    23.01
                 ],
                 [
                     1745280000000,
-                    31.47
+                    25.04
                 ],
                 [
                     1745366400000,
-                    31.47
+                    23.11
                 ],
                 [
                     1745452800000,
-                    31.47
+                    22.12
                 ],
                 [
                     1745539200000,
-                    31.47
+                    22.45
                 ],
                 [
                     1745798400000,
-                    31.47
+                    22.5
                 ],
                 [
                     1745884800000,
-                    31.47
+                    22.86
                 ],
                 [
                     1745971200000,
-                    31.47
+                    23.11
                 ],
                 [
                     1746057600000,
-                    31.47
+                    23.47
                 ],
                 [
                     1746144000000,
-                    31.47
+                    23.7
                 ],
                 [
                     1746403200000,
-                    31.47
+                    23.77
                 ],
                 [
                     1746489600000,
-                    31.47
+                    23.13
                 ],
                 [
                     1746576000000,
-                    31.47
+                    23.27
                 ],
                 [
                     1746662400000,
-                    31.47
+                    22.55
                 ],
                 [
                     1746748800000,
-                    34.64
+                    23.07
                 ],
                 [
                     1747008000000,
-                    34.64
+                    23.16
                 ],
                 [
                     1747094400000,
-                    34.64
+                    23.33
                 ],
                 [
                     1747180800000,
-                    34.64
+                    23.43
                 ],
                 [
                     1747267200000,
-                    34.64
+                    23.58
                 ],
                 [
                     1747353600000,
-                    34.64
+                    23.98
                 ],
                 [
                     1747612800000,
-                    35.49
+                    23.89
                 ],
                 [
                     1747699200000,
-                    35.49
+                    23.72
                 ],
                 [
                     1747785600000,
-                    35.49
+                    23.31
                 ],
                 [
                     1747872000000,
-                    35.49
+                    23.71
                 ],
                 [
                     1747958400000,
-                    34.64
+                    23.89
                 ],
                 [
                     1748304000000,
-                    36.69
+                    23.83
                 ],
                 [
                     1748390400000,
-                    36.69
+                    24.04
                 ],
                 [
                     1748476800000,
-                    36.69
+                    24.0
                 ],
                 [
                     1748563200000,
-                    36.69
+                    23.91
                 ],
                 [
                     1748822400000,
-                    36.69
+                    24.01
                 ],
                 [
                     1748908800000,
-                    36.69
+                    23.6
                 ],
                 [
                     1748995200000,
-                    36.69
+                    23.97
                 ],
                 [
                     1749081600000,
-                    36.69
+                    23.8
                 ],
                 [
                     1749168000000,
-                    36.06
+                    24.1
                 ],
                 [
                     1749427200000,
-                    36.06
+                    24.12
                 ],
                 [
                     1749513600000,
-                    36.06
+                    24.23
                 ],
                 [
                     1749600000000,
-                    36.06
+                    24.56
                 ],
                 [
                     1749686400000,
-                    36.06
+                    25.33
                 ],
                 [
                     1749772800000,
-                    36.06
+                    24.33
                 ],
                 [
                     1750032000000,
-                    36.06
+                    24.65
                 ],
                 [
                     1750118400000,
-                    36.06
+                    24.81
                 ],
                 [
                     1750204800000,
-                    36.06
+                    25.2
                 ],
                 [
                     1750377600000,
-                    36.06
+                    25.4
                 ],
                 [
                     1750636800000,
-                    36.06
+                    25.89
                 ],
                 [
                     1750723200000,
-                    36.06
+                    26.97
                 ],
                 [
                     1750809600000,
-                    37.53
+                    26.85
                 ],
                 [
                     1750896000000,
-                    37.53
+                    27.14
                 ],
                 [
                     1750982400000,
-                    37.53
+                    28.05
                 ],
                 [
                     1751241600000,
-                    37.53
+                    28.08
                 ],
                 [
                     1751328000000,
-                    37.53
+                    27.69
                 ],
                 [
                     1751414400000,
-                    37.53
+                    27.82
                 ],
                 [
                     1751500800000,
-                    37.53
+                    28.23
                 ],
                 [
                     1751846400000,
-                    37.53
+                    28.34
                 ],
                 [
                     1751932800000,
-                    37.53
+                    28.84
                 ],
                 [
                     1752019200000,
-                    37.53
+                    29.41
                 ],
                 [
                     1752105600000,
-                    34.55
+                    29.17
                 ],
                 [
                     1752192000000,
-                    34.55
+                    28.57
                 ],
                 [
                     1752451200000,
-                    34.55
+                    29.27
                 ],
                 [
                     1752537600000,
-                    34.55
+                    29.56
                 ],
                 [
                     1752624000000,
-                    34.55
+                    29.95
                 ],
                 [
                     1752710400000,
-                    33.81
+                    30.35
                 ],
                 [
                     1752796800000,
-                    33.81
+                    30.25
                 ],
                 [
                     1753056000000,
-                    34.34
+                    29.8
                 ],
                 [
                     1753142400000,
-                    34.34
+                    29.0
                 ],
                 [
                     1753228800000,
-                    34.34
+                    28.56
                 ],
                 [
                     1753315200000,
-                    34.34
+                    28.15
                 ],
                 [
                     1753401600000,
-                    34.34
+                    28.51
                 ],
                 [
                     1753660800000,
-                    34.34
+                    28.0
                 ],
                 [
                     1753747200000,
-                    34.34
+                    27.92
                 ],
                 [
                     1753833600000,
-                    34.34
+                    29.33
                 ],
                 [
                     1753920000000,
-                    34.34
+                    29.57
                 ],
                 [
                     1754006400000,
-                    34.34
+                    29.57
                 ],
                 [
                     1754265600000,
-                    34.34
+                    29.53
                 ],
                 [
                     1754352000000,
-                    34.34
+                    27.84
                 ],
                 [
                     1754438400000,
-                    34.34
+                    28.44
                 ],
                 [
                     1754524800000,
-                    34.34
+                    28.05
                 ],
                 [
                     1754611200000,
-                    34.34
+                    27.62
                 ],
                 [
                     1754870400000,
-                    31.84
+                    28.12
                 ],
                 [
                     1754956800000,
-                    31.84
+                    28.99
                 ],
                 [
                     1755043200000,
-                    31.84
+                    30.86
                 ],
                 [
                     1755129600000,
-                    31.84
+                    31.18
                 ],
                 [
                     1755216000000,
-                    33.0
+                    31.0
                 ],
                 [
                     1755475200000,
-                    33.0
+                    31.28
                 ],
                 [
                     1755561600000,
-                    33.0
+                    30.35
                 ],
                 [
                     1755648000000,
-                    33.0
+                    30.32
                 ],
                 [
                     1755734400000,
-                    33.0
+                    31.17
                 ],
                 [
                     1755820800000,
-                    33.0
+                    31.63
                 ],
                 [
                     1756080000000,
-                    33.0
+                    31.53
                 ],
                 [
                     1756166400000,
-                    33.0
+                    31.79
                 ],
                 [
                     1756252800000,
-                    33.0
+                    31.29
                 ],
                 [
                     1756339200000,
-                    33.0
+                    31.33
                 ],
                 [
                     1756425600000,
-                    33.0
+                    30.94
                 ],
                 [
                     1756771200000,
-                    33.0
+                    30.82
                 ],
                 [
                     1756857600000,
-                    33.0
+                    30.52
                 ],
                 [
                     1756944000000,
-                    33.0
+                    30.9
                 ],
                 [
                     1757030400000,
-                    33.0
+                    30.87
                 ],
                 [
                     1757289600000,
-                    33.0
+                    30.99
                 ],
                 [
                     1757376000000,
-                    33.0
+                    31.18
                 ],
                 [
                     1757462400000,
-                    33.0
+                    31.24
                 ],
                 [
                     1757548800000,
-                    33.0
+                    30.0
                 ],
                 [
                     1757635200000,
-                    32.83
+                    30.33
                 ],
                 [
                     1757894400000,
-                    32.83
+                    29.95
                 ],
                 [
                     1757980800000,
-                    32.83
+                    30.24
                 ],
                 [
                     1758067200000,
-                    34.69
+                    28.93
                 ],
                 [
                     1758153600000,
-                    32.87
+                    29.47
                 ],
                 [
                     1758240000000,
-                    32.87
+                    30.14
                 ],
                 [
                     1758499200000,
-                    32.87
+                    29.73
                 ],
                 [
                     1758585600000,
-                    32.87
+                    30.08
                 ],
                 [
                     1758672000000,
-                    32.87
+                    29.54
                 ],
                 [
                     1758758400000,
-                    32.87
+                    29.32
                 ],
                 [
                     1758844800000,
-                    32.87
+                    28.97
                 ],
                 [
                     1759104000000,
-                    32.87
+                    28.56
                 ],
                 [
                     1759190400000,
-                    32.87
+                    26.9
                 ],
                 [
                     1759276800000,
-                    32.87
+                    26.51
                 ],
                 [
                     1759363200000,
-                    34.27
+                    26.58
                 ],
                 [
                     1759449600000,
-                    34.27
+                    26.42
                 ],
                 [
                     1759708800000,
-                    34.27
+                    25.58
                 ],
                 [
                     1759795200000,
-                    34.27
+                    25.43
                 ],
                 [
                     1759881600000,
-                    34.27
+                    25.51
                 ],
                 [
                     1759968000000,
-                    34.27
+                    25.28
                 ],
                 [
                     1760054400000,
-                    34.27
+                    24.25
                 ],
                 [
                     1760313600000,
-                    32.32
+                    25.19
                 ],
                 [
                     1760400000000,
-                    32.32
+                    26.43
                 ],
                 [
                     1760486400000,
-                    32.32
+                    27.51
                 ],
                 [
                     1760572800000,
-                    32.32
+                    26.91
                 ],
                 [
                     1760659200000,
-                    30.2
+                    26.35
                 ],
                 [
                     1760918400000,
-                    30.2
+                    26.2
                 ],
                 [
                     1761004800000,
-                    30.2
+                    27.01
                 ],
                 [
                     1761091200000,
-                    30.2
+                    27.5
                 ],
                 [
                     1761177600000,
-                    30.2
+                    27.43
                 ],
                 [
                     1761264000000,
-                    30.2
+                    27.03
                 ],
                 [
                     1761523200000,
-                    30.2
+                    27.11
                 ],
                 [
                     1761609600000,
-                    30.2
+                    26.64
                 ],
                 [
                     1761696000000,
-                    30.2
+                    26.14
                 ],
                 [
                     1761782400000,
-                    30.2
+                    25.49
                 ],
                 [
                     1761868800000,
-                    30.2
+                    25.61
                 ],
                 [
                     1762128000000,
-                    29.5
+                    26.09
                 ],
                 [
                     1762214400000,
-                    29.5
+                    25.58
                 ],
                 [
                     1762300800000,
-                    29.5
+                    23.38
                 ],
                 [
                     1762387200000,
-                    29.5
+                    22.86
                 ],
                 [
                     1762473600000,
-                    29.5
+                    22.97
                 ],
                 [
                     1762732800000,
-                    29.5
+                    22.71
                 ],
                 [
                     1762819200000,
-                    29.5
+                    22.88
                 ],
                 [
                     1762905600000,
-                    29.5
+                    22.99
                 ],
                 [
                     1762992000000,
-                    29.5
+                    22.64
                 ],
                 [
                     1763078400000,
-                    29.5
+                    22.33
                 ],
                 [
                     1763337600000,
-                    29.5
+                    21.81
                 ],
                 [
                     1763424000000,
-                    29.5
+                    22.1
                 ],
                 [
                     1763510400000,
-                    29.5
+                    21.7
                 ],
                 [
                     1763596800000,
-                    29.5
+                    21.11
                 ],
                 [
                     1763683200000,
-                    27.72
+                    21.65
                 ],
                 [
                     1763942400000,
-                    27.72
+                    21.52
                 ],
                 [
                     1764028800000,
-                    27.72
+                    21.71
                 ],
                 [
                     1764115200000,
-                    27.72
+                    21.71
                 ],
                 [
                     1764288000000,
-                    27.72
+                    22.0
                 ],
                 [
                     1764547200000,
-                    27.72
+                    21.94
                 ],
                 [
                     1764633600000,
-                    27.72
+                    21.99
                 ],
                 [
                     1764720000000,
-                    27.72
+                    22.85
                 ],
                 [
                     1764806400000,
-                    27.72
+                    22.81
                 ],
                 [
                     1764892800000,
-                    27.72
+                    22.46
                 ],
                 [
                     1765152000000,
-                    25.68
+                    22.94
                 ],
                 [
                     1765238400000,
-                    25.68
+                    23.5
                 ],
                 [
                     1765324800000,
-                    25.68
+                    22.91
                 ],
                 [
                     1765411200000,
-                    26.21
+                    23.14
                 ],
                 [
                     1765497600000,
-                    26.21
+                    23.11
                 ],
                 [
                     1765756800000,
-                    26.21
+                    22.79
                 ],
                 [
                     1765843200000,
-                    26.64
+                    22.53
                 ],
                 [
                     1765929600000,
-                    26.64
+                    22.6
                 ],
                 [
                     1766016000000,
-                    26.64
+                    22.92
                 ],
                 [
                     1766102400000,
-                    26.64
+                    22.86
                 ],
                 [
                     1766361600000,
-                    26.64
+                    23.35
                 ],
                 [
                     1766448000000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766534400000,
-                    27.55
+                    23.11
                 ],
                 [
                     1766707200000,
-                    27.55
+                    23.1
                 ],
                 [
                     1766966400000,
-                    27.55
+                    23.41
                 ],
                 [
                     1767052800000,
-                    27.55
+                    24.17
                 ],
                 [
                     1767139200000,
-                    27.55
+                    23.77
                 ],
                 [
                     1767312000000,
-                    27.55
+                    23.32
                 ],
                 [
                     1767571200000,
-                    27.55
+                    23.05
                 ],
                 [
                     1767657600000,
-                    27.75
+                    21.98
                 ],
                 [
                     1767744000000,
-                    27.75
+                    21.06
                 ],
                 [
                     1767830400000,
-                    27.75
+                    21.23
                 ],
                 [
                     1767916800000,
-                    27.75
+                    20.88
                 ],
                 [
                     1768176000000,
-                    27.75
+                    20.34
                 ],
                 [
                     1768262400000,
-                    26.75
+                    20.0
                 ],
                 [
                     1768348800000,
-                    27.0
+                    19.85
                 ],
                 [
                     1768435200000,
-                    27.0
+                    19.82
                 ],
                 [
                     1768521600000,
-                    27.0
+                    18.97
                 ],
                 [
                     1768867200000,
-                    26.69
+                    18.62
                 ],
                 [
                     1768953600000,
-                    26.69
+                    18.25
                 ],
                 [
                     1769040000000,
-                    26.69
+                    18.57
                 ],
                 [
                     1769126400000,
-                    26.95
+                    18.16
                 ],
                 [
                     1769385600000,
-                    26.95
+                    18.14
                 ],
                 [
                     1769472000000,
-                    26.95
+                    18.52
                 ],
                 [
                     1769558400000,
-                    26.95
+                    18.58
                 ],
                 [
                     1769644800000,
-                    26.95
+                    18.48
                 ],
                 [
                     1769731200000,
-                    26.95
+                    18.11
                 ],
                 [
                     1769990400000,
-                    26.95
+                    18.24
                 ],
                 [
                     1770076800000,
-                    26.95
+                    18.12
                 ],
                 [
                     1770163200000,
-                    26.95
+                    17.68
                 ],
                 [
                     1770249600000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770336000000,
-                    26.95
+                    16.99
                 ],
                 [
                     1770595200000,
-                    26.95
+                    17.26
                 ],
                 [
                     1770681600000,
-                    26.95
+                    17.39
                 ],
                 [
                     1770768000000,
-                    26.95
+                    17.05
                 ],
                 [
                     1770854400000,
-                    26.15
+                    16.35
                 ],
                 [
                     1770940800000,
-                    26.15
+                    16.47
                 ],
                 [
                     1771286400000,
-                    26.15
+                    16.84
                 ],
                 [
                     1771372800000,
-                    26.15
+                    17.19
                 ],
                 [
                     1771459200000,
-                    28.34
+                    17.46
                 ],
                 [
                     1771545600000,
-                    28.34
+                    17.76
                 ],
                 [
                     1771804800000,
-                    31.15
+                    17.17
                 ],
                 [
                     1771891200000,
-                    31.42
+                    17.75
                 ],
                 [
                     1771977600000,
-                    31.42
+                    17.79
                 ],
                 [
                     1772064000000,
-                    29.64
+                    18.41
                 ],
                 [
                     1772150400000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772409600000,
-                    29.48
+                    19.58
                 ],
                 [
                     1772496000000,
-                    29.48
+                    17.67
                 ],
                 [
                     1772582400000,
-                    30.57
+                    19.23
                 ],
                 [
                     1772668800000,
-                    30.57
+                    19.25
+                ],
+                [
+                    1772755200000,
+                    18.55
                 ]
             ],
             "5y": [
                 [
-                    1615680000000,
-                    39.34
-                ],
-                [
-                    1616284800000,
-                    39.34
-                ],
-                [
-                    1616889600000,
-                    39.34
-                ],
-                [
-                    1617494400000,
-                    39.34
-                ],
-                [
-                    1618099200000,
-                    39.34
-                ],
-                [
-                    1618704000000,
-                    39.34
-                ],
-                [
-                    1619308800000,
-                    39.34
-                ],
-                [
-                    1619913600000,
-                    42.61
-                ],
-                [
-                    1620518400000,
-                    42.97
-                ],
-                [
-                    1621123200000,
-                    42.97
-                ],
-                [
-                    1621728000000,
-                    42.97
-                ],
-                [
-                    1622332800000,
-                    47.35
-                ],
-                [
-                    1622937600000,
-                    47.35
-                ],
-                [
-                    1623542400000,
-                    47.35
-                ],
-                [
-                    1624147200000,
-                    47.35
-                ],
-                [
-                    1624752000000,
-                    48.11
-                ],
-                [
-                    1625356800000,
-                    48.11
-                ],
-                [
-                    1625961600000,
-                    48.11
-                ],
-                [
-                    1626566400000,
-                    49.03
-                ],
-                [
-                    1627171200000,
-                    48.95
-                ],
-                [
-                    1627776000000,
-                    48.95
-                ],
-                [
-                    1628380800000,
-                    48.95
-                ],
-                [
-                    1628985600000,
-                    44.77
-                ],
-                [
-                    1629590400000,
-                    44.77
-                ],
-                [
-                    1630195200000,
-                    42.69
-                ],
-                [
-                    1630800000000,
-                    42.69
-                ],
-                [
-                    1631404800000,
-                    44.08
-                ],
-                [
                     1632009600000,
-                    44.08
-                ],
-                [
-                    1632614400000,
-                    44.08
-                ],
-                [
-                    1633219200000,
-                    44.08
-                ],
-                [
-                    1633824000000,
-                    44.08
-                ],
-                [
-                    1634428800000,
-                    44.08
-                ],
-                [
-                    1635033600000,
-                    44.08
-                ],
-                [
-                    1635638400000,
-                    44.33
-                ],
-                [
-                    1636243200000,
-                    44.33
-                ],
-                [
-                    1636848000000,
-                    44.33
-                ],
-                [
-                    1637452800000,
-                    41.34
-                ],
-                [
-                    1638057600000,
-                    41.34
-                ],
-                [
-                    1638662400000,
-                    41.34
-                ],
-                [
-                    1639267200000,
-                    37.58
-                ],
-                [
-                    1639872000000,
-                    34.43
-                ],
-                [
-                    1640476800000,
-                    36.4
-                ],
-                [
-                    1641081600000,
-                    36.4
-                ],
-                [
-                    1641686400000,
-                    36.4
-                ],
-                [
-                    1642291200000,
-                    38.89
-                ],
-                [
-                    1642896000000,
-                    35.97
-                ],
-                [
-                    1643500800000,
-                    35.97
-                ],
-                [
-                    1644105600000,
-                    35.97
-                ],
-                [
-                    1644710400000,
-                    35.25
-                ],
-                [
-                    1645315200000,
-                    35.25
-                ],
-                [
-                    1645920000000,
-                    35.25
-                ],
-                [
-                    1646524800000,
-                    35.25
-                ],
-                [
-                    1647129600000,
-                    31.03
-                ],
-                [
-                    1647734400000,
-                    31.03
-                ],
-                [
-                    1648339200000,
-                    31.03
-                ],
-                [
-                    1648944000000,
-                    31.03
-                ],
-                [
-                    1649548800000,
-                    31.03
-                ],
-                [
-                    1650153600000,
-                    31.03
-                ],
-                [
-                    1650758400000,
-                    34.24
-                ],
-                [
-                    1651363200000,
-                    34.24
-                ],
-                [
-                    1651968000000,
-                    34.43
-                ],
-                [
-                    1652572800000,
-                    34.43
-                ],
-                [
-                    1653177600000,
-                    33.26
-                ],
-                [
-                    1653782400000,
-                    33.26
-                ],
-                [
-                    1654387200000,
-                    33.26
-                ],
-                [
-                    1654992000000,
-                    33.26
-                ],
-                [
-                    1655596800000,
-                    33.26
-                ],
-                [
-                    1656201600000,
-                    28.87
-                ],
-                [
-                    1656806400000,
-                    28.87
-                ],
-                [
-                    1657411200000,
-                    28.87
-                ],
-                [
-                    1658016000000,
-                    28.87
-                ],
-                [
-                    1658620800000,
-                    28.87
-                ],
-                [
-                    1659225600000,
-                    31.86
-                ],
-                [
-                    1659830400000,
-                    29.36
-                ],
-                [
-                    1660435200000,
-                    33.36
-                ],
-                [
-                    1661040000000,
-                    33.36
-                ],
-                [
-                    1661644800000,
-                    33.36
-                ],
-                [
-                    1662249600000,
-                    33.36
-                ],
-                [
-                    1662854400000,
-                    28.56
-                ],
-                [
-                    1663459200000,
-                    28.56
-                ],
-                [
-                    1664064000000,
-                    28.56
-                ],
-                [
-                    1664668800000,
-                    28.56
-                ],
-                [
-                    1665273600000,
-                    28.56
-                ],
-                [
-                    1665878400000,
-                    24.07
-                ],
-                [
-                    1666483200000,
-                    24.07
-                ],
-                [
-                    1667088000000,
-                    24.07
-                ],
-                [
-                    1667692800000,
-                    24.07
-                ],
-                [
-                    1668297600000,
-                    24.07
-                ],
-                [
-                    1668902400000,
-                    24.07
-                ],
-                [
-                    1669507200000,
-                    32.31
-                ],
-                [
-                    1670112000000,
-                    32.31
-                ],
-                [
-                    1670716800000,
-                    34.36
-                ],
-                [
-                    1671321600000,
-                    34.36
-                ],
-                [
-                    1671926400000,
-                    34.36
-                ],
-                [
-                    1672531200000,
-                    36.17
-                ],
-                [
-                    1673136000000,
-                    36.17
-                ],
-                [
-                    1673740800000,
-                    35.3
-                ],
-                [
-                    1674345600000,
-                    35.3
-                ],
-                [
-                    1674950400000,
-                    35.3
-                ],
-                [
-                    1675555200000,
-                    35.3
-                ],
-                [
-                    1676160000000,
-                    35.3
-                ],
-                [
-                    1676764800000,
-                    35.3
-                ],
-                [
-                    1677369600000,
-                    35.3
-                ],
-                [
-                    1677974400000,
-                    35.3
-                ],
-                [
-                    1678579200000,
-                    35.3
-                ],
-                [
-                    1679184000000,
-                    35.3
-                ],
-                [
-                    1679788800000,
-                    35.3
-                ],
-                [
-                    1680393600000,
-                    35.3
-                ],
-                [
-                    1680998400000,
-                    36.31
-                ],
-                [
-                    1681603200000,
-                    36.31
-                ],
-                [
-                    1682208000000,
-                    36.31
-                ],
-                [
-                    1682812800000,
-                    35.45
-                ],
-                [
-                    1683417600000,
-                    36.69
-                ],
-                [
-                    1684022400000,
-                    37.48
-                ],
-                [
-                    1684627200000,
-                    37.48
-                ],
-                [
-                    1685232000000,
-                    35.56
-                ],
-                [
-                    1685836800000,
-                    35.56
-                ],
-                [
-                    1686441600000,
-                    35.44
-                ],
-                [
-                    1687046400000,
-                    35.7
-                ],
-                [
-                    1687651200000,
-                    36.19
-                ],
-                [
-                    1688256000000,
-                    37.05
-                ],
-                [
-                    1688860800000,
-                    33.99
-                ],
-                [
-                    1689465600000,
-                    35.69
-                ],
-                [
-                    1690070400000,
-                    37.38
-                ],
-                [
-                    1690675200000,
-                    37.49
-                ],
-                [
-                    1691280000000,
-                    37.49
-                ],
-                [
-                    1691884800000,
-                    33.82
-                ],
-                [
-                    1692489600000,
-                    32.04
-                ],
-                [
-                    1693094400000,
-                    32.04
-                ],
-                [
-                    1693699200000,
-                    32.04
-                ],
-                [
-                    1694304000000,
-                    31.18
-                ],
-                [
-                    1694908800000,
-                    29.6
-                ],
-                [
-                    1695513600000,
-                    29.6
-                ],
-                [
-                    1696118400000,
-                    29.39
-                ],
-                [
-                    1696723200000,
-                    28.67
-                ],
-                [
-                    1697328000000,
-                    28.67
-                ],
-                [
-                    1697932800000,
-                    27.39
-                ],
-                [
-                    1698537600000,
-                    27.39
-                ],
-                [
-                    1699142400000,
-                    27.39
-                ],
-                [
-                    1699747200000,
-                    30.76
-                ],
-                [
-                    1700352000000,
-                    31.14
-                ],
-                [
-                    1700956800000,
-                    31.14
-                ],
-                [
-                    1701561600000,
-                    31.14
-                ],
-                [
-                    1702166400000,
-                    33.03
-                ],
-                [
-                    1702771200000,
-                    32.72
-                ],
-                [
-                    1703376000000,
-                    32.72
-                ],
-                [
-                    1703980800000,
-                    32.72
-                ],
-                [
-                    1704585600000,
-                    32.85
-                ],
-                [
-                    1705190400000,
-                    32.42
-                ],
-                [
-                    1705795200000,
-                    32.42
-                ],
-                [
-                    1706400000000,
-                    32.42
-                ],
-                [
-                    1707004800000,
-                    32.42
-                ],
-                [
-                    1707609600000,
-                    32.42
-                ],
-                [
-                    1708214400000,
-                    37.81
-                ],
-                [
-                    1708819200000,
-                    37.81
-                ],
-                [
-                    1709424000000,
-                    37.81
-                ],
-                [
-                    1710028800000,
-                    37.81
-                ],
-                [
-                    1710633600000,
-                    37.81
-                ],
-                [
-                    1711238400000,
-                    38.0
-                ],
-                [
-                    1711843200000,
-                    38.0
-                ],
-                [
-                    1712448000000,
-                    38.0
-                ],
-                [
-                    1713052800000,
-                    36.48
-                ],
-                [
-                    1713657600000,
-                    36.48
-                ],
-                [
-                    1714262400000,
-                    36.48
-                ],
-                [
-                    1714867200000,
-                    38.12
-                ],
-                [
-                    1715472000000,
-                    34.77
-                ],
-                [
-                    1716076800000,
-                    35.1
-                ],
-                [
-                    1716681600000,
-                    35.1
-                ],
-                [
-                    1717286400000,
-                    35.1
-                ],
-                [
-                    1717891200000,
-                    35.1
-                ],
-                [
-                    1718496000000,
-                    33.28
-                ],
-                [
-                    1719100800000,
-                    32.81
-                ],
-                [
-                    1719705600000,
-                    32.81
-                ],
-                [
-                    1720310400000,
-                    32.81
-                ],
-                [
-                    1720915200000,
-                    31.25
-                ],
-                [
-                    1721520000000,
-                    34.25
-                ],
-                [
-                    1722124800000,
-                    34.25
-                ],
-                [
-                    1722729600000,
-                    34.25
-                ],
-                [
-                    1723334400000,
-                    35.26
-                ],
-                [
-                    1723939200000,
-                    36.6
-                ],
-                [
-                    1724544000000,
-                    36.6
-                ],
-                [
-                    1725148800000,
-                    36.6
-                ],
-                [
-                    1725753600000,
-                    38.35
-                ],
-                [
-                    1726358400000,
-                    39.18
-                ],
-                [
-                    1726963200000,
-                    40.6
-                ],
-                [
-                    1727568000000,
-                    40.6
-                ],
-                [
-                    1728172800000,
-                    40.6
-                ],
-                [
-                    1728777600000,
-                    36.55
-                ],
-                [
-                    1729382400000,
-                    35.37
-                ],
-                [
-                    1729987200000,
-                    35.37
-                ],
-                [
-                    1730592000000,
-                    37.34
-                ],
-                [
-                    1731196800000,
-                    37.34
-                ],
-                [
-                    1731801600000,
-                    39.61
-                ],
-                [
-                    1732406400000,
-                    37.71
-                ],
-                [
-                    1733011200000,
-                    37.71
-                ],
-                [
-                    1733616000000,
-                    37.71
-                ],
-                [
-                    1734220800000,
-                    37.71
-                ],
-                [
-                    1734825600000,
-                    37.71
-                ],
-                [
-                    1735430400000,
-                    37.71
-                ],
-                [
-                    1736035200000,
-                    37.71
-                ],
-                [
-                    1736640000000,
-                    37.71
-                ],
-                [
-                    1737244800000,
-                    34.74
-                ],
-                [
-                    1737849600000,
-                    32.48
-                ],
-                [
-                    1738454400000,
-                    37.67
-                ],
-                [
-                    1739059200000,
-                    35.33
-                ],
-                [
-                    1739664000000,
-                    35.74
-                ],
-                [
-                    1740268800000,
-                    38.14
-                ],
-                [
-                    1740873600000,
-                    38.14
-                ],
-                [
-                    1741478400000,
-                    37.02
-                ],
-                [
-                    1742083200000,
-                    31.86
-                ],
-                [
-                    1742688000000,
-                    29.23
-                ],
-                [
-                    1743292800000,
-                    29.23
-                ],
-                [
-                    1743897600000,
-                    29.23
-                ],
-                [
-                    1744502400000,
-                    30.84
-                ],
-                [
-                    1745107200000,
-                    31.47
-                ],
-                [
-                    1745712000000,
-                    31.47
-                ],
-                [
-                    1746316800000,
-                    31.47
-                ],
-                [
-                    1746921600000,
-                    34.64
-                ],
-                [
-                    1747526400000,
-                    34.64
-                ],
-                [
-                    1748131200000,
-                    34.64
-                ],
-                [
-                    1748736000000,
-                    36.69
-                ],
-                [
-                    1749340800000,
-                    36.06
-                ],
-                [
-                    1749945600000,
-                    36.06
-                ],
-                [
-                    1750550400000,
-                    36.06
-                ],
-                [
-                    1751155200000,
-                    37.53
-                ],
-                [
-                    1751760000000,
-                    37.53
-                ],
-                [
-                    1752364800000,
-                    34.55
-                ],
-                [
-                    1752969600000,
-                    33.81
-                ],
-                [
-                    1753574400000,
-                    34.34
-                ],
-                [
-                    1754179200000,
-                    34.34
-                ],
-                [
-                    1754784000000,
-                    34.34
-                ],
-                [
-                    1755388800000,
-                    33.0
-                ],
-                [
-                    1755993600000,
-                    33.0
-                ],
-                [
-                    1756598400000,
-                    33.0
-                ],
-                [
-                    1757203200000,
-                    33.0
-                ],
-                [
-                    1757808000000,
-                    32.83
-                ],
-                [
-                    1758412800000,
-                    32.87
-                ],
-                [
-                    1759017600000,
-                    32.87
-                ],
-                [
-                    1759622400000,
-                    34.27
-                ],
-                [
-                    1760227200000,
-                    34.27
-                ],
-                [
-                    1760832000000,
-                    30.2
-                ],
-                [
-                    1761436800000,
-                    30.2
-                ],
-                [
-                    1762041600000,
-                    30.2
-                ],
-                [
-                    1762646400000,
-                    29.5
-                ],
-                [
-                    1763251200000,
-                    29.5
-                ],
-                [
-                    1763856000000,
-                    27.72
-                ],
-                [
-                    1764460800000,
-                    27.72
-                ],
-                [
-                    1765065600000,
-                    27.72
-                ],
-                [
-                    1765670400000,
-                    26.21
-                ],
-                [
-                    1766275200000,
-                    26.64
-                ],
-                [
-                    1766880000000,
-                    27.55
-                ],
-                [
-                    1767484800000,
-                    27.55
-                ],
-                [
-                    1768089600000,
-                    27.75
-                ],
-                [
-                    1768694400000,
                     27.0
                 ],
                 [
+                    1632614400000,
+                    25.97
+                ],
+                [
+                    1633219200000,
+                    23.45
+                ],
+                [
+                    1633824000000,
+                    23.48
+                ],
+                [
+                    1634428800000,
+                    24.27
+                ],
+                [
+                    1635033600000,
+                    22.11
+                ],
+                [
+                    1635638400000,
+                    20.9
+                ],
+                [
+                    1636243200000,
+                    22.0
+                ],
+                [
+                    1636848000000,
+                    21.9
+                ],
+                [
+                    1637452800000,
+                    21.03
+                ],
+                [
+                    1638057600000,
+                    17.71
+                ],
+                [
+                    1638662400000,
+                    15.8
+                ],
+                [
+                    1639267200000,
+                    18.23
+                ],
+                [
+                    1639872000000,
+                    17.7
+                ],
+                [
+                    1640476800000,
+                    18.59
+                ],
+                [
+                    1641081600000,
+                    17.57
+                ],
+                [
+                    1641686400000,
+                    16.48
+                ],
+                [
+                    1642291200000,
+                    15.47
+                ],
+                [
+                    1642896000000,
+                    12.71
+                ],
+                [
+                    1643500800000,
+                    12.64
+                ],
+                [
+                    1644105600000,
+                    11.93
+                ],
+                [
+                    1644710400000,
+                    13.29
+                ],
+                [
+                    1645315200000,
+                    12.65
+                ],
+                [
+                    1645920000000,
+                    13.95
+                ],
+                [
+                    1646524800000,
+                    12.69
+                ],
+                [
+                    1647129600000,
+                    12.48
+                ],
+                [
+                    1647734400000,
+                    16.17
+                ],
+                [
+                    1648339200000,
+                    14.79
+                ],
+                [
+                    1648944000000,
+                    16.65
+                ],
+                [
+                    1649548800000,
+                    13.69
+                ],
+                [
+                    1650153600000,
+                    13.02
+                ],
+                [
+                    1650758400000,
+                    13.19
+                ],
+                [
+                    1651363200000,
+                    12.54
+                ],
+                [
+                    1651968000000,
+                    12.09
+                ],
+                [
+                    1652572800000,
+                    10.2
+                ],
+                [
+                    1653177600000,
+                    9.12
+                ],
+                [
+                    1653782400000,
+                    9.88
+                ],
+                [
+                    1654387200000,
+                    10.38
+                ],
+                [
+                    1654992000000,
+                    9.49
+                ],
+                [
+                    1655596800000,
+                    8.41
+                ],
+                [
+                    1656201600000,
+                    8.1
+                ],
+                [
+                    1656806400000,
+                    8.07
+                ],
+                [
+                    1657411200000,
+                    8.01
+                ],
+                [
+                    1658016000000,
+                    8.08
+                ],
+                [
+                    1658620800000,
+                    8.47
+                ],
+                [
+                    1659225600000,
+                    9.61
+                ],
+                [
+                    1659830400000,
+                    10.65
+                ],
+                [
+                    1660435200000,
+                    12.29
+                ],
+                [
+                    1661040000000,
+                    12.44
+                ],
+                [
+                    1661644800000,
+                    11.3
+                ],
+                [
+                    1662249600000,
+                    10.8
+                ],
+                [
+                    1662854400000,
+                    10.9
+                ],
+                [
+                    1663459200000,
+                    10.55
+                ],
+                [
+                    1664064000000,
+                    8.8
+                ],
+                [
+                    1664668800000,
+                    8.8
+                ],
+                [
+                    1665273600000,
+                    8.28
+                ],
+                [
+                    1665878400000,
+                    8.36
+                ],
+                [
+                    1666483200000,
+                    8.55
+                ],
+                [
+                    1667088000000,
+                    9.56
+                ],
+                [
+                    1667692800000,
+                    9.57
+                ],
+                [
+                    1668297600000,
+                    9.92
+                ],
+                [
+                    1668902400000,
+                    11.44
+                ],
+                [
+                    1669507200000,
+                    11.02
+                ],
+                [
+                    1670112000000,
+                    11.53
+                ],
+                [
+                    1670716800000,
+                    10.09
+                ],
+                [
+                    1671321600000,
+                    10.06
+                ],
+                [
+                    1671926400000,
+                    9.44
+                ],
+                [
+                    1672531200000,
+                    9.96
+                ],
+                [
+                    1673136000000,
+                    9.95
+                ],
+                [
+                    1673740800000,
+                    10.88
+                ],
+                [
+                    1674345600000,
+                    10.63
+                ],
+                [
+                    1674950400000,
+                    13.22
+                ],
+                [
+                    1675555200000,
+                    13.03
+                ],
+                [
+                    1676160000000,
+                    12.6
+                ],
+                [
+                    1676764800000,
+                    12.48
+                ],
+                [
+                    1677369600000,
+                    12.02
+                ],
+                [
+                    1677974400000,
+                    12.65
+                ],
+                [
+                    1678579200000,
+                    11.46
+                ],
+                [
+                    1679184000000,
+                    10.29
+                ],
+                [
+                    1679788800000,
+                    10.6
+                ],
+                [
+                    1680393600000,
+                    11.63
+                ],
+                [
+                    1680998400000,
+                    11.37
+                ],
+                [
+                    1681603200000,
+                    11.62
+                ],
+                [
+                    1682208000000,
+                    11.9
+                ],
+                [
+                    1682812800000,
+                    11.57
+                ],
+                [
+                    1683417600000,
+                    13.02
+                ],
+                [
+                    1684022400000,
+                    11.57
+                ],
+                [
+                    1684627200000,
+                    12.59
+                ],
+                [
+                    1685232000000,
+                    12.29
+                ],
+                [
+                    1685836800000,
+                    12.23
+                ],
+                [
+                    1686441600000,
+                    12.3
+                ],
+                [
+                    1687046400000,
+                    11.56
+                ],
+                [
+                    1687651200000,
+                    11.99
+                ],
+                [
+                    1688256000000,
+                    12.9
+                ],
+                [
+                    1688860800000,
+                    13.15
+                ],
+                [
+                    1689465600000,
+                    14.65
+                ],
+                [
+                    1690070400000,
+                    15.14
+                ],
+                [
+                    1690675200000,
+                    14.9
+                ],
+                [
+                    1691280000000,
+                    14.53
+                ],
+                [
+                    1691884800000,
+                    12.69
+                ],
+                [
+                    1692489600000,
+                    11.96
+                ],
+                [
+                    1693094400000,
+                    11.45
+                ],
+                [
+                    1693699200000,
+                    11.51
+                ],
+                [
+                    1694304000000,
+                    11.3
+                ],
+                [
+                    1694908800000,
+                    10.61
+                ],
+                [
+                    1695513600000,
+                    9.85
+                ],
+                [
+                    1696118400000,
+                    10.01
+                ],
+                [
+                    1696723200000,
+                    9.64
+                ],
+                [
+                    1697328000000,
+                    9.0
+                ],
+                [
+                    1697932800000,
+                    8.76
+                ],
+                [
+                    1698537600000,
+                    8.75
+                ],
+                [
+                    1699142400000,
+                    9.67
+                ],
+                [
+                    1699747200000,
+                    9.75
+                ],
+                [
+                    1700352000000,
+                    10.05
+                ],
+                [
+                    1700956800000,
+                    10.0
+                ],
+                [
+                    1701561600000,
+                    10.21
+                ],
+                [
+                    1702166400000,
+                    10.34
+                ],
+                [
+                    1702771200000,
+                    10.6
+                ],
+                [
+                    1703376000000,
+                    10.95
+                ],
+                [
+                    1703980800000,
+                    11.05
+                ],
+                [
+                    1704585600000,
+                    11.08
+                ],
+                [
+                    1705190400000,
+                    11.15
+                ],
+                [
+                    1705795200000,
+                    11.28
+                ],
+                [
+                    1706400000000,
+                    10.45
+                ],
+                [
+                    1707004800000,
+                    10.27
+                ],
+                [
+                    1707609600000,
+                    10.45
+                ],
+                [
+                    1708214400000,
+                    10.22
+                ],
+                [
+                    1708819200000,
+                    9.82
+                ],
+                [
+                    1709424000000,
+                    9.88
+                ],
+                [
+                    1710028800000,
+                    10.02
+                ],
+                [
+                    1710633600000,
+                    10.13
+                ],
+                [
+                    1711238400000,
+                    11.47
+                ],
+                [
+                    1711843200000,
+                    11.64
+                ],
+                [
+                    1712448000000,
+                    11.59
+                ],
+                [
+                    1713052800000,
+                    10.58
+                ],
+                [
+                    1713657600000,
+                    9.66
+                ],
+                [
+                    1714262400000,
+                    9.57
+                ],
+                [
+                    1714867200000,
+                    9.21
+                ],
+                [
+                    1715472000000,
+                    9.26
+                ],
+                [
+                    1716076800000,
+                    10.65
+                ],
+                [
+                    1716681600000,
+                    10.45
+                ],
+                [
+                    1717286400000,
+                    10.19
+                ],
+                [
+                    1717891200000,
+                    10.71
+                ],
+                [
+                    1718496000000,
+                    10.84
+                ],
+                [
+                    1719100800000,
+                    11.07
+                ],
+                [
+                    1719705600000,
+                    11.18
+                ],
+                [
+                    1720310400000,
+                    10.99
+                ],
+                [
+                    1720915200000,
+                    11.49
+                ],
+                [
+                    1721520000000,
+                    11.19
+                ],
+                [
+                    1722124800000,
+                    11.07
+                ],
+                [
+                    1722729600000,
+                    10.65
+                ],
+                [
+                    1723334400000,
+                    11.12
+                ],
+                [
+                    1723939200000,
+                    11.06
+                ],
+                [
+                    1724544000000,
+                    11.71
+                ],
+                [
+                    1725148800000,
+                    11.63
+                ],
+                [
+                    1725753600000,
+                    11.6
+                ],
+                [
+                    1726358400000,
+                    11.7
+                ],
+                [
+                    1726963200000,
+                    12.12
+                ],
+                [
+                    1727568000000,
+                    12.34
+                ],
+                [
+                    1728172800000,
+                    12.22
+                ],
+                [
+                    1728777600000,
+                    12.41
+                ],
+                [
+                    1729382400000,
+                    12.39
+                ],
+                [
+                    1729987200000,
+                    12.32
+                ],
+                [
+                    1730592000000,
+                    12.48
+                ],
+                [
+                    1731196800000,
+                    15.86
+                ],
+                [
+                    1731801600000,
+                    16.94
+                ],
+                [
+                    1732406400000,
+                    17.73
+                ],
+                [
+                    1733011200000,
+                    17.34
+                ],
+                [
+                    1733616000000,
+                    17.68
+                ],
+                [
+                    1734220800000,
+                    17.34
+                ],
+                [
+                    1734825600000,
+                    16.62
+                ],
+                [
+                    1735430400000,
+                    17.41
+                ],
+                [
+                    1736035200000,
+                    17.75
+                ],
+                [
+                    1736640000000,
+                    19.0
+                ],
+                [
+                    1737244800000,
+                    20.04
+                ],
+                [
+                    1737849600000,
+                    20.75
+                ],
+                [
+                    1738454400000,
+                    20.98
+                ],
+                [
+                    1739059200000,
+                    21.67
+                ],
+                [
+                    1739664000000,
+                    22.22
+                ],
+                [
+                    1740268800000,
+                    21.26
+                ],
+                [
+                    1740873600000,
+                    21.61
+                ],
+                [
+                    1741478400000,
+                    20.28
+                ],
+                [
+                    1742083200000,
+                    20.08
+                ],
+                [
+                    1742688000000,
+                    22.32
+                ],
+                [
+                    1743292800000,
+                    21.98
+                ],
+                [
+                    1743897600000,
+                    20.32
+                ],
+                [
+                    1744502400000,
+                    22.57
+                ],
+                [
+                    1745107200000,
+                    23.96
+                ],
+                [
+                    1745712000000,
+                    22.45
+                ],
+                [
+                    1746316800000,
+                    23.7
+                ],
+                [
+                    1746921600000,
+                    23.07
+                ],
+                [
+                    1747526400000,
+                    23.98
+                ],
+                [
+                    1748131200000,
+                    23.89
+                ],
+                [
+                    1748736000000,
+                    23.91
+                ],
+                [
+                    1749340800000,
+                    24.1
+                ],
+                [
+                    1749945600000,
+                    24.33
+                ],
+                [
+                    1750550400000,
+                    25.4
+                ],
+                [
+                    1751155200000,
+                    28.05
+                ],
+                [
+                    1751760000000,
+                    28.23
+                ],
+                [
+                    1752364800000,
+                    28.57
+                ],
+                [
+                    1752969600000,
+                    30.25
+                ],
+                [
+                    1753574400000,
+                    28.51
+                ],
+                [
+                    1754179200000,
+                    29.57
+                ],
+                [
+                    1754784000000,
+                    27.62
+                ],
+                [
+                    1755388800000,
+                    31.0
+                ],
+                [
+                    1755993600000,
+                    31.63
+                ],
+                [
+                    1756598400000,
+                    30.94
+                ],
+                [
+                    1757203200000,
+                    30.87
+                ],
+                [
+                    1757808000000,
+                    30.33
+                ],
+                [
+                    1758412800000,
+                    30.14
+                ],
+                [
+                    1759017600000,
+                    28.97
+                ],
+                [
+                    1759622400000,
+                    26.42
+                ],
+                [
+                    1760227200000,
+                    24.25
+                ],
+                [
+                    1760832000000,
+                    26.35
+                ],
+                [
+                    1761436800000,
+                    27.03
+                ],
+                [
+                    1762041600000,
+                    25.61
+                ],
+                [
+                    1762646400000,
+                    22.97
+                ],
+                [
+                    1763251200000,
+                    22.33
+                ],
+                [
+                    1763856000000,
+                    21.65
+                ],
+                [
+                    1764460800000,
+                    22.0
+                ],
+                [
+                    1765065600000,
+                    22.46
+                ],
+                [
+                    1765670400000,
+                    23.11
+                ],
+                [
+                    1766275200000,
+                    22.86
+                ],
+                [
+                    1766880000000,
+                    23.1
+                ],
+                [
+                    1767484800000,
+                    23.32
+                ],
+                [
+                    1768089600000,
+                    20.88
+                ],
+                [
+                    1768694400000,
+                    18.97
+                ],
+                [
                     1769299200000,
-                    26.95
+                    18.16
                 ],
                 [
                     1769904000000,
-                    26.95
+                    18.11
                 ],
                 [
                     1770508800000,
-                    26.95
+                    16.99
                 ],
                 [
                     1771113600000,
-                    26.15
+                    16.47
                 ],
                 [
                     1771718400000,
-                    28.34
+                    17.76
                 ],
                 [
                     1772323200000,
-                    29.64
+                    18.26
                 ],
                 [
                     1772928000000,
-                    30.57
+                    18.55
                 ]
             ]
         }
@@ -33327,11 +33328,11 @@
         },
         "eps_beat_miss_pct": 9.37,
         "news_summary": [
-            "Betsson AB reported highlights from its Q4 2025 earnings call.",
-            "The company demonstrated strong performance within its casino operations.",
-            "The earnings discussion also covered the sportsbook segment, providing context to the overall results."
+            "Betsson AB reported strong casino performance as a key highlight from its Q4 2025 earnings call.",
+            "The company is potentially identified within a group of 'European Gems' recognized for strong financial fundamentals.",
+            "Betsson AB might also be considered among European stocks attractive to investors seeking dividend payouts."
         ],
-        "sentiment": 80,
+        "sentiment": 90,
         "jurisdictions": [
             "Nordics",
             "LatAm",
@@ -36279,11 +36280,11 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "Playtech is potentially identified among top UK growth companies, supported by strong insider ownership, indicating confidence in its future prospects.",
-            "Analysis suggests Playtech's shares may currently be priced below their intrinsic value, potentially offering an attractive investment opportunity.",
-            "The broader market commentary points to sustained interest in identifying established UK companies with growth potential and strong fundamentals."
+            "The provided headlines focus on general UK market trends, including growth companies with insider ownership and potentially undervalued stocks.",
+            "None of the reviewed headlines specifically mention Playtech, nor do they offer any company-specific news or updates for the iGaming provider.",
+            "The articles discuss broader investment themes such as UK penny stocks and companies with market caps under \u00a3900M, which do not directly apply to Playtech's profile."
         ],
-        "sentiment": 75,
+        "sentiment": 50,
         "jurisdictions": [
             "UK",
             "Italy"
@@ -39229,11 +39230,11 @@
         },
         "eps_beat_miss_pct": 12.5,
         "news_summary": [
-            "Churchill Downs (CHDN) has reported exceptional financial performance, including record results for 2025 and beating Q4 earnings and revenue estimates.",
-            "Key metrics from the Q4 earnings calls highlight robust growth and profitability, reinforcing a strong operational quarter.",
-            "The introduction of a new Kentucky venue is a significant strategic development that is anticipated to enhance the investment case for Churchill Downs."
+            "Churchill Downs (CHDN) significantly beat Q4 earnings and revenue estimates.",
+            "The company anticipates record-setting financial results for 2025, driven by strong operational performance.",
+            "A new Kentucky venue is expected to further enhance future growth and could positively alter the investment thesis for CHDN."
         ],
-        "sentiment": 95,
+        "sentiment": 93,
         "jurisdictions": [
             "US"
         ],
@@ -42289,11 +42290,11 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "Light & Wonder reported robust Q4 performance, achieving record revenue and surpassing analyst earnings estimates.",
-            "The company demonstrated a strong commitment to shareholder value through significant share buybacks.",
-            "Despite positive top-line growth and strategic capital allocation, the company also recorded a quarterly loss, which could be a point of concern for investors."
+            "Light & Wonder reported record revenue for Q4 2025, successfully surpassing analyst earnings estimates.",
+            "The company demonstrated strong revenue growth and engaged in heavy share buybacks, indicating management confidence despite a quarterly loss.",
+            "Overall Q4 performance was robust, highlighted by strategic advancements and key metrics exceeding expectations."
         ],
-        "sentiment": 70,
+        "sentiment": 88,
         "jurisdictions": [
             "US",
             "Australia",
@@ -42798,9 +42799,9 @@
         },
         "eps_beat_miss_pct": 5.56,
         "news_summary": [
-            "Aristocrat Leisure's shares are estimated to be significantly undervalued, potentially 26% below their intrinsic value.",
-            "The company has successfully resolved its litigation with Light & Wonder, removing a key area of uncertainty and potential legal overhead.",
-            "Aristocrat Leisure has delivered strong total shareholder returns over the past three years, outpacing its underlying earnings growth."
+            "Aristocrat Leisure (ASX:ALL) shares are estimated to be significantly undervalued, potentially trading 26% below their intrinsic value.",
+            "The company has successfully resolved its litigation with Light & Wonder, removing a key area of legal uncertainty.",
+            "Aristocrat Leisure has demonstrated robust shareholder returns over the past three years, outpacing its underlying earnings growth."
         ],
         "sentiment": 90,
         "jurisdictions": [
@@ -45751,9 +45752,9 @@
         },
         "eps_beat_miss_pct": -20.0,
         "news_summary": [
-            "The majority of the provided headlines pertain to 'Superior Group (SGC)', a separate entity from the iGaming company 'Super Group'.",
-            "'Superior Group (SGC)' reported beating Q4 earnings and revenue estimates and held an earnings call with highlights and an available transcript.",
-            "No specific news or financial updates for 'Super Group' (SGHC), the iGaming company, are contained within these headlines."
+            "The provided headlines primarily refer to 'Superior Group (SGC)', not 'Super Group', making a direct financial analysis for Super Group challenging.",
+            "News regarding Superior Group (SGC) indicates positive Q4 2025 performance, with the company beating both earnings and revenue estimates.",
+            "Without specific news pertaining to Super Group, these headlines do not provide direct insights into its financial standing or market sentiment."
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -48813,9 +48814,9 @@
         },
         "eps_beat_miss_pct": 50.0,
         "news_summary": [
-            "Rush Street Interactive (RSI) experienced a 6.6% stock surge driven by strong 2025 profit projections and an optimistic 2026 revenue outlook, indicating robust future financial performance.",
-            "The positive news is tempered by a significant insider transaction, as the CEO sold nearly 250,000 shares for over $40 million, which can often be interpreted negatively by the market.",
-            "Operating within a generally favorable economic climate, RSI stands to benefit from rebounding consumer confidence, which supports discretionary spending in sectors like iGaming, despite general market questioning around some growth stocks."
+            "Rush Street Interactive's CEO executed a substantial sale of nearly 250,000 shares, valued at over $40 million, which may raise questions regarding insider confidence.",
+            "Despite the insider selling, RSI's stock rose by 6.6% following strong positive news regarding its 2025 profit projections and a robust 2026 revenue outlook.",
+            "Overall market perception for RSI is mixed, with some external analyses questioning its potential as a growth stock, even as the broader discretionary sector, including potential for iGaming, shows signs of a rebound due to increased consumer confidence."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -51875,11 +51876,11 @@
         },
         "eps_beat_miss_pct": -300.0,
         "news_summary": [
-            "Bragg Gaming Group is set to release its Q4 and Full Year 2025 financial results on March 19.",
-            "The company has strengthened its executive team to drive an enhanced content strategy, North American expansion, and an AI-first transformation.",
-            "Preliminary Q4 revenue showed a modest 1.8% increase, and Bragg has issued full-year 2026 guidance."
+            "Bragg Gaming announced preliminary unaudited Q4 revenue growth of 1.8% and issued full-year guidance, with official Q4 and full-year results scheduled for release on March 19.",
+            "The company is significantly strengthening its executive team to enhance its content strategy, drive North American growth, and spearhead an AI-first transformation.",
+            "Bragg Gaming Group facilitated an executive block trade amidst these strategic and financial announcements."
         ],
-        "sentiment": 70,
+        "sentiment": 75,
         "jurisdictions": [
             "US",
             "Europe",
@@ -54861,9 +54862,9 @@
         },
         "eps_beat_miss_pct": 20.0,
         "news_summary": [
-            "Kambi Group PLC (KMBIF) announced its Q4 2025 earnings call highlights.",
-            "The company reported strong EBITDA growth for the period.",
-            "The call also pointed towards positive strategic developments for the group."
+            "Kambi Group PLC (KMBIF) held its Q4 2025 earnings call, providing key insights into its performance.",
+            "The company reported strong EBITDA growth, signaling robust financial health and operational efficiency.",
+            "Strategic highlights were discussed, pointing towards future initiatives and potential market positioning."
         ],
         "sentiment": 92,
         "jurisdictions": [
