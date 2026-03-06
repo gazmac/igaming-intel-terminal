@@ -24,7 +24,7 @@
         },
         "eps_beat_miss_pct": -8.9,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -3068,7 +3068,7 @@
         "company": "DraftKings",
         "base_country": "USA",
         "release_gmt": "2026-05-07T21:00:00Z",
-        "last_price": "$25.14",
+        "last_price": "$25.15",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.25,
@@ -3086,7 +3086,7 @@
         },
         "eps_beat_miss_pct": 38.89,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -3198,7 +3198,7 @@
                 ],
                 [
                     1772829900000,
-                    25.14
+                    25.15
                 ]
             ],
             "1w": [
@@ -6147,7 +6147,7 @@
         },
         "eps_beat_miss_pct": 37.78,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -9100,7 +9100,7 @@
         },
         "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -12109,7 +12109,7 @@
         },
         "eps_beat_miss_pct": 98.21,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -15168,7 +15168,7 @@
         },
         "eps_beat_miss_pct": -440.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -18209,7 +18209,7 @@
         "company": "Penn Entertainment",
         "base_country": "USA",
         "release_gmt": "2026-05-07T21:00:00Z",
-        "last_price": "$14.64",
+        "last_price": "$14.63",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.07,
@@ -18226,7 +18226,7 @@
         },
         "eps_beat_miss_pct": 250.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -18337,7 +18337,7 @@
                 ],
                 [
                     1772829900000,
-                    14.64
+                    14.63
                 ]
             ],
             "1w": [
@@ -21284,7 +21284,7 @@
         },
         "eps_beat_miss_pct": 18.18,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -24325,7 +24325,7 @@
         "company": "Wynn Resorts",
         "base_country": "USA",
         "release_gmt": "2026-05-06T21:00:00Z",
-        "last_price": "$101.64",
+        "last_price": "$101.63",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.2,
@@ -24343,7 +24343,7 @@
         },
         "eps_beat_miss_pct": 14.29,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -24455,7 +24455,7 @@
                 ],
                 [
                     1772829900000,
-                    101.64
+                    101.63
                 ]
             ],
             "1w": [
@@ -27403,7 +27403,7 @@
         },
         "eps_beat_miss_pct": -600.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -30354,7 +30354,7 @@
         },
         "eps_beat_miss_pct": 25.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -30395,7 +30395,7 @@
         },
         "eps_beat_miss_pct": 9.37,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -33345,7 +33345,7 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -36277,7 +36277,7 @@
         "company": "Churchill Downs",
         "base_country": "USA",
         "release_gmt": "2026-04-22T21:00:00Z",
-        "last_price": "$83.83",
+        "last_price": "$83.81",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.35,
@@ -36293,7 +36293,7 @@
         },
         "eps_beat_miss_pct": 12.5,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -36403,7 +36403,7 @@
                 ],
                 [
                     1772829900000,
-                    83.83
+                    83.81
                 ]
             ],
             "1w": [
@@ -39351,7 +39351,7 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -39858,7 +39858,7 @@
         },
         "eps_beat_miss_pct": 5.56,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -42809,7 +42809,7 @@
         },
         "eps_beat_miss_pct": -20.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -45869,7 +45869,7 @@
         },
         "eps_beat_miss_pct": 50.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -48929,7 +48929,7 @@
         },
         "eps_beat_miss_pct": -300.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -51913,7 +51913,7 @@
         },
         "eps_beat_miss_pct": 20.0,
         "news_summary": [
-            "News temporarily unavailable."
+            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
         ],
         "sentiment": 50,
         "jurisdictions": [
