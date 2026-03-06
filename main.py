@@ -1,4 +1,3 @@
-import time
 import requests
 import fitz  # PyMuPDF
 import json
@@ -7,6 +6,7 @@ import os
 import pandas as pd
 import feedparser
 import io
+import time
 from bs4 import BeautifulSoup
 from google import genai
 from datetime import datetime
@@ -58,36 +58,54 @@ def get_latest_pdf_url(ir_url):
         return None
 
 def extract_pdf_text(pdf_url):
-    """Downloads PDF and extracts text from the first 8 pages."""
+    """Bifocal extraction: Scans the start (narrative) and end (tables) of the PDF."""
     try:
         response = requests.get(pdf_url, stream=True, timeout=20)
         with open("temp.pdf", "wb") as f:
             f.write(response.content)
         doc = fitz.open("temp.pdf")
         text = ""
-        for page in doc[:8]:
+        # Get first 6 pages (Executive summary)
+        for page in doc[:6]:
             text += page.get_text()
+        # Get last 4 pages (Financial tables)
+        if len(doc) > 6:
+            for page in doc[-4:]:
+                text += page.get_text()
         return text
     except Exception as e:
         print(f"Error reading PDF: {e}")
         return ""
 
 def scrape_yahoo_estimates(ticker):
-    """Scrapes Wall Street analyst forecasts for EPS."""
+    """Stealth scraper for Yahoo Finance Analysis tab."""
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1'
+    }
     url = f"https://finance.yahoo.com/quote/{ticker}/analysis"
-    headers = {'User-Agent': 'Mozilla/5.0'}
     forecasts = {"mid": None, "low": None, "high": None}
     try:
-        response = requests.get(url, headers=headers, timeout=15)
-        # Using io.StringIO to fix the pandas FutureWarning
+        session = requests.Session()
+        response = session.get(url, headers=headers, timeout=15)
+        
+        if "Earnings Estimate" not in response.text:
+            print(f"⚠️ Yahoo blocked {ticker} or table missing.")
+            return forecasts
+
         tables = pd.read_html(io.StringIO(response.text))
         for df in tables:
-            if 'Earnings Estimate' in df.columns:
-                df.set_index('Earnings Estimate', inplace=True)
-                curr_qtr = df.columns[0]
-                forecasts["mid"] = float(df.loc['Avg. Estimate', curr_qtr])
-                forecasts["low"] = float(df.loc['Low Estimate', curr_qtr])
-                forecasts["high"] = float(df.loc['High Estimate', curr_qtr])
+            if any('Earnings Estimate' in str(col) for col in df.columns):
+                df.columns = [str(c) for c in df.columns]
+                df.set_index(df.columns[0], inplace=True)
+                target_col = df.columns[0]
+                forecasts["mid"] = float(df.loc['Avg. Estimate', target_col]) if 'Avg. Estimate' in df.index else None
+                forecasts["low"] = float(df.loc['Low Estimate', target_col]) if 'Low Estimate' in df.index else None
+                forecasts["high"] = float(df.loc['High Estimate', target_col]) if 'High Estimate' in df.index else None
                 break
     except Exception as e:
         print(f"Error scraping Yahoo estimates for {ticker}: {e}")
@@ -115,16 +133,21 @@ def fetch_stock_history(ticker):
             ts = result['timestamp']
             pr = result['indicators']['quote'][0]['close']
             history[label] = [[t * 1000, round(p, 2)] for t, p in zip(ts, pr) if p is not None]
-        except Exception as e:
-            history[label] = []
+        except: history[label] = []
     return history
 
 # --- 3. AI PROCESSING ---
 
 def ai_process_intelligence(pdf_text, headlines, company_name):
-    """Unified AI call to extract metrics, summarize news, and determine sentiment."""
+    """Unified AI call with hints for improved extraction accuracy."""
     prompt = f"""
     Analyze the financial data for {company_name}.
+    
+    HINTS: 
+    - Look for CFO name in the board or financial review sections.
+    - Financials (Revenue/NGR) might be in GBP, EUR, or USD; use the reported currency.
+    - If the PDF text is empty, prioritize news headlines for sentiment and summary.
+
     REPORT TEXT: {pdf_text[:12000]}
     NEWS HEADLINES: {' | '.join(headlines)}
 
@@ -138,7 +161,7 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
         "sentiment": int_0_to_100
     }}
     """
-    print(f"Sending data to Gemini for {company_name}...")
+    print(f"Sending data to Gemini for {company_name} (Text size: {len(pdf_text)})...")
     try:
         response = client.models.generate_content(
             model='gemini-2.5-flash-lite',
@@ -147,8 +170,8 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
         )
         return json.loads(response.text)
     except Exception as e:
-        print(f"❌ ERROR processing {company_name} with Gemini: {e}")
-        return {"execs":{}, "dates":{}, "actuals":{}, "jurisdictions":[], "summary":["Data processing failed."], "sentiment":50}
+        print(f"❌ ERROR processing {company_name}: {e}")
+        return {"execs":{}, "dates":{}, "actuals":{}, "jurisdictions":[], "summary":["Analysis failed."], "sentiment":50}
 
 # --- 4. MAIN LOOP ---
 
@@ -172,8 +195,7 @@ def run_pipeline():
             act = float(intel['actuals'].get('eps', 0))
             est = float(estimates.get('mid', 0))
             if est != 0: beat_miss = round(((act - est) / abs(est)) * 100, 2)
-        except Exception:
-            pass
+        except: pass
 
         master_db.append({
             "ticker": co["ticker"],
@@ -191,7 +213,9 @@ def run_pipeline():
             "jurisdictions": intel["jurisdictions"],
             "history": history
         })
-        print("Pausing for 5 seconds to respect API rate limits...")
+        
+        # Rate-limiting pause
+        print("Pausing 5s for API safety...")
         time.sleep(5)
 
     with open('gambling_stocks_live.json', 'w') as f:
