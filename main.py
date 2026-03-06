@@ -9,7 +9,7 @@ import io
 import time
 from bs4 import BeautifulSoup
 from google import genai
-from datetime import datetime
+from datetime import datetime, timezone
 
 # --- 1. CONFIGURATION ---
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
@@ -40,8 +40,30 @@ TARGET_COMPANIES = [
 
 # --- 2. SCRAPING & DATA EXTRACTION ---
 
+def get_next_earnings_date(ticker):
+    """Fetches the exact future earnings release date from Yahoo's internal calendar API."""
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    }
+    # This hidden endpoint returns the official Wall Street calendar for the stock
+    url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=calendarEvents"
+    
+    try:
+        response = requests.get(url, headers=headers, timeout=10).json()
+        events = response.get('quoteSummary', {}).get('result', [{}])[0].get('calendarEvents', {})
+        earnings_dates = events.get('earnings', {}).get('earningsDate', [])
+        
+        if earnings_dates:
+            # Yahoo returns a Unix timestamp. We convert it to our GMT string format.
+            timestamp = earnings_dates[0]
+            future_date = datetime.fromtimestamp(timestamp, tz=timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            return future_date
+    except Exception as e:
+        print(f"⚠️ Could not fetch future calendar for {ticker}: {e}")
+        
+    return None
+
 def get_latest_pdf_url(ir_url):
-    """Scrapes IR page to find the most recent earnings PDF link."""
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         response = requests.get(ir_url, headers=headers, timeout=15)
@@ -58,27 +80,21 @@ def get_latest_pdf_url(ir_url):
         return None
 
 def extract_pdf_text(pdf_url):
-    """Bifocal extraction: Scans the start (narrative) and end (tables) of the PDF."""
     try:
         response = requests.get(pdf_url, stream=True, timeout=20)
         with open("temp.pdf", "wb") as f:
             f.write(response.content)
         doc = fitz.open("temp.pdf")
         text = ""
-        # Get first 6 pages (Executive summary)
-        for page in doc[:6]:
-            text += page.get_text()
-        # Get last 4 pages (Financial tables)
+        for page in doc[:6]: text += page.get_text()
         if len(doc) > 6:
-            for page in doc[-4:]:
-                text += page.get_text()
+            for page in doc[-4:]: text += page.get_text()
         return text
     except Exception as e:
         print(f"Error reading PDF: {e}")
         return ""
 
 def scrape_yahoo_estimates(ticker):
-    """Stealth scraper for Yahoo Finance Analysis tab."""
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -94,7 +110,7 @@ def scrape_yahoo_estimates(ticker):
         response = session.get(url, headers=headers, timeout=15)
         
         if "Earnings Estimate" not in response.text:
-            print(f"⚠️ Yahoo blocked {ticker} or table missing.")
+            print(f"⚠️ Yahoo blocked {ticker} estimates or table missing.")
             return forecasts
 
         tables = pd.read_html(io.StringIO(response.text))
@@ -112,13 +128,11 @@ def scrape_yahoo_estimates(ticker):
     return forecasts
 
 def get_latest_news_headlines(ticker):
-    """Fetches top 5 headlines from Yahoo Finance RSS."""
     rss_url = f"https://finance.yahoo.com/rss/headline?s={ticker}"
     feed = feedparser.parse(rss_url)
     return [entry.title for entry in feed.entries[:5]]
 
 def fetch_stock_history(ticker):
-    """Fetches price data for ranges: 1d, 1w, 1m, 3m, 6m, 1y, 5y."""
     headers = {'User-Agent': 'Mozilla/5.0'}
     periods = {
         "1d": ("1d", "15m"), "1w": ("5d", "1h"), "1m": ("1mo", "1d"),
@@ -139,14 +153,13 @@ def fetch_stock_history(ticker):
 # --- 3. AI PROCESSING ---
 
 def ai_process_intelligence(pdf_text, headlines, company_name):
-    """Unified AI call with hints for improved extraction accuracy."""
     prompt = f"""
     Analyze the financial data for {company_name}.
     
     HINTS: 
     - Look for CFO name in the board or financial review sections.
-    - Financials (Revenue/NGR) might be in GBP, EUR, or USD; use the reported currency.
-    - If the PDF text is empty, prioritize news headlines for sentiment and summary.
+    - Financials might be in GBP, EUR, or USD; use the reported currency.
+    - For the "call" date/time, look strictly at the NEWS HEADLINES for any announcements about future/upcoming earnings calls. If none exist, set to null.
 
     REPORT TEXT: {pdf_text[:12000]}
     NEWS HEADLINES: {' | '.join(headlines)}
@@ -161,7 +174,7 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
         "sentiment": int_0_to_100
     }}
     """
-    print(f"Sending data to Gemini for {company_name} (Text size: {len(pdf_text)})...")
+    print(f"Sending data to Gemini for {company_name}...")
     try:
         response = client.models.generate_content(
             model='gemini-2.5-flash-lite',
@@ -180,16 +193,25 @@ def run_pipeline():
     for co in TARGET_COMPANIES:
         print(f"\nProcessing {co['name']}...")
         
+        # 1. Scrape standard data
         headlines = get_latest_news_headlines(co['ticker'])
         estimates = scrape_yahoo_estimates(co['ticker'])
         history = fetch_stock_history(co['ticker'])
         
+        # 2. Fetch the true FUTURE earnings date directly from the API
+        future_release_date = get_next_earnings_date(co['ticker'])
+        
+        # 3. Get the PDF and run AI analysis
         pdf_url = get_latest_pdf_url(co['ir_url'])
         pdf_text = extract_pdf_text(pdf_url) if pdf_url else ""
-        
         intel = ai_process_intelligence(pdf_text, headlines, co['name'])
         
-        # Calculate Beat/Miss %
+        # 4. OVERRIDE the AI's "past" date with the true "future" date
+        if future_release_date:
+            intel["dates"]["release"] = future_release_date
+            print(f"📅 Verified next earnings date: {future_release_date}")
+        
+        # 5. Calculate Beat/Miss
         beat_miss = None
         try:
             act = float(intel['actuals'].get('eps', 0))
@@ -204,7 +226,7 @@ def run_pipeline():
             "ceo": intel["execs"].get("ceo"),
             "cfo": intel["execs"].get("cfo"),
             "release_gmt": intel["dates"].get("release"),
-            "call_gmt": intel["dates"].get("call"),
+            "call_gmt": intel["dates"].get("call"), # AI still attempts to find call times from news
             "actuals": intel["actuals"],
             "forecast_eps": estimates,
             "eps_beat_miss_pct": beat_miss,
@@ -214,7 +236,6 @@ def run_pipeline():
             "history": history
         })
         
-        # Rate-limiting pause
         print("Pausing 5s for API safety...")
         time.sleep(5)
 
