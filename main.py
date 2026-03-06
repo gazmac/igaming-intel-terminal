@@ -1,14 +1,12 @@
 import requests
 import json
 import urllib.parse
-import urllib.request  # FIX: Explicitly required for the Google News bypass
 import os
 import pandas as pd
-import feedparser
 import time
 import yfinance as yf
 import re
-import traceback       # FIX: To print exact error logs if a fatal crash occurs
+import traceback
 import sys
 from google import genai
 from datetime import datetime
@@ -88,11 +86,17 @@ def fetch_stock_history(ticker):
     try:
         ytk = yf.Ticker(fetch_ticker)
         
+        # FIX 1: Look at the last 5 days to guarantee we find a closing price for illiquid EU OTC stocks
+        df_price = ytk.history(period="5d")
+        if not df_price.empty:
+            last_price_str = f"{sym}{round(df_price['Close'].iloc[-1], 2)}"
+
+        # 1d intraday chart (might be empty for OTC, but we already secured the last_price_str)
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
-            last_price_str = f"{sym}{round(df_1d['Close'].iloc[-1], 2)}"
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
 
+        # 5-year history
         df_5y = ytk.history(period="5y", interval="1d")
         if not df_5y.empty:
             df_5y.index = df_5y.index.tz_localize(None)
@@ -112,45 +116,51 @@ def fetch_stock_history(ticker):
     return history, last_price_str
 
 def ai_process_intelligence(company_name, ticker):
-    print(f"  -> Analyzing News for {company_name}...")
+    print(f"  -> Fetching Yahoo API News for {company_name}...")
     
-    # FIX: Initialize the AI Client safely inside the function to prevent global crashes
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        return {"summary": ["API KEY ERROR: GEMINI_API_KEY secret is missing in GitHub Actions."], "sentiment": 50}
-    
+        return {"summary": ["System Error: API key missing."], "sentiment": 50}
+        
     try:
         client = genai.Client(api_key=api_key)
         
-        query = urllib.parse.quote(f'"{company_name}" stock OR gambling news')
-        google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+        # FIX 2: Abandon RSS completely. Use Yahoo's internal JSON Search API (Bypasses bot blockers)
+        clean_name = urllib.parse.quote(company_name)
+        url = f"https://query2.finance.yahoo.com/v1/finance/search?q={clean_name}&newsCount=5"
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         
-        # Explicit urllib usage
-        req = urllib.request.Request(google_rss, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response:
-            feed = feedparser.parse(response.read())
-            
-        headlines = [entry.title for entry in feed.entries[:6]]
+        res = requests.get(url, headers=headers, timeout=10)
+        res_data = res.json()
+        
+        headlines = [item['title'] for item in res_data.get('news', [])]
+        
         if not headlines:
-            return {"summary": ["No recent headlines found."], "sentiment": 50}
+            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50}
 
-        prompt = f"Act as an iGaming analyst. Based on: {' | '.join(headlines)}. Return ONLY a raw JSON object like this: {{\"summary\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"sentiment\": 75}}. Do not use code blocks."
+        # Prompt Gemini with JSON validation config active
+        prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
         
         ai_resp = client.models.generate_content(
             model='gemini-1.5-flash', 
-            contents=prompt
+            contents=prompt,
+            config={"response_mime_type": "application/json"}
         )
         
+        # Scrubber
         raw_text = ai_resp.text.strip()
         match = re.search(r'\{.*\}', raw_text, re.DOTALL)
         if match:
-            return json.loads(match.group(0))
-            
-        return {"summary": ["News analysis parsing error."], "sentiment": 50}
+            data = json.loads(match.group(0))
+            if "summary" in data and "sentiment" in data:
+                return data
+                
+        return {"summary": ["Failed to extract valid data from AI."], "sentiment": 50}
         
     except Exception as e:
         print(f"  ❌ AI/News failed for {company_name}: {e}")
-        return {"summary": [f"News API Error: {str(e)[:50]}"], "sentiment": 50}
+        error_msg = str(e).replace('"', "'")[:60]
+        return {"summary": [f"News Engine Error: {error_msg}"], "sentiment": 50}
 
 # --- 3. PIPELINE EXECUTION ---
 
@@ -193,6 +203,7 @@ def run_pipeline():
             "history": history
         })
         
+        # 5-second sleep to ensure we stay under the 15 RPM Gemini limit
         time.sleep(5)
 
     if master_db:
