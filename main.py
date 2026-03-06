@@ -43,7 +43,6 @@ OTC_MAP = {
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
-# FULLY RESTORED & QUARTERIZED: Includes the exact "period" for dynamic HTML labeling
 VERIFIED_DATA = {
     "FLUT": {"period": "Q4 25", "eps_actual": 1.74, "eps_forecast": 1.91, "revenue": "$4.74B", "net_income": "$10M", "ebitda": "$832M", "ngr": "$4.74B", "fcf": "-$1.43B", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"period": "Q4 25", "eps_actual": 0.25, "eps_forecast": 0.18, "revenue": "$1.99B", "net_income": "$136.4M", "ebitda": "$343M", "ngr": "$1.99B", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -75,6 +74,8 @@ VERIFIED_CALENDAR = {
     "SGHC": "2026-05-14T12:00:00Z", "RSI": "2026-05-06T21:00:00Z", "BRAG": "2026-05-14T12:00:00Z", "KAMBI.ST": "2026-04-29T06:30:00Z"
 }
 
+# --- 2. CORE FUNCTIONS ---
+
 def fetch_stock_history(ticker):
     print(f"  -> Fetching charts for {ticker}...")
     is_otc = ticker in OTC_MAP
@@ -86,7 +87,6 @@ def fetch_stock_history(ticker):
     
     try:
         ytk = yf.Ticker(fetch_ticker)
-        
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
             last_price_str = f"{sym}{round(df_1d['Close'].iloc[-1], 2)}"
@@ -102,7 +102,6 @@ def fetch_stock_history(ticker):
             
             history["1w"], history["1m"], history["3m"] = slice_data(7), slice_data(30), slice_data(90)
             history["6m"], history["1y"] = slice_data(180), slice_data(365)
-            
             df_5y_weekly = df_5y.resample('W').last().dropna()
             history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
             
@@ -111,37 +110,64 @@ def fetch_stock_history(ticker):
         
     return history, last_price_str
 
-def ai_process_intelligence(company_name):
+def ai_process_intelligence(company_name, ticker):
+    """Bulletproof News Engine: Tries Yahoo, then Google, then aggressively parses JSON."""
     print(f"  -> Analyzing News for {company_name}...")
+    headlines = []
+    
     try:
-        query = urllib.parse.quote(f'"{company_name}" stock OR gambling news')
-        google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
-        
-        req = urllib.request.Request(google_rss, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response:
-            feed = feedparser.parse(response.read())
+        # 1. Primary Source: Yahoo Finance RSS (Highly reliable for US/Global)
+        clean_ticker = ticker.split('.')[0] 
+        try:
+            rss_url = f"https://finance.yahoo.com/rss/headline?s={clean_ticker}"
+            feed = feedparser.parse(rss_url)
+            if feed.entries:
+                headlines = [entry.title for entry in feed.entries[:5]]
+        except Exception:
+            pass
             
-        headlines = [entry.title for entry in feed.entries[:6]]
+        # 2. Secondary Source: Google News (Fallback if Yahoo is empty)
         if not headlines:
-            return {"summary": ["No recent headlines found."], "sentiment": 50}
+            query = urllib.parse.quote(f'"{company_name}" stock')
+            google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+            res = requests.get(google_rss, headers=headers, timeout=10)
+            feed = feedparser.parse(res.text)
+            if feed.entries:
+                headlines = [entry.title for entry in feed.entries[:5]]
 
-        prompt = f"Act as an iGaming analyst. Based on: {' | '.join(headlines)}. Return ONLY a raw JSON object like this: {{\"summary\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"sentiment\": 75}}. Do not use code blocks."
+        if not headlines:
+            return {"summary": [f"No news articles found on RSS feeds for {company_name}."], "sentiment": 50}
+
+        # 3. AI Processing using gemini-1.5-flash with forced JSON config
+        prompt = f"Act as an iGaming analyst. Based on: {' | '.join(headlines)}. Return ONLY a JSON object containing two keys: 'summary' (a list of 3 short bullet points) and 'sentiment' (integer 0-100)."
         
         ai_resp = client.models.generate_content(
             model='gemini-1.5-flash', 
-            contents=prompt
+            contents=prompt,
+            config={"response_mime_type": "application/json"}
         )
         
+        # 4. Aggressive Scrubber
         raw_text = ai_resp.text.strip()
-        match = re.search(r'\{.*\}', raw_text, re.DOTALL)
-        if match:
-            return json.loads(match.group(0))
-            
-        return {"summary": ["News analysis parsing error."], "sentiment": 50}
+        # Find the first { and last } to strictly isolate the JSON
+        start = raw_text.find('{')
+        end = raw_text.rfind('}')
+        if start != -1 and end != -1:
+            clean_json = raw_text[start:end+1]
+            data = json.loads(clean_json)
+            if "summary" in data and "sentiment" in data:
+                return data
+                
+        raise ValueError("AI Output did not match JSON schema.")
         
     except Exception as e:
         print(f"  ❌ AI/News failed for {company_name}: {e}")
-        return {"summary": ["News temporarily unavailable."], "sentiment": 50}
+        # DIAGNOSTIC UI: Prints the exact Python error to your dashboard!
+        error_msg = str(e).replace('"', "'")[:80]
+        return {"summary": [f"Engine Error: {error_msg}"], "sentiment": 50}
+
+# --- 3. PIPELINE EXECUTION ---
 
 def run_pipeline():
     master_db = []
@@ -151,47 +177,22 @@ def run_pipeline():
         ticker = co['ticker']
         print(f"\nProcessing {co['name']}...")
         
-        # Pulls the full structure, including the new 'period' key
         fin = VERIFIED_DATA.get(ticker, {
             "period": "N/A", "eps_actual": 0, "eps_forecast": 0, "revenue": "N/A", 
             "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": []
         })
         
-        # Beat/Miss Math preserved
         beat_miss = 0
         if fin.get("eps_forecast", 0) != 0:
             beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
             
         try:
-            intel = ai_process_intelligence(co['name'])
+            intel = ai_process_intelligence(co['name'], ticker)
             history, last_price = fetch_stock_history(ticker)
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": ["System Error."], "sentiment": 50}
+            intel = {"summary": [f"System Crash: {str(e)[:50]}"], "sentiment": 50}
             history, last_price = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
 
         master_db.append({
             "ticker": ticker,
-            "company": co["name"],
-            "base_country": co["base_country"],
-            "release_gmt": VERIFIED_CALENDAR.get(ticker, ""),
-            "last_price": last_price,
-            "actuals": fin,
-            "eps_beat_miss_pct": beat_miss,
-            "news_summary": intel.get("summary", ["Analysis unavailable"]),
-            "sentiment": intel.get("sentiment", 50),
-            "jurisdictions": fin.get("jurisdictions", []),
-            "history": history
-        })
-        
-        time.sleep(3)
-
-    if master_db:
-        with open('gambling_stocks_live.json', 'w') as f:
-            json.dump(master_db, f, indent=4)
-        print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
-    else:
-        print("\n❌ Pipeline Error: No data collected.")
-
-if __name__ == "__main__":
-    run_pipeline()
