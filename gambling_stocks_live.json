@@ -3,43 +3,32 @@
         "ticker": "FLUT",
         "company": "Flutter Entertainment",
         "base_country": "Ireland",
-        "ceo": "Peter Jackson",
-        "cfo": null,
         "release_gmt": "2026-05-06T21:00:00Z",
-        "call_gmt": null,
         "actuals": {
-            "eps": null,
-            "revenue": "$16.4BN",
-            "ngr": null,
-            "fcf": null,
-            "debt_equity": null
+            "eps_actual": -1.75,
+            "eps_forecast": 0.24,
+            "revenue": "$16.38B",
+            "net_income": "-$407M",
+            "ebitda": "$2.84B",
+            "ngr": "$16.38B",
+            "fcf": "$407M",
+            "debt_equity": "3.7x"
         },
-        "forecast_eps": {
-            "mid": null,
-            "low": null,
-            "high": null
-        },
-        "eps_beat_miss_pct": null,
+        "eps_beat_miss_pct": -829.17,
         "news_summary": [
-            "Flutter Entertainment reported $16.4 billion in revenue and 15.9 million Average Monthly Players (AMPs).",
-            "The company achieved a 17% year-over-year Group revenue growth, with US revenue up 20% and International revenue up 14%.",
-            "FanDuel, Flutter's US brand, saw revenue grow 20% and adjusted EBITDA grow 82% to $922m, maintaining leadership in US online sports betting and iGaming."
+            "Flutter Entertainment experienced a 7.0% stock decline following its 2025 loss and 2026 guidance, despite Jefferies maintaining a 'buy' rating with a reduced price target.",
+            "The company's FanDuel Predicts platform is being positioned to balance growth with profit pressures in its US expansion strategy.",
+            "Despite a significant price target cut by Jefferies, a separate headline indicates Flutter Entertainment's stock was soaring on an unspecified positive development."
         ],
-        "sentiment": 50,
+        "sentiment": 55,
         "jurisdictions": [
             "US",
-            "AU",
-            "GB",
-            "IT",
-            "ZA",
-            "CZ",
-            "PL",
-            "RO",
-            "RS",
-            "HR",
-            "BA",
-            "ME",
-            "BR"
+            "UK",
+            "Ireland",
+            "Australia",
+            "Italy",
+            "Brazil",
+            "India (Exited)"
         ],
         "history": {
             "1d": [
@@ -96,8 +85,16 @@
                     111.37
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772819100000,
+                    111.2
+                ],
+                [
+                    1772820000000,
+                    111.23
+                ],
+                [
+                    1772820162000,
+                    111.29
                 ]
             ],
             "1w": [
@@ -227,11 +224,11 @@
                 ],
                 [
                     1772818200000,
-                    111.37
+                    111.23
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ],
             "1m": [
@@ -312,8 +309,8 @@
                     114.57
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ],
             "3m": [
@@ -558,8 +555,8 @@
                     114.57
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ],
             "6m": [
@@ -1060,8 +1057,8 @@
                     114.57
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ],
             "1y": [
@@ -1278,8 +1275,8 @@
                     114.57
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ],
             "5y": [
@@ -1524,8 +1521,8 @@
                     114.57
                 ],
                 [
-                    1772819139000,
-                    111.35
+                    1772820162000,
+                    111.29
                 ]
             ]
         }
@@ -1534,30 +1531,30 @@
         "ticker": "DKNG",
         "company": "DraftKings",
         "base_country": "USA",
-        "ceo": "Jason Robins",
-        "cfo": "Jason Park",
         "release_gmt": "2026-05-07T21:00:00Z",
-        "call_gmt": null,
         "actuals": {
-            "eps": null,
-            "revenue": null,
-            "ngr": null,
-            "fcf": null,
-            "debt_equity": null
+            "eps_actual": 0.28,
+            "eps_forecast": 0.2,
+            "revenue": "$1.99B",
+            "net_income": "$136.4M",
+            "ebitda": "$343.2M",
+            "ngr": "$1.99B",
+            "fcf": "$150M",
+            "debt_equity": "1.2x"
         },
-        "forecast_eps": {
-            "mid": null,
-            "low": null,
-            "high": null
-        },
-        "eps_beat_miss_pct": null,
+        "eps_beat_miss_pct": 40.0,
         "news_summary": [
-            "DraftKings is actively expanding into prediction markets, leveraging its experience from the sports betting industry.",
-            "This strategic push into prediction markets is seen as a potential new growth avenue for the company.",
-            "The company's move into prediction markets also raises ethical and legal considerations."
+            "DraftKings is expanding into prediction markets, potentially opening a new growth avenue.",
+            "This expansion into prediction markets faces scrutiny regarding ethical and legal risks.",
+            "The company is reportedly being considered by investors like Cathie Wood, suggesting potential underlying value or strategic interest."
         ],
-        "sentiment": 60,
-        "jurisdictions": [],
+        "sentiment": 55,
+        "jurisdictions": [
+            "US (26 States)",
+            "Washington D.C.",
+            "Puerto Rico",
+            "Ontario (Canada)"
+        ],
         "history": {
             "1d": [
                 [
@@ -1614,11 +1611,15 @@
                 ],
                 [
                     1772819100000,
+                    24.98
+                ],
+                [
+                    1772820000000,
                     25.0
                 ],
                 [
-                    1772819161000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "1w": [
@@ -1751,8 +1752,8 @@
                     25.0
                 ],
                 [
-                    1772819161000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "1m": [
@@ -1833,8 +1834,8 @@
                     25.46
                 ],
                 [
-                    1772819161000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "3m": [
@@ -2079,8 +2080,8 @@
                     25.46
                 ],
                 [
-                    1772819163000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "6m": [
@@ -2581,8 +2582,8 @@
                     25.46
                 ],
                 [
-                    1772819163000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "1y": [
@@ -2799,8 +2800,8 @@
                     25.46
                 ],
                 [
-                    1772819161000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ],
             "5y": [
@@ -3045,8 +3046,8 @@
                     25.46
                 ],
                 [
-                    1772819163000,
-                    25.0
+                    1772820164000,
+                    24.99
                 ]
             ]
         }
@@ -3055,31 +3056,36 @@
         "ticker": "ENT.L",
         "company": "Entain PLC",
         "base_country": "UK",
-        "ceo": null,
-        "cfo": null,
         "release_gmt": "2026-04-29T07:00:00Z",
-        "call_gmt": null,
         "actuals": {
-            "eps": null,
-            "revenue": null,
-            "ngr": null,
-            "fcf": null,
-            "debt_equity": null
+            "eps_actual": 0.62,
+            "eps_forecast": 0.45,
+            "revenue": "\u00a35.26B",
+            "net_income": "-\u00a3681M",
+            "ebitda": "\u00a31.16B",
+            "ngr": "\u00a35.32B",
+            "fcf": "\u00a3151M",
+            "debt_equity": "3.1x"
         },
-        "forecast_eps": {
-            "mid": null,
-            "low": null,
-            "high": null
-        },
-        "eps_beat_miss_pct": null,
+        "eps_beat_miss_pct": 37.78,
         "news_summary": [
-            "Entain PLC experienced strong financial performance in its Full Year 2025 earnings call.",
-            "However, the company faces a significant \u00a3500 million impact due to tax changes related to gambling duties.",
-            "These tax hikes are expected to reduce the size of the regulated gambling market."
+            "Entain reported strong financial performance during their Full Year 2025 Earnings Call.",
+            "The company anticipates a significant financial impact, estimated at \u00a3500 million, due to tax changes introduced by Reeves.",
+            "Entain warns that increased gambling taxes could lead to a contraction of the regulated market."
         ],
         "sentiment": 30,
         "jurisdictions": [
-            "GB"
+            "UK",
+            "Ireland",
+            "Italy",
+            "Brazil",
+            "Australia",
+            "Georgia",
+            "Spain",
+            "Canada",
+            "Croatia",
+            "Poland",
+            "US (BetMGM)"
         ],
         "history": {
             "1d": [
@@ -4726,30 +4732,30 @@
         "ticker": "EVO.ST",
         "company": "Evolution AB",
         "base_country": "Sweden",
-        "ceo": null,
-        "cfo": null,
         "release_gmt": "2026-04-22T06:30:00Z",
-        "call_gmt": null,
         "actuals": {
-            "eps": null,
-            "revenue": null,
-            "ngr": null,
-            "fcf": null,
-            "debt_equity": null
+            "eps_actual": 1.54,
+            "eps_forecast": 1.46,
+            "revenue": "\u20ac514M",
+            "net_income": "\u20ac306M",
+            "ebitda": "\u20ac393M",
+            "ngr": "\u20ac514M",
+            "fcf": "\u20ac250M",
+            "debt_equity": "0.1x"
         },
-        "forecast_eps": {
-            "mid": null,
-            "low": null,
-            "high": null
-        },
-        "eps_beat_miss_pct": null,
+        "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "Evolution AB's Q4 2025 earnings call highlighted navigation of challenges and expansion.",
-            "The company is involved in a legal complaint against Playtech, which caused Playtech's stock to plunge.",
-            "Recent share price fluctuations raise questions about Evolution's current valuation for 2025."
+            "Evolution AB is navigating challenges and expanding horizons as indicated by their Q4 2025 earnings call.",
+            "Evolution AB has initiated legal action against Playtech, leading to a significant stock price drop for Playtech.",
+            "Evolution AB's recent share price fluctuations and valuation are being questioned, with a notable 15% slide impacting its 2025 valuation."
         ],
-        "sentiment": 30,
-        "jurisdictions": [],
+        "sentiment": 45,
+        "jurisdictions": [
+            "North America",
+            "LatAm",
+            "Europe",
+            "Asia"
+        ],
         "history": {
             "1d": [
                 [
