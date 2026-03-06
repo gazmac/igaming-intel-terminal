@@ -142,7 +142,7 @@ def ai_process_intelligence(company_name, ticker):
         prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
         
         ai_resp = client.models.generate_content(
-            model='gemini-1.5-flash', 
+            model='gemini-2.5-flash', 
             contents=prompt,
             config={"response_mime_type": "application/json"}
         )
