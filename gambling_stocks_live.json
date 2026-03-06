@@ -4,7 +4,7 @@
         "company": "Flutter Entertainment",
         "base_country": "Ireland",
         "release_gmt": "2026-05-06T21:00:00Z",
-        "last_price": "$112.26",
+        "last_price": "$112.25",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.74,
@@ -24,7 +24,7 @@
         },
         "eps_beat_miss_pct": -8.9,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -3086,7 +3086,7 @@
         },
         "eps_beat_miss_pct": 38.89,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -3198,7 +3198,7 @@
                 ],
                 [
                     1772829900000,
-                    25.15
+                    25.14
                 ]
             ],
             "1w": [
@@ -6128,7 +6128,7 @@
         "company": "Entain PLC",
         "base_country": "UK",
         "release_gmt": "2026-04-29T07:00:00Z",
-        "last_price": "N/A",
+        "last_price": "$8.12",
         "actuals": {
             "period": "H2 25",
             "eps_actual": 0.62,
@@ -6147,7 +6147,7 @@
         },
         "eps_beat_miss_pct": 37.78,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -9100,7 +9100,7 @@
         },
         "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -12091,7 +12091,7 @@
         "company": "MGM Resorts",
         "base_country": "USA",
         "release_gmt": "2026-05-01T21:00:00Z",
-        "last_price": "$35.58",
+        "last_price": "$35.57",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.11,
@@ -12109,7 +12109,7 @@
         },
         "eps_beat_miss_pct": 98.21,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -15168,7 +15168,7 @@
         },
         "eps_beat_miss_pct": -440.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -15279,7 +15279,7 @@
                 ],
                 [
                     1772829900000,
-                    26.4
+                    26.42
                 ]
             ],
             "1w": [
@@ -18209,7 +18209,7 @@
         "company": "Penn Entertainment",
         "base_country": "USA",
         "release_gmt": "2026-05-07T21:00:00Z",
-        "last_price": "$14.63",
+        "last_price": "$14.64",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.07,
@@ -18226,7 +18226,7 @@
         },
         "eps_beat_miss_pct": 250.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -18337,7 +18337,7 @@
                 ],
                 [
                     1772829900000,
-                    14.63
+                    14.64
                 ]
             ],
             "1w": [
@@ -21267,7 +21267,7 @@
         "company": "Las Vegas Sands",
         "base_country": "USA",
         "release_gmt": "2026-04-20T21:00:00Z",
-        "last_price": "$53.59",
+        "last_price": "$53.6",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.65,
@@ -21284,7 +21284,7 @@
         },
         "eps_beat_miss_pct": 18.18,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -24325,7 +24325,7 @@
         "company": "Wynn Resorts",
         "base_country": "USA",
         "release_gmt": "2026-05-06T21:00:00Z",
-        "last_price": "$101.63",
+        "last_price": "$101.61",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.2,
@@ -24343,7 +24343,7 @@
         },
         "eps_beat_miss_pct": 14.29,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -24455,7 +24455,7 @@
                 ],
                 [
                     1772829900000,
-                    101.63
+                    101.64
                 ]
             ],
             "1w": [
@@ -27385,7 +27385,7 @@
         "company": "Evoke plc",
         "base_country": "UK",
         "release_gmt": "2026-04-15T07:00:00Z",
-        "last_price": "N/A",
+        "last_price": "$0.4",
         "actuals": {
             "period": "H2 25",
             "eps_actual": -0.05,
@@ -27403,7 +27403,7 @@
         },
         "eps_beat_miss_pct": -600.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -30354,7 +30354,7 @@
         },
         "eps_beat_miss_pct": 25.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -30377,7 +30377,7 @@
         "company": "Betsson AB",
         "base_country": "Sweden",
         "release_gmt": "2026-04-23T06:30:00Z",
-        "last_price": "N/A",
+        "last_price": "$16.0",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.35,
@@ -30395,7 +30395,7 @@
         },
         "eps_beat_miss_pct": 9.37,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -33328,7 +33328,7 @@
         "company": "Playtech",
         "base_country": "UK",
         "release_gmt": "2026-03-25T07:00:00Z",
-        "last_price": "N/A",
+        "last_price": "$4.78",
         "actuals": {
             "period": "H2 25",
             "eps_actual": 0.18,
@@ -33345,7 +33345,7 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -36277,7 +36277,7 @@
         "company": "Churchill Downs",
         "base_country": "USA",
         "release_gmt": "2026-04-22T21:00:00Z",
-        "last_price": "$83.81",
+        "last_price": "$83.83",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 1.35,
@@ -36293,7 +36293,7 @@
         },
         "eps_beat_miss_pct": 12.5,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -36403,7 +36403,7 @@
                 ],
                 [
                     1772829900000,
-                    83.81
+                    83.83
                 ]
             ],
             "1w": [
@@ -39333,7 +39333,7 @@
         "company": "Light & Wonder",
         "base_country": "USA",
         "release_gmt": "2026-05-08T21:00:00Z",
-        "last_price": "N/A",
+        "last_price": "$91.88",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.45,
@@ -39351,7 +39351,7 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -39840,7 +39840,7 @@
         "company": "Aristocrat Leisure",
         "base_country": "Australia",
         "release_gmt": "2026-05-13T00:00:00Z",
-        "last_price": "N/A",
+        "last_price": "$34.54",
         "actuals": {
             "period": "H2 25",
             "eps_actual": 0.95,
@@ -39858,7 +39858,7 @@
         },
         "eps_beat_miss_pct": 5.56,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -42791,7 +42791,7 @@
         "company": "Super Group",
         "base_country": "Guernsey",
         "release_gmt": "2026-05-14T12:00:00Z",
-        "last_price": "$10.65",
+        "last_price": "$10.64",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.08,
@@ -42809,7 +42809,7 @@
         },
         "eps_beat_miss_pct": -20.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -45851,7 +45851,7 @@
         "company": "Rush Street Interactive",
         "base_country": "USA",
         "release_gmt": "2026-05-06T21:00:00Z",
-        "last_price": "$20.88",
+        "last_price": "$20.87",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.12,
@@ -45869,7 +45869,7 @@
         },
         "eps_beat_miss_pct": 50.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -48929,7 +48929,7 @@
         },
         "eps_beat_miss_pct": -300.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -51895,7 +51895,7 @@
         "company": "Kambi Group",
         "base_country": "Malta",
         "release_gmt": "2026-04-29T06:30:00Z",
-        "last_price": "N/A",
+        "last_price": "$12.65",
         "actuals": {
             "period": "Q4 25",
             "eps_actual": 0.18,
@@ -51913,7 +51913,7 @@
         },
         "eps_beat_miss_pct": 20.0,
         "news_summary": [
-            "News API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': "
+            "News Engine Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/ge"
         ],
         "sentiment": 50,
         "jurisdictions": [
