@@ -79,16 +79,22 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
-                            <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold">
-                                <option value="1d">1 Day</option>
-                                <option value="1w">1 Week</option>
-                                <option value="1m">1 Month</option>
-                                <option value="6m" selected>6 Months</option>
-                                <option value="1y">1 Year</option>
-                                <option value="5y">5 Years</option>
-                            </select>
+                            
+                            <div class="flex gap-2 w-full sm:w-auto">
+                                <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer">
+                                    <option value="">Compare...</option>
+                                    </select>
+                                <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-slate-700 cursor-pointer">
+                                    <option value="1d">1 Day</option>
+                                    <option value="1w">1 Week</option>
+                                    <option value="1m">1 Month</option>
+                                    <option value="6m" selected>6 Months</option>
+                                    <option value="1y">1 Year</option>
+                                    <option value="5y">5 Years</option>
+                                </select>
+                            </div>
                         </div>
                         <div id="main-chart" class="w-full bg-white rounded-xl p-2 border border-slate-100 min-h-[300px]"></div>
                     </div>
@@ -147,13 +153,10 @@
 
             sortedDb.sort((a, b) => {
                 if (currentSort === 'earnings') {
-                    // SAFE FALLBACK: Checks if a.calendar exists before looking for the date
                     const dateStrA = a.calendar?.date || a.release_gmt || '';
                     const dateStrB = b.calendar?.date || b.release_gmt || '';
-                    
                     const timeA = new Date(dateStrA).getTime();
                     const timeB = new Date(dateStrB).getTime();
-                    
                     const finalA = isNaN(timeA) ? Infinity : timeA;
                     const finalB = isNaN(timeB) ? Infinity : timeB;
                     return finalA - finalB;
@@ -185,7 +188,6 @@
                 const isBeat = s.eps_beat_miss_pct > 0;
                 const beatColor = isBeat ? 'text-green-600' : 'text-red-500';
                 
-                // SAFE FALLBACKS
                 const period = s.actuals?.period || 'Q4 25';
                 const earningsDate = s.calendar?.date || (s.release_gmt ? new Date(s.release_gmt).toLocaleDateString() : 'TBD');
                 const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
@@ -230,18 +232,24 @@
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
             
-            // SAFE FALLBACKS
-            const period = s.actuals?.period || 'Q4 25';
-            const earningsDate = s.calendar?.date || 'TBD';
-            const reportTime = s.calendar?.report_time || 'TBD';
-            const callTime = s.calendar?.call_time || 'TBD';
+            // Populate the "Compare" dropdown dynamically so you can't compare a stock to itself
+            const compareSelect = document.getElementById('compare-select');
+            compareSelect.innerHTML = '<option value="">Compare...</option>' + 
+                db.filter(x => x.ticker !== ticker)
+                  .sort((a, b) => a.company.localeCompare(b.company))
+                  .map(x => `<option value="${x.ticker}">${x.company}</option>`)
+                  .join('');
+            
+            // Reset Compare select to default on new modal open
+            compareSelect.value = "";
 
+            const period = s.actuals?.period || 'Q4 25';
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerText = `${ticker} | ${s.base_country} Based`;
             
-            document.getElementById('modal-earnings-date').innerText = earningsDate;
-            document.getElementById('modal-report-time').innerText = reportTime;
-            document.getElementById('modal-call-time').innerText = callTime;
+            document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
+            document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
+            document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
 
             document.getElementById('modal-financials').innerHTML = `
                 <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act vs Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
@@ -268,15 +276,42 @@
 
         function updateMainChart() {
             const timeframe = document.getElementById('timeframe-select').value;
-            const s = db.find(x => x.ticker === activeTicker);
-            if (chartInstance) chartInstance.destroy();
+            const compareTicker = document.getElementById('compare-select').value;
             
-            const chartData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+            const s = db.find(x => x.ticker === activeTicker);
+            const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+            
+            let seriesData = [];
+            let chartColors = [];
+            let isCompareMode = false;
+
+            if (chartInstance) chartInstance.destroy();
+
+            // THE NORMALIZATION ENGINE
+            if (compareTicker) {
+                isCompareMode = true;
+                const comp = db.find(x => x.ticker === compareTicker);
+                const compData = (comp.history && comp.history[timeframe]) ? comp.history[timeframe] : [];
+
+                // Function to convert raw prices to % change from day 1
+                const normalizeToPercent = (data) => {
+                    if (!data || data.length === 0) return [];
+                    const basePrice = data[0][1];
+                    return data.map(pt => [pt[0], ((pt[1] - basePrice) / basePrice) * 100]);
+                };
+
+                seriesData.push({ name: s.company, data: normalizeToPercent(baseData) });
+                seriesData.push({ name: comp.company, data: normalizeToPercent(compData) });
+                chartColors = ['#3b82f6', '#8b5cf6']; // Blue for base, Purple for comparison
+            } else {
+                seriesData.push({ name: 'Price', data: baseData });
+                chartColors = ['#3b82f6']; // Blue for standard
+            }
             
             chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
-                series: [{ name: 'Price', data: chartData }],
+                series: seriesData,
                 chart: { 
-                    type: 'area', 
+                    type: isCompareMode ? 'line' : 'area', // Area looks messy when overlapping
                     height: 320, 
                     toolbar: { show: false },
                     zoom: { enabled: false },
@@ -285,14 +320,32 @@
                 dataLabels: { enabled: false },
                 markers: { size: 0, hover: { size: 6 } },
                 stroke: { curve: 'smooth', width: 2.5 },
-                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
-                yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => v.toFixed(2) } },
-                colors: ['#3b82f6'],
-                fill: { type: 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
+                xaxis: { 
+                    type: 'datetime', 
+                    labels: { style: { colors: '#94a3b8', fontSize: '11px' } } 
+                },
+                yaxis: { 
+                    labels: { 
+                        style: { colors: '#94a3b8', fontSize: '11px' }, 
+                        // Dynamically swap between % and raw currency
+                        formatter: (v) => isCompareMode ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) 
+                    } 
+                },
+                colors: chartColors,
+                fill: { 
+                    type: isCompareMode ? 'solid' : 'gradient', 
+                    gradient: { opacityFrom: 0.3, opacityTo: 0 } 
+                },
                 grid: { borderColor: '#f1f5f9' },
-                tooltip: { x: { format: 'dd MMM yyyy' }, theme: 'light' },
-                noData: { text: "No chart data available" }
+                tooltip: { 
+                    x: { format: 'dd MMM yyyy' }, 
+                    y: { formatter: (v) => isCompareMode ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) },
+                    theme: 'light' 
+                },
+                legend: { show: isCompareMode, position: 'top', horizontalAlign: 'right' },
+                noData: { text: "Loading..." }
             });
+            
             chartInstance.render();
         }
 
