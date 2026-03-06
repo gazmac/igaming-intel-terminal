@@ -5,7 +5,7 @@
         "base_country": "Ireland",
         "ceo": "Peter Jackson",
         "cfo": null,
-        "release_gmt": null,
+        "release_gmt": "2025-12-31T00:00:00Z",
         "call_gmt": null,
         "actuals": {
             "eps": null,
@@ -21,18 +21,18 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Flutter Entertainment reported strong financial results with $16.4 billion in revenue (+17% YoY) and $2.8 billion in Adjusted EBITDA (+21% YoY), showcasing significant growth.",
-            "FanDuel, Flutter's US brand, continues to dominate with 20% revenue growth and 82% adjusted EBITDA growth, holding 41% OSB GGR share and 28% iGaming GGR share in Q4.",
-            "The company is expanding into prediction markets with FanDuel Predicts and focusing on international growth in markets like Brazil, while also emphasizing sustainability through its Positive Impact Plan."
+            "Flutter Entertainment reported strong growth metrics for 2025, with Average Monthly Players (AMPs) reaching 15.9 million and Group revenue increasing by 17% year-over-year to $16.4 billion.",
+            "The company's US operations, particularly FanDuel, demonstrated robust performance with 20% revenue growth and 41% online sports betting GGR share in Q4, alongside the launch of FanDuel Predicts to capture new market opportunities.",
+            "International revenue grew by 14% in 2025, driven by strong performances in Southern Europe and Africa, and strategic platform migrations, with targeted investments planned for Brazil ahead of the 2026 FIFA World Cup."
         ],
-        "sentiment": 75,
+        "sentiment": 55,
         "jurisdictions": [
             "US",
             "AU",
             "GB",
             "IT",
             "BR",
-            "CN"
+            "ZA"
         ],
         "history": {
             "1d": [
@@ -81,8 +81,12 @@
                     110.43
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817300000,
+                    111.46
+                ],
+                [
+                    1772817953000,
+                    111.34
                 ]
             ],
             "1w": [
@@ -140,7 +144,7 @@
                 ],
                 [
                     1772569800000,
-                    111.5
+                    111.28
                 ],
                 [
                     1772634600000,
@@ -208,11 +212,11 @@
                 ],
                 [
                     1772814600000,
-                    110.43
+                    111.46
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817953000,
+                    111.34
                 ]
             ],
             "1m": [
@@ -293,8 +297,8 @@
                     114.57
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817953000,
+                    111.34
                 ]
             ],
             "3m": [
@@ -539,8 +543,8 @@
                     114.57
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817953000,
+                    111.34
                 ]
             ],
             "6m": [
@@ -1041,8 +1045,8 @@
                     114.57
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817953000,
+                    111.34
                 ]
             ],
             "1y": [
@@ -1259,8 +1263,8 @@
                     114.57
                 ],
                 [
-                    1772817050000,
-                    110.51
+                    1772817956000,
+                    111.37
                 ]
             ],
             "5y": [
@@ -1505,8 +1509,8 @@
                     114.57
                 ],
                 [
-                    1772817052000,
-                    110.45
+                    1772817956000,
+                    111.37
                 ]
             ]
         }
@@ -1516,15 +1520,15 @@
         "company": "DraftKings",
         "base_country": "USA",
         "ceo": "Jason Robins",
-        "cfo": "Brett Caler",
-        "release_gmt": "2024-05-03T21:00:00Z",
-        "call_gmt": "2024-05-03T21:00:00Z",
+        "cfo": "Jason Park",
+        "release_gmt": "2023-11-03T00:00:00.000Z",
+        "call_gmt": "2023-11-03T00:00:00.000Z",
         "actuals": {
-            "eps": -0.13,
-            "revenue": "1.11B",
-            "ngr": null,
-            "fcf": "-18.9M",
-            "debt_equity": "0.81"
+            "eps": -0.21,
+            "revenue": "$213M",
+            "ngr": "$790M",
+            "fcf": "-$36M",
+            "debt_equity": "0.69"
         },
         "forecast_eps": {
             "mid": null,
@@ -1533,9 +1537,9 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "DraftKings reported Q1 2024 revenue of $1.11 billion, an increase of 53% year-over-year, driven by strong performance in its Sportsbook and iGaming segments.",
-            "The company narrowed its net loss to $40 million, or -$0.13 per share, compared to a net loss of $111.7 million, or -$0.38 per share, in the prior year period.",
-            "DraftKings is expanding into prediction markets, leveraging its sports-betting playbook for potential new growth avenues, although this move raises ethical and legal considerations."
+            "DraftKings reported a net loss of $0.21 per share for the third quarter of 2023, an improvement from the previous year.",
+            "Revenue for the quarter increased by 47% year-over-year to $790 million, primarily driven by strong performance in the B2C segment.",
+            "The company is expanding into prediction markets, leveraging its sports-betting expertise to explore new growth avenues, although this move raises ethical and legal considerations."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -1585,11 +1589,15 @@
                 ],
                 [
                     1772816400000,
+                    25.01
+                ],
+                [
+                    1772817300000,
                     25.0
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "1w": [
@@ -1718,8 +1726,8 @@
                     25.0
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "1m": [
@@ -1800,8 +1808,8 @@
                     25.46
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "3m": [
@@ -2046,8 +2054,8 @@
                     25.46
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "6m": [
@@ -2548,8 +2556,8 @@
                     25.46
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "1y": [
@@ -2766,8 +2774,8 @@
                     25.46
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ],
             "5y": [
@@ -3012,8 +3020,8 @@
                     25.46
                 ],
                 [
-                    1772817056000,
-                    25.01
+                    1772817961000,
+                    25.0
                 ]
             ]
         }
@@ -3023,15 +3031,15 @@
         "company": "Entain PLC",
         "base_country": "UK",
         "ceo": "Jette Nygaard-Andersen",
-        "cfo": "David Gregory",
+        "cfo": "Rob Wood",
         "release_gmt": "2024-03-07T07:00:00Z",
-        "call_gmt": "2024-03-07T10:00:00Z",
+        "call_gmt": "2024-03-07T10:30:00Z",
         "actuals": {
-            "eps": 0.47,
-            "revenue": "\u00a310.716bn",
-            "ngr": "\u00a38.577bn",
-            "fcf": "\u00a3762m",
-            "debt_equity": "1.5x"
+            "eps": 0.13,
+            "revenue": "\u00a3107.1m",
+            "ngr": "\u00a34.12bn",
+            "fcf": "\u00a3544.6m",
+            "debt_equity": "1.6"
         },
         "forecast_eps": {
             "mid": null,
@@ -3040,21 +3048,13 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Entain reported strong financial performance for FY23, with revenue of \u00a310.716bn and NGR of \u00a38.577bn.",
-            "The company generated \u00a3762m in free cash flow, and maintains a debt-to-equity ratio of 1.5x.",
-            "However, Entain faces challenges from increased gambling taxes in the UK, which could shrink the regulated market."
+            "Entain reported a statutory loss of \u00a3447.3m for the year ended 31 December 2023, a significant decrease from the previous year's profit.",
+            "Net Gaming Revenue (NGR) for the full year 2023 increased by 7% to \u00a34.12 billion.",
+            "The company faced challenges including a \u00a3500m hit from tax changes and potential shrinkage of the regulated market due to increased gambling taxes."
         ],
-        "sentiment": 45,
+        "sentiment": 30,
         "jurisdictions": [
-            "GB",
-            "US",
-            "AU",
-            "IT",
-            "BG",
-            "DE",
-            "NL",
-            "RO",
-            "GR"
+            "GB"
         ],
         "history": {
             "1d": [
@@ -4704,7 +4704,7 @@
         "ceo": null,
         "cfo": null,
         "release_gmt": null,
-        "call_gmt": "2025-XX-XXT00:00:00Z",
+        "call_gmt": null,
         "actuals": {
             "eps": null,
             "revenue": null,
@@ -4719,14 +4719,12 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Evolution AB (EVVTY) held its Q4 2025 earnings call, discussing challenges and expansion plans.",
-            "The company's stock experienced fluctuations, leading to questions about its current valuation.",
-            "Evolution AB was mentioned in a legal complaint by Playtech, which saw a significant stock price drop."
+            "Evolution AB (EVVTY) is navigating challenges and expanding horizons in its Q4 2025 earnings.",
+            "The company's valuation is under scrutiny following recent share price fluctuations, with a 15% slide raising questions about its 2025 outlook.",
+            "Playtech's stock experienced a significant drop after Evolution named it in a legal complaint."
         ],
-        "sentiment": 45,
-        "jurisdictions": [
-            "SWE"
-        ],
+        "sentiment": 30,
+        "jurisdictions": [],
         "history": {
             "1d": [
                 [
