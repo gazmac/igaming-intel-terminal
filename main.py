@@ -14,8 +14,6 @@ from google import genai
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
-client = genai.Client(api_key=GEMINI_API_KEY)
 
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
@@ -69,7 +67,6 @@ VERIFIED_DATA = {
     "KAMBI.ST": {"period": "Q4 25", "eps_actual": 0.18, "eps_forecast": 0.15, "revenue": "€45M", "net_income": "€5M", "ebitda": "€15M", "ngr": "€45M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
 }
 
-# RESTORED: Fully detailed dictionary format
 VERIFIED_CALENDAR = {
     "FLUT": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
     "DKNG": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
@@ -170,8 +167,9 @@ def fetch_stock_history(ticker, native_price_raw):
 def ai_process_intelligence(company_name, ticker):
     print(f"  -> Fetching Yahoo API News for {company_name}...")
     
+    # SAFETY NET: Fetch and validate API key only when needed, inside the try block
     api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
+    if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {"summary": ["System Error: API key missing."], "sentiment": 50}
         
     try:
@@ -224,7 +222,6 @@ def run_pipeline():
             "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": []
         })
         
-        # RESTORED: Safely fetch the calendar dictionary object
         cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
         
         beat_miss = 0
@@ -233,4 +230,41 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, native_
+            last_price_str, native_price_raw = get_native_price(ticker)
+            history = fetch_stock_history(ticker, native_price_raw)
+        except Exception as e:
+            print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
+            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
+            history, last_price_str = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
+
+        master_db.append({
+            "ticker": ticker,
+            "company": co["name"],
+            "base_country": co["base_country"],
+            "calendar": cal, 
+            "last_price": last_price_str,
+            "actuals": fin,
+            "eps_beat_miss_pct": beat_miss,
+            "news_summary": intel.get("summary", ["Data parsing failed."]),
+            "sentiment": intel.get("sentiment", 50),
+            "jurisdictions": fin.get("jurisdictions", []),
+            "history": history
+        })
+        
+        time.sleep(5)
+
+    if master_db:
+        with open('gambling_stocks_live.json', 'w') as f:
+            json.dump(master_db, f, indent=4)
+        print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
+    else:
+        print("\n❌ Pipeline Error: No data collected.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    try:
+        run_pipeline()
+    except Exception as e:
+        print("\n❌ FATAL CRASH: The script encountered a module-level error.")
+        traceback.print_exc()
+        sys.exit(1)
