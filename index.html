@@ -3,64 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iGaming Intel Terminal</title>
+    <title>iGaming Earnings HQ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        .sparkline-container { width: 80px; height: 30px; }
-        #main-chart { min-height: 300px; }
-        .modal-open { overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
+        .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
     </style>
 </head>
-<body class="bg-slate-50 p-3 md:p-6 font-sans text-slate-900">
-
-    <div class="max-w-[120rem] mx-auto">
-        <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-slate-200 pb-4 gap-2">
-            <h1 class="text-2xl md:text-3xl font-black text-slate-800">iGaming Intel <span class="text-blue-600">Terminal</span></h1>
-            <div id="last-update" class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Loading...</div>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">iGaming Earnings HQ</h1>
+                <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
+            </div>
+            <div id="last-update" class="text-xs text-slate-400 font-mono"></div>
         </header>
 
-        <div class="hidden md:block bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-            <table class="min-w-full text-left whitespace-nowrap">
-                <thead class="bg-slate-800 text-slate-300 text-[10px] uppercase font-bold tracking-wider">
-                    <tr>
-                        <th class="px-4 py-3">Equity & Price</th>
-                        <th class="px-4 py-3">Sentiment</th>
-                        <th class="px-4 py-3">Next Earnings</th>
-                        <th class="px-4 py-3 border-l border-slate-600">EPS (Act vs Est)</th>
-                        <th class="px-4 py-3">Rev / EBITDA</th>
-                        <th class="px-4 py-3">Net Income</th>
-                        <th class="px-4 py-3">Jurisdictions</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-        </div>
-
-        <div id="mobile-list" class="md:hidden space-y-4"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid">
+            </div>
     </div>
 
-    <div id="modal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center z-50 p-0 md:p-4">
-        <div class="bg-white w-full h-full md:h-auto md:max-w-7xl md:rounded-3xl md:max-h-[95vh] overflow-y-auto relative p-6 md:p-10">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 text-4xl">&times;</button>
-            <div class="flex flex-col md:flex-row justify-between mb-6 gap-4">
-                <div><h2 id="m-name" class="text-2xl font-black"></h2><p id="m-ticker" class="text-slate-500 font-mono"></p></div>
-                <select id="timeframe-select" onchange="updateMainChart()" class="bg-slate-100 rounded-xl px-4 py-2 font-bold outline-none">
-                    <option value="1w">1 Week</option><option value="1m">1 Month</option><option value="1y">1 Year</option><option value="5y" selected>5 Years</option>
-                </select>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 space-y-6">
-                    <div id="main-chart" class="bg-slate-50 rounded-2xl border p-4"></div>
-                    <div id="m-map" class="h-48 bg-slate-50 rounded-2xl border overflow-hidden"></div>
+    <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                <div>
+                    <h2 id="modal-title" class="text-2xl font-bold text-slate-900"></h2>
+                    <p id="modal-ticker" class="text-slate-500 font-mono text-sm"></p>
                 </div>
-                <div class="bg-blue-600 rounded-2xl p-6 text-white">
-                    <div class="text-5xl font-black mb-6" id="m-sentiment-val"></div>
-                    <div id="m-news" class="text-sm space-y-4"></div>
+                <button onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
+                            <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none">
+                                <option value="1d">1 Day</option>
+                                <option value="1w">1 Week</option>
+                                <option value="1m">1 Month</option>
+                                <option value="6m" selected>6 Months</option>
+                                <option value="1y">1 Year</option>
+                                <option value="5y">5 Years</option>
+                            </select>
+                        </div>
+                        <div id="main-chart" class="w-full bg-slate-50 rounded-xl p-4"></div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">AI Sentiment</h3>
+                            <div class="bg-slate-50 p-4 rounded-xl">
+                                <div class="flex justify-between items-end mb-2">
+                                    <span id="sentiment-label" class="text-2xl font-bold"></span>
+                                    <span class="text-xs text-slate-400 pb-1">BULLISHNESS</span>
+                                </div>
+                                <div class="sentiment-bar"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
+                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,105 +84,91 @@
         let chartInstance = null;
 
         async function init() {
-            const res = await fetch(`gambling_stocks_live.json?t=${Date.now()}`);
-            db = await res.json();
-            document.getElementById('last-update').innerText = `Updated: ${new Date().toLocaleTimeString()}`;
-            renderUI();
+            try {
+                const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
+                db = await response.json();
+                document.getElementById('last-update').innerText = 'LAST REFRESH: ' + new Date().toLocaleTimeString();
+                renderGrid();
+            } catch (e) { console.error("Data load failed", e); }
         }
 
-        function renderUI() {
-            const tbody = document.getElementById('table-body');
-            const mobileList = document.getElementById('mobile-list');
-            tbody.innerHTML = ''; mobileList.innerHTML = '';
-            
-            db.forEach(s => {
-                const isBeat = s.eps_beat_miss_pct > 0;
-                const beatHtml = `<div class="${isBeat ? 'text-green-600' : 'text-red-500'} font-black text-[10px] mt-1">${isBeat ? '▲ BEAT' : '▼ MISS'} ${Math.abs(s.eps_beat_miss_pct)}%</div>`;
-
-                // Desktop
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 cursor-pointer border-b border-slate-50 transition-colors";
-                tr.onclick = () => openModal(s.ticker);
-                tr.innerHTML = `
-                    <td class="px-4 py-5">
-                        <div class="font-black text-slate-800 flex items-center gap-2">${s.company} <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md font-bold">${s.last_price}</span></div>
-                        <div class="text-[10px] text-slate-400 font-mono">${s.ticker}</div>
-                    </td>
-                    <td class="px-4 py-5"><div class="flex items-center gap-3"><span class="font-black ${s.sentiment > 50 ? 'text-green-500' : 'text-slate-700'}">${s.sentiment}</span><div id="spark-${s.ticker}" class="sparkline-container"></div></div></td>
-                    <td class="px-4 py-5 font-bold text-sm">${new Date(s.release_gmt).toLocaleDateString('en-GB', {day:'2-digit', month:'short'})}</td>
-                    <td class="px-4 py-4 border-l bg-slate-50/50">
-                        <div class="text-[11px] font-bold"><span class="text-slate-400">ACT:</span> ${s.actuals.eps_actual}</div>
-                        <div class="text-[11px] font-bold"><span class="text-slate-400">EST:</span> ${s.actuals.eps_forecast}</div>
-                        ${beatHtml}
-                    </td>
-                    <td class="px-4 py-5 text-[11px] space-y-1">
-                        <div><span class="text-slate-400 font-bold">REV:</span> ${s.actuals.revenue}</div>
-                        <div><span class="text-slate-400 font-bold">EBT:</span> ${s.actuals.ebitda}</div>
-                    </td>
-                    <td class="px-4 py-5 font-bold text-sm ${s.actuals.net_income.includes('-') ? 'text-red-500' : ''}">${s.actuals.net_income}</td>
-                    <td class="px-4 py-5 text-[10px] text-slate-400 font-bold uppercase">${s.jurisdictions.slice(0,2).join(' • ')}</td>
+        function renderGrid() {
+            const grid = document.getElementById('stock-grid');
+            grid.innerHTML = db.map(s => {
+                const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
+                return `
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
+                                <p class="text-xs font-mono text-slate-400">${s.ticker}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-900">${s.last_price}</div>
+                                <div class="text-[10px] text-slate-400 uppercase tracking-tighter">${s.base_country}</div>
+                            </div>
+                        </div>
+                        <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment}%"></div></div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                            <span>Sentiment</span>
+                            <span>${s.sentiment}%</span>
+                        </div>
+                    </div>
                 `;
-                tbody.appendChild(tr);
-
-                // Mobile
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl border border-slate-200 active:scale-95 transition-transform";
-                card.onclick = () => openModal(s.ticker);
-                card.innerHTML = `<div class="flex justify-between font-black"><div>${s.company} <span class="text-blue-600 text-xs ml-2">${s.last_price}</span></div><div class="${s.sentiment > 50 ? 'text-green-500' : ''}">${s.sentiment}</div></div>`;
-                mobileList.appendChild(card);
-
-                renderSparkline(s, `#spark-${s.ticker}`);
-            });
-        }
-
-        function renderSparkline(s, selector) {
-            if(!s.history["1w"]) return;
-            new ApexCharts(document.querySelector(selector), {
-                series: [{ data: s.history["1w"].map(p => p[1]) }],
-                chart: { type: 'line', sparkline: { enabled: true } },
-                stroke: { curve: 'smooth', width: 2, colors: [s.sentiment > 50 ? '#22c55e' : '#64748b'] }
-            }).render();
+            }).join('');
         }
 
         function openModal(ticker) {
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
-            document.getElementById('m-name').innerText = s.company;
-            document.getElementById('m-ticker').innerText = `${s.ticker} | ${s.last_price}`;
-            document.getElementById('m-sentiment-val').innerText = s.sentiment;
-            document.getElementById('m-news').innerHTML = s.news_summary.map(n => `<div class="bg-white/10 p-3 rounded-lg">${n}</div>`).join('');
-            document.getElementById('modal').classList.remove('hidden');
-            document.body.classList.add('modal-open');
-            setTimeout(() => { updateMainChart(); renderMap(s.jurisdictions); }, 100);
-        }
+            document.getElementById('modal-title').innerText = s.company;
+            document.getElementById('modal-ticker').innerText = `${ticker} | ${s.base_country} Based`;
+            
+            const newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+            document.getElementById('news-summary').innerHTML = newsHtml;
+            
+            const sentLabel = document.getElementById('sentiment-label');
+            sentLabel.innerText = s.sentiment + '%';
+            sentLabel.className = 'text-2xl font-bold ' + (s.sentiment > 60 ? 'text-emerald-600' : (s.sentiment < 40 ? 'text-rose-600' : 'text-amber-600'));
+            
+            const sentFill = document.getElementById('modal-sentiment-fill');
+            sentFill.style.width = s.sentiment + '%';
+            sentFill.className = 'sentiment-fill ' + (s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500'));
 
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.body.classList.remove('modal-open'); }
+            document.getElementById('modal').classList.remove('hidden');
+            updateMainChart();
+        }
 
         function updateMainChart() {
             const timeframe = document.getElementById('timeframe-select').value;
             const s = db.find(x => x.ticker === activeTicker);
             if (chartInstance) chartInstance.destroy();
+            
+            const chartData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+            
             chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
-                series: [{ name: 'Price', data: s.history[timeframe] }],
-                chart: { type: 'area', height: 300, toolbar: { show: false } },
-                xaxis: { type: 'datetime' },
-                colors: ['#2563eb'],
-                fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0 } },
-                noData: { text: 'Loading...' }
+                series: [{ name: 'Price', data: chartData }],
+                chart: { 
+                    type: 'area', 
+                    height: 320, 
+                    toolbar: { show: false },
+                    zoom: { enabled: false }
+                },
+                // FIX: Hide labels and markers, keep tooltip
+                dataLabels: { enabled: false },
+                markers: { size: 0, hover: { size: 6 } },
+                stroke: { curve: 'smooth', width: 2.5 },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8' } } },
+                yaxis: { labels: { style: { colors: '#94a3b8' }, formatter: (v) => v.toFixed(2) } },
+                colors: ['#3b82f6'],
+                fill: { type: 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
+                grid: { borderColor: '#f1f5f9' },
+                tooltip: { x: { format: 'dd MMM yyyy' }, theme: 'light' }
             });
             chartInstance.render();
         }
 
-        function renderMap(list) {
-            $('#m-map').empty();
-            const markers = {}; list.forEach(c => markers[c.substring(0, 2).toUpperCase()] = 1);
-            $('#m-map').vectorMap({
-                map: 'world_mill_en', backgroundColor: 'transparent',
-                regionStyle: { initial: { fill: '#cbd5e1' } },
-                series: { regions: [{ values: markers, scale: ['#93c5fd', '#2563eb'] }] }
-            });
-        }
-
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
         init();
     </script>
 </body>
