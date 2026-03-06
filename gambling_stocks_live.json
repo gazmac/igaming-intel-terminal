@@ -5,7 +5,7 @@
         "base_country": "Ireland",
         "ceo": "Peter Jackson",
         "cfo": null,
-        "release_gmt": "2025-12-31T00:00:00Z",
+        "release_gmt": "2026-05-06T21:00:00Z",
         "call_gmt": null,
         "actuals": {
             "eps": null,
@@ -21,18 +21,25 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Flutter Entertainment reported strong 2025 highlights with $16.4BN in revenue and a 17% YoY group revenue growth.",
-            "The company's US operations, particularly FanDuel, showed robust growth with a 20% revenue increase and 82% adjusted EBITDA growth, solidifying its market leadership.",
-            "International markets also demonstrated resilience with 14% revenue growth, driven by strong performance in Southern Europe and Africa, and strategic integrations and investments planned for 2026."
+            "Flutter Entertainment reported $16.4 billion in revenue and 15.9 million Average Monthly Players (AMPs).",
+            "The company achieved a 17% year-over-year Group revenue growth, with US revenue up 20% and International revenue up 14%.",
+            "FanDuel, Flutter's US brand, saw revenue grow 20% and adjusted EBITDA grow 82% to $922m, maintaining leadership in US online sports betting and iGaming."
         ],
-        "sentiment": 65,
+        "sentiment": 50,
         "jurisdictions": [
             "US",
+            "AU",
             "GB",
             "IT",
-            "AU",
-            "BR",
-            "CZ"
+            "ZA",
+            "CZ",
+            "PL",
+            "RO",
+            "RS",
+            "HR",
+            "BA",
+            "ME",
+            "BR"
         ],
         "history": {
             "1d": [
@@ -86,11 +93,11 @@
                 ],
                 [
                     1772818200000,
-                    111.07
+                    111.37
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "1w": [
@@ -220,11 +227,11 @@
                 ],
                 [
                     1772818200000,
-                    111.07
+                    111.37
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "1m": [
@@ -305,8 +312,8 @@
                     114.57
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "3m": [
@@ -551,8 +558,8 @@
                     114.57
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "6m": [
@@ -1053,8 +1060,8 @@
                     114.57
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "1y": [
@@ -1271,8 +1278,8 @@
                     114.57
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ],
             "5y": [
@@ -1517,8 +1524,8 @@
                     114.57
                 ],
                 [
-                    1772818606000,
-                    110.99
+                    1772819139000,
+                    111.35
                 ]
             ]
         }
@@ -1528,15 +1535,15 @@
         "company": "DraftKings",
         "base_country": "USA",
         "ceo": "Jason Robins",
-        "cfo": "Alan Ginsberg",
-        "release_gmt": "2024-05-03T07:00:00Z",
+        "cfo": "Jason Park",
+        "release_gmt": "2026-05-07T21:00:00Z",
         "call_gmt": null,
         "actuals": {
-            "eps": -0.14,
-            "revenue": "$829.0 million",
-            "ngr": "$1.1 billion",
-            "fcf": "-$44.1 million",
-            "debt_equity": "0.56"
+            "eps": null,
+            "revenue": null,
+            "ngr": null,
+            "fcf": null,
+            "debt_equity": null
         },
         "forecast_eps": {
             "mid": null,
@@ -1545,14 +1552,12 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "DraftKings reported strong Q1 2024 results with revenue of $829 million, exceeding expectations.",
-            "The company saw a significant increase in Net Gaming Revenue (NGR) to $1.1 billion, driven by strong player engagement and product innovation.",
-            "Despite a net loss per share of $0.14, DraftKings continues to invest in growth, as evidenced by the expansion into prediction markets."
+            "DraftKings is actively expanding into prediction markets, leveraging its experience from the sports betting industry.",
+            "This strategic push into prediction markets is seen as a potential new growth avenue for the company.",
+            "The company's move into prediction markets also raises ethical and legal considerations."
         ],
-        "sentiment": 65,
-        "jurisdictions": [
-            "USA"
-        ],
+        "sentiment": 60,
+        "jurisdictions": [],
         "history": {
             "1d": [
                 [
@@ -1605,11 +1610,15 @@
                 ],
                 [
                     1772818200000,
-                    24.99
+                    24.98
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819100000,
+                    25.0
+                ],
+                [
+                    1772819161000,
+                    25.0
                 ]
             ],
             "1w": [
@@ -1739,11 +1748,11 @@
                 ],
                 [
                     1772818200000,
-                    24.99
+                    25.0
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819161000,
+                    25.0
                 ]
             ],
             "1m": [
@@ -1824,8 +1833,8 @@
                     25.46
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819161000,
+                    25.0
                 ]
             ],
             "3m": [
@@ -2070,8 +2079,8 @@
                     25.46
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819163000,
+                    25.0
                 ]
             ],
             "6m": [
@@ -2572,8 +2581,8 @@
                     25.46
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819163000,
+                    25.0
                 ]
             ],
             "1y": [
@@ -2790,8 +2799,8 @@
                     25.46
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819161000,
+                    25.0
                 ]
             ],
             "5y": [
@@ -3036,8 +3045,8 @@
                     25.46
                 ],
                 [
-                    1772818615000,
-                    24.98
+                    1772819163000,
+                    25.0
                 ]
             ]
         }
@@ -3048,7 +3057,7 @@
         "base_country": "UK",
         "ceo": null,
         "cfo": null,
-        "release_gmt": null,
+        "release_gmt": "2026-04-29T07:00:00Z",
         "call_gmt": null,
         "actuals": {
             "eps": null,
@@ -3064,11 +3073,11 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Entain PLC experienced a significant financial impact of \u00a3500 million due to tax changes.",
-            "The company anticipates that gambling tax hikes will lead to a contraction of the regulated market.",
-            "Entain PLC reported strong financial performance in its Full Year 2025 earnings call."
+            "Entain PLC experienced strong financial performance in its Full Year 2025 earnings call.",
+            "However, the company faces a significant \u00a3500 million impact due to tax changes related to gambling duties.",
+            "These tax hikes are expected to reduce the size of the regulated gambling market."
         ],
-        "sentiment": 60,
+        "sentiment": 30,
         "jurisdictions": [
             "GB"
         ],
@@ -4719,7 +4728,7 @@
         "base_country": "Sweden",
         "ceo": null,
         "cfo": null,
-        "release_gmt": null,
+        "release_gmt": "2026-04-22T06:30:00Z",
         "call_gmt": null,
         "actuals": {
             "eps": null,
@@ -4735,9 +4744,9 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Evolution AB (EVVTY) Q4 2025 Earnings Call Highlights: Navigating Challenges and Expanding Horizons.",
-            "Playtech stock plunges 30% after Evolution names it in legal complaint.",
-            "Analysis of Evolution's 2025 valuation considering recent share price fluctuations and a 15% slide."
+            "Evolution AB's Q4 2025 earnings call highlighted navigation of challenges and expansion.",
+            "The company is involved in a legal complaint against Playtech, which caused Playtech's stock to plunge.",
+            "Recent share price fluctuations raise questions about Evolution's current valuation for 2025."
         ],
         "sentiment": 30,
         "jurisdictions": [],
