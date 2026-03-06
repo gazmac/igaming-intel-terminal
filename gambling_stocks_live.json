@@ -21,18 +21,18 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Flutter Entertainment reported strong growth metrics for 2025, with Average Monthly Players (AMPs) reaching 15.9 million and Group revenue increasing by 17% year-over-year to $16.4 billion.",
-            "The company's US operations, particularly FanDuel, demonstrated robust performance with 20% revenue growth and 41% online sports betting GGR share in Q4, alongside the launch of FanDuel Predicts to capture new market opportunities.",
-            "International revenue grew by 14% in 2025, driven by strong performances in Southern Europe and Africa, and strategic platform migrations, with targeted investments planned for Brazil ahead of the 2026 FIFA World Cup."
+            "Flutter Entertainment reported strong 2025 highlights with $16.4BN in revenue and a 17% YoY group revenue growth.",
+            "The company's US operations, particularly FanDuel, showed robust growth with a 20% revenue increase and 82% adjusted EBITDA growth, solidifying its market leadership.",
+            "International markets also demonstrated resilience with 14% revenue growth, driven by strong performance in Southern Europe and Africa, and strategic integrations and investments planned for 2026."
         ],
-        "sentiment": 55,
+        "sentiment": 65,
         "jurisdictions": [
             "US",
-            "AU",
             "GB",
             "IT",
+            "AU",
             "BR",
-            "ZA"
+            "CZ"
         ],
         "history": {
             "1d": [
@@ -82,11 +82,15 @@
                 ],
                 [
                     1772817300000,
-                    111.46
+                    110.94
                 ],
                 [
-                    1772817953000,
-                    111.34
+                    1772818200000,
+                    111.07
+                ],
+                [
+                    1772818606000,
+                    110.99
                 ]
             ],
             "1w": [
@@ -144,7 +148,7 @@
                 ],
                 [
                     1772569800000,
-                    111.28
+                    111.5
                 ],
                 [
                     1772634600000,
@@ -212,11 +216,15 @@
                 ],
                 [
                     1772814600000,
-                    111.46
+                    110.94
                 ],
                 [
-                    1772817953000,
-                    111.34
+                    1772818200000,
+                    111.07
+                ],
+                [
+                    1772818606000,
+                    110.99
                 ]
             ],
             "1m": [
@@ -297,8 +305,8 @@
                     114.57
                 ],
                 [
-                    1772817953000,
-                    111.34
+                    1772818606000,
+                    110.99
                 ]
             ],
             "3m": [
@@ -543,8 +551,8 @@
                     114.57
                 ],
                 [
-                    1772817953000,
-                    111.34
+                    1772818606000,
+                    110.99
                 ]
             ],
             "6m": [
@@ -1045,8 +1053,8 @@
                     114.57
                 ],
                 [
-                    1772817953000,
-                    111.34
+                    1772818606000,
+                    110.99
                 ]
             ],
             "1y": [
@@ -1263,8 +1271,8 @@
                     114.57
                 ],
                 [
-                    1772817956000,
-                    111.37
+                    1772818606000,
+                    110.99
                 ]
             ],
             "5y": [
@@ -1509,8 +1517,8 @@
                     114.57
                 ],
                 [
-                    1772817956000,
-                    111.37
+                    1772818606000,
+                    110.99
                 ]
             ]
         }
@@ -1520,15 +1528,15 @@
         "company": "DraftKings",
         "base_country": "USA",
         "ceo": "Jason Robins",
-        "cfo": "Jason Park",
-        "release_gmt": "2023-11-03T00:00:00.000Z",
-        "call_gmt": "2023-11-03T00:00:00.000Z",
+        "cfo": "Alan Ginsberg",
+        "release_gmt": "2024-05-03T07:00:00Z",
+        "call_gmt": null,
         "actuals": {
-            "eps": -0.21,
-            "revenue": "$213M",
-            "ngr": "$790M",
-            "fcf": "-$36M",
-            "debt_equity": "0.69"
+            "eps": -0.14,
+            "revenue": "$829.0 million",
+            "ngr": "$1.1 billion",
+            "fcf": "-$44.1 million",
+            "debt_equity": "0.56"
         },
         "forecast_eps": {
             "mid": null,
@@ -1537,13 +1545,13 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "DraftKings reported a net loss of $0.21 per share for the third quarter of 2023, an improvement from the previous year.",
-            "Revenue for the quarter increased by 47% year-over-year to $790 million, primarily driven by strong performance in the B2C segment.",
-            "The company is expanding into prediction markets, leveraging its sports-betting expertise to explore new growth avenues, although this move raises ethical and legal considerations."
+            "DraftKings reported strong Q1 2024 results with revenue of $829 million, exceeding expectations.",
+            "The company saw a significant increase in Net Gaming Revenue (NGR) to $1.1 billion, driven by strong player engagement and product innovation.",
+            "Despite a net loss per share of $0.14, DraftKings continues to invest in growth, as evidenced by the expansion into prediction markets."
         ],
         "sentiment": 65,
         "jurisdictions": [
-            "US"
+            "USA"
         ],
         "history": {
             "1d": [
@@ -1593,11 +1601,15 @@
                 ],
                 [
                     1772817300000,
-                    25.0
+                    24.95
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818200000,
+                    24.99
+                ],
+                [
+                    1772818615000,
+                    24.98
                 ]
             ],
             "1w": [
@@ -1627,7 +1639,7 @@
                 ],
                 [
                     1772483400000,
-                    23.82
+                    23.81
                 ],
                 [
                     1772548200000,
@@ -1655,7 +1667,7 @@
                 ],
                 [
                     1772569800000,
-                    24.41
+                    24.43
                 ],
                 [
                     1772634600000,
@@ -1723,11 +1735,15 @@
                 ],
                 [
                     1772814600000,
-                    25.0
+                    24.95
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818200000,
+                    24.99
+                ],
+                [
+                    1772818615000,
+                    24.98
                 ]
             ],
             "1m": [
@@ -1808,8 +1824,8 @@
                     25.46
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818615000,
+                    24.98
                 ]
             ],
             "3m": [
@@ -2054,8 +2070,8 @@
                     25.46
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818615000,
+                    24.98
                 ]
             ],
             "6m": [
@@ -2556,8 +2572,8 @@
                     25.46
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818615000,
+                    24.98
                 ]
             ],
             "1y": [
@@ -2774,8 +2790,8 @@
                     25.46
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818615000,
+                    24.98
                 ]
             ],
             "5y": [
@@ -3020,8 +3036,8 @@
                     25.46
                 ],
                 [
-                    1772817961000,
-                    25.0
+                    1772818615000,
+                    24.98
                 ]
             ]
         }
@@ -3030,16 +3046,16 @@
         "ticker": "ENT.L",
         "company": "Entain PLC",
         "base_country": "UK",
-        "ceo": "Jette Nygaard-Andersen",
-        "cfo": "Rob Wood",
-        "release_gmt": "2024-03-07T07:00:00Z",
-        "call_gmt": "2024-03-07T10:30:00Z",
+        "ceo": null,
+        "cfo": null,
+        "release_gmt": null,
+        "call_gmt": null,
         "actuals": {
-            "eps": 0.13,
-            "revenue": "\u00a3107.1m",
-            "ngr": "\u00a34.12bn",
-            "fcf": "\u00a3544.6m",
-            "debt_equity": "1.6"
+            "eps": null,
+            "revenue": null,
+            "ngr": null,
+            "fcf": null,
+            "debt_equity": null
         },
         "forecast_eps": {
             "mid": null,
@@ -3048,11 +3064,11 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Entain reported a statutory loss of \u00a3447.3m for the year ended 31 December 2023, a significant decrease from the previous year's profit.",
-            "Net Gaming Revenue (NGR) for the full year 2023 increased by 7% to \u00a34.12 billion.",
-            "The company faced challenges including a \u00a3500m hit from tax changes and potential shrinkage of the regulated market due to increased gambling taxes."
+            "Entain PLC experienced a significant financial impact of \u00a3500 million due to tax changes.",
+            "The company anticipates that gambling tax hikes will lead to a contraction of the regulated market.",
+            "Entain PLC reported strong financial performance in its Full Year 2025 earnings call."
         ],
-        "sentiment": 30,
+        "sentiment": 60,
         "jurisdictions": [
             "GB"
         ],
@@ -4719,9 +4735,9 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Evolution AB (EVVTY) is navigating challenges and expanding horizons in its Q4 2025 earnings.",
-            "The company's valuation is under scrutiny following recent share price fluctuations, with a 15% slide raising questions about its 2025 outlook.",
-            "Playtech's stock experienced a significant drop after Evolution named it in a legal complaint."
+            "Evolution AB (EVVTY) Q4 2025 Earnings Call Highlights: Navigating Challenges and Expanding Horizons.",
+            "Playtech stock plunges 30% after Evolution names it in legal complaint.",
+            "Analysis of Evolution's 2025 valuation considering recent share price fluctuations and a 15% slide."
         ],
         "sentiment": 30,
         "jurisdictions": [],
