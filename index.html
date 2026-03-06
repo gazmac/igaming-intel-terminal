@@ -40,6 +40,8 @@
             </div>
             
             <div class="p-6">
+                <div id="modal-financials" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100"></div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2">
                         <div class="flex items-center justify-between mb-4">
@@ -53,13 +55,13 @@
                                 <option value="5y">5 Years</option>
                             </select>
                         </div>
-                        <div id="main-chart" class="w-full bg-slate-50 rounded-xl p-4"></div>
+                        <div id="main-chart" class="w-full bg-white rounded-xl p-2 border border-slate-100"></div>
                     </div>
 
                     <div class="space-y-6">
                         <div>
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">AI Sentiment</h3>
-                            <div class="bg-slate-50 p-4 rounded-xl">
+                            <div class="bg-white p-4 rounded-xl border border-slate-100">
                                 <div class="flex justify-between items-end mb-2">
                                     <span id="sentiment-label" class="text-2xl font-bold"></span>
                                     <span class="text-xs text-slate-400 pb-1">BULLISHNESS</span>
@@ -70,7 +72,7 @@
 
                         <div>
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
-                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed"></ul>
+                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100"></ul>
                         </div>
                     </div>
                 </div>
@@ -96,22 +98,35 @@
             const grid = document.getElementById('stock-grid');
             grid.innerHTML = db.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
+                const isBeat = s.eps_beat_miss_pct > 0;
+                const beatColor = isBeat ? 'text-green-600' : 'text-red-500';
+                const period = s.actuals.period || 'Q4 25';
+                
                 return `
-                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
-                                <p class="text-xs font-mono text-slate-400">${s.ticker}</p>
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
+                                    <p class="text-xs font-mono text-slate-400">${s.ticker}</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-slate-900">${s.last_price}</div>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <div class="text-lg font-bold text-slate-900">${s.last_price}</div>
-                                <div class="text-[10px] text-slate-400 uppercase tracking-tighter">${s.base_country}</div>
+                            
+                            <div class="grid grid-cols-2 gap-2 mb-4 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals.revenue}</span></div>
+                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${beatColor}">${isBeat ? '▲' : '▼'} ${Math.abs(s.eps_beat_miss_pct)}%</span></div>
                             </div>
                         </div>
-                        <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment}%"></div></div>
-                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
-                            <span>Sentiment</span>
-                            <span>${s.sentiment}%</span>
+
+                        <div>
+                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment}%"></div></div>
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                                <span>Sentiment</span>
+                                <span>${s.sentiment}%</span>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -121,8 +136,19 @@
         function openModal(ticker) {
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
+            const period = s.actuals.period || 'Q4 25';
+
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerText = `${ticker} | ${s.base_country} Based`;
+            
+            // Populate Modal Financials Strip
+            document.getElementById('modal-financials').innerHTML = `
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act vs Est)</div><div class="font-mono text-sm font-bold">${s.actuals.eps_actual} <span class="text-slate-400">/ ${s.actuals.eps_forecast}</span></div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">REV (${period})</div><div class="font-mono text-sm font-bold">${s.actuals.revenue}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals.ebitda}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">Net Income</div><div class="font-mono text-sm font-bold ${s.actuals.net_income.includes('-') ? 'text-red-500' : ''}">${s.actuals.net_income}</div></div>
+                <div><div class="text-[10px] font-bold text-slate-400 uppercase">FCF</div><div class="font-mono text-sm font-bold">${s.actuals.fcf}</div></div>
+            `;
             
             const newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
             document.getElementById('news-summary').innerHTML = newsHtml;
@@ -154,7 +180,6 @@
                     toolbar: { show: false },
                     zoom: { enabled: false }
                 },
-                // FIX: Hide labels and markers, keep tooltip
                 dataLabels: { enabled: false },
                 markers: { size: 0, hover: { size: 6 } },
                 stroke: { curve: 'smooth', width: 2.5 },
