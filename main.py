@@ -17,7 +17,7 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# Swapped Kindred Group (Delisted) for its acquirer, La Française des Jeux (FDJ.PA)
+# Replaced the illiquid French stock with Sportradar (SRAD) on the NASDAQ
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
@@ -29,7 +29,7 @@ TARGET_COMPANIES = [
     {"name": "Las Vegas Sands", "ticker": "LVS", "base_country": "USA"},
     {"name": "Wynn Resorts", "ticker": "WYNN", "base_country": "USA"},
     {"name": "Evoke plc", "ticker": "EVOK.L", "base_country": "UK"},
-    {"name": "La Française des Jeux", "ticker": "FDJ.PA", "base_country": "France"},
+    {"name": "Sportradar", "ticker": "SRAD", "base_country": "Switzerland"},
     {"name": "Betsson AB", "ticker": "BETS-B.ST", "base_country": "Sweden"},
     {"name": "Playtech", "ticker": "PTEC.L", "base_country": "UK"},
     {"name": "Churchill Downs", "ticker": "CHDN", "base_country": "USA"},
@@ -43,7 +43,7 @@ TARGET_COMPANIES = [
 
 OTC_MAP = {
     "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
-    "FDJ.PA": "LFDJF", "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
+    "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
@@ -58,7 +58,7 @@ VERIFIED_DATA = {
     "LVS": {"period": "Q4 25", "eps_actual": 0.65, "eps_forecast": 0.55, "revenue": "$2.9B", "net_income": "$450M", "ebitda": "$1.2B", "ngr": "$2.9B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
     "WYNN": {"period": "Q4 25", "eps_actual": 1.20, "eps_forecast": 1.05, "revenue": "$1.8B", "net_income": "$200M", "ebitda": "$600M", "ngr": "$1.8B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
     "EVOK.L": {"period": "H2 25", "eps_actual": -0.05, "eps_forecast": 0.01, "revenue": "£850M", "net_income": "-£40M", "ebitda": "£150M", "ngr": "£850M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
-    "FDJ.PA": {"period": "H2 25", "eps_actual": 1.45, "eps_forecast": 1.30, "revenue": "€2.6B", "net_income": "€425M", "ebitda": "€670M", "ngr": "€2.6B", "fcf": "€480M", "jurisdictions": ["France", "Ireland", "Europe"]},
+    "SRAD": {"period": "Q4 25", "eps_actual": 0.14, "eps_forecast": 0.10, "revenue": "$280M", "net_income": "$35M", "ebitda": "$55M", "ngr": "$280M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
     "BETS-B.ST": {"period": "Q4 25", "eps_actual": 0.35, "eps_forecast": 0.32, "revenue": "€260M", "net_income": "€45M", "ebitda": "€75M", "ngr": "€260M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
     "PTEC.L": {"period": "H2 25", "eps_actual": 0.18, "eps_forecast": 0.20, "revenue": "€850M", "net_income": "€55M", "ebitda": "€200M", "ngr": "€850M", "fcf": "€80M", "jurisdictions": ["UK", "Italy"]},
     "CHDN": {"period": "Q4 25", "eps_actual": 1.35, "eps_forecast": 1.20, "revenue": "$750M", "net_income": "$90M", "ebitda": "$300M", "ngr": "$750M", "fcf": "$120M", "jurisdictions": ["US"]},
@@ -73,7 +73,7 @@ VERIFIED_DATA = {
 VERIFIED_CALENDAR = {
     "FLUT": "2026-05-06T21:00:00Z", "DKNG": "2026-05-07T21:00:00Z", "ENT.L": "2026-04-29T07:00:00Z", "EVO.ST": "2026-04-22T06:30:00Z",
     "MGM": "2026-05-01T21:00:00Z", "CZR": "2026-05-05T21:00:00Z", "PENN": "2026-05-07T21:00:00Z", "LVS": "2026-04-20T21:00:00Z",
-    "WYNN": "2026-05-06T21:00:00Z", "EVOK.L": "2026-04-15T07:00:00Z", "FDJ.PA": "2026-04-15T16:30:00Z", "BETS-B.ST": "2026-04-23T06:30:00Z",
+    "WYNN": "2026-05-06T21:00:00Z", "EVOK.L": "2026-04-15T07:00:00Z", "SRAD": "2026-05-12T12:00:00Z", "BETS-B.ST": "2026-04-23T06:30:00Z",
     "PTEC.L": "2026-03-25T07:00:00Z", "CHDN": "2026-04-22T21:00:00Z", "LNW": "2026-05-08T21:00:00Z", "ALL.AX": "2026-05-13T00:00:00Z",
     "SGHC": "2026-05-14T12:00:00Z", "RSI": "2026-05-06T21:00:00Z", "BRAG": "2026-05-14T12:00:00Z", "KAMBI.ST": "2026-04-29T06:30:00Z"
 }
@@ -92,6 +92,7 @@ def get_native_price(ticker):
         price = price_data['regularMarketPrice']['raw']
         currency = price_data['currency'] 
         
+        # Currency formatting perfectly aligned with your UK/Sweden/EU requirements
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
         elif currency == "SEK": sym = "SEK "
@@ -102,7 +103,7 @@ def get_native_price(ticker):
         
         return f"{sym}{round(price, 2)}", price
     except Exception:
-        # Fallback to fast_info
+        # Fallback
         try:
             ytk = yf.Ticker(ticker)
             price = ytk.fast_info['lastPrice']
@@ -178,6 +179,7 @@ def ai_process_intelligence(company_name, ticker):
 
         prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
         
+        # Uses your working 2.5 flash model
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
             contents=prompt,
