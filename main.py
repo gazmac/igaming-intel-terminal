@@ -17,7 +17,6 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# Replaced the illiquid French stock with Sportradar (SRAD) on the NASDAQ
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
@@ -70,18 +69,33 @@ VERIFIED_DATA = {
     "KAMBI.ST": {"period": "Q4 25", "eps_actual": 0.18, "eps_forecast": 0.15, "revenue": "€45M", "net_income": "€5M", "ebitda": "€15M", "ngr": "€45M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
 }
 
+# RESTORED: Fully detailed dictionary format
 VERIFIED_CALENDAR = {
-    "FLUT": "2026-05-06T21:00:00Z", "DKNG": "2026-05-07T21:00:00Z", "ENT.L": "2026-04-29T07:00:00Z", "EVO.ST": "2026-04-22T06:30:00Z",
-    "MGM": "2026-05-01T21:00:00Z", "CZR": "2026-05-05T21:00:00Z", "PENN": "2026-05-07T21:00:00Z", "LVS": "2026-04-20T21:00:00Z",
-    "WYNN": "2026-05-06T21:00:00Z", "EVOK.L": "2026-04-15T07:00:00Z", "SRAD": "2026-05-12T12:00:00Z", "BETS-B.ST": "2026-04-23T06:30:00Z",
-    "PTEC.L": "2026-03-25T07:00:00Z", "CHDN": "2026-04-22T21:00:00Z", "LNW": "2026-05-08T21:00:00Z", "ALL.AX": "2026-05-13T00:00:00Z",
-    "SGHC": "2026-05-14T12:00:00Z", "RSI": "2026-05-06T21:00:00Z", "BRAG": "2026-05-14T12:00:00Z", "KAMBI.ST": "2026-04-29T06:30:00Z"
+    "FLUT": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "DKNG": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "ENT.L": {"date": "Apr 16, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "EVO.ST": {"date": "Apr 22, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "MGM": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "CZR": {"date": "Apr 28, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "PENN": {"date": "May 7, 2026", "report_time": "7:00 AM EST", "call_time": "8:00 AM EST"},
+    "LVS": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "WYNN": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "EVOK.L": {"date": "Apr 15, 2026", "report_time": "7:00 AM BST", "call_time": "8:30 AM BST"},
+    "SRAD": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "BETS-B.ST": {"date": "Apr 24, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "PTEC.L": {"date": "Mar 25, 2026", "report_time": "7:00 AM GMT", "call_time": "9:00 AM GMT"},
+    "CHDN": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST (Next Day)"},
+    "LNW": {"date": "May 8, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "ALL.AX": {"date": "May 13, 2026", "report_time": "8:00 AM AEST", "call_time": "10:30 AM AEST"},
+    "SGHC": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "RSI": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "BRAG": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "KAMBI.ST": {"date": "Apr 29, 2026", "report_time": "7:45 AM CET", "call_time": "10:45 AM CET"}
 }
 
 # --- 2. CORE FUNCTIONS ---
 
 def get_native_price(ticker):
-    """Surgical API call to grab the exact native currency and price."""
     try:
         url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=price"
         headers = {'User-Agent': 'Mozilla/5.0'}
@@ -92,7 +106,6 @@ def get_native_price(ticker):
         price = price_data['regularMarketPrice']['raw']
         currency = price_data['currency'] 
         
-        # Currency formatting perfectly aligned with your UK/Sweden/EU requirements
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
         elif currency == "SEK": sym = "SEK "
@@ -103,7 +116,6 @@ def get_native_price(ticker):
         
         return f"{sym}{round(price, 2)}", price
     except Exception:
-        # Fallback
         try:
             ytk = yf.Ticker(ticker)
             price = ytk.fast_info['lastPrice']
@@ -117,7 +129,6 @@ def get_native_price(ticker):
             return "N/A", None
 
 def fetch_stock_history(ticker, native_price_raw):
-    """Fetches charts and mathematically scales OTC charts back to native currency limits."""
     print(f"  -> Fetching charts for {ticker}...")
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
@@ -144,7 +155,6 @@ def fetch_stock_history(ticker, native_price_raw):
             df_5y_weekly = df_5y.resample('W').last().dropna()
             history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
             
-        # THE NORMALIZER: Mathematically scale the OTC chart array to match the Native European price
         if is_otc and native_price_raw and history["1d"]:
             latest_otc = history["1d"][-1][1]
             if latest_otc > 0:
@@ -179,7 +189,6 @@ def ai_process_intelligence(company_name, ticker):
 
         prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
         
-        # Uses your working 2.5 flash model
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
             contents=prompt,
@@ -215,47 +224,13 @@ def run_pipeline():
             "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": []
         })
         
+        # RESTORED: Safely fetch the calendar dictionary object
+        cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
+        
         beat_miss = 0
         if fin.get("eps_forecast", 0) != 0:
             beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, native_price_raw = get_native_price(ticker)
-            history = fetch_stock_history(ticker, native_price_raw)
-        except Exception as e:
-            print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
-            history, last_price_str = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
-
-        master_db.append({
-            "ticker": ticker,
-            "company": co["name"],
-            "base_country": co["base_country"],
-            "release_gmt": VERIFIED_CALENDAR.get(ticker, ""),
-            "last_price": last_price_str,
-            "actuals": fin,
-            "eps_beat_miss_pct": beat_miss,
-            "news_summary": intel.get("summary", ["Data parsing failed."]),
-            "sentiment": intel.get("sentiment", 50),
-            "jurisdictions": fin.get("jurisdictions", []),
-            "history": history
-        })
-        
-        time.sleep(5)
-
-    if master_db:
-        with open('gambling_stocks_live.json', 'w') as f:
-            json.dump(master_db, f, indent=4)
-        print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
-    else:
-        print("\n❌ Pipeline Error: No data collected.")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    try:
-        run_pipeline()
-    except Exception as e:
-        print("\n❌ FATAL CRASH: The script encountered a module-level error.")
-        traceback.print_exc()
-        sys.exit(1)
+            last_price_str, native_
