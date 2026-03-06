@@ -11,8 +11,6 @@ from google import genai
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
-# The script will look for an environment variable (set in GitHub Secrets)
-# If running locally, you can replace this with your actual key string.
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -80,8 +78,7 @@ def scrape_yahoo_estimates(ticker):
     forecasts = {"mid": None, "low": None, "high": None}
     try:
         response = requests.get(url, headers=headers, timeout=15)
-        # --- THE FIX IS HERE ---
-        # Wrap the raw HTML text in io.StringIO() before handing it to pandas
+        # Using io.StringIO to fix the pandas FutureWarning
         tables = pd.read_html(io.StringIO(response.text))
         for df in tables:
             if 'Earnings Estimate' in df.columns:
@@ -91,7 +88,8 @@ def scrape_yahoo_estimates(ticker):
                 forecasts["low"] = float(df.loc['Low Estimate', curr_qtr])
                 forecasts["high"] = float(df.loc['High Estimate', curr_qtr])
                 break
-    except: pass
+    except Exception as e:
+        print(f"Error scraping Yahoo estimates for {ticker}: {e}")
     return forecasts
 
 def get_latest_news_headlines(ticker):
@@ -115,9 +113,9 @@ def fetch_stock_history(ticker):
             result = res['chart']['result'][0]
             ts = result['timestamp']
             pr = result['indicators']['quote'][0]['close']
-            # Format as [timestamp_ms, price] for ApexCharts
             history[label] = [[t * 1000, round(p, 2)] for t, p in zip(ts, pr) if p is not None]
-        except: history[label] = []
+        except Exception as e:
+            history[label] = []
     return history
 
 # --- 3. AI PROCESSING ---
@@ -139,11 +137,7 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
         "sentiment": int_0_to_100
     }}
     """
-  def ai_process_intelligence(pdf_text, headlines, company_name):
-    # ... (keep the prompt setup as it was) ...
-    
-    print(f"Sending data to Gemini for {company_name} (PDF text length: {len(pdf_text)} characters)...")
-    
+    print(f"Sending data to Gemini for {company_name}...")
     try:
         response = client.models.generate_content(
             model='gemini-2.0-flash',
@@ -151,24 +145,16 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
             config={"response_mime_type": "application/json"}
         )
         return json.loads(response.text)
-        
     except Exception as e:
-        # THIS IS THE CRITICAL CHANGE: It will now print exactly why it failed.
         print(f"❌ ERROR processing {company_name} with Gemini: {e}")
-        
-        # We still return the fallback so the JSON doesn't corrupt, 
-        # but now you have a paper trail.
-        return {
-            "execs": {}, "dates": {}, "actuals": {}, 
-            "jurisdictions": [], "summary": ["Data processing failed."], "sentiment": 50
-        }
+        return {"execs":{}, "dates":{}, "actuals":{}, "jurisdictions":[], "summary":["Data processing failed."], "sentiment":50}
 
 # --- 4. MAIN LOOP ---
 
 def run_pipeline():
     master_db = []
     for co in TARGET_COMPANIES:
-        print(f"Processing {co['name']}...")
+        print(f"\nProcessing {co['name']}...")
         
         headlines = get_latest_news_headlines(co['ticker'])
         estimates = scrape_yahoo_estimates(co['ticker'])
@@ -185,7 +171,8 @@ def run_pipeline():
             act = float(intel['actuals'].get('eps', 0))
             est = float(estimates.get('mid', 0))
             if est != 0: beat_miss = round(((act - est) / abs(est)) * 100, 2)
-        except: pass
+        except Exception:
+            pass
 
         master_db.append({
             "ticker": co["ticker"],
@@ -206,7 +193,7 @@ def run_pipeline():
 
     with open('gambling_stocks_live.json', 'w') as f:
         json.dump(master_db, f, indent=4)
-    print("Pipeline Complete.")
+    print("\nPipeline Complete.")
 
 if __name__ == "__main__":
     run_pipeline()
