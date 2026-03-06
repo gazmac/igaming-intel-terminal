@@ -5,6 +5,7 @@ import urllib.parse
 import os
 import pandas as pd
 import feedparser
+import io
 from bs4 import BeautifulSoup
 from google import genai
 from datetime import datetime
@@ -79,7 +80,9 @@ def scrape_yahoo_estimates(ticker):
     forecasts = {"mid": None, "low": None, "high": None}
     try:
         response = requests.get(url, headers=headers, timeout=15)
-        tables = pd.read_html(response.text)
+        # --- THE FIX IS HERE ---
+        # Wrap the raw HTML text in io.StringIO() before handing it to pandas
+        tables = pd.read_html(io.StringIO(response.text))
         for df in tables:
             if 'Earnings Estimate' in df.columns:
                 df.set_index('Earnings Estimate', inplace=True)
