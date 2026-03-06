@@ -1,8 +1,10 @@
 import requests
 import json
 import urllib.parse
+import urllib.request
 import os
 import pandas as pd
+import feedparser
 import time
 import yfinance as yf
 import re
@@ -12,6 +14,10 @@ from google import genai
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+# Swapped Kindred Group (Delisted) for its acquirer, La Française des Jeux (FDJ.PA)
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
@@ -23,7 +29,7 @@ TARGET_COMPANIES = [
     {"name": "Las Vegas Sands", "ticker": "LVS", "base_country": "USA"},
     {"name": "Wynn Resorts", "ticker": "WYNN", "base_country": "USA"},
     {"name": "Evoke plc", "ticker": "EVOK.L", "base_country": "UK"},
-    {"name": "Kindred Group", "ticker": "KIND-SDB.ST", "base_country": "Malta"},
+    {"name": "La Française des Jeux", "ticker": "FDJ.PA", "base_country": "France"},
     {"name": "Betsson AB", "ticker": "BETS-B.ST", "base_country": "Sweden"},
     {"name": "Playtech", "ticker": "PTEC.L", "base_country": "UK"},
     {"name": "Churchill Downs", "ticker": "CHDN", "base_country": "USA"},
@@ -37,7 +43,7 @@ TARGET_COMPANIES = [
 
 OTC_MAP = {
     "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
-    "KIND-SDB.ST": "KNDGF", "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
+    "FDJ.PA": "LFDJF", "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
@@ -52,7 +58,7 @@ VERIFIED_DATA = {
     "LVS": {"period": "Q4 25", "eps_actual": 0.65, "eps_forecast": 0.55, "revenue": "$2.9B", "net_income": "$450M", "ebitda": "$1.2B", "ngr": "$2.9B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
     "WYNN": {"period": "Q4 25", "eps_actual": 1.20, "eps_forecast": 1.05, "revenue": "$1.8B", "net_income": "$200M", "ebitda": "$600M", "ngr": "$1.8B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
     "EVOK.L": {"period": "H2 25", "eps_actual": -0.05, "eps_forecast": 0.01, "revenue": "£850M", "net_income": "-£40M", "ebitda": "£150M", "ngr": "£850M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
-    "KIND-SDB.ST": {"period": "Q4 25", "eps_actual": 0.15, "eps_forecast": 0.12, "revenue": "£310M", "net_income": "£35M", "ebitda": "£65M", "ngr": "£300M", "fcf": "£40M", "jurisdictions": ["UK", "Sweden", "Netherlands"]},
+    "FDJ.PA": {"period": "H2 25", "eps_actual": 1.45, "eps_forecast": 1.30, "revenue": "€2.6B", "net_income": "€425M", "ebitda": "€670M", "ngr": "€2.6B", "fcf": "€480M", "jurisdictions": ["France", "Ireland", "Europe"]},
     "BETS-B.ST": {"period": "Q4 25", "eps_actual": 0.35, "eps_forecast": 0.32, "revenue": "€260M", "net_income": "€45M", "ebitda": "€75M", "ngr": "€260M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
     "PTEC.L": {"period": "H2 25", "eps_actual": 0.18, "eps_forecast": 0.20, "revenue": "€850M", "net_income": "€55M", "ebitda": "€200M", "ngr": "€850M", "fcf": "€80M", "jurisdictions": ["UK", "Italy"]},
     "CHDN": {"period": "Q4 25", "eps_actual": 1.35, "eps_forecast": 1.20, "revenue": "$750M", "net_income": "$90M", "ebitda": "$300M", "ngr": "$750M", "fcf": "$120M", "jurisdictions": ["US"]},
@@ -67,36 +73,63 @@ VERIFIED_DATA = {
 VERIFIED_CALENDAR = {
     "FLUT": "2026-05-06T21:00:00Z", "DKNG": "2026-05-07T21:00:00Z", "ENT.L": "2026-04-29T07:00:00Z", "EVO.ST": "2026-04-22T06:30:00Z",
     "MGM": "2026-05-01T21:00:00Z", "CZR": "2026-05-05T21:00:00Z", "PENN": "2026-05-07T21:00:00Z", "LVS": "2026-04-20T21:00:00Z",
-    "WYNN": "2026-05-06T21:00:00Z", "EVOK.L": "2026-04-15T07:00:00Z", "KIND-SDB.ST": "2026-04-24T06:30:00Z", "BETS-B.ST": "2026-04-23T06:30:00Z",
+    "WYNN": "2026-05-06T21:00:00Z", "EVOK.L": "2026-04-15T07:00:00Z", "FDJ.PA": "2026-04-15T16:30:00Z", "BETS-B.ST": "2026-04-23T06:30:00Z",
     "PTEC.L": "2026-03-25T07:00:00Z", "CHDN": "2026-04-22T21:00:00Z", "LNW": "2026-05-08T21:00:00Z", "ALL.AX": "2026-05-13T00:00:00Z",
     "SGHC": "2026-05-14T12:00:00Z", "RSI": "2026-05-06T21:00:00Z", "BRAG": "2026-05-14T12:00:00Z", "KAMBI.ST": "2026-04-29T06:30:00Z"
 }
 
 # --- 2. CORE FUNCTIONS ---
 
-def fetch_stock_history(ticker):
+def get_native_price(ticker):
+    """Surgical API call to grab the exact native currency and price."""
+    try:
+        url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=price"
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers, timeout=5)
+        data = res.json()
+        price_data = data['quoteSummary']['result'][0]['price']
+        
+        price = price_data['regularMarketPrice']['raw']
+        currency = price_data['currency'] 
+        
+        if currency == "GBp": sym = "GBp "
+        elif currency == "GBP": sym = "£"
+        elif currency == "SEK": sym = "SEK "
+        elif currency == "EUR": sym = "€"
+        elif currency == "AUD": sym = "A$"
+        elif currency == "CAD": sym = "C$"
+        else: sym = "$"
+        
+        return f"{sym}{round(price, 2)}", price
+    except Exception:
+        # Fallback to fast_info
+        try:
+            ytk = yf.Ticker(ticker)
+            price = ytk.fast_info['lastPrice']
+            if ".L" in ticker: sym = "GBp "
+            elif ".ST" in ticker: sym = "SEK "
+            elif ".PA" in ticker or ".AS" in ticker: sym = "€"
+            elif ".AX" in ticker: sym = "A$"
+            else: sym = "$"
+            return f"{sym}{round(price, 2)}", price
+        except Exception:
+            return "N/A", None
+
+def fetch_stock_history(ticker, native_price_raw):
+    """Fetches charts and mathematically scales OTC charts back to native currency limits."""
     print(f"  -> Fetching charts for {ticker}...")
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
     
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
-    last_price_str = "N/A"
-    sym = "$" if is_otc else ("GBp " if ".L" in ticker else ("SEK " if ".ST" in ticker else "$"))
     
     try:
         ytk = yf.Ticker(fetch_ticker)
         
-        # FIX 1: Look at the last 5 days to guarantee we find a closing price for illiquid EU OTC stocks
-        df_price = ytk.history(period="5d")
-        if not df_price.empty:
-            last_price_str = f"{sym}{round(df_price['Close'].iloc[-1], 2)}"
-
-        # 1d intraday chart (might be empty for OTC, but we already secured the last_price_str)
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
 
-        # 5-year history
         df_5y = ytk.history(period="5y", interval="1d")
         if not df_5y.empty:
             df_5y.index = df_5y.index.tz_localize(None)
@@ -110,10 +143,18 @@ def fetch_stock_history(ticker):
             df_5y_weekly = df_5y.resample('W').last().dropna()
             history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
             
+        # THE NORMALIZER: Mathematically scale the OTC chart array to match the Native European price
+        if is_otc and native_price_raw and history["1d"]:
+            latest_otc = history["1d"][-1][1]
+            if latest_otc > 0:
+                ratio = native_price_raw / latest_otc
+                for period in history:
+                    history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
+                    
     except Exception as e:
         print(f"  ❌ yfinance failed for {ticker}: {e}")
         
-    return history, last_price_str
+    return history
 
 def ai_process_intelligence(company_name, ticker):
     print(f"  -> Fetching Yahoo API News for {company_name}...")
@@ -124,21 +165,17 @@ def ai_process_intelligence(company_name, ticker):
         
     try:
         client = genai.Client(api_key=api_key)
-        
-        # FIX 2: Abandon RSS completely. Use Yahoo's internal JSON Search API (Bypasses bot blockers)
         clean_name = urllib.parse.quote(company_name)
         url = f"https://query2.finance.yahoo.com/v1/finance/search?q={clean_name}&newsCount=5"
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        headers = {'User-Agent': 'Mozilla/5.0'}
         
         res = requests.get(url, headers=headers, timeout=10)
         res_data = res.json()
-        
         headlines = [item['title'] for item in res_data.get('news', [])]
         
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50}
 
-        # Prompt Gemini with JSON validation config active
         prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
         
         ai_resp = client.models.generate_content(
@@ -147,7 +184,6 @@ def ai_process_intelligence(company_name, ticker):
             config={"response_mime_type": "application/json"}
         )
         
-        # Scrubber
         raw_text = ai_resp.text.strip()
         match = re.search(r'\{.*\}', raw_text, re.DOTALL)
         if match:
@@ -183,18 +219,19 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            history, last_price = fetch_stock_history(ticker)
+            last_price_str, native_price_raw = get_native_price(ticker)
+            history = fetch_stock_history(ticker, native_price_raw)
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
-            history, last_price = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
+            history, last_price_str = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
 
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
             "base_country": co["base_country"],
             "release_gmt": VERIFIED_CALENDAR.get(ticker, ""),
-            "last_price": last_price,
+            "last_price": last_price_str,
             "actuals": fin,
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
@@ -203,7 +240,6 @@ def run_pipeline():
             "history": history
         })
         
-        # 5-second sleep to ensure we stay under the 15 RPM Gemini limit
         time.sleep(5)
 
     if master_db:
