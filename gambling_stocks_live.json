@@ -6,17 +6,23 @@
         "release_gmt": "2026-05-06T21:00:00Z",
         "last_price": "$112.26",
         "actuals": {
-            "eps_actual": -1.75,
-            "eps_forecast": 0.24,
-            "revenue": "$16.38B",
-            "ebitda": "$2.84B",
+            "period": "Q4 25",
+            "eps_actual": 1.74,
+            "eps_forecast": 1.91,
+            "revenue": "$4.74B",
+            "net_income": "$10M",
+            "ebitda": "$832M",
+            "ngr": "$4.74B",
+            "fcf": "-$1.43B",
             "jurisdictions": [
                 "US",
                 "UK",
-                "Ireland"
+                "Ireland",
+                "Australia",
+                "Italy"
             ]
         },
-        "eps_beat_miss_pct": -829.17,
+        "eps_beat_miss_pct": -8.9,
         "news_summary": [
             "News temporarily unavailable."
         ],
@@ -24,7 +30,9 @@
         "jurisdictions": [
             "US",
             "UK",
-            "Ireland"
+            "Ireland",
+            "Australia",
+            "Italy"
         ],
         "history": {
             "1d": [
@@ -3062,23 +3070,29 @@
         "release_gmt": "2026-05-07T21:00:00Z",
         "last_price": "$25.14",
         "actuals": {
-            "eps_actual": 0.28,
-            "eps_forecast": 0.2,
+            "period": "Q4 25",
+            "eps_actual": 0.25,
+            "eps_forecast": 0.18,
             "revenue": "$1.99B",
-            "ebitda": "$343.2M",
+            "net_income": "$136.4M",
+            "ebitda": "$343M",
+            "ngr": "$1.99B",
+            "fcf": "$270M",
             "jurisdictions": [
                 "US",
-                "Canada"
+                "Ontario",
+                "Puerto Rico"
             ]
         },
-        "eps_beat_miss_pct": 40.0,
+        "eps_beat_miss_pct": 38.89,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "US",
-            "Canada"
+            "Ontario",
+            "Puerto Rico"
         ],
         "history": {
             "1d": [
@@ -6116,14 +6130,19 @@
         "release_gmt": "2026-04-29T07:00:00Z",
         "last_price": "N/A",
         "actuals": {
+            "period": "H2 25",
             "eps_actual": 0.62,
             "eps_forecast": 0.45,
-            "revenue": "\u00a35.26B",
-            "ebitda": "\u00a31.16B",
+            "revenue": "\u00a33.2B",
+            "net_income": "\u00a3150M",
+            "ebitda": "\u00a3600M",
+            "ngr": "\u00a33.2B",
+            "fcf": "\u00a3151M",
             "jurisdictions": [
                 "UK",
                 "Italy",
-                "Brazil"
+                "Brazil",
+                "Australia"
             ]
         },
         "eps_beat_miss_pct": 37.78,
@@ -6134,7 +6153,8 @@
         "jurisdictions": [
             "UK",
             "Italy",
-            "Brazil"
+            "Brazil",
+            "Australia"
         ],
         "history": {
             "1d": [],
@@ -9063,12 +9083,19 @@
         "release_gmt": "2026-04-22T06:30:00Z",
         "last_price": "$61.08",
         "actuals": {
+            "period": "Q4 25",
             "eps_actual": 1.54,
             "eps_forecast": 1.46,
             "revenue": "\u20ac514M",
+            "net_income": "\u20ac306M",
             "ebitda": "\u20ac393M",
+            "ngr": "\u20ac514M",
+            "fcf": "\u20ac250M",
             "jurisdictions": [
-                "Global Live Casino"
+                "Europe",
+                "North America",
+                "LatAm",
+                "Asia"
             ]
         },
         "eps_beat_miss_pct": 5.48,
@@ -9077,7 +9104,10 @@
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "Global Live Casino"
+            "Europe",
+            "North America",
+            "LatAm",
+            "Asia"
         ],
         "history": {
             "1d": [
@@ -12060,26 +12090,32 @@
         "ticker": "MGM",
         "company": "MGM Resorts",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-05-01T21:00:00Z",
         "last_price": "$35.58",
         "actuals": {
-            "eps_actual": 0.76,
-            "eps_forecast": 2.4,
-            "revenue": "$17.5B",
-            "ebitda": "$2.4B",
+            "period": "Q4 25",
+            "eps_actual": 1.11,
+            "eps_forecast": 0.56,
+            "revenue": "$4.61B",
+            "net_income": "$294M",
+            "ebitda": "$635M",
+            "ngr": "$4.61B",
+            "fcf": "$300M",
             "jurisdictions": [
                 "US",
-                "Macau"
+                "Macau",
+                "Japan"
             ]
         },
-        "eps_beat_miss_pct": -68.33,
+        "eps_beat_miss_pct": 98.21,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "US",
-            "Macau"
+            "Macau",
+            "Japan"
         ],
         "history": {
             "1d": [
@@ -15114,19 +15150,23 @@
         "ticker": "CZR",
         "company": "Caesars Entertainment",
         "base_country": "USA",
-        "release_gmt": "",
-        "last_price": "$26.42",
+        "release_gmt": "2026-05-05T21:00:00Z",
+        "last_price": "$26.4",
         "actuals": {
-            "eps_actual": -2.42,
+            "period": "Q4 25",
+            "eps_actual": -0.34,
             "eps_forecast": 0.1,
-            "revenue": "$11.49B",
-            "ebitda": "$3.29B",
+            "revenue": "$2.8B",
+            "net_income": "-$72M",
+            "ebitda": "$900M",
+            "ngr": "$2.8B",
+            "fcf": "$150M",
             "jurisdictions": [
                 "US",
                 "Canada"
             ]
         },
-        "eps_beat_miss_pct": -2520.0,
+        "eps_beat_miss_pct": -440.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
@@ -15239,7 +15279,7 @@
                 ],
                 [
                     1772829900000,
-                    26.42
+                    26.4
                 ]
             ],
             "1w": [
@@ -18168,15 +18208,20 @@
         "ticker": "PENN",
         "company": "Penn Entertainment",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-05-07T21:00:00Z",
         "last_price": "$14.64",
         "actuals": {
+            "period": "Q4 25",
             "eps_actual": 0.07,
             "eps_forecast": 0.02,
-            "revenue": "$6.3B",
-            "ebitda": "$1.4B",
+            "revenue": "$1.6B",
+            "net_income": "$15M",
+            "ebitda": "$350M",
+            "ngr": "$1.6B",
+            "fcf": "$80M",
             "jurisdictions": [
-                "US"
+                "US",
+                "Canada"
             ]
         },
         "eps_beat_miss_pct": 250.0,
@@ -18185,7 +18230,8 @@
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "US"
+            "US",
+            "Canada"
         ],
         "history": {
             "1d": [
@@ -21220,19 +21266,23 @@
         "ticker": "LVS",
         "company": "Las Vegas Sands",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-04-20T21:00:00Z",
         "last_price": "$53.59",
         "actuals": {
-            "eps_actual": 2.45,
-            "eps_forecast": 2.8,
-            "revenue": "$13.0B",
-            "ebitda": "$5.23B",
+            "period": "Q4 25",
+            "eps_actual": 0.65,
+            "eps_forecast": 0.55,
+            "revenue": "$2.9B",
+            "net_income": "$450M",
+            "ebitda": "$1.2B",
+            "ngr": "$2.9B",
+            "fcf": "$600M",
             "jurisdictions": [
                 "Macau",
                 "Singapore"
             ]
         },
-        "eps_beat_miss_pct": -12.5,
+        "eps_beat_miss_pct": 18.18,
         "news_summary": [
             "News temporarily unavailable."
         ],
@@ -24274,26 +24324,32 @@
         "ticker": "WYNN",
         "company": "Wynn Resorts",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-05-06T21:00:00Z",
         "last_price": "$101.64",
         "actuals": {
-            "eps_actual": 4.5,
-            "eps_forecast": 5.0,
-            "revenue": "$7.3B",
-            "ebitda": "$2.4B",
+            "period": "Q4 25",
+            "eps_actual": 1.2,
+            "eps_forecast": 1.05,
+            "revenue": "$1.8B",
+            "net_income": "$200M",
+            "ebitda": "$600M",
+            "ngr": "$1.8B",
+            "fcf": "$300M",
             "jurisdictions": [
                 "US",
-                "Macau"
+                "Macau",
+                "UAE"
             ]
         },
-        "eps_beat_miss_pct": -10.0,
+        "eps_beat_miss_pct": 14.29,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "US",
-            "Macau"
+            "Macau",
+            "UAE"
         ],
         "history": {
             "1d": [
@@ -27328,25 +27384,31 @@
         "ticker": "EVOK.L",
         "company": "Evoke plc",
         "base_country": "UK",
-        "release_gmt": "",
+        "release_gmt": "2026-04-15T07:00:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": -0.15,
-            "eps_forecast": 0.05,
-            "revenue": "\u00a31.7B",
-            "ebitda": "\u00a3310M",
+            "period": "H2 25",
+            "eps_actual": -0.05,
+            "eps_forecast": 0.01,
+            "revenue": "\u00a3850M",
+            "net_income": "-\u00a340M",
+            "ebitda": "\u00a3150M",
+            "ngr": "\u00a3850M",
+            "fcf": "\u00a320M",
             "jurisdictions": [
                 "UK",
+                "Italy",
                 "Spain"
             ]
         },
-        "eps_beat_miss_pct": -400.0,
+        "eps_beat_miss_pct": -600.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "UK",
+            "Italy",
             "Spain"
         ],
         "history": {
@@ -30273,26 +30335,32 @@
         "ticker": "KIND-SDB.ST",
         "company": "Kindred Group",
         "base_country": "Malta",
-        "release_gmt": "",
+        "release_gmt": "2026-04-24T06:30:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 0.21,
-            "eps_forecast": 0.3,
-            "revenue": "\u00a31.21B",
-            "ebitda": "\u00a3134M",
+            "period": "Q4 25",
+            "eps_actual": 0.15,
+            "eps_forecast": 0.12,
+            "revenue": "\u00a3310M",
+            "net_income": "\u00a335M",
+            "ebitda": "\u00a365M",
+            "ngr": "\u00a3300M",
+            "fcf": "\u00a340M",
             "jurisdictions": [
-                "Europe",
-                "Australia"
+                "UK",
+                "Sweden",
+                "Netherlands"
             ]
         },
-        "eps_beat_miss_pct": -30.0,
+        "eps_beat_miss_pct": 25.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "Europe",
-            "Australia"
+            "UK",
+            "Sweden",
+            "Netherlands"
         ],
         "history": {
             "1d": [],
@@ -30308,26 +30376,32 @@
         "ticker": "BETS-B.ST",
         "company": "Betsson AB",
         "base_country": "Sweden",
-        "release_gmt": "",
+        "release_gmt": "2026-04-23T06:30:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 1.29,
-            "eps_forecast": 1.35,
-            "revenue": "\u20ac1.20B",
-            "ebitda": "\u20ac314M",
+            "period": "Q4 25",
+            "eps_actual": 0.35,
+            "eps_forecast": 0.32,
+            "revenue": "\u20ac260M",
+            "net_income": "\u20ac45M",
+            "ebitda": "\u20ac75M",
+            "ngr": "\u20ac260M",
+            "fcf": "\u20ac50M",
             "jurisdictions": [
                 "Nordics",
-                "LatAm"
+                "LatAm",
+                "CEECA"
             ]
         },
-        "eps_beat_miss_pct": -4.44,
+        "eps_beat_miss_pct": 9.37,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "Nordics",
-            "LatAm"
+            "LatAm",
+            "CEECA"
         ],
         "history": {
             "1d": [],
@@ -33253,19 +33327,23 @@
         "ticker": "PTEC.L",
         "company": "Playtech",
         "base_country": "UK",
-        "release_gmt": "",
+        "release_gmt": "2026-03-25T07:00:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 0.35,
-            "eps_forecast": 0.4,
-            "revenue": "\u20ac1.7B",
-            "ebitda": "\u20ac400M",
+            "period": "H2 25",
+            "eps_actual": 0.18,
+            "eps_forecast": 0.2,
+            "revenue": "\u20ac850M",
+            "net_income": "\u20ac55M",
+            "ebitda": "\u20ac200M",
+            "ngr": "\u20ac850M",
+            "fcf": "\u20ac80M",
             "jurisdictions": [
                 "UK",
                 "Italy"
             ]
         },
-        "eps_beat_miss_pct": -12.5,
+        "eps_beat_miss_pct": -10.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
@@ -36198,18 +36276,22 @@
         "ticker": "CHDN",
         "company": "Churchill Downs",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-04-22T21:00:00Z",
         "last_price": "$83.83",
         "actuals": {
-            "eps_actual": 5.29,
-            "eps_forecast": 6.13,
-            "revenue": "$2.93B",
-            "ebitda": "$1.21B",
+            "period": "Q4 25",
+            "eps_actual": 1.35,
+            "eps_forecast": 1.2,
+            "revenue": "$750M",
+            "net_income": "$90M",
+            "ebitda": "$300M",
+            "ngr": "$750M",
+            "fcf": "$120M",
             "jurisdictions": [
                 "US"
             ]
         },
-        "eps_beat_miss_pct": -13.7,
+        "eps_beat_miss_pct": 12.5,
         "news_summary": [
             "News temporarily unavailable."
         ],
@@ -39250,26 +39332,32 @@
         "ticker": "LNW",
         "company": "Light & Wonder",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-05-08T21:00:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 1.5,
-            "eps_forecast": 2.1,
-            "revenue": "$3.2B",
-            "ebitda": "$1.1B",
+            "period": "Q4 25",
+            "eps_actual": 0.45,
+            "eps_forecast": 0.5,
+            "revenue": "$800M",
+            "net_income": "$45M",
+            "ebitda": "$280M",
+            "ngr": "$800M",
+            "fcf": "$100M",
             "jurisdictions": [
                 "US",
-                "Australia"
+                "Australia",
+                "UK"
             ]
         },
-        "eps_beat_miss_pct": -28.57,
+        "eps_beat_miss_pct": -10.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "US",
-            "Australia"
+            "Australia",
+            "UK"
         ],
         "history": {
             "1d": [],
@@ -39751,24 +39839,32 @@
         "ticker": "ALL.AX",
         "company": "Aristocrat Leisure",
         "base_country": "Australia",
-        "release_gmt": "",
+        "release_gmt": "2026-05-13T00:00:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 1.85,
-            "eps_forecast": 2.05,
-            "revenue": "A$6.3B",
-            "ebitda": "A$2.1B",
+            "period": "H2 25",
+            "eps_actual": 0.95,
+            "eps_forecast": 0.9,
+            "revenue": "A$3.2B",
+            "net_income": "A$600M",
+            "ebitda": "A$1.1B",
+            "ngr": "A$3.2B",
+            "fcf": "A$750M",
             "jurisdictions": [
-                "Global slots"
+                "US",
+                "Australia",
+                "Global"
             ]
         },
-        "eps_beat_miss_pct": -9.76,
+        "eps_beat_miss_pct": 5.56,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "Global slots"
+            "US",
+            "Australia",
+            "Global"
         ],
         "history": {
             "1d": [],
@@ -42694,26 +42790,32 @@
         "ticker": "SGHC",
         "company": "Super Group",
         "base_country": "Guernsey",
-        "release_gmt": "",
+        "release_gmt": "2026-05-14T12:00:00Z",
         "last_price": "$10.65",
         "actuals": {
-            "eps_actual": 0.3,
-            "eps_forecast": 0.35,
-            "revenue": "\u20ac1.4B",
-            "ebitda": "\u20ac300M",
+            "period": "Q4 25",
+            "eps_actual": 0.08,
+            "eps_forecast": 0.1,
+            "revenue": "\u20ac360M",
+            "net_income": "\u20ac35M",
+            "ebitda": "\u20ac75M",
+            "ngr": "\u20ac360M",
+            "fcf": "\u20ac45M",
             "jurisdictions": [
                 "Canada",
-                "Africa"
+                "Africa",
+                "Europe"
             ]
         },
-        "eps_beat_miss_pct": -14.29,
+        "eps_beat_miss_pct": -20.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "Canada",
-            "Africa"
+            "Africa",
+            "Europe"
         ],
         "history": {
             "1d": [
@@ -45748,26 +45850,32 @@
         "ticker": "RSI",
         "company": "Rush Street Interactive",
         "base_country": "USA",
-        "release_gmt": "",
+        "release_gmt": "2026-05-06T21:00:00Z",
         "last_price": "$20.88",
         "actuals": {
-            "eps_actual": 0.32,
-            "eps_forecast": 0.4,
-            "revenue": "$1.13B",
-            "ebitda": "$154M",
+            "period": "Q4 25",
+            "eps_actual": 0.12,
+            "eps_forecast": 0.08,
+            "revenue": "$250M",
+            "net_income": "$15M",
+            "ebitda": "$40M",
+            "ngr": "$250M",
+            "fcf": "$20M",
             "jurisdictions": [
                 "US",
-                "LatAm"
+                "Colombia",
+                "Mexico"
             ]
         },
-        "eps_beat_miss_pct": -20.0,
+        "eps_beat_miss_pct": 50.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
             "US",
-            "LatAm"
+            "Colombia",
+            "Mexico"
         ],
         "history": {
             "1d": [
@@ -48802,15 +48910,21 @@
         "ticker": "BRAG",
         "company": "Bragg Gaming Group",
         "base_country": "Canada",
-        "release_gmt": "",
+        "release_gmt": "2026-05-14T12:00:00Z",
         "last_price": "$1.61",
         "actuals": {
-            "eps_actual": -0.1,
-            "eps_forecast": 0.05,
-            "revenue": "\u20ac106M",
-            "ebitda": "\u20ac15M",
+            "period": "Q4 25",
+            "eps_actual": -0.02,
+            "eps_forecast": 0.01,
+            "revenue": "\u20ac28M",
+            "net_income": "-\u20ac1M",
+            "ebitda": "\u20ac4M",
+            "ngr": "\u20ac28M",
+            "fcf": "\u20ac1M",
             "jurisdictions": [
-                "iGaming B2B"
+                "US",
+                "Europe",
+                "Canada"
             ]
         },
         "eps_beat_miss_pct": -300.0,
@@ -48819,7 +48933,9 @@
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "iGaming B2B"
+            "US",
+            "Europe",
+            "Canada"
         ],
         "history": {
             "1d": [
@@ -51778,24 +51894,32 @@
         "ticker": "KAMBI.ST",
         "company": "Kambi Group",
         "base_country": "Malta",
-        "release_gmt": "",
+        "release_gmt": "2026-04-29T06:30:00Z",
         "last_price": "N/A",
         "actuals": {
-            "eps_actual": 0.67,
-            "eps_forecast": 0.69,
-            "revenue": "\u20ac176M",
-            "ebitda": "\u20ac59M",
+            "period": "Q4 25",
+            "eps_actual": 0.18,
+            "eps_forecast": 0.15,
+            "revenue": "\u20ac45M",
+            "net_income": "\u20ac5M",
+            "ebitda": "\u20ac15M",
+            "ngr": "\u20ac45M",
+            "fcf": "\u20ac8M",
             "jurisdictions": [
-                "B2B Sportsbook"
+                "Global B2B",
+                "US",
+                "LatAm"
             ]
         },
-        "eps_beat_miss_pct": -2.9,
+        "eps_beat_miss_pct": 20.0,
         "news_summary": [
             "News temporarily unavailable."
         ],
         "sentiment": 50,
         "jurisdictions": [
-            "B2B Sportsbook"
+            "Global B2B",
+            "US",
+            "LatAm"
         ],
         "history": {
             "1d": [],
