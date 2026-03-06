@@ -5,4 +5,4 @@ google-genai
 pandas
 lxml
 feedparser
-yfinance
+yfinance>=0.2.54
