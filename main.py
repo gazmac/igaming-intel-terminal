@@ -136,6 +136,11 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
         "sentiment": int_0_to_100
     }}
     """
+  def ai_process_intelligence(pdf_text, headlines, company_name):
+    # ... (keep the prompt setup as it was) ...
+    
+    print(f"Sending data to Gemini for {company_name} (PDF text length: {len(pdf_text)} characters)...")
+    
     try:
         response = client.models.generate_content(
             model='gemini-2.0-flash',
@@ -143,8 +148,17 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
             config={"response_mime_type": "application/json"}
         )
         return json.loads(response.text)
-    except:
-        return {"execs":{}, "dates":{}, "actuals":{}, "jurisdictions":[], "summary":[], "sentiment":50}
+        
+    except Exception as e:
+        # THIS IS THE CRITICAL CHANGE: It will now print exactly why it failed.
+        print(f"❌ ERROR processing {company_name} with Gemini: {e}")
+        
+        # We still return the fallback so the JSON doesn't corrupt, 
+        # but now you have a paper trail.
+        return {
+            "execs": {}, "dates": {}, "actuals": {}, 
+            "jurisdictions": [], "summary": ["Data processing failed."], "sentiment": 50
+        }
 
 # --- 4. MAIN LOOP ---
 
