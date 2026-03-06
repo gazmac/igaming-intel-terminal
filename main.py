@@ -13,7 +13,6 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# Using your full list of 20 targets
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
@@ -70,76 +69,75 @@ VERIFIED_CALENDAR = {
 }
 
 def fetch_stock_history(ticker):
-    """Fetches charts via yfinance using a secure session to bypass European GDPR walls."""
+    """Optimized chart fetching: Downloads once and slices locally to defeat rate limits."""
     print(f"Fetching charts and price for {ticker}...")
     
-    # Injecting a browser session to defeat Yahoo's EU Cookie Blocks
-    session = requests.Session()
-    session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'})
-    
-    periods = {
-        "1d": {"p": "1d", "i": "15m"}, "1w": {"p": "5d", "i": "1h"}, 
-        "1m": {"p": "1mo", "i": "1d"}, "3m": {"p": "3mo", "i": "1d"}, 
-        "6m": {"p": "6mo", "i": "1d"}, "1y": {"p": "1y", "i": "1wk"}, 
-        "5y": {"p": "5y", "i": "1wk"} 
-    }
-    history = {}
+    history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     last_price_str = "N/A"
     
-    # Format currencies cleanly
     currencies = {"FLUT": "$", "DKNG": "$", "ENT.L": "GBp ", "EVO.ST": "SEK ", "EVOK.L": "GBp ", "KIND-SDB.ST": "SEK ", "BETS-B.ST": "SEK ", "PTEC.L": "GBp ", "ALL.AX": "A$", "KAMBI.ST": "SEK "}
     sym = currencies.get(ticker, "$")
     
     try:
-        # Pass the secure session into yfinance
-        ytk = yf.Ticker(ticker, session=session)
-        latest_data = ytk.history(period="1d")
-        if not latest_data.empty:
-            last_price_str = f"{sym}{round(latest_data['Close'].iloc[-1], 2)}"
+        ytk = yf.Ticker(ticker)
+        
+        # 1. Fetch Intraday (For the latest price and 1-day chart)
+        df_1d = ytk.history(period="1d", interval="15m")
+        if not df_1d.empty:
+            last_price_str = f"{sym}{round(df_1d['Close'].iloc[-1], 2)}"
+            history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
 
-        for label, config in periods.items():
-            df = ytk.history(period=config["p"], interval=config["i"])
-            data_points = []
-            if not df.empty:
-                for idx, row in df.iterrows():
-                    ts = int(pd.Timestamp(idx).timestamp() * 1000)
-                    data_points.append([ts, round(row['Close'], 2)])
-            history[label] = data_points
+        # 2. Fetch 5-Year History (One API Call) and slice it locally
+        df_5y = ytk.history(period="5y", interval="1d")
+        if not df_5y.empty:
+            def slice_data(days):
+                cutoff = df_5y.index[-1] - pd.Timedelta(days=days)
+                sliced = df_5y[df_5y.index >= cutoff]
+                return [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in sliced.iterrows()]
+            
+            history["1w"] = slice_data(7)
+            history["1m"] = slice_data(30)
+            history["3m"] = slice_data(90)
+            history["6m"] = slice_data(180)
+            history["1y"] = slice_data(365)
+            
+            # Resample daily data to weekly data for the 5-year view so the JS chart doesn't lag
+            df_5y_weekly = df_5y.resample('W').last().dropna()
+            history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
+            
     except Exception as e:
         print(f"❌ Error fetching {ticker}: {e}")
         
     return history, last_price_str
 
 def ai_process_intelligence(company_name):
-    """Fetches global news from Google and parses Gemini JSON securely."""
-    # 1. Switch entirely to Google News to fix the broken Yahoo RSS for International stocks
-    print(f"Fetching Google News for {company_name}...")
+    """Fetches Google News and forces clean JSON out of the AI."""
+    print(f"Analyzing News for {company_name}...")
     query = urllib.parse.quote(f'"{company_name}" stock OR earnings')
-    google_rss = f"[https://news.google.com/rss/search?q=](https://news.google.com/rss/search?q=){query}&hl=en-US&gl=US&ceid=US:en"
+    google_rss = f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+    
     feed = feedparser.parse(google_rss)
     headlines = [entry.title for entry in feed.entries[:6]]
     
     if not headlines:
         return {"summary": ["No recent news found for this company."], "sentiment": 50}
 
-    prompt = f"Act as an iGaming financial analyst. Based on these headlines for {company_name}: {' | '.join(headlines)}. Return ONLY a JSON object exactly like this: {{\"summary\": [\"Point 1\", \"Point 2\", \"Point 3\"], \"sentiment\": 75}}. Do not include markdown code blocks."
+    prompt = f"Act as an iGaming financial analyst. Based on these headlines for {company_name}: {' | '.join(headlines)}. Return ONLY a JSON object exactly like this: {{\n\"summary\": [\"Point 1\", \"Point 2\", \"Point 3\"],\n\"sentiment\": 75\n}}. Do not include markdown code blocks."
     
     try:
         response = client.models.generate_content(
-            model='gemini-2.5-flash-lite', 
+            model='gemini-2.5-flash', 
             contents=prompt, 
             config={"response_mime_type": "application/json"}
         )
         
-        # 2. The JSON Scrubber: Strips the ```json markdown that breaks the parser
+        # The Scrubber: Forcefully removes markdown ticks if Gemini disobeys the prompt
         raw_text = response.text.strip()
-        if raw_text.startswith("```json"):
-            raw_text = raw_text[7:]
         if raw_text.startswith("```"):
-            raw_text = raw_text[3:]
-        if raw_text.endswith("```"):
-            raw_text = raw_text[:-3]
-            
+            raw_text = raw_text.split("\n", 1)[-1]
+            if raw_text.endswith("```"):
+                raw_text = raw_text[:-3]
+                
         return json.loads(raw_text.strip())
     except Exception as e:
         print(f"❌ AI Parsing Error for {company_name}: {e}")
@@ -149,12 +147,12 @@ def run_pipeline():
     master_db = []
     for co in TARGET_COMPANIES:
         ticker = co['ticker']
-        print(f"\nProcessing {co['name']} ({ticker})...")
+        print(f"\n--- {co['name']} ({ticker}) ---")
         
         intel = ai_process_intelligence(co['name'])
         history, last_price = fetch_stock_history(ticker)
         
-        fin = VERIFIED_DATA.get(ticker, VERIFIED_DATA["DKNG"]) # Fallback safety
+        fin = VERIFIED_DATA.get(ticker, VERIFIED_DATA["DKNG"])
         beat_miss = 0
         if fin["eps_forecast"] != 0:
             beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
@@ -167,7 +165,8 @@ def run_pipeline():
             "jurisdictions": fin["jurisdictions"], "history": history
         })
         
-        time.sleep(4) # Respect Gemini API limits
+        # Hard pause to guarantee we stay under the 15 requests/minute free tier limit
+        time.sleep(4)
 
     with open('gambling_stocks_live.json', 'w') as f:
         json.dump(master_db, f, indent=4)
