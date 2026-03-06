@@ -15,12 +15,25 @@
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
-        <header class="mb-8 flex justify-between items-end">
+        
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
             <div>
                 <h1 class="text-3xl font-bold text-slate-900 tracking-tight">iGaming Earnings HQ</h1>
                 <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
             </div>
-            <div id="last-update" class="text-xs text-slate-400 font-mono"></div>
+            <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
+                <div id="last-update" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded">Loading Data...</div>
+                
+                <div class="flex items-center gap-2 w-full">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">Sort By:</span>
+                    <select id="sort-select" onchange="applySort()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
+                        <option value="earnings">Nearest Earnings Date</option>
+                        <option value="alpha">Alphabetical</option>
+                        <option value="exchange">Stock Exchange Group</option>
+                        <option value="beat">Highest EPS Beat</option>
+                    </select>
+                </div>
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid">
@@ -40,13 +53,35 @@
             </div>
             
             <div class="p-6">
+                <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 mb-6 flex justify-between items-center shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-500 text-white p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-0.5">Next Earnings Event</div>
+                            <div id="modal-earnings-date" class="text-lg font-black text-slate-800"></div>
+                        </div>
+                    </div>
+                    <div class="text-right flex gap-4 md:gap-6">
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase">Report Release</div>
+                            <div id="modal-report-time" class="text-xs md:text-sm font-bold text-slate-700"></div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase">Conference Call</div>
+                            <div id="modal-call-time" class="text-xs md:text-sm font-bold text-blue-600"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="modal-financials" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
-                            <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none">
+                            <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold">
                                 <option value="1d">1 Day</option>
                                 <option value="1w">1 Week</option>
                                 <option value="1m">1 Month</option>
@@ -55,13 +90,13 @@
                                 <option value="5y">5 Years</option>
                             </select>
                         </div>
-                        <div id="main-chart" class="w-full bg-white rounded-xl p-2 border border-slate-100"></div>
+                        <div id="main-chart" class="w-full bg-white rounded-xl p-2 border border-slate-100 min-h-[300px]"></div>
                     </div>
 
                     <div class="space-y-6">
                         <div>
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">AI Sentiment</h3>
-                            <div class="bg-white p-4 rounded-xl border border-slate-100">
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
                                 <div class="flex justify-between items-end mb-2">
                                     <span id="sentiment-label" class="text-2xl font-bold"></span>
                                     <span class="text-xs text-slate-400 pb-1">BULLISHNESS</span>
@@ -72,7 +107,7 @@
 
                         <div>
                             <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
-                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100"></ul>
+                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100 shadow-sm"></ul>
                         </div>
                     </div>
                 </div>
@@ -84,23 +119,76 @@
         let db = [];
         let activeTicker = null;
         let chartInstance = null;
+        let currentSort = 'earnings'; // Default sort state
 
         async function init() {
             try {
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
-                document.getElementById('last-update').innerText = 'LAST REFRESH: ' + new Date().toLocaleTimeString();
-                renderGrid();
-            } catch (e) { console.error("Data load failed", e); }
+                document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                applySort(); // Sorts and renders immediately on load
+            } catch (e) { 
+                console.error("Data load failed", e);
+                document.getElementById('last-update').innerText = 'Data Fetch Failed';
+            }
         }
 
-        function renderGrid() {
+        function getExchangeGroup(ticker) {
+            if (ticker.endsWith('.L')) return 'LSE (UK)';
+            if (ticker.endsWith('.ST')) return 'Nasdaq Stockholm';
+            if (ticker.endsWith('.PA')) return 'Euronext Paris';
+            if (ticker.endsWith('.AX')) return 'ASX (Australia)';
+            return 'US Markets (NYSE/NASDAQ)';
+        }
+
+        function applySort() {
+            currentSort = document.getElementById('sort-select').value;
+            
+            // Create a fresh copy to sort
+            let sortedDb = [...db];
+
+            sortedDb.sort((a, b) => {
+                if (currentSort === 'earnings') {
+                    // Convert date strings to sortable timestamps
+                    const dateA = new Date(a.calendar.date).getTime();
+                    const dateB = new Date(b.calendar.date).getTime();
+                    // Push invalid dates/TBDs to the very bottom
+                    const timeA = isNaN(dateA) ? Infinity : dateA;
+                    const timeB = isNaN(dateB) ? Infinity : dateB;
+                    return timeA - timeB;
+                } 
+                else if (currentSort === 'alpha') {
+                    return a.company.localeCompare(b.company);
+                } 
+                else if (currentSort === 'exchange') {
+                    const exA = getExchangeGroup(a.ticker);
+                    const exB = getExchangeGroup(b.ticker);
+                    // If same exchange, alphabetize within that group
+                    if (exA === exB) return a.company.localeCompare(b.company);
+                    return exA.localeCompare(exB);
+                } 
+                else if (currentSort === 'beat') {
+                    // Sort by highest beat descending. Nulls go to the bottom.
+                    const beatA = (a.eps_beat_miss_pct !== null && a.eps_beat_miss_pct !== undefined) ? a.eps_beat_miss_pct : -999;
+                    const beatB = (b.eps_beat_miss_pct !== null && b.eps_beat_miss_pct !== undefined) ? b.eps_beat_miss_pct : -999;
+                    return beatB - beatA;
+                }
+                return 0;
+            });
+
+            renderGrid(sortedDb);
+        }
+
+        function renderGrid(dataToRender) {
             const grid = document.getElementById('stock-grid');
-            grid.innerHTML = db.map(s => {
+            grid.innerHTML = dataToRender.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
                 const isBeat = s.eps_beat_miss_pct > 0;
                 const beatColor = isBeat ? 'text-green-600' : 'text-red-500';
                 const period = s.actuals.period || 'Q4 25';
+                
+                // Optional: If grouped by exchange, show the exchange in the header instead of base country
+                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
                 
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
@@ -108,20 +196,25 @@
                             <div class="flex justify-between items-start mb-3">
                                 <div>
                                     <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
-                                    <p class="text-xs font-mono text-slate-400">${s.ticker}</p>
+                                    <p class="text-[10px] font-mono text-slate-400">${s.ticker} • ${locationLabel}</p>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-lg font-bold text-slate-900">${s.last_price}</div>
                                 </div>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-2 mb-4 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
                                 <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals.revenue}</span></div>
                                 <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${beatColor}">${isBeat ? '▲' : '▼'} ${Math.abs(s.eps_beat_miss_pct)}%</span></div>
                             </div>
                         </div>
 
                         <div>
+                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100">
+                                <span>🗓️ NEXT EARNINGS:</span>
+                                <span class="text-blue-600">${s.calendar.date}</span>
+                            </div>
+
                             <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment}%"></div></div>
                             <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
                                 <span>Sentiment</span>
@@ -141,6 +234,11 @@
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerText = `${ticker} | ${s.base_country} Based`;
             
+            // Populate Calendar Strip
+            document.getElementById('modal-earnings-date').innerText = s.calendar.date;
+            document.getElementById('modal-report-time').innerText = s.calendar.report_time;
+            document.getElementById('modal-call-time').innerText = s.calendar.call_time;
+
             // Populate Modal Financials Strip
             document.getElementById('modal-financials').innerHTML = `
                 <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act vs Est)</div><div class="font-mono text-sm font-bold">${s.actuals.eps_actual} <span class="text-slate-400">/ ${s.actuals.eps_forecast}</span></div></div>
@@ -178,22 +276,30 @@
                     type: 'area', 
                     height: 320, 
                     toolbar: { show: false },
-                    zoom: { enabled: false }
+                    zoom: { enabled: false },
+                    fontFamily: 'inherit'
                 },
                 dataLabels: { enabled: false },
                 markers: { size: 0, hover: { size: 6 } },
                 stroke: { curve: 'smooth', width: 2.5 },
-                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8' } } },
-                yaxis: { labels: { style: { colors: '#94a3b8' }, formatter: (v) => v.toFixed(2) } },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
+                yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => v.toFixed(2) } },
                 colors: ['#3b82f6'],
                 fill: { type: 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
                 grid: { borderColor: '#f1f5f9' },
-                tooltip: { x: { format: 'dd MMM yyyy' }, theme: 'light' }
+                tooltip: { x: { format: 'dd MMM yyyy' }, theme: 'light' },
+                noData: { text: "No chart data available" }
             });
             chartInstance.render();
         }
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
         init();
     </script>
 </body>
