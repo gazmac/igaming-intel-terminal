@@ -3,11 +3,17 @@
         "ticker": "FLUT",
         "company": "Flutter Entertainment",
         "base_country": "Ireland",
-        "ceo": null,
+        "ceo": "Peter Jackson",
         "cfo": null,
         "release_gmt": null,
         "call_gmt": null,
-        "actuals": {},
+        "actuals": {
+            "eps": null,
+            "revenue": "$16.4BN",
+            "ngr": null,
+            "fcf": null,
+            "debt_equity": null
+        },
         "forecast_eps": {
             "mid": null,
             "low": null,
@@ -15,10 +21,19 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Data processing failed."
+            "Flutter Entertainment reported strong financial results with $16.4 billion in revenue (+17% YoY) and $2.8 billion in Adjusted EBITDA (+21% YoY), showcasing significant growth.",
+            "FanDuel, Flutter's US brand, continues to dominate with 20% revenue growth and 82% adjusted EBITDA growth, holding 41% OSB GGR share and 28% iGaming GGR share in Q4.",
+            "The company is expanding into prediction markets with FanDuel Predicts and focusing on international growth in markets like Brazil, while also emphasizing sustainability through its Positive Impact Plan."
         ],
-        "sentiment": 50,
-        "jurisdictions": [],
+        "sentiment": 75,
+        "jurisdictions": [
+            "US",
+            "AU",
+            "GB",
+            "IT",
+            "BR",
+            "CN"
+        ],
         "history": {
             "1d": [
                 [
@@ -63,11 +78,11 @@
                 ],
                 [
                     1772816400000,
-                    111.03
+                    110.43
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "1w": [
@@ -193,11 +208,11 @@
                 ],
                 [
                     1772814600000,
-                    111.03
+                    110.43
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "1m": [
@@ -278,8 +293,8 @@
                     114.57
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "3m": [
@@ -524,8 +539,8 @@
                     114.57
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "6m": [
@@ -1026,8 +1041,8 @@
                     114.57
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "1y": [
@@ -1244,8 +1259,8 @@
                     114.57
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817050000,
+                    110.51
                 ]
             ],
             "5y": [
@@ -1490,8 +1505,8 @@
                     114.57
                 ],
                 [
-                    1772816558000,
-                    111.17
+                    1772817052000,
+                    110.45
                 ]
             ]
         }
@@ -1500,11 +1515,17 @@
         "ticker": "DKNG",
         "company": "DraftKings",
         "base_country": "USA",
-        "ceo": null,
-        "cfo": null,
-        "release_gmt": null,
-        "call_gmt": null,
-        "actuals": {},
+        "ceo": "Jason Robins",
+        "cfo": "Brett Caler",
+        "release_gmt": "2024-05-03T21:00:00Z",
+        "call_gmt": "2024-05-03T21:00:00Z",
+        "actuals": {
+            "eps": -0.13,
+            "revenue": "1.11B",
+            "ngr": null,
+            "fcf": "-18.9M",
+            "debt_equity": "0.81"
+        },
         "forecast_eps": {
             "mid": null,
             "low": null,
@@ -1512,10 +1533,14 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Data processing failed."
+            "DraftKings reported Q1 2024 revenue of $1.11 billion, an increase of 53% year-over-year, driven by strong performance in its Sportsbook and iGaming segments.",
+            "The company narrowed its net loss to $40 million, or -$0.13 per share, compared to a net loss of $111.7 million, or -$0.38 per share, in the prior year period.",
+            "DraftKings is expanding into prediction markets, leveraging its sports-betting playbook for potential new growth avenues, although this move raises ethical and legal considerations."
         ],
-        "sentiment": 50,
-        "jurisdictions": [],
+        "sentiment": 65,
+        "jurisdictions": [
+            "US"
+        ],
         "history": {
             "1d": [
                 [
@@ -1560,11 +1585,11 @@
                 ],
                 [
                     1772816400000,
-                    25.06
+                    25.0
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "1w": [
@@ -1594,7 +1619,7 @@
                 ],
                 [
                     1772483400000,
-                    23.81
+                    23.82
                 ],
                 [
                     1772548200000,
@@ -1622,7 +1647,7 @@
                 ],
                 [
                     1772569800000,
-                    24.43
+                    24.41
                 ],
                 [
                     1772634600000,
@@ -1690,11 +1715,11 @@
                 ],
                 [
                     1772814600000,
-                    25.06
+                    25.0
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "1m": [
@@ -1775,8 +1800,8 @@
                     25.46
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "3m": [
@@ -2021,8 +2046,8 @@
                     25.46
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "6m": [
@@ -2523,8 +2548,8 @@
                     25.46
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "1y": [
@@ -2741,8 +2766,8 @@
                     25.46
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ],
             "5y": [
@@ -2987,8 +3012,8 @@
                     25.46
                 ],
                 [
-                    1772816564000,
-                    25.08
+                    1772817056000,
+                    25.01
                 ]
             ]
         }
@@ -2997,11 +3022,17 @@
         "ticker": "ENT.L",
         "company": "Entain PLC",
         "base_country": "UK",
-        "ceo": null,
-        "cfo": null,
-        "release_gmt": null,
-        "call_gmt": null,
-        "actuals": {},
+        "ceo": "Jette Nygaard-Andersen",
+        "cfo": "David Gregory",
+        "release_gmt": "2024-03-07T07:00:00Z",
+        "call_gmt": "2024-03-07T10:00:00Z",
+        "actuals": {
+            "eps": 0.47,
+            "revenue": "\u00a310.716bn",
+            "ngr": "\u00a38.577bn",
+            "fcf": "\u00a3762m",
+            "debt_equity": "1.5x"
+        },
         "forecast_eps": {
             "mid": null,
             "low": null,
@@ -3009,10 +3040,22 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Data processing failed."
+            "Entain reported strong financial performance for FY23, with revenue of \u00a310.716bn and NGR of \u00a38.577bn.",
+            "The company generated \u00a3762m in free cash flow, and maintains a debt-to-equity ratio of 1.5x.",
+            "However, Entain faces challenges from increased gambling taxes in the UK, which could shrink the regulated market."
         ],
-        "sentiment": 50,
-        "jurisdictions": [],
+        "sentiment": 45,
+        "jurisdictions": [
+            "GB",
+            "US",
+            "AU",
+            "IT",
+            "BG",
+            "DE",
+            "NL",
+            "RO",
+            "GR"
+        ],
         "history": {
             "1d": [
                 [
@@ -4661,8 +4704,14 @@
         "ceo": null,
         "cfo": null,
         "release_gmt": null,
-        "call_gmt": null,
-        "actuals": {},
+        "call_gmt": "2025-XX-XXT00:00:00Z",
+        "actuals": {
+            "eps": null,
+            "revenue": null,
+            "ngr": null,
+            "fcf": null,
+            "debt_equity": null
+        },
         "forecast_eps": {
             "mid": null,
             "low": null,
@@ -4670,10 +4719,14 @@
         },
         "eps_beat_miss_pct": null,
         "news_summary": [
-            "Data processing failed."
+            "Evolution AB (EVVTY) held its Q4 2025 earnings call, discussing challenges and expansion plans.",
+            "The company's stock experienced fluctuations, leading to questions about its current valuation.",
+            "Evolution AB was mentioned in a legal complaint by Playtech, which saw a significant stock price drop."
         ],
-        "sentiment": 50,
-        "jurisdictions": [],
+        "sentiment": 45,
+        "jurisdictions": [
+            "SWE"
+        ],
         "history": {
             "1d": [
                 [
