@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+pymupdf
+google-genai
+pandas
+lxml
+feedparser
