@@ -1,3 +1,4 @@
+import time
 import requests
 import fitz  # PyMuPDF
 import json
@@ -140,7 +141,7 @@ def ai_process_intelligence(pdf_text, headlines, company_name):
     print(f"Sending data to Gemini for {company_name}...")
     try:
         response = client.models.generate_content(
-            model='gemini-2.0-flash',
+            model='gemini-2.5-flash-lite',
             contents=prompt,
             config={"response_mime_type": "application/json"}
         )
@@ -190,6 +191,8 @@ def run_pipeline():
             "jurisdictions": intel["jurisdictions"],
             "history": history
         })
+        print("Pausing for 5 seconds to respect API rate limits...")
+        time.sleep(5)
 
     with open('gambling_stocks_live.json', 'w') as f:
         json.dump(master_db, f, indent=4)
