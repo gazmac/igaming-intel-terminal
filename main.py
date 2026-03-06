@@ -65,18 +65,41 @@ def get_latest_news_headlines(ticker, company_name):
     return headlines
 
 def fetch_stock_history(ticker):
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    periods = {"1d": ("1d", "15m"), "1w": ("5d", "1h"), "1m": ("1mo", "1d"), "3m": ("3mo", "1d"), "6m": ("6mo", "1d"), "1y": ("1y", "1wk"), "5y": ("5y", "1mo")}
+    """Uses yfinance to bypass EU cookie walls and fetch historical prices reliably."""
+    print(f"Fetching charts for {ticker} via yfinance...")
+    # Map our dashboard labels to yfinance period/interval parameters
+    periods = {
+        "1d": {"p": "1d", "i": "15m"},
+        "1w": {"p": "5d", "i": "1h"},
+        "1m": {"p": "1mo", "i": "1d"},
+        "3m": {"p": "3mo", "i": "1d"},
+        "6m": {"p": "6mo", "i": "1d"},
+        "1y": {"p": "1y", "i": "1wk"},
+        "5y": {"p": "5y", "i": "1mo"}
+    }
     history = {}
-    for label, (r, i) in periods.items():
-        try:
-            url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?range={r}&interval={i}"
-            res = requests.get(url, headers=headers, timeout=5).json()
-            result = res['chart']['result'][0]
-            ts = result['timestamp']
-            pr = result['indicators']['quote'][0]['close']
-            history[label] = [[t * 1000, round(p, 2)] for t, p in zip(ts, pr) if p is not None]
-        except: history[label] = []
+    
+    try:
+        ytk = yf.Ticker(ticker)
+        for label, config in periods.items():
+            try:
+                # Fetch the dataframe from Yahoo
+                df = ytk.history(period=config["p"], interval=config["i"])
+                data_points = []
+                
+                if not df.empty:
+                    # Convert the pandas index to milliseconds for ApexCharts
+                    for idx, row in df.iterrows():
+                        ts = int(idx.timestamp() * 1000)
+                        data_points.append([ts, round(row['Close'], 2)])
+                
+                history[label] = data_points
+            except Exception as e:
+                print(f"⚠️ Error fetching {label} for {ticker}: {e}")
+                history[label] = []
+    except Exception as e:
+        print(f"❌ Critical yfinance error for {ticker}: {e}")
+        
     return history
 
 # --- 3. AI PROCESSING ---
