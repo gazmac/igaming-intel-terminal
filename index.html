@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGaming Intelligence Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
+    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
+    <style>
+        .sparkline-container { width: 120px; height: 40px; }
+        #main-chart { min-height: 350px; }
+        /* Smooth scrolling for modal */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 p-8 font-sans text-slate-900">
+
+    <div class="max-w-[120rem] mx-auto">
+        <header class="mb-10 flex justify-between items-end border-b border-slate-200 pb-6">
+            <div>
+                <h1 class="text-4xl font-black text-slate-800 tracking-tight">iGaming Intel <span class="text-blue-600">Terminal</span></h1>
+                <p class="text-sm text-slate-500 mt-2">Live Calendar, AI Sentiment, and Automated Earnings Alerts.</p>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-3 bg-white border border-slate-200 p-2 rounded-xl shadow-sm">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Earnings Crash Alert</span>
+                        <span class="text-xs text-slate-500">Notify on intraday drop:</span>
+                    </div>
+                    <div class="flex items-center bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+                        <input 
+                            type="number" 
+                            id="alert-threshold" 
+                            value="3" 
+                            min="1" 
+                            step="1" 
+                            onchange="updateAlertThreshold()"
+                            class="w-16 bg-transparent text-center font-bold text-slate-800 focus:outline-none py-1"
+                        >
+                        <span class="pr-3 text-sm font-bold text-slate-500">%</span>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <div id="last-update" class="text-xs text-slate-400 font-mono uppercase mb-1">Checking data...</div>
+                    <button onclick="requestNotificationPermission()" class="text-[10px] bg-slate-800 text-white px-3 py-1 rounded-full font-bold hover:bg-blue-600 transition-colors">
+                        Enable Notifications
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-800 text-slate-300 text-[10px] uppercase font-bold tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 cursor-pointer hover:text-white transition">Equity</th>
+                        <th class="px-6 py-4">Sentiment & 1W Trend</th>
+                        <th class="px-6 py-4">Earnings Date (GMT)</th>
+                        <th class="px-6 py-4">EPS (Act/Mid) & Beat/Miss</th>
+                        <th class="px-6 py-4">Key Metrics</th>
+                        <th class="px-6 py-4">Top Jurisdictions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y divide-slate-100">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl w-full max-w-7xl max-h-[90vh] overflow-y-auto p-10 shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-3xl">&times;</button>
+            
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h2 id="m-name" class="text-3xl font-black text-slate-900"></h2>
+                    <p id="m-ticker" class="text-slate-500 font-mono mt-1"></p>
+                </div>
+                <div class="flex items-center gap-3 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider">Chart Range</span>
+                    <select id="timeframe-select" onchange="updateMainChart()" class="bg-white border-none text-sm font-bold rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                        <option value="1d">1 Day (Intraday)</option>
+                        <option value="1w">1 Week</option>
+                        <option value="1m">30 Days</option>
+                        <option value="3m">3 Months</option>
+                        <option value="6m">6 Months</option>
+                        <option value="1y">1 Year</option>
+                        <option value="5y" selected>5 Years</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
+                        <div id="main-chart" class="w-full"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Global Operating Footprint</h3>
+                        <div id="m-map" class="h-72 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-white shadow-xl shadow-blue-200/50">
+                        <h3 class="text-xs font-bold uppercase opacity-70 mb-6 tracking-wider">AI Sentiment Engine</h3>
+                        <div class="flex items-baseline gap-2 mb-6">
+                            <span id="m-sentiment-val" class="text-6xl font-black"></span>
+                            <span class="text-lg opacity-80 font-bold">/ 100</span>
+                        </div>
+                        <div class="border-t border-blue-500/50 pt-6">
+                            <h4 class="text-[10px] uppercase font-bold opacity-70 mb-3 tracking-wider">Strategic Summary</h4>
+                            <div id="m-news" class="text-sm space-y-4 opacity-95 leading-relaxed font-medium"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        let db = [];
+        let activeTicker = null;
+        let chartInstance = null;
+        let currentAlertThreshold = 3.0; // Default 3%
+
+        // --- 1. INITIALIZATION & DATA POLLING ---
+        async function init() {
+            // Check current threshold from input
+            updateAlertThreshold();
+            
+            await fetchData();
+
+            // Set up a background polling interval (every 15 minutes)
+            setInterval(async () => {
+                await fetchData();
+            }, 60000 * 15);
+        }
+
+        async function fetchData() {
+            try {
+                // In production, point this to your raw GitHub JSON URL
+                const res = await fetch('gambling_stocks_live.json');
+                db = await res.json();
+                
+                document.getElementById('last-update').innerText = `Last Refreshed: ${new Date().toLocaleTimeString()}`;
+                renderTable();
+                checkAlerts(db); // Check for price crashes every time data is fetched
+            } catch (err) {
+                console.error("Error fetching data:", err);
+                document.getElementById('last-update').innerText = "Data fetch failed. Retrying...";
+            }
+        }
+
+        // --- 2. ALERT & NOTIFICATION ENGINE ---
+        function requestNotificationPermission() {
+            if ("Notification" in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        alert("Notifications enabled! You will be alerted for intraday price crashes during earnings.");
+                    } else {
+                        alert("Notification permission denied. Please enable in your browser settings.");
+                    }
+                });
+            }
+        }
+
+        function updateAlertThreshold() {
+            const inputVal = document.getElementById('alert-threshold').value;
+            currentAlertThreshold = parseFloat(inputVal) || 3.0;
+            console.log(`Alert threshold updated to ${currentAlertThreshold}%`);
+            
+            // Re-check alerts immediately if the user lowers the threshold
+            if (db.length > 0) checkAlerts(db);
+        }
+
+        function checkAlerts(stockData) {
+            if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+            // Use UTC/GMT date to match the release dates in the JSON
+            const todayDate = new Date().toISOString().split('T')[0]; 
+
+            stockData.forEach(stock => {
+                if (!stock.release_gmt || !stock.history || !stock.history["1d"]) return;
+
+                const releaseDate = stock.release_gmt.split('T')[0];
+                
+                // Only alert on the actual earnings day
+                if (releaseDate !== todayDate) return;
+
+                const intradayData = stock.history["1d"];
+                if (intradayData.length < 2) return;
+
+                // Extract prices and find High vs Current
+                const prices = intradayData.map(point => point[1]);
+                const highOfDay = Math.max(...prices);
+                const currentPrice = prices[prices.length - 1];
+
+                // Calculate % drop
+                const percentDrop = ((highOfDay - currentPrice) / highOfDay) * 100;
+
+                // Fire alert if threshold met
+                if (percentDrop >= currentAlertThreshold) {
+                    // Unique key ensures we only alert once per day per stock, unless threshold changes drastically
+                    const alertKey = `alert_${stock.ticker}_${todayDate}_${currentAlertThreshold}`;
+                    
+                    if (!localStorage.getItem(alertKey)) {
+                        const notification = new Notification(`🚨 ${stock.ticker} Earnings Alert`, {
+                            body: `${stock.company} is down ${percentDrop.toFixed(2)}% from its daily high. Current: $${currentPrice}`,
+                            icon: 'https://cdn-icons-png.flaticon.com/512/2952/2952286.png'
+                        });
+
+                        notification.onclick = () => {
+                            window.focus();
+                            openModal(stock.ticker);
+                        };
+
+                        localStorage.setItem(alertKey, "true");
+                    }
+                }
+            });
+        }
+
+        // --- 3. UI RENDERING LOGIC ---
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = ''; // Clear existing
+            
+            db.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors group cursor-pointer border-b border-slate-50 last:border-none";
+                tr.onclick = () => openModal(s.ticker);
+                
+                // Format GMT Dates
+                const releaseDateObj = s.release_gmt ? new Date(s.release_gmt) : null;
+                const releaseDateStr = releaseDateObj ? releaseDateObj.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : 'N/A';
+                const releaseTimeStr = releaseDateObj ? releaseDateObj.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', timeZone:'GMT' }) + ' GMT' : '';
+
+                tr.innerHTML = `
+                    <td class="px-6 py-6">
+                        <div class="font-black text-slate-800 text-lg group-hover:text-blue-600 transition-colors">${s.company}</div>
+                        <div class="text-xs text-slate-500 font-mono mt-1">${s.ticker} | HQ: ${s.base_country}</div>
+                    </td>
+                    <td class="px-6 py-6">
+                        <div class="flex items-center gap-6">
+                            <div class="flex flex-col min-w-[3rem]">
+                                <span class="text-xl font-black ${s.sentiment > 60 ? 'text-green-500' : (s.sentiment < 40 ? 'text-red-500' : 'text-slate-700')}">${s.sentiment || 0}</span>
+                            </div>
+                            <div id="spark-${s.ticker}" class="sparkline-container"></div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-6">
+                        <div class="font-bold text-slate-800">${releaseDateStr}</div>
+                        <div class="text-xs text-slate-500">${releaseTimeStr}</div>
+                    </td>
+                    <td class="px-6 py-6">
+                        <div class="font-mono text-slate-800 font-bold">${s.actuals?.eps || '-'} / ${s.forecast_eps?.mid || '-'}</div>
+                        <div class="text-[10px] ${s.eps_beat_miss_pct > 0 ? 'text-green-600' : (s.eps_beat_miss_pct < 0 ? 'text-red-500' : 'text-slate-400')} font-black tracking-wider mt-1">
+                            ${s.eps_beat_miss_pct !== null ? (s.eps_beat_miss_pct > 0 ? '▲ BEAT ' : '▼ MISS ') + Math.abs(s.eps_beat_miss_pct) + '%' : 'PENDING'}
+                        </div>
+                    </td>
+                    <td class="px-6 py-6 text-xs text-slate-600 space-y-1">
+                        <div><span class="font-bold text-slate-400">NGR:</span> ${s.actuals?.ngr || '-'}</div>
+                        <div><span class="font-bold text-slate-400">FCF:</span> ${s.actuals?.fcf || '-'}</div>
+                    </td>
+                    <td class="px-6 py-6 text-[10px] text-slate-500 uppercase font-bold leading-relaxed">
+                        ${s.jurisdictions?.slice(0, 4).join(' • ') || 'N/A'} ${s.jurisdictions?.length > 4 ? '...' : ''}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+                
+                // Render mini-chart if history exists
+                if(s.history && s.history["1w"]) renderSparkline(s);
+            });
+        }
+
+        function renderSparkline(stock) {
+            const isBullish = stock.sentiment > 60;
+            const options = {
+                series: [{ data: stock.history["1w"].map(p => p[1]) }],
+                chart: { type: 'line', sparkline: { enabled: true }, animations: { enabled: false } },
+                stroke: { curve: 'smooth', width: 2, colors: [isBullish ? '#22c55e' : (stock.sentiment < 40 ? '#ef4444' : '#64748b')] },
+                tooltip: { enabled: false }
+            };
+            new ApexCharts(document.querySelector(`#spark-${stock.ticker}`), options).render();
+        }
+
+        // --- 4. MODAL & DEEP DIVE LOGIC ---
+        function openModal(ticker) {
+            activeTicker = ticker;
+            const s = db.find(x => x.ticker === ticker);
+            if(!s) return;
+
+            document.getElementById('m-name').innerText = s.company;
+            document.getElementById('m-ticker').innerText = `${s.ticker} • CEO: ${s.ceo || 'N/A'} • CFO: ${s.cfo || 'N/A'}`;
+            document.getElementById('m-sentiment-val').innerText = s.sentiment || 0;
+            
+            const newsHtml = s.news_summary && s.news_summary.length > 0 
+                ? s.news_summary.map(n => `<div class="flex gap-3"><span class="text-blue-300">▹</span><p>${n}</p></div>`).join('') 
+                : '<p>No recent news summaries available.</p>';
+            document.getElementById('m-news').innerHTML = newsHtml;
+            
+            document.getElementById('modal').classList.remove('hidden');
+            
+            // Ensure UI is cleanly rendered
+            setTimeout(() => {
+                updateMainChart();
+                renderMap(s.jurisdictions || []);
+            }, 50);
+        }
+
+        function closeModal() { 
+            document.getElementById('modal').classList.add('hidden'); 
+        }
+
+        function updateMainChart() {
+            const timeframe = document.getElementById('timeframe-select').value;
+            const s = db.find(x => x.ticker === activeTicker);
+            if(!s || !s.history || !s.history[timeframe]) return;
+
+            const data = s.history[timeframe];
+
+            const options = {
+                series: [{ name: 'Price', data: data }],
+                chart: { type: 'area', height: 350, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 2 },
+                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0 } },
+                xaxis: { 
+                    type: 'datetime', 
+                    labels: { style: { colors: '#94a3b8', fontWeight: 600 } },
+                    axisBorder: { show: false }, axisTicks: { show: false }
+                },
+                yaxis: { 
+                    labels: { style: { colors: '#94a3b8', fontWeight: 600 }, formatter: (val) => val.toFixed(2) } 
+                },
+                grid: { borderColor: '#f1f5f9', strokeDashArray: 4 },
+                colors: ['#2563eb']
+            };
+
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new ApexCharts(document.querySelector("#main-chart"), options);
+            chartInstance.render();
+        }
+
+        function renderMap(list) {
+            $('#m-map').empty();
+            const markers = {};
+            list.forEach(c => markers[c] = 1); // Map ISO codes to values
+            
+            $('#m-map').vectorMap({
+                map: 'world_mill_en',
+                backgroundColor: 'transparent',
+                regionStyle: { 
+                    initial: { fill: '#cbd5e1', "fill-opacity": 1, stroke: 'none' },
+                    hover: { "fill-opacity": 0.8, cursor: 'pointer' }
+                },
+                series: { 
+                    regions: [{ values: markers, scale: ['#93c5fd', '#2563eb'], normalizeFunction: 'polynomial' }] 
+                },
+                onRegionTipShow: function(e, el, code){
+                    if(markers[code]) el.html(el.html() + ' (Active Jurisdiction)');
+                }
+            });
+        }
+
+        // Close modal when clicking outside the white box
+        window.onclick = function(e) {
+            if (e.target == document.getElementById('modal')) closeModal();
+        }
+
+        // Kickoff
+        init();
+    </script>
+</body>
+</html>
