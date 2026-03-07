@@ -314,11 +314,38 @@
             } else { series = [{ name: 'Price', data: baseData }]; }
             
             chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
-                series: series, chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, fontFamily: 'inherit' },
-                stroke: { curve: 'smooth', width: 2 }, xaxis: { type: 'datetime' },
-                yaxis: { labels: { formatter: (v) => isComp ? v.toFixed(2) + '%' : v.toFixed(2) } },
+                series: series, 
+                chart: { 
+                    type: isComp ? 'line' : 'area', 
+                    height: 300, 
+                    toolbar: { show: false }, 
+                    fontFamily: 'inherit' 
+                },
+                dataLabels: { enabled: false }, // THE FIX: Hides the messy numbers
+                markers: { size: 0, hover: { size: 5 } }, // THE FIX: Keeps the smooth line but adds a hover dot
+                stroke: { curve: 'smooth', width: 2 }, 
+                xaxis: { 
+                    type: 'datetime',
+                    labels: { style: { colors: '#94a3b8', fontSize: '11px' } }
+                },
+                yaxis: { 
+                    labels: { 
+                        style: { colors: '#94a3b8', fontSize: '11px' },
+                        formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) 
+                    } 
+                },
                 colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
-                fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } }
+                fill: { 
+                    type: isComp ? 'solid' : 'gradient', 
+                    gradient: { opacityFrom: 0.3, opacityTo: 0 } 
+                },
+                grid: { borderColor: '#f1f5f9' },
+                tooltip: { 
+                    x: { format: 'dd MMM yyyy' }, 
+                    y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) },
+                    theme: 'light' 
+                },
+                legend: { show: isComp, position: 'top', horizontalAlign: 'right' }
             });
             chartInstance.render();
         }
