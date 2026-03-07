@@ -388,7 +388,7 @@ def run_pipeline():
             "ticker": ticker,
             "company": co["name"],
             # THE CRITICAL NEW LINE ADDING THE LOGO
-            "logo": f"https://logo.clearbit.com/{co['domain']}",
+            "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
