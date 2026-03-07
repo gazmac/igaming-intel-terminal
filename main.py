@@ -109,14 +109,29 @@ def get_live_fx_rates():
     return rates
 
 def get_stock_fundamentals(ticker, fx_rates):
-    """Surgical pull of Price, Market Cap, P/E, and Debt-to-Equity in one robust pass."""
+    """Bypasses yfinance.info and queries Yahoo's raw JSON API for perfect reliability."""
     try:
-        ytk = yf.Ticker(ticker)
-        info = ytk.info
+        # Request the exact 3 modules we need directly from Yahoo's servers
+        url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=price,summaryDetail,financialData"
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        res = requests.get(url, headers=headers, timeout=5)
+        
+        if res.status_code != 200:
+            raise ValueError(f"HTTP {res.status_code}")
+            
+        data = res.json()
+        result = data.get('quoteSummary', {}).get('result', [])
+        if not result:
+            raise ValueError("No data returned")
+            
+        modules = result[0]
+        price_mod = modules.get('price', {})
+        summary_mod = modules.get('summaryDetail', {})
+        financial_mod = modules.get('financialData', {})
         
         # 1. Price & Currency
-        price = info.get('currentPrice') or info.get('previousClose') or ytk.fast_info.get('lastPrice', 0)
-        currency = info.get('currency', 'USD')
+        price = financial_mod.get('currentPrice', {}).get('raw') or price_mod.get('regularMarketPrice', {}).get('raw', 0)
+        currency = price_mod.get('currency', 'USD')
         
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
@@ -127,7 +142,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         else: sym = "$"
         
         # 2. Market Cap (Native & USD converted)
-        mc_raw = info.get('marketCap', 0)
+        mc_raw = price_mod.get('marketCap', {}).get('raw') or summary_mod.get('marketCap', {}).get('raw', 0)
         mc_display = "N/A"
         mc_usd_val = 0
         
@@ -148,11 +163,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 mc_display = mc_native
                 
         # 3. P/E Ratio
-        pe_raw = info.get('trailingPE') or info.get('forwardPE')
+        pe_raw = summary_mod.get('trailingPE', {}).get('raw') or summary_mod.get('forwardPE', {}).get('raw')
         pe_str = f"{round(pe_raw, 2)}" if pe_raw else "N/A"
         
         # 4. Debt-to-Equity
-        de_raw = info.get('debtToEquity')
+        de_raw = financial_mod.get('debtToEquity', {}).get('raw')
         de_str = f"{round(de_raw, 2)}%" if de_raw is not None else "N/A"
         
         return f"{sym}{round(price, 2)}", price, mc_display, mc_usd_val, pe_str, de_str
