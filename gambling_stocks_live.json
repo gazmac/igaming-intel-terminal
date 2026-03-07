@@ -50,11 +50,11 @@
         },
         "eps_beat_miss_pct": -8.9,
         "news_summary": [
-            "Flutter's stock experienced a 7.0% decline following projections of a 2025 loss and a conservative 2026 financial outlook.",
-            "Jefferies significantly cut its price target for Flutter by 45%, yet maintained a 'buy' rating, suggesting the market may be overly pessimistic regarding US growth potential.",
-            "FanDuel, a key Flutter asset, is grappling with balancing rapid growth against profit pressures within its US expansion strategy."
+            "Flutter Entertainment (FLUT) shares dropped 7.0% following a projected 2025 loss and 2026 guidance, with FanDuel's US operations under scrutiny.",
+            "Jefferies significantly reduced Flutter's price target by 45%, while maintaining a 'buy' rating, contending that the market is unfairly pricing in zero US growth.",
+            "The company faces critical challenges in its US expansion through FanDuel, specifically balancing the demands of growth with persistent profit pressures."
         ],
-        "sentiment": 22,
+        "sentiment": 25,
         "jurisdictions": [
             "US",
             "UK",
@@ -3134,11 +3134,11 @@
         },
         "eps_beat_miss_pct": 38.89,
         "news_summary": [
-            "DraftKings is attracting significant institutional investment, notably from Cathie Wood's ARK Invest, signaling a potential bargain opportunity.",
-            "The company is strategically expanding into the burgeoning prediction markets, leveraging its sports-betting playbook to pursue a new growth lane.",
-            "This aggressive push into prediction markets and a 'super app' strategy is, however, raising questions about ethical and legal risks, and some market observers suggest other emerging tech investments may be more attractive."
+            "Cathie Wood's ARK Invest has recently acquired DraftKings stock, indicating a belief in its value as a bargain investment.",
+            "DraftKings is strategically expanding into the burgeoning prediction markets, leveraging its established sports-betting playbook to capture a new growth opportunity.",
+            "This aggressive push into prediction markets, however, is raising concerns regarding potential ethical and legal risks, with some analysts suggesting alternative investments may offer superior returns in the sector."
         ],
-        "sentiment": 70,
+        "sentiment": 65,
         "jurisdictions": [
             "US",
             "Ontario",
@@ -3248,7 +3248,7 @@
                 ],
                 [
                     1772829900000,
-                    25.15
+                    25.14
                 ]
             ],
             "1w": [
@@ -6198,7 +6198,7 @@
         "actuals": {
             "rev_label": "NGR",
             "revenue_fy": "GBp 5.09B (FY '24)",
-            "revenue_interim": "\u00a32.7B (H2 '24)",
+            "revenue_interim": "\u00a32.70B (H2 '25)",
             "focus": "B2C Sportsbook, iGaming & Retail",
             "map_codes": [
                 "GB",
@@ -6208,10 +6208,10 @@
                 "ES"
             ],
             "eps_actual": 0.62,
-            "eps_forecast": 0.45,
-            "net_income": "\u00a3379M",
-            "ebitda": "\u00a31.09B",
-            "fcf": "\u00a3281M",
+            "eps_forecast": 0.55,
+            "net_income": "-\u00a3681M",
+            "ebitda": "\u00a31.16B",
+            "fcf": "\u00a3151M",
             "jurisdictions": [
                 "UK",
                 "Italy",
@@ -6219,13 +6219,13 @@
                 "Australia"
             ]
         },
-        "eps_beat_miss_pct": 37.78,
+        "eps_beat_miss_pct": 12.73,
         "news_summary": [
-            "Entain PLC projects strong financial performance for Full Year 2025, indicating a positive future outlook for the company.",
-            "The company, owner of Ladbrokes, has revealed a significant financial burden of \u00a3500 million due to increased UK gaming taxes, referred to as 'Reeves\u2019s tax raid'.",
-            "The broader iGaming sector in the UK is experiencing a shift in narrative due to higher gaming taxes, impacting companies like Entain and Evoke."
+            "Entain projects strong financial performance for Full Year 2025, indicating a positive long-term outlook for the company.",
+            "The Ladbrokes owner is facing a significant financial setback, revealing a substantial \u00a3500 million hit from a recent tax-related issue.",
+            "The broader UK gaming market is experiencing pressure due to higher taxes, a trend that is likely to impact Entain's operations in the region."
         ],
-        "sentiment": 40,
+        "sentiment": 45,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -9208,11 +9208,11 @@
         },
         "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "Evolution AB's Q4 2025 earnings are a central point of interest for market observers, with an anticipated release or discussion.",
-            "The company's upcoming earnings call is expected to detail strategies for addressing existing challenges within its operations or market.",
-            "Analysts will be particularly keen to hear about Evolution AB's plans for future growth and expansion initiatives, indicating a forward-looking perspective."
+            "Evolution AB is currently focused on its Q4 2025 earnings, with an earnings report preview setting expectations for the upcoming financial disclosure.",
+            "The company's earnings call will emphasize how it is addressing and overcoming current operational or market challenges.",
+            "A significant theme for Evolution AB's future strategy involves identifying and capitalizing on new growth opportunities and market expansions."
         ],
-        "sentiment": 65,
+        "sentiment": 70,
         "jurisdictions": [
             "Europe",
             "North America",
@@ -12239,11 +12239,11 @@
         },
         "eps_beat_miss_pct": -296.43,
         "news_summary": [
-            "MGM Resorts International has seen a notable share rebound, prompting market discussions about whether its current pricing accurately reflects mixed valuation signals.",
-            "The company's stock surged 7.6% following positive announcements including planned share buybacks, robust payouts from its BetMGM iGaming joint venture, and advancements in its Osaka integrated resort project.",
-            "These developments highlight MGM's strategic capital allocation, strong performance in the digital gaming sector, and progress on significant future growth initiatives."
+            "MGM Resorts' stock price saw a significant increase of 7.6% based on recent positive announcements.",
+            "This upward movement is attributed to strategic financial moves, including detailed share buyback plans and positive updates on BetMGM payouts.",
+            "Further contributing to investor optimism is the reported progress on the company's Osaka development project, despite some mixed valuation signals following a recent share rebound."
         ],
-        "sentiment": 85,
+        "sentiment": 80,
         "jurisdictions": [
             "US",
             "Macau",
@@ -15324,11 +15324,11 @@
         },
         "eps_beat_miss_pct": -440.0,
         "news_summary": [
-            "Caesars Entertainment is experiencing significant institutional selling, marked by a fund dumping its entire $54 million stake and another $16 million institutional exit, totaling over $70 million.",
-            "The market narrative around Caesars is shifting, with increased focus on its cash flow and potential risks associated with the Las Vegas market.",
-            "Despite these financial concerns, Kalshi traders are assigning a 68% probability of Caesars being acquired this year, and the company continues operational expansion with a new sportsbook opening at The Resort at Summerlin."
+            "Caesars is facing mixed institutional investor sentiment, with significant exits including Nut Tree Capital dumping its entire $54 million stake and another $16 million institutional exit amid a volatile year.",
+            "The market narrative for Caesars Entertainment is shifting, with increased focus on the company's cash flow performance and inherent risks tied to its Las Vegas operations.",
+            "Despite some concerns, Kalshi traders are assigning a 68% probability of Caesars being acquired this year, complemented by ongoing operational expansion such as the official opening of a new Race & Sportsbook."
         ],
-        "sentiment": 35,
+        "sentiment": 60,
         "jurisdictions": [
             "US",
             "Canada",
@@ -18404,9 +18404,9 @@
         },
         "eps_beat_miss_pct": 250.0,
         "news_summary": [
-            "Penn Entertainment's stock price experienced a significant downturn, indicated by its market performance.",
-            "The decline was primarily attributed to the company failing to meet its third-quarter earnings expectations.",
-            "Further impacting the company's outlook was its exit or changes related to the ESPN partnership, likely affecting its sports betting initiatives."
+            "PENN Entertainment's stock price experienced a notable decline.",
+            "The downturn was primarily driven by the company missing its Q3 earnings expectations.",
+            "The exit from the ESPN partnership was also cited as a significant factor contributing to the negative market reaction."
         ],
         "sentiment": 15,
         "jurisdictions": [
@@ -21482,11 +21482,11 @@
         },
         "eps_beat_miss_pct": 18.18,
         "news_summary": [
-            "Las Vegas Sands (LVS) is being highlighted as both a strong value stock and a top long-term momentum stock, indicating diverse positive analyst perspectives on its investment potential.",
-            "The company has demonstrated recent positive market performance, with its stock up 6.2% since the last earnings report.",
-            "Sands China has launched a Responsible Gaming Academy in collaboration with the University of Macau, signaling a commitment to corporate social responsibility and sustainable operations."
+            "Las Vegas Sands (LVS) is recognized for its dual appeal as both a strong value stock and a top long-term momentum stock, indicating diverse positive investment theses.",
+            "The company has shown recent positive market performance, with its stock price increasing by 6.2% since its last earnings report.",
+            "Despite positive momentum, there are mixed signals and conflicting views regarding LVS's fair valuation after varied returns, leading to market debate on its current pricing."
         ],
-        "sentiment": 85,
+        "sentiment": 80,
         "jurisdictions": [
             "Macau",
             "Singapore"
@@ -24563,11 +24563,11 @@
         },
         "eps_beat_miss_pct": 14.29,
         "news_summary": [
-            "Wynn Resorts reported steady financial results for its fourth quarter.",
-            "The company continues to make significant progress on its key project in the United Arab Emirates, indicating future growth prospects.",
-            "Other headlines primarily detail investment firm Kettle Hill's activities in unrelated technology and retail stocks, offering no direct insight into Wynn's performance or outlook."
+            "Wynn Resorts reported stable financial results for the fourth quarter, reflecting consistent operational performance.",
+            "The company's significant project in the United Arab Emirates is progressing, signaling future growth opportunities and expansion.",
+            "Other market headlines indicate active investment by firms such as Kettle Hill across various tech and retail sectors, though these specific reports do not directly involve Wynn Resorts."
         ],
-        "sentiment": 75,
+        "sentiment": 70,
         "jurisdictions": [
             "US",
             "Macau",
@@ -27647,11 +27647,11 @@
         },
         "eps_beat_miss_pct": -600.0,
         "news_summary": [
-            "Evoke plc is undergoing significant strategic shifts driven by recent UK gaming tax adjustments and broader regulatory review plans.",
-            "The company's future is notably being reshaped by the emergence of potential takeover terms, indicating ongoing or anticipated M&A activity.",
-            "Analysts and investors are closely monitoring these substantial changes, which are rewriting Evoke's story and impacting its outlook."
+            "UK gaming tax changes are a primary driver behind the evolving investment outlook for Evoke plc.",
+            "The company's strategic narrative is being reshaped by ongoing review plans and the emergence of potential takeover terms.",
+            "Analysts are actively scrutinizing these significant shifts, highlighting a period of strategic change and uncertainty for investors."
         ],
-        "sentiment": 65,
+        "sentiment": 45,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -30628,11 +30628,11 @@
         },
         "eps_beat_miss_pct": 40.0,
         "news_summary": [
-            "Sportradar has renewed its significant FIFA integrity partnership, further extending its market reach and enhancing its data advantage.",
-            "The company reported record revenue during its Q4 2025 earnings call, signaling strong financial performance and strategic progress.",
-            "Macquarie lowered its price target for Sportradar Group from $34 to $30 but maintained an 'Outperform' rating, reflecting a nuanced, yet still positive, analyst perspective."
+            "Sportradar has renewed its crucial FIFA integrity partnership, extending its market reach and reinforcing its data advantage in the sports integrity sector.",
+            "The company reported record revenue during its Q4 2025 earnings call, indicating strong financial performance and strategic growth.",
+            "Macquarie adjusted its price target for Sportradar Group downwards from $34 to $30 but maintained its 'Outperform' rating, signaling continued confidence in the stock's potential."
         ],
-        "sentiment": 75,
+        "sentiment": 85,
         "jurisdictions": [
             "Global B2B",
             "US",
@@ -33608,11 +33608,11 @@
         },
         "eps_beat_miss_pct": 9.37,
         "news_summary": [
-            "Betsson AB (BTSNY) reported strong performance within its casino segment, highlighted during its Q4 2025 earnings call.",
-            "The robust casino results were achieved amidst its other business operations, potentially indicating varied performance across different segments like sportsbook.",
-            "This news specifically points to a positive financial contribution and strength from a core part of Betsson's iGaming offerings."
+            "Betsson AB (BTSNY) showcased strong casino performance during its Q4 2025 earnings call.",
+            "The company may be recognized among 'European Gems' featuring strong fundamentals, as per broader market analysis.",
+            "Betsson AB could potentially be identified as one of the 'European Dividend Stocks' for investor consideration."
         ],
-        "sentiment": 85,
+        "sentiment": 75,
         "jurisdictions": [
             "Nordics",
             "LatAm",
@@ -36589,9 +36589,9 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "General market discussions highlight 'Top UK Growth Companies with Insider Ownership' and '3 UK Growth Stocks with Strong Insider Ownership,' categories Playtech may align with, suggesting a positive focus on firms demonstrating these characteristics.",
-            "There's market interest in 'UK Stocks... priced below intrinsic estimates,' indicating potential value opportunities within the broader UK market that an analyst might assess for Playtech.",
-            "Several headlines pertaining to 'UK Penny Stocks' and companies with market caps under \u00a3900M are not relevant to Playtech, given its established market position and larger capitalization."
+            "The headlines indicate a strong focus on identifying top UK growth companies that demonstrate significant insider ownership.",
+            "There is a keen interest in discovering UK stocks, including well-known entities, that are potentially priced below their intrinsic value.",
+            "Attention is also being drawn to promising UK penny stocks, particularly those with market capitalizations under \u00a3900M, as potential investment opportunities."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -39560,9 +39560,9 @@
         },
         "eps_beat_miss_pct": 12.5,
         "news_summary": [
-            "Churchill Downs (CHDN) reported Q4 2025 earnings and revenues that successfully surpassed analyst estimates, indicating strong financial performance.",
-            "The company is projecting record results for 2025, a forecast significantly bolstered by the development of a new venue in Kentucky, which is expected to enhance its investment appeal.",
-            "Highlights and key metrics from the Q4 2025 earnings call underscored robust operational and financial outcomes for the quarter."
+            "Churchill Downs (CHDN) reported strong Q4 earnings, successfully beating both revenue and earnings estimates.",
+            "The company is projecting record results for 2025, driven by the robust Q4 performance and strategic initiatives.",
+            "A new Kentucky venue is anticipated to be a significant catalyst, potentially improving the long-term investment case for CHDN."
         ],
         "sentiment": 92,
         "jurisdictions": [
@@ -42642,11 +42642,11 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "Light & Wonder reported robust Q4 results, achieving record revenue and successfully surpassing earnings estimates, indicating strong operational performance.",
-            "Despite a reported quarterly loss, the company engaged in significant share buybacks, which suggests management confidence and a commitment to returning capital to shareholders.",
-            "The mixed financial picture, combining top-line growth with a net loss and shareholder initiatives, requires investors to carefully assess the interplay of these key metrics."
+            "Light & Wonder (LNW) reported robust Q4 financial results, highlighted by significant revenue growth and achieving record revenues, notably surpassing analyst earnings estimates.",
+            "The company engaged in heavy share buybacks during the quarter, a strategic move often interpreted by investors as a strong signal of management confidence and a commitment to enhancing shareholder value.",
+            "Despite the strong top-line performance and positive strategic financial actions, the company also disclosed a quarterly loss, which investors will likely weigh against the impressive revenue and earnings beats."
         ],
-        "sentiment": 80,
+        "sentiment": 75,
         "jurisdictions": [
             "US",
             "Australia",
@@ -43185,9 +43185,9 @@
         },
         "eps_beat_miss_pct": 5.56,
         "news_summary": [
-            "Aristocrat Leisure (ASX:ALL) shares are estimated to be trading 26% below their intrinsic value, suggesting significant undervaluation.",
-            "The company has reached a resolution in its litigation with Light & Wonder, eliminating a key source of legal uncertainty.",
-            "Aristocrat has delivered robust three-year total shareholder returns that have outpaced its underlying earnings growth, demonstrating strong value creation for investors."
+            "Aristocrat Leisure shares are estimated to be significantly undervalued, potentially 26% below their intrinsic value.",
+            "Aristocrat has reached a resolution in its litigation with Light & Wonder, removing a source of uncertainty and potential legal costs.",
+            "The company has delivered robust shareholder returns over the past three years, outperforming its underlying earnings growth."
         ],
         "sentiment": 90,
         "jurisdictions": [
@@ -46166,11 +46166,11 @@
         },
         "eps_beat_miss_pct": -20.0,
         "news_summary": [
-            "The majority of the provided headlines refer to \"Superior Group (SGC)\" and their Q4 2025 financial results.",
-            "These headlines indicate that Superior Group (SGC) successfully beat its Q4 earnings and revenue estimates, suggesting a positive performance for that company.",
-            "The information presented does not contain any direct financial news, earnings updates, or specific performance indicators pertaining to Super Group, making it difficult to assess its market position from these headlines."
+            "The provided headlines predominantly refer to Superior Group of Companies (SGC), a company involved in uniforms and branded merchandise, rather than Super Group (SGHC), the iGaming entity.",
+            "News items indicate positive Q4 2025 earnings and revenue beats for Superior Group (SGC), along with related earnings call highlights, but these do not pertain to Super Group.",
+            "No specific financial performance updates, strategic developments, or market-moving news directly concerning Super Group (SGHC) can be gleaned from the provided information."
         ],
-        "sentiment": 20,
+        "sentiment": 45,
         "jurisdictions": [
             "Canada",
             "Africa",
@@ -49252,11 +49252,11 @@
         },
         "eps_beat_miss_pct": 50.0,
         "news_summary": [
-            "RSI's stock experienced a significant 6.6% increase driven by strong 2025 profit projections and a robust 2026 revenue outlook.",
-            "A cautionary signal emerged as the CEO sold nearly 250,000 shares, netting over $40 million, which often raises questions about insider confidence.",
-            "The company operates in a favorable market for discretionary spending, benefiting from an observed rebound in consumer confidence."
+            "Rush Street Interactive (RSI) saw its stock rise by 6.6% following positive announcements regarding a strong 2025 profit jump and an optimistic 2026 revenue outlook.",
+            "The CEO of Rush Street Interactive executed a significant sale, offloading nearly 250,000 shares for over $40 million, which often raises questions about insider confidence.",
+            "While the iGaming sector stands to benefit from a rebound in consumer confidence, positioning it as a potentially 'solid discretionary stock,' general market commentary also highlights scrutiny on certain growth stocks."
         ],
-        "sentiment": 70,
+        "sentiment": 68,
         "jurisdictions": [
             "US",
             "Colombia",
@@ -52338,11 +52338,11 @@
         },
         "eps_beat_miss_pct": -300.0,
         "news_summary": [
-            "Bragg Gaming announced preliminary Q4 2025 revenue growth of 1.8% and is set to release full Q4 and FY2025 financial results, alongside FY2026 guidance, on March 19.",
-            "The company is strategically enhancing its executive team to accelerate content strategy development, expand North American market presence, and implement an AI-first transformation.",
-            "Bragg Gaming Group facilitated an executive block trade, a standard transaction that typically reflects internal share movements and may not imply a change in company outlook."
+            "Bragg Gaming is set to release its Q4 and full-year 2025 financial results on March 19, following preliminary reports indicating a 1.8% increase in Q4 revenue and the issuance of full-year 2026 guidance.",
+            "The company is actively strengthening its executive team and strategic focus, emphasizing enhanced content development and significant growth opportunities in the North American market.",
+            "Bragg Gaming is also embarking on an 'AI-First Transformation,' signaling a forward-looking approach to innovation and operational efficiency across its business."
         ],
-        "sentiment": 75,
+        "sentiment": 70,
         "jurisdictions": [
             "US",
             "Europe",
@@ -55350,11 +55350,11 @@
         },
         "eps_beat_miss_pct": 20.0,
         "news_summary": [
-            "Kambi Group PLC (KMBIF) held its Q4 2025 earnings call.",
-            "The earnings call highlighted strong EBITDA growth for the period.",
-            "Strategic initiatives were also discussed during the call, indicating future plans."
+            "Kambi Group PLC (KMBIF) recently held its Q4 2025 earnings call.",
+            "A significant highlight from the call was robust growth in EBITDA, indicating strong financial performance.",
+            "The earnings call also touched upon strategic developments, signaling positive future direction for the company."
         ],
-        "sentiment": 92,
+        "sentiment": 90,
         "jurisdictions": [
             "Global B2B",
             "US",
