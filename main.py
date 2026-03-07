@@ -46,7 +46,6 @@ OTC_MAP = {
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
-# FULLY CLASSIFIED: Added precise "focus" metrics and ISO "map_codes" for the UI
 VERIFIED_DATA = {
     "FLUT": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "revenue": "$4.74B", "net_income": "$10M", "ebitda": "$832M", "ngr": "$4.74B", "fcf": "-$1.43B", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "revenue": "$1.99B", "net_income": "$136.4M", "ebitda": "$343M", "ngr": "$1.99B", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -95,16 +94,29 @@ VERIFIED_CALENDAR = {
 
 # --- 2. CORE FUNCTIONS ---
 
-def get_native_price(ticker):
+def get_live_fx_rates():
+    """Fetches real-time Forex conversion rates to safely convert EU/UK/AUS market caps to USD."""
+    print("🌍 Fetching live Forex rates...")
+    rates = {'USD': 1.0, '$': 1.0}
+    pairs = {'GBP': 'GBPUSD=X', 'GBp': 'GBPUSD=X', 'EUR': 'EURUSD=X', 'SEK': 'SEKUSD=X', 'AUD': 'AUDUSD=X', 'CAD': 'CADUSD=X'}
+    for currency, ticker in pairs.items():
+        try:
+            val = yf.Ticker(ticker).fast_info['lastPrice']
+            if currency == 'GBp': val = val / 100.0 # Convert pence to pounds for math
+            rates[currency] = val
+        except Exception:
+            rates[currency] = 1.0 # Safe fallback
+    return rates
+
+def get_stock_fundamentals(ticker, fx_rates):
+    """Surgical pull of Price, Market Cap, P/E, and Debt-to-Equity in one robust pass."""
     try:
-        url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=price"
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        res = requests.get(url, headers=headers, timeout=5)
-        data = res.json()
-        price_data = data['quoteSummary']['result'][0]['price']
+        ytk = yf.Ticker(ticker)
+        info = ytk.info
         
-        price = price_data['regularMarketPrice']['raw']
-        currency = price_data['currency'] 
+        # 1. Price & Currency
+        price = info.get('currentPrice') or info.get('previousClose') or ytk.fast_info.get('lastPrice', 0)
+        currency = info.get('currency', 'USD')
         
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
@@ -114,19 +126,40 @@ def get_native_price(ticker):
         elif currency == "CAD": sym = "C$"
         else: sym = "$"
         
-        return f"{sym}{round(price, 2)}", price
-    except Exception:
-        try:
-            ytk = yf.Ticker(ticker)
-            price = ytk.fast_info['lastPrice']
-            if ".L" in ticker: sym = "GBp "
-            elif ".ST" in ticker: sym = "SEK "
-            elif ".PA" in ticker or ".AS" in ticker: sym = "€"
-            elif ".AX" in ticker: sym = "A$"
-            else: sym = "$"
-            return f"{sym}{round(price, 2)}", price
-        except Exception:
-            return "N/A", None
+        # 2. Market Cap (Native & USD converted)
+        mc_raw = info.get('marketCap', 0)
+        mc_display = "N/A"
+        mc_usd_val = 0
+        
+        if mc_raw > 0:
+            if mc_raw >= 1e9: mc_native = f"{sym}{round(mc_raw/1e9, 2)}B"
+            elif mc_raw >= 1e6: mc_native = f"{sym}{round(mc_raw/1e6, 2)}M"
+            else: mc_native = f"{sym}{mc_raw}"
+            
+            fx_rate = fx_rates.get(currency, 1.0)
+            mc_usd_val = mc_raw * fx_rate
+            
+            if currency not in ["USD", "$"]:
+                if mc_usd_val >= 1e9: mc_usd_str = f"${round(mc_usd_val/1e9, 2)}B"
+                elif mc_usd_val >= 1e6: mc_usd_str = f"${round(mc_usd_val/1e6, 2)}M"
+                else: mc_usd_str = f"${round(mc_usd_val, 2)}"
+                mc_display = f"{mc_native} ({mc_usd_str})"
+            else:
+                mc_display = mc_native
+                
+        # 3. P/E Ratio
+        pe_raw = info.get('trailingPE') or info.get('forwardPE')
+        pe_str = f"{round(pe_raw, 2)}" if pe_raw else "N/A"
+        
+        # 4. Debt-to-Equity
+        de_raw = info.get('debtToEquity')
+        de_str = f"{round(de_raw, 2)}%" if de_raw is not None else "N/A"
+        
+        return f"{sym}{round(price, 2)}", price, mc_display, mc_usd_val, pe_str, de_str
+        
+    except Exception as e:
+        print(f"  ❌ Fundamentals fetch failed for {ticker}: {e}")
+        return "N/A", 0, "N/A", 0, "N/A", "N/A"
 
 def fetch_stock_history(ticker, native_price_raw):
     print(f"  -> Fetching charts for {ticker}...")
@@ -201,7 +234,6 @@ def ai_process_intelligence(company_name, ticker):
         return {"summary": ["Failed to extract valid data from AI."], "sentiment": 50}
         
     except Exception as e:
-        print(f"  ❌ AI/News failed for {company_name}: {e}")
         error_msg = str(e).replace('"', "'")[:60]
         return {"summary": [f"News Engine Error: {error_msg}"], "sentiment": 50}
 
@@ -210,6 +242,8 @@ def ai_process_intelligence(company_name, ticker):
 def run_pipeline():
     master_db = []
     print(f"🚀 Starting Pipeline...")
+    
+    fx_rates = get_live_fx_rates()
     
     for co in TARGET_COMPANIES:
         ticker = co['ticker']
@@ -228,12 +262,12 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, native_price_raw = get_native_price(ticker)
+            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity = get_stock_fundamentals(ticker, fx_rates)
             history = fetch_stock_history(ticker, native_price_raw)
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
-            history, last_price_str = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A"
+            history, last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A", "N/A", 0, "N/A", "N/A"
 
         master_db.append({
             "ticker": ticker,
@@ -243,6 +277,13 @@ def run_pipeline():
             "map_codes": fin.get("map_codes", []),           
             "calendar": cal, 
             "last_price": last_price_str,
+            
+            # The new metrics for the UI
+            "market_cap_str": mc_str,
+            "market_cap_usd": mc_usd,
+            "pe_ratio": pe_ratio,
+            "debt_to_equity": debt_equity,
+            
             "actuals": fin,
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
