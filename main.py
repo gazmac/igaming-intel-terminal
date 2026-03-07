@@ -47,26 +47,26 @@ OTC_MAP = {
 }
 
 VERIFIED_DATA = {
-    "FLUT": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "revenue": "$4.74B", "net_income": "$10M", "ebitda": "$832M", "ngr": "$4.74B", "fcf": "-$1.43B", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
-    "DKNG": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "revenue": "$1.99B", "net_income": "$136.4M", "ebitda": "$343M", "ngr": "$1.99B", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
-    "ENT.L": {"period": "H2 25", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "BR", "AU", "ES"], "eps_actual": 0.62, "eps_forecast": 0.45, "revenue": "£3.2B", "net_income": "£150M", "ebitda": "£600M", "ngr": "£3.2B", "fcf": "£151M", "jurisdictions": ["UK", "Italy", "Brazil", "Australia"]},
-    "EVO.ST": {"period": "Q4 25", "focus": "B2B Live Casino Technology", "map_codes": ["SE", "US", "CA", "MT", "LV", "GE", "RO"], "eps_actual": 1.54, "eps_forecast": 1.46, "revenue": "€514M", "net_income": "€306M", "ebitda": "€393M", "ngr": "€514M", "fcf": "€250M", "jurisdictions": ["Europe", "North America", "LatAm", "Asia"]},
-    "MGM": {"period": "Q4 25", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CN", "JP"], "eps_actual": 1.11, "eps_forecast": 0.56, "revenue": "$4.61B", "net_income": "$294M", "ebitda": "$635M", "ngr": "$4.61B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "Japan"]},
-    "CZR": {"period": "Q4 25", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CA", "GB", "AE"], "eps_actual": -0.34, "eps_forecast": 0.10, "revenue": "$2.8B", "net_income": "-$72M", "ebitda": "$900M", "ngr": "$2.8B", "fcf": "$150M", "jurisdictions": ["US", "Canada", "UK", "UAE"]},
-    "PENN": {"period": "Q4 25", "focus": "Land-based Casinos & B2C Digital", "map_codes": ["US", "CA"], "eps_actual": 0.07, "eps_forecast": 0.02, "revenue": "$1.6B", "net_income": "$15M", "ebitda": "$350M", "ngr": "$1.6B", "fcf": "$80M", "jurisdictions": ["US", "Canada"]},
-    "LVS": {"period": "Q4 25", "focus": "Land-based Casino Resorts", "map_codes": ["CN", "SG"], "eps_actual": 0.65, "eps_forecast": 0.55, "revenue": "$2.9B", "net_income": "$450M", "ebitda": "$1.2B", "ngr": "$2.9B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
-    "WYNN": {"period": "Q4 25", "focus": "Luxury Land-based Resorts", "map_codes": ["US", "CN", "AE"], "eps_actual": 1.20, "eps_forecast": 1.05, "revenue": "$1.8B", "net_income": "$200M", "ebitda": "$600M", "ngr": "$1.8B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
-    "EVOK.L": {"period": "H2 25", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "ES", "RO"], "eps_actual": -0.05, "eps_forecast": 0.01, "revenue": "£850M", "net_income": "-£40M", "ebitda": "£150M", "ngr": "£850M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
-    "SRAD": {"period": "Q4 25", "focus": "B2B Sports Data & Technology", "map_codes": ["CH", "US", "GB", "DE", "AT"], "eps_actual": 0.14, "eps_forecast": 0.10, "revenue": "$280M", "net_income": "$35M", "ebitda": "$55M", "ngr": "$280M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
-    "BETS-B.ST": {"period": "Q4 25", "focus": "B2C & B2B iGaming/Sportsbook", "map_codes": ["SE", "MT", "IT", "AR", "CO", "PE"], "eps_actual": 0.35, "eps_forecast": 0.32, "revenue": "€260M", "net_income": "€45M", "ebitda": "€75M", "ngr": "€260M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
-    "PTEC.L": {"period": "H2 25", "focus": "B2B iGaming & Sportsbook Tech", "map_codes": ["GB", "IT", "BG", "UA", "EE"], "eps_actual": 0.18, "eps_forecast": 0.20, "revenue": "€850M", "net_income": "€55M", "ebitda": "€200M", "ngr": "€850M", "fcf": "€80M", "jurisdictions": ["UK", "Italy", "LatAm"]},
-    "CHDN": {"period": "Q4 25", "focus": "Racing, Casinos & Online Wagering", "map_codes": ["US"], "eps_actual": 1.35, "eps_forecast": 1.20, "revenue": "$750M", "net_income": "$90M", "ebitda": "$300M", "ngr": "$750M", "fcf": "$120M", "jurisdictions": ["US"]},
-    "LNW": {"period": "Q4 25", "focus": "B2B Gaming Machines & iGaming", "map_codes": ["US", "AU", "GB", "SE"], "eps_actual": 0.45, "eps_forecast": 0.50, "revenue": "$800M", "net_income": "$45M", "ebitda": "$280M", "ngr": "$800M", "fcf": "$100M", "jurisdictions": ["US", "Australia", "UK"]},
-    "ALL.AX": {"period": "H2 25", "focus": "B2B Slots, Social Casino & iGaming", "map_codes": ["AU", "US", "GB", "IL"], "eps_actual": 0.95, "eps_forecast": 0.90, "revenue": "A$3.2B", "net_income": "A$600M", "ebitda": "A$1.1B", "ngr": "A$3.2B", "fcf": "A$750M", "jurisdictions": ["US", "Australia", "Global"]},
-    "SGHC": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["ZA", "CA", "GB", "MT", "FR"], "eps_actual": 0.08, "eps_forecast": 0.10, "revenue": "€360M", "net_income": "€35M", "ebitda": "€75M", "ngr": "€360M", "fcf": "€45M", "jurisdictions": ["Canada", "Africa", "Europe"]},
-    "RSI": {"period": "Q4 25", "focus": "B2C Casino-First iGaming", "map_codes": ["US", "CO", "MX", "CA", "PE"], "eps_actual": 0.12, "eps_forecast": 0.08, "revenue": "$250M", "net_income": "$15M", "ebitda": "$40M", "ngr": "$250M", "fcf": "$20M", "jurisdictions": ["US", "Colombia", "Mexico"]},
-    "BRAG": {"period": "Q4 25", "focus": "B2B iGaming Content & PAM", "map_codes": ["CA", "US", "NL", "BR", "FI"], "eps_actual": -0.02, "eps_forecast": 0.01, "revenue": "€28M", "net_income": "-€1M", "ebitda": "€4M", "ngr": "€28M", "fcf": "€1M", "jurisdictions": ["US", "Europe", "Canada"]},
-    "KAMBI.ST": {"period": "Q4 25", "focus": "B2B Sportsbook Technology", "map_codes": ["MT", "SE", "GB", "US", "RO", "CO"], "eps_actual": 0.18, "eps_forecast": 0.15, "revenue": "€45M", "net_income": "€5M", "ebitda": "€15M", "ngr": "€45M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
+    "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '24)", "revenue_interim": "$3.79B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
+    "DKNG": {"rev_label": "REV", "revenue_fy": "$4.77B (FY '24)", "revenue_interim": "$1.39B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "net_income": "-$507M", "ebitda": "$181M", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
+    "ENT.L": {"rev_label": "NGR", "revenue_fy": "£5.16B (FY '24)", "revenue_interim": "£2.7B (H2 '24)", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "BR", "AU", "ES"], "eps_actual": 0.62, "eps_forecast": 0.45, "net_income": "£379M", "ebitda": "£1.09B", "fcf": "£281M", "jurisdictions": ["UK", "Italy", "Brazil", "Australia"]},
+    "EVO.ST": {"rev_label": "REV", "revenue_fy": "€2.21B (FY '24)", "revenue_interim": "€625M (Q4 '24)", "focus": "B2B Live Casino Technology", "map_codes": ["SE", "US", "CA", "MT", "LV", "GE", "RO"], "eps_actual": 1.54, "eps_forecast": 1.46, "net_income": "€1.24B", "ebitda": "€1.56B", "fcf": "€250M", "jurisdictions": ["Europe", "North America", "LatAm", "Asia"]},
+    "MGM": {"rev_label": "REV", "revenue_fy": "$17.2B (FY '24)", "revenue_interim": "$4.3B (Q4 '24)", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CN", "JP"], "eps_actual": -1.10, "eps_forecast": 0.56, "net_income": "$157M", "ebitda": "$528M", "fcf": "$300M", "jurisdictions": ["US", "Macau", "Japan"]},
+    "CZR": {"rev_label": "REV", "revenue_fy": "$11.4B (FY '24)", "revenue_interim": "$2.8B (Q4 '24)", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CA", "GB", "AE"], "eps_actual": -0.34, "eps_forecast": 0.10, "net_income": "-$72M", "ebitda": "$900M", "fcf": "$150M", "jurisdictions": ["US", "Canada", "UK", "UAE"]},
+    "PENN": {"rev_label": "REV", "revenue_fy": "$6.3B (FY '24)", "revenue_interim": "$1.6B (Q4 '24)", "focus": "Land-based Casinos & B2C Digital", "map_codes": ["US", "CA"], "eps_actual": 0.07, "eps_forecast": 0.02, "net_income": "$15M", "ebitda": "$350M", "fcf": "$80M", "jurisdictions": ["US", "Canada"]},
+    "LVS": {"rev_label": "REV", "revenue_fy": "$11.5B (FY '24)", "revenue_interim": "$2.9B (Q4 '24)", "focus": "Land-based Casino Resorts", "map_codes": ["CN", "SG"], "eps_actual": 0.65, "eps_forecast": 0.55, "net_income": "$450M", "ebitda": "$1.2B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
+    "WYNN": {"rev_label": "REV", "revenue_fy": "$7.2B (FY '24)", "revenue_interim": "$1.8B (Q4 '24)", "focus": "Luxury Land-based Resorts", "map_codes": ["US", "CN", "AE"], "eps_actual": 1.20, "eps_forecast": 1.05, "net_income": "$200M", "ebitda": "$600M", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
+    "EVOK.L": {"rev_label": "NGR", "revenue_fy": "£1.75B (FY '24)", "revenue_interim": "£850M (H2 '24)", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "ES", "RO"], "eps_actual": -0.05, "eps_forecast": 0.01, "net_income": "-£191M", "ebitda": "£312M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
+    "SRAD": {"rev_label": "REV", "revenue_fy": "$980M (FY '24)", "revenue_interim": "$280M (Q4 '24)", "focus": "B2B Sports Data & Technology", "map_codes": ["CH", "US", "GB", "DE", "AT"], "eps_actual": 0.14, "eps_forecast": 0.10, "net_income": "$35M", "ebitda": "$55M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
+    "BETS-B.ST": {"rev_label": "REV", "revenue_fy": "€1.0B (FY '24)", "revenue_interim": "€260M (Q4 '24)", "focus": "B2C & B2B iGaming/Sportsbook", "map_codes": ["SE", "MT", "IT", "AR", "CO", "PE"], "eps_actual": 0.35, "eps_forecast": 0.32, "net_income": "€45M", "ebitda": "€75M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
+    "PTEC.L": {"rev_label": "REV", "revenue_fy": "€1.7B (FY '24)", "revenue_interim": "€850M (H2 '24)", "focus": "B2B iGaming & Sportsbook Tech", "map_codes": ["GB", "IT", "BG", "UA", "EE"], "eps_actual": 0.18, "eps_forecast": 0.20, "net_income": "€55M", "ebitda": "€200M", "fcf": "€80M", "jurisdictions": ["UK", "Italy", "LatAm"]},
+    "CHDN": {"rev_label": "REV", "revenue_fy": "$2.8B (FY '24)", "revenue_interim": "$750M (Q4 '24)", "focus": "Racing, Casinos & Online Wagering", "map_codes": ["US"], "eps_actual": 1.35, "eps_forecast": 1.20, "net_income": "$90M", "ebitda": "$300M", "fcf": "$120M", "jurisdictions": ["US"]},
+    "LNW": {"rev_label": "REV", "revenue_fy": "$3.1B (FY '24)", "revenue_interim": "$800M (Q4 '24)", "focus": "B2B Gaming Machines & iGaming", "map_codes": ["US", "AU", "GB", "SE"], "eps_actual": 0.45, "eps_forecast": 0.50, "net_income": "$45M", "ebitda": "$280M", "fcf": "$100M", "jurisdictions": ["US", "Australia", "UK"]},
+    "ALL.AX": {"rev_label": "REV", "revenue_fy": "A$6.4B (FY '24)", "revenue_interim": "A$3.2B (H2 '24)", "focus": "B2B Slots, Social Casino & iGaming", "map_codes": ["AU", "US", "GB", "IL"], "eps_actual": 0.95, "eps_forecast": 0.90, "net_income": "A$600M", "ebitda": "A$1.1B", "fcf": "A$750M", "jurisdictions": ["US", "Australia", "Global"]},
+    "SGHC": {"rev_label": "NGR", "revenue_fy": "€1.4B (FY '24)", "revenue_interim": "€360M (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["ZA", "CA", "GB", "MT", "FR"], "eps_actual": 0.08, "eps_forecast": 0.10, "net_income": "€35M", "ebitda": "€75M", "fcf": "€45M", "jurisdictions": ["Canada", "Africa", "Europe"]},
+    "RSI": {"rev_label": "REV", "revenue_fy": "$950M (FY '24)", "revenue_interim": "$250M (Q4 '24)", "focus": "B2C Casino-First iGaming", "map_codes": ["US", "CO", "MX", "CA", "PE"], "eps_actual": 0.12, "eps_forecast": 0.08, "net_income": "$15M", "ebitda": "$40M", "fcf": "$20M", "jurisdictions": ["US", "Colombia", "Mexico"]},
+    "BRAG": {"rev_label": "REV", "revenue_fy": "€105M (FY '24)", "revenue_interim": "€28M (Q4 '24)", "focus": "B2B iGaming Content & PAM", "map_codes": ["CA", "US", "NL", "BR", "FI"], "eps_actual": -0.02, "eps_forecast": 0.01, "net_income": "-€1M", "ebitda": "€4M", "fcf": "€1M", "jurisdictions": ["US", "Europe", "Canada"]},
+    "KAMBI.ST": {"rev_label": "REV", "revenue_fy": "€180M (FY '24)", "revenue_interim": "€45M (Q4 '24)", "focus": "B2B Sportsbook Technology", "map_codes": ["MT", "SE", "GB", "US", "RO", "CO"], "eps_actual": 0.18, "eps_forecast": 0.15, "net_income": "€5M", "ebitda": "€15M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
 }
 
 VERIFIED_CALENDAR = {
@@ -95,40 +95,39 @@ VERIFIED_CALENDAR = {
 # --- 2. CORE FUNCTIONS ---
 
 def get_live_fx_rates():
-    """Fetches real-time Forex conversion rates to safely convert EU/UK/AUS market caps to USD."""
     print("🌍 Fetching live Forex rates...")
     rates = {'USD': 1.0, '$': 1.0}
     pairs = {'GBP': 'GBPUSD=X', 'GBp': 'GBPUSD=X', 'EUR': 'EURUSD=X', 'SEK': 'SEKUSD=X', 'AUD': 'AUDUSD=X', 'CAD': 'CADUSD=X'}
     for currency, ticker in pairs.items():
         try:
             val = yf.Ticker(ticker).fast_info['lastPrice']
-            if currency == 'GBp': val = val / 100.0 # Convert pence to pounds for math
+            if currency == 'GBp': val = val / 100.0 
             rates[currency] = val
         except Exception:
-            rates[currency] = 1.0 # Safe fallback
+            rates[currency] = 1.0 
     return rates
 
 def get_stock_fundamentals(ticker, fx_rates):
-    """Multi-tiered approach to guarantee Price and Market Cap, while safely attempting P/E and Debt."""
-    # Safety Defaults
+    """Multi-tiered approach to fetch market cap, pe, debt, and strictly labeled revenue periods."""
     price = 0
     price_str = "N/A"
     mc_display = "N/A"
     mc_usd_val = 0
     pe_str = "N/A"
     de_str = "N/A"
+    fy_rev_str = "N/A"
+    interim_rev_str = "N/A"
     sym = "$"
     currency = "USD"
     
     try:
         ytk = yf.Ticker(ticker)
         
-        # --- TIER 1: PRICE & CURRENCY (Highly Reliable) ---
+        # --- TIER 1: PRICE & CURRENCY ---
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
-        except Exception:
-            pass # We will rely on the 0 default if this completely fails
+        except Exception: pass 
             
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
@@ -138,10 +137,9 @@ def get_stock_fundamentals(ticker, fx_rates):
         elif currency == "CAD": sym = "C$"
         else: sym = "$"
         
-        if price > 0:
-            price_str = f"{sym}{round(price, 2)}"
+        if price > 0: price_str = f"{sym}{round(price, 2)}"
             
-        # --- TIER 2: MARKET CAP (Highly Reliable) ---
+        # --- TIER 2: MARKET CAP ---
         try:
             mc_raw = ytk.fast_info['marketCap']
             if mc_raw and mc_raw > 0:
@@ -159,26 +157,84 @@ def get_stock_fundamentals(ticker, fx_rates):
                     mc_display = f"{mc_native} ({mc_usd_str})"
                 else:
                     mc_display = mc_native
-        except Exception:
-            pass
+        except Exception: pass
 
-        # --- TIER 3: P/E & DEBT-TO-EQUITY (Flaky on GitHub Actions) ---
-        # Wrapped in its own try/except so a Yahoo block doesn't wipe out the Price
+        # --- TIER 3: FORENSIC P/E & DEBT-TO-EQUITY ---
         try:
             info = ytk.info
             pe_raw = info.get('trailingPE') or info.get('forwardPE')
             if pe_raw: pe_str = f"{round(pe_raw, 2)}"
-            
+            else:
+                eps = info.get('trailingEps')
+                if eps is not None:
+                    if eps <= 0: pe_str = "Neg EPS"
+                    elif price > 0: pe_str = f"{round(price / eps, 2)}" 
+
             de_raw = info.get('debtToEquity')
             if de_raw is not None: de_str = f"{round(de_raw, 2)}%"
-        except Exception:
-            pass # Fail silently, leaving them as "N/A" but preserving the rest
+            else:
+                total_debt = info.get('totalDebt')
+                total_equity = info.get('totalStockholderEquity') 
+                if total_debt is not None and total_equity is not None:
+                    if total_equity <= 0: de_str = "Neg Equity" 
+                    else: de_str = f"{round((total_debt / total_equity) * 100, 2)}%" 
+                elif total_debt == 0: de_str = "0.00%"
+        except Exception: pass 
+
+        # --- TIER 4: FY & INTERIM REVENUE TAGGING ---
+        # FULL YEAR
+        try:
+            income_annual = ytk.income_stmt
+            if not income_annual.empty:
+                raw_rev_fy = 0
+                if 'Total Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
+                elif 'Operating Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
+                    
+                if pd.notna(raw_rev_fy) and raw_rev_fy > 0:
+                    fy_date = income_annual.columns[0]
+                    fy_year = pd.to_datetime(fy_date).year
+                    if raw_rev_fy >= 1e9: rev_val = f"{sym}{round(raw_rev_fy/1e9, 2)}B"
+                    elif raw_rev_fy >= 1e6: rev_val = f"{sym}{round(raw_rev_fy/1e6, 2)}M"
+                    else: rev_val = f"{sym}{raw_rev_fy}"
+                    fy_rev_str = f"{rev_val} (FY '{str(fy_year)[-2:]})"
+        except Exception: pass
+
+        # INTERIM (Quarterly or Half-Yearly)
+        try:
+            income_quarterly = ytk.quarterly_income_stmt
+            if not income_quarterly.empty:
+                raw_rev_q = 0
+                if 'Total Revenue' in income_quarterly.index: raw_rev_q = income_quarterly.loc['Total Revenue'].iloc[0]
+                elif 'Operating Revenue' in income_quarterly.index: raw_rev_q = income_quarterly.loc['Operating Revenue'].iloc[0]
+                    
+                if pd.notna(raw_rev_q) and raw_rev_q > 0:
+                    q_date = income_quarterly.columns[0]
+                    q_month = pd.to_datetime(q_date).month
+                    q_year = pd.to_datetime(q_date).year
+                    
+                    q_label = "Q4"
+                    if q_month <= 3: q_label = "Q1"
+                    elif q_month <= 6: q_label = "Q2"
+                    elif q_month <= 9: q_label = "Q3"
+                    
+                    # Smart check for European half-yearly reporting gaps
+                    try:
+                        if len(income_quarterly.columns) > 1:
+                            days_diff = (pd.to_datetime(income_quarterly.columns[0]) - pd.to_datetime(income_quarterly.columns[1])).days
+                            if days_diff > 120: q_label = "H1" if q_month <= 6 else "H2"
+                    except Exception: pass
+                    
+                    if raw_rev_q >= 1e9: rev_val = f"{sym}{round(raw_rev_q/1e9, 2)}B"
+                    elif raw_rev_q >= 1e6: rev_val = f"{sym}{round(raw_rev_q/1e6, 2)}M"
+                    else: rev_val = f"{sym}{raw_rev_q}"
+                    interim_rev_str = f"{rev_val} ({q_label} '{str(q_year)[-2:]})"
+        except Exception: pass
             
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str
         
     except Exception as e:
         print(f"  ❌ FATAL Fundamentals fetch failed for {ticker}: {e}")
-        return "N/A", 0, "N/A", 0, "N/A", "N/A"
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A"
 
 def fetch_stock_history(ticker, native_price_raw):
     print(f"  -> Fetching charts for {ticker}...")
@@ -269,9 +325,8 @@ def run_pipeline():
         print(f"\nProcessing {co['name']}...")
         
         fin = VERIFIED_DATA.get(ticker, {
-            "period": "N/A", "eps_actual": 0, "eps_forecast": 0, "revenue": "N/A", 
-            "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": [],
-            "focus": "Diversified Gaming", "map_codes": []
+            "eps_actual": 0, "eps_forecast": 0, "net_income": "N/A", "ebitda": "N/A", "fcf": "N/A", "jurisdictions": [],
+            "focus": "Diversified Gaming", "map_codes": [], "rev_label": "REV", "revenue_fy": "N/A", "revenue_interim": "N/A"
         })
         
         cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
@@ -281,7 +336,13 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity = get_stock_fundamentals(ticker, fx_rates)
+            
+            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev = get_stock_fundamentals(ticker, fx_rates)
+            
+            # Prioritize dynamic data if available, otherwise use hardcoded verification
+            fin["revenue_fy"] = dyn_fy_rev if dyn_fy_rev != "N/A" else fin.get("revenue_fy", "N/A")
+            fin["revenue_interim"] = dyn_int_rev if dyn_int_rev != "N/A" else fin.get("revenue_interim", "N/A")
+            
             history = fetch_stock_history(ticker, native_price_raw)
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
@@ -296,13 +357,10 @@ def run_pipeline():
             "map_codes": fin.get("map_codes", []),           
             "calendar": cal, 
             "last_price": last_price_str,
-            
-            # The new metrics for the UI
             "market_cap_str": mc_str,
             "market_cap_usd": mc_usd,
             "pe_ratio": pe_ratio,
             "debt_to_equity": debt_equity,
-            
             "actuals": fin,
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
