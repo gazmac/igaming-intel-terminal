@@ -10,13 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
         .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
-        /* Smooth transition for the info overlay */
         #methodology-overlay { transition: opacity 0.3s ease; }
     </style>
 </head>
@@ -35,9 +33,10 @@
                     <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">Sort By:</span>
                     <select id="sort-select" onchange="applySort()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
                         <option value="earnings">Nearest Earnings Date</option>
-                        <option value="alpha">Alphabetical</option>
-                        <option value="exchange">Stock Exchange Group</option>
+                        <option value="marketcap">Market Cap (High to Low)</option>
                         <option value="beat">Highest EPS Beat</option>
+                        <option value="exchange">Stock Exchange Group</option>
+                        <option value="alpha">Alphabetical</option>
                     </select>
                 </div>
             </div>
@@ -55,37 +54,30 @@
                         <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
                         <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
                     </div>
-                    
                     <div class="space-y-8">
                         <section>
                             <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
                         </section>
-
                         <section>
                             <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
                         </section>
-
                         <section>
                             <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
                         </section>
-
                         <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                                    <span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                                    <span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-                                    <span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
                                 </div>
                             </div>
                         </section>
@@ -118,7 +110,7 @@
                     </div>
                 </div>
 
-                <div id="modal-financials" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100"></div>
+                <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2 flex flex-col gap-6">
@@ -189,7 +181,6 @@
             }
         }
 
-        // --- UI FUNCTIONS ---
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
             el.classList.toggle('hidden');
@@ -197,10 +188,9 @@
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
-            document.getElementById('methodology-overlay').classList.add('hidden'); // Ensure info is reset
+            document.getElementById('methodology-overlay').classList.add('hidden'); 
         }
 
-        // --- DATA & SORTING ---
         function getExchangeGroup(ticker) {
             if (ticker.endsWith('.L')) return 'LSE (UK)';
             if (ticker.endsWith('.ST')) return 'Nasdaq Stockholm';
@@ -217,11 +207,16 @@
                     const timeA = new Date(a.calendar?.date || '').getTime() || Infinity;
                     const timeB = new Date(b.calendar?.date || '').getTime() || Infinity;
                     return timeA - timeB;
-                } else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
+                } 
+                else if (currentSort === 'marketcap') {
+                    return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
+                }
+                else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
                 else if (currentSort === 'exchange') {
                     const exA = getExchangeGroup(a.ticker); const exB = getExchangeGroup(b.ticker);
                     return exA === exB ? a.company.localeCompare(b.company) : exA.localeCompare(exB);
-                } else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
+                } 
+                else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
                 return 0;
             });
             renderGrid(sortedDb);
@@ -231,20 +226,29 @@
             const grid = document.getElementById('stock-grid');
             grid.innerHTML = dataToRender.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
+                const period = s.actuals?.period || 'Q4 25';
+                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
+                
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start mb-3">
                                 <div>
                                     <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
-                                    <p class="text-[10px] font-mono text-slate-400 mt-1">${s.ticker} • ${s.base_country}</p>
+                                    <p class="text-[10px] font-mono text-slate-400 mt-1">${s.ticker} • ${locationLabel}</p>
                                     <span class="inline-block mt-2 bg-slate-100 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">${s.focus || 'Diversified Gaming'}</span>
                                 </div>
                                 <div class="text-right"><div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div></div>
                             </div>
+                            
+                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2">
+                                <span class="text-slate-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
+                                <span class="font-bold text-slate-700">${s.market_cap_str || 'N/A'}</span>
+                            </div>
+
                             <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <div><span class="text-slate-400 font-bold uppercase">REV</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue || 'N/A'}</span></div>
-                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
+                                <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue || 'N/A'}</span></div>
+                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
                             </div>
                         </div>
                         <div>
@@ -267,13 +271,18 @@
             document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
             document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
             document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
+            
+            // EXPANDED FINANCIALS STRIP
             document.getElementById('modal-financials').innerHTML = `
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'}/${s.actuals?.eps_forecast || 'N/A'}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">Revenue</div><div class="font-mono text-sm font-bold">${s.actuals?.revenue || 'N/A'}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">Net Income</div><div class="font-mono text-sm font-bold">${s.actuals?.net_income || 'N/A'}</div></div>
-                <div><div class="text-[10px] font-bold text-slate-400 uppercase">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+                <div class="min-w-[120px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Revenue</div><div class="font-mono text-sm font-bold">${s.actuals?.revenue || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
             `;
+
             document.getElementById('news-summary').innerHTML = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('') || '<li>No news available.</li>';
             
             const sent = s.sentiment || 50;
@@ -311,26 +320,29 @@
                 isComp = true; const comp = db.find(x => x.ticker === compareTicker);
                 const norm = (d) => d.length ? d.map(p => [p[0], ((p[1] - d[0][1]) / d[0][1]) * 100]) : [];
                 series = [{ name: s.company, data: norm(baseData) }, { name: comp.company, data: norm(comp.history[timeframe] || []) }];
-            } else { series = [{ name: 'Price', data: baseData }]; }
+            } else { 
+                series = [{ name: 'Price', data: baseData }]; 
+            }
             
             chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
-                series: series, 
+                series: series,
                 chart: { 
                     type: isComp ? 'line' : 'area', 
                     height: 300, 
-                    toolbar: { show: false }, 
-                    fontFamily: 'inherit' 
+                    toolbar: { show: false },
+                    zoom: { enabled: false },
+                    fontFamily: 'inherit'
                 },
-                dataLabels: { enabled: false }, // THE FIX: Hides the messy numbers
-                markers: { size: 0, hover: { size: 5 } }, // THE FIX: Keeps the smooth line but adds a hover dot
-                stroke: { curve: 'smooth', width: 2 }, 
+                dataLabels: { enabled: false },
+                markers: { size: 0, hover: { size: 5 } },
+                stroke: { curve: 'smooth', width: 2.5 },
                 xaxis: { 
-                    type: 'datetime',
-                    labels: { style: { colors: '#94a3b8', fontSize: '11px' } }
+                    type: 'datetime', 
+                    labels: { style: { colors: '#94a3b8', fontSize: '11px' } } 
                 },
                 yaxis: { 
                     labels: { 
-                        style: { colors: '#94a3b8', fontSize: '11px' },
+                        style: { colors: '#94a3b8', fontSize: '11px' }, 
                         formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) 
                     } 
                 },
@@ -345,12 +357,17 @@
                     y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) },
                     theme: 'light' 
                 },
-                legend: { show: isComp, position: 'top', horizontalAlign: 'right' }
+                legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
+                noData: { text: "Loading..." }
             });
+            
             chartInstance.render();
         }
 
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') closeModal(); 
+        });
+
         init();
     </script>
 </body>
