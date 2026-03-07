@@ -3,245 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iGaming Intelligence Terminal</title>
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <title>iGaming Earnings HQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
+    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --accent: #38bdf8;
-            --positive: #22c55e;
-            --negative: #ef4444;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-        }
-
-        /* NEW CARD HEADER WITH LOGO */
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .company-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: white;
-            margin-right: 12px;
-            object-fit: contain;
-            padding: 2px;
-            border: 1px solid #334155;
-        }
-
-        .header-text h3 {
-            margin: 0;
-            font-size: 1.1rem;
-            color: var(--text-main);
-        }
-
-        .header-text span {
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 15px;
-        }
-
-        .price-main {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .metric-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-        }
-
-        .metric-item {
-            background: #0f172a;
-            padding: 8px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .metric-label { color: var(--text-dim); }
-
-        .chart-container {
-            height: 200px;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .news-box {
-            font-size: 0.8rem;
-            border-top: 1px solid #334155;
-            padding-top: 10px;
-        }
-
-        .news-item {
-            margin-bottom: 5px;
-            color: var(--text-dim);
-            line-height: 1.4;
-        }
-
-        .sentiment-bar {
-            height: 4px;
-            background: #334155;
-            border-radius: 2px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .sentiment-fill { height: 100%; transition: width 1s; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
+        .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
+        #methodology-overlay { transition: opacity 0.3s ease; }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">iGaming Earnings HQ</h1>
+                <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
+            </div>
+            <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
+                <div id="last-update" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded">Loading Data...</div>
+                
+                <div class="flex items-center gap-2 w-full">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">Sort By:</span>
+                    <select id="sort-select" onchange="applySort()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
+                        <option value="earnings">Nearest Earnings Date</option>
+                        <option value="marketcap">Market Cap (High to Low)</option>
+                        <option value="beat">Highest EPS Beat</option>
+                        <option value="exchange">Stock Exchange Group</option>
+                        <option value="alpha">Alphabetical</option>
+                    </select>
+                </div>
+            </div>
+        </header>
 
-    <div class="header">
-        <h1>iGaming Intelligence Terminal</h1>
-        <div id="last-update" style="color: var(--text-dim); font-size: 0.9rem;"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid"></div>
     </div>
 
-    <div class="grid" id="stock-grid">
+    <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
+            
+            <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
+                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
+                    </div>
+                    <div class="space-y-8">
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
+                        </section>
+                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                            <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                <div class="flex items-center gap-4">
+                    <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
+                    <div>
+                        <h2 id="modal-title" class="text-2xl font-bold text-slate-900"></h2>
+                        <div id="modal-ticker" class="mt-1"></div>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 mb-6 flex justify-between items-center shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-500 text-white p-2 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+                        <div>
+                            <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-0.5">Next Earnings Event</div>
+                            <div id="modal-earnings-date" class="text-lg font-black text-slate-800"></div>
+                        </div>
+                    </div>
+                    <div class="text-right flex gap-4 md:gap-6">
+                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Report Release</div><div id="modal-report-time" class="text-xs md:text-sm font-bold text-slate-700"></div></div>
+                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Conference Call</div><div id="modal-call-time" class="text-xs md:text-sm font-bold text-blue-600"></div></div>
+                    </div>
+                </div>
+
+                <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 flex flex-col gap-6">
+                        <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-2">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
+                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer"><option value="">Compare...</option></select>
+                                    <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-slate-700 cursor-pointer">
+                                        <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="main-chart" class="w-full min-h-[300px]"></div>
+                        </div>
+
+                        <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex flex-col h-[280px]">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Global Operational Footprint</h3>
+                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="map-jurisdictions-text"></div>
+                            </div>
+                            <div class="relative flex-grow rounded-lg overflow-hidden bg-slate-50 border border-slate-100"><div id="m-map" class="absolute inset-0"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
+                                <button onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    How it works
+                                </button>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div class="flex justify-between items-end mb-2">
+                                    <span id="sentiment-label" class="text-2xl font-bold"></span>
+                                    <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Bullishness Index</span>
+                                </div>
+                                <div class="sentiment-bar"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
+                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100 shadow-sm"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
     <script>
-        // Fallback function for logos
-        function handleLogoError(img) {
-            img.onerror = null; 
-            img.src = `https://ui-avatars.com/api/?name=${img.alt}&background=random&color=fff&rounded=true`;
-        }
+        let db = [];
+        let activeTicker = null;
+        let chartInstance = null;
+        let currentSort = 'earnings';
 
-        async function loadDashboard() {
+        async function init() {
             try {
-                const response = await fetch('gambling_stocks_live.json');
-                const data = await response.json();
-                const grid = document.getElementById('stock-grid');
-                
-                document.getElementById('last-update').innerText = `Live Market Data: ${new Date().toLocaleString()}`;
-
-                data.forEach(stock => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    
-                    const beatMissClass = stock.eps_beat_miss_pct >= 0 ? 'positive' : 'negative';
-                    const sentimentColor = stock.sentiment > 60 ? '#22c55e' : (stock.sentiment < 40 ? '#ef4444' : '#eab308');
-
-                    card.innerHTML = `
-                        <div class="card-header">
-                            <img src="${stock.logo}" alt="${stock.company}" class="company-logo" onerror="handleLogoError(this)">
-                            <div class="header-text">
-                                <h3>${stock.company}</h3>
-                                <span>${stock.ticker} · ${stock.base_country}</span>
-                            </div>
-                        </div>
-
-                        <div class="price-row">
-                            <div class="price-main">${stock.last_price}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-dim)">MCap: ${stock.market_cap_str}</div>
-                        </div>
-
-                        <div class="metric-grid">
-                            <div class="metric-item"><span class="metric-label">P/E</span><span>${stock.pe_ratio}</span></div>
-                            <div class="metric-item"><span class="metric-label">D/E</span><span>${stock.debt_to_equity}</span></div>
-                            <div class="metric-item"><span class="metric-label">${stock.actuals.rev_label} (FY)</span><span>${stock.actuals.revenue_fy}</span></div>
-                            <div class="metric-item"><span class="metric-label">EBITDA</span><span>${stock.actuals.ebitda}</span></div>
-                        </div>
-
-                        <div id="chart-${stock.ticker.replace('.', '-')}" class="chart-container"></div>
-
-                        <div class="news-box">
-                            <strong>Intelligence Summary:</strong>
-                            ${stock.news_summary.map(n => `<div class="news-item">• ${n}</div>`).join('')}
-                            <div class="sentiment-bar">
-                                <div class="sentiment-fill" style="width: ${stock.sentiment}%; background: ${sentimentColor}"></div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    grid.appendChild(card);
-                    renderChart(stock);
-                });
-            } catch (e) {
-                console.error("Dashboard Load Error:", e);
+                const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
+                db = await response.json();
+                document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                applySort(); 
+            } catch (e) { 
+                document.getElementById('last-update').innerText = 'Data Fetch Failed';
             }
         }
 
-        function renderChart(stock) {
-            const containerId = `chart-${stock.ticker.replace('.', '-')}`;
-            const chartData = stock.history["1m"]; // Defaulting to 1 Month view
+        function toggleMethodology() {
+            const el = document.getElementById('methodology-overlay');
+            el.classList.toggle('hidden');
+        }
 
-            Highcharts.chart(containerId, {
-                chart: { backgroundColor: 'transparent', height: 200, type: 'area', margin: [0,0,0,0] },
-                title: { text: null },
-                credits: { enabled: false },
-                xAxis: { visible: false },
-                yAxis: { visible: false },
-                legend: { enabled: false },
-                tooltip: { xDateFormat: '%b %e, %Y', shared: true },
-                plotOptions: {
-                    area: {
-                        fillColor: {
-                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                            stops: [[0, '#38bdf888'], [1, '#38bdf800']]
-                        },
-                        lineColor: '#38bdf8',
-                        lineWidth: 2,
-                        marker: { enabled: false }
-                    }
-                },
-                series: [{ name: 'Price', data: chartData }]
+        function closeModal() { 
+            document.getElementById('modal').classList.add('hidden'); 
+            document.getElementById('methodology-overlay').classList.add('hidden'); 
+        }
+
+        function getExchangeGroup(ticker) {
+            if (ticker.endsWith('.L')) return 'LSE (UK)';
+            if (ticker.endsWith('.ST')) return 'Nasdaq Stockholm';
+            if (ticker.endsWith('.PA')) return 'Euronext Paris';
+            if (ticker.endsWith('.AX')) return 'ASX (Australia)';
+            return 'US Markets (NYSE/NASDAQ)';
+        }
+
+        function applySort() {
+            currentSort = document.getElementById('sort-select').value;
+            let sortedDb = [...db];
+            sortedDb.sort((a, b) => {
+                if (currentSort === 'earnings') {
+                    const timeA = new Date(a.calendar?.date || '').getTime() || Infinity;
+                    const timeB = new Date(b.calendar?.date || '').getTime() || Infinity;
+                    return timeA - timeB;
+                } 
+                else if (currentSort === 'marketcap') {
+                    return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
+                }
+                else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
+                else if (currentSort === 'exchange') {
+                    const exA = getExchangeGroup(a.ticker); const exB = getExchangeGroup(b.ticker);
+                    return exA === exB ? a.company.localeCompare(b.company) : exA.localeCompare(exB);
+                } 
+                else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
+                return 0;
+            });
+            renderGrid(sortedDb);
+        }
+
+        function renderGrid(dataToRender) {
+            const grid = document.getElementById('stock-grid');
+            grid.innerHTML = dataToRender.map(s => {
+                const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
+                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
+                
+                const revLabel = s.actuals?.rev_label || 'REV';
+                
+                // Fallback avatar URL generation
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+
+                return `
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex gap-3 items-center">
+                                    <img src="${s.logo}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
+                                        <p class="text-[10px] font-mono text-slate-400 mt-0.5">${s.ticker} • ${locationLabel}</p>
+                                        <span class="inline-block mt-1.5 bg-slate-100 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">${s.focus || 'Diversified Gaming'}</span>
+                                    </div>
+                                </div>
+                                <div class="text-right shrink-0"><div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div></div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2">
+                                <span class="text-slate-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
+                                <span class="font-bold text-slate-700">${s.market_cap_str || 'N/A'}</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <div><span class="text-slate-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
+                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${s.calendar?.date || 'TBD'}</span></div>
+                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase"><span>Sentiment</span><span>${s.sentiment || 50}%</span></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openModal(ticker) {
+            activeTicker = ticker;
+            const s = db.find(x => x.ticker === ticker);
+            document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
+            
+            // MODAL HEADER UPDATE (Title + Logo)
+            const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+            const modalLogo = document.getElementById('modal-logo');
+            modalLogo.src = s.logo;
+            modalLogo.onerror = function() {
+                this.onerror = null;
+                this.src = fallbackUrl;
+            };
+            modalLogo.classList.remove('hidden');
+
+            document.getElementById('modal-title').innerText = s.company;
+            document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
+            document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
+            document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
+            document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
+            
+            const revLabel = s.actuals?.rev_label || 'Revenue';
+
+            // EXPANDED FINANCIALS STRIP
+            document.getElementById('modal-financials').innerHTML = `
+                <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
+                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+            `;
+
+            document.getElementById('news-summary').innerHTML = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('') || '<li>No news available.</li>';
+            
+            const sent = s.sentiment || 50;
+            const sLab = document.getElementById('sentiment-label');
+            sLab.innerText = sent + '%';
+            sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
+            const sFil = document.getElementById('modal-sentiment-fill');
+            sFil.style.width = sent + '%';
+            sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-emerald-500' : (sent < 40 ? 'bg-rose-500' : 'bg-amber-500'));
+            
+            document.getElementById('map-jurisdictions-text').innerText = (s.jurisdictions || []).slice(0, 4).join(' • ');
+            document.getElementById('modal').classList.remove('hidden');
+            setTimeout(() => { updateMainChart(); renderMap(s.map_codes || []); }, 100);
+        }
+
+        function renderMap(codes) {
+            $('#m-map').empty();
+            const regionColors = {}; codes.forEach(c => regionColors[c] = '#2563eb'); 
+            $('#m-map').vectorMap({
+                map: 'world_mill_en', backgroundColor: 'transparent', zoomOnScroll: false,
+                regionStyle: { initial: { fill: '#cbd5e1' }, hover: { "fill-opacity": 0.8 } },
+                series: { regions: [{ values: regionColors, attribute: 'fill' }] }
             });
         }
 
-        loadDashboard();
+        function updateMainChart() {
+            const timeframe = document.getElementById('timeframe-select').value;
+            const compareTicker = document.getElementById('compare-select').value;
+            const s = db.find(x => x.ticker === activeTicker);
+            const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+            if (chartInstance) chartInstance.destroy();
+
+            let series = []; let isComp = false;
+            if (compareTicker) {
+                isComp = true; const comp = db.find(x => x.ticker === compareTicker);
+                const norm = (d) => d.length ? d.map(p => [p[0], ((p[1] - d[0][1]) / d[0][1]) * 100]) : [];
+                series = [{ name: s.company, data: norm(baseData) }, { name: comp.company, data: norm(comp.history[timeframe] || []) }];
+            } else { 
+                series = [{ name: 'Price', data: baseData }]; 
+            }
+            
+            chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
+                series: series,
+                chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false },
+                markers: { size: 0, hover: { size: 5 } },
+                stroke: { curve: 'smooth', width: 2.5 },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
+                yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) } },
+                colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
+                fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
+                grid: { borderColor: '#f1f5f9' },
+                tooltip: { x: { format: 'dd MMM yyyy' }, y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) }, theme: 'light' },
+                legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
+                noData: { text: "Loading..." }
+            });
+            chartInstance.render();
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        init();
     </script>
 </body>
 </html>
