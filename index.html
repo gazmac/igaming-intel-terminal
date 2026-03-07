@@ -307,21 +307,26 @@
             }, 100);
         }
 
-        function renderMap(codes) {
+       function renderMap(codes) {
             $('#m-map').empty();
-            const markers = {};
-            codes.forEach(c => markers[c] = 1);
+            
+            // Explicitly force the specific countries to be dark blue
+            const regionColors = {};
+            codes.forEach(c => regionColors[c] = '#2563eb'); 
             
             $('#m-map').vectorMap({
                 map: 'world_mill_en', 
                 backgroundColor: 'transparent',
                 zoomOnScroll: false,
                 regionStyle: { 
-                    initial: { fill: '#cbd5e1', stroke: 'none' }, // Slate 300
+                    initial: { fill: '#cbd5e1', stroke: 'none' }, // Default grey for unused countries
                     hover: { "fill-opacity": 0.8, cursor: 'default' }
                 },
                 series: { 
-                    regions: [{ values: markers, scale: ['#93c5fd', '#3b82f6'] }] // Blue intensity scale
+                    regions: [{ 
+                        values: regionColors, 
+                        attribute: 'fill' // Force bypasses scale calculation
+                    }] 
                 }
             });
         }
