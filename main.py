@@ -109,30 +109,27 @@ def get_live_fx_rates():
     return rates
 
 def get_stock_fundamentals(ticker, fx_rates):
-    """Bypasses yfinance.info and queries Yahoo's raw JSON API for perfect reliability."""
+    """Multi-tiered approach to guarantee Price and Market Cap, while safely attempting P/E and Debt."""
+    # Safety Defaults
+    price = 0
+    price_str = "N/A"
+    mc_display = "N/A"
+    mc_usd_val = 0
+    pe_str = "N/A"
+    de_str = "N/A"
+    sym = "$"
+    currency = "USD"
+    
     try:
-        # Request the exact 3 modules we need directly from Yahoo's servers
-        url = f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}?modules=price,summaryDetail,financialData"
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-        res = requests.get(url, headers=headers, timeout=5)
+        ytk = yf.Ticker(ticker)
         
-        if res.status_code != 200:
-            raise ValueError(f"HTTP {res.status_code}")
+        # --- TIER 1: PRICE & CURRENCY (Highly Reliable) ---
+        try:
+            price = ytk.fast_info['lastPrice']
+            currency = ytk.fast_info['currency']
+        except Exception:
+            pass # We will rely on the 0 default if this completely fails
             
-        data = res.json()
-        result = data.get('quoteSummary', {}).get('result', [])
-        if not result:
-            raise ValueError("No data returned")
-            
-        modules = result[0]
-        price_mod = modules.get('price', {})
-        summary_mod = modules.get('summaryDetail', {})
-        financial_mod = modules.get('financialData', {})
-        
-        # 1. Price & Currency
-        price = financial_mod.get('currentPrice', {}).get('raw') or price_mod.get('regularMarketPrice', {}).get('raw', 0)
-        currency = price_mod.get('currency', 'USD')
-        
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
         elif currency == "SEK": sym = "SEK "
@@ -141,39 +138,46 @@ def get_stock_fundamentals(ticker, fx_rates):
         elif currency == "CAD": sym = "C$"
         else: sym = "$"
         
-        # 2. Market Cap (Native & USD converted)
-        mc_raw = price_mod.get('marketCap', {}).get('raw') or summary_mod.get('marketCap', {}).get('raw', 0)
-        mc_display = "N/A"
-        mc_usd_val = 0
-        
-        if mc_raw > 0:
-            if mc_raw >= 1e9: mc_native = f"{sym}{round(mc_raw/1e9, 2)}B"
-            elif mc_raw >= 1e6: mc_native = f"{sym}{round(mc_raw/1e6, 2)}M"
-            else: mc_native = f"{sym}{mc_raw}"
+        if price > 0:
+            price_str = f"{sym}{round(price, 2)}"
             
-            fx_rate = fx_rates.get(currency, 1.0)
-            mc_usd_val = mc_raw * fx_rate
-            
-            if currency not in ["USD", "$"]:
-                if mc_usd_val >= 1e9: mc_usd_str = f"${round(mc_usd_val/1e9, 2)}B"
-                elif mc_usd_val >= 1e6: mc_usd_str = f"${round(mc_usd_val/1e6, 2)}M"
-                else: mc_usd_str = f"${round(mc_usd_val, 2)}"
-                mc_display = f"{mc_native} ({mc_usd_str})"
-            else:
-                mc_display = mc_native
+        # --- TIER 2: MARKET CAP (Highly Reliable) ---
+        try:
+            mc_raw = ytk.fast_info['marketCap']
+            if mc_raw and mc_raw > 0:
+                if mc_raw >= 1e9: mc_native = f"{sym}{round(mc_raw/1e9, 2)}B"
+                elif mc_raw >= 1e6: mc_native = f"{sym}{round(mc_raw/1e6, 2)}M"
+                else: mc_native = f"{sym}{mc_raw}"
                 
-        # 3. P/E Ratio
-        pe_raw = summary_mod.get('trailingPE', {}).get('raw') or summary_mod.get('forwardPE', {}).get('raw')
-        pe_str = f"{round(pe_raw, 2)}" if pe_raw else "N/A"
-        
-        # 4. Debt-to-Equity
-        de_raw = financial_mod.get('debtToEquity', {}).get('raw')
-        de_str = f"{round(de_raw, 2)}%" if de_raw is not None else "N/A"
-        
-        return f"{sym}{round(price, 2)}", price, mc_display, mc_usd_val, pe_str, de_str
+                fx_rate = fx_rates.get(currency, 1.0)
+                mc_usd_val = mc_raw * fx_rate
+                
+                if currency not in ["USD", "$"]:
+                    if mc_usd_val >= 1e9: mc_usd_str = f"${round(mc_usd_val/1e9, 2)}B"
+                    elif mc_usd_val >= 1e6: mc_usd_str = f"${round(mc_usd_val/1e6, 2)}M"
+                    else: mc_usd_str = f"${round(mc_usd_val, 2)}"
+                    mc_display = f"{mc_native} ({mc_usd_str})"
+                else:
+                    mc_display = mc_native
+        except Exception:
+            pass
+
+        # --- TIER 3: P/E & DEBT-TO-EQUITY (Flaky on GitHub Actions) ---
+        # Wrapped in its own try/except so a Yahoo block doesn't wipe out the Price
+        try:
+            info = ytk.info
+            pe_raw = info.get('trailingPE') or info.get('forwardPE')
+            if pe_raw: pe_str = f"{round(pe_raw, 2)}"
+            
+            de_raw = info.get('debtToEquity')
+            if de_raw is not None: de_str = f"{round(de_raw, 2)}%"
+        except Exception:
+            pass # Fail silently, leaving them as "N/A" but preserving the rest
+            
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str
         
     except Exception as e:
-        print(f"  ❌ Fundamentals fetch failed for {ticker}: {e}")
+        print(f"  ❌ FATAL Fundamentals fetch failed for {ticker}: {e}")
         return "N/A", 0, "N/A", 0, "N/A", "N/A"
 
 def fetch_stock_history(ticker, native_price_raw):
