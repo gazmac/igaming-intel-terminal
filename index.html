@@ -10,14 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
         .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
         #methodology-overlay { transition: opacity 0.3s ease; }
         
-        /* Beautiful Styling for the AI Reading Room HTML injection */
         .reading-room-prose p { margin-bottom: 1.2em; font-size: 0.95rem; line-height: 1.6; color: #334155; }
         .reading-room-prose strong { color: #0f172a; font-weight: 700; }
         .reading-room-prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
@@ -54,6 +53,43 @@
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
             
+            <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
+                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
+                    </div>
+                    <div class="space-y-8">
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
+                        </section>
+                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                            <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
             <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
                 <div class="flex items-center gap-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
@@ -117,7 +153,7 @@
                 </div>
                 
                 <div id="modal-reading-room" class="hidden bg-white border border-slate-200 rounded-xl p-6 md:p-10 shadow-inner">
-                    <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-4 gap-4">
                         <div>
                             <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
                                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -125,11 +161,26 @@
                             </h3>
                             <p class="text-sm text-slate-400 mt-1">AI-Synthesized Strategic Outline</p>
                         </div>
-                        <button onclick="toggleReadingRoom()" class="text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
+                        <div class="flex gap-2 w-full md:w-auto">
+                            <button onclick="playReadingRoomAudio()" class="w-full md:w-auto text-sm font-bold text-slate-700 hover:text-slate-900 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors border border-slate-200 shadow-sm">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.4 4.038a1 1 0 00-1.077.092l-3.8 2.87H4a2 2 0 00-2 2v2a2 2 0 002 2h1.523l3.8 2.87A1 1 0 0011 15V5a1 1 0 00-.6-.962zM14.5 10a4.5 4.5 0 00-1.84-3.61 1 1 0 111.18-1.61A6.5 6.5 0 0116.5 10a6.5 6.5 0 01-2.66 5.22 1 1 0 01-1.18-1.61A4.5 4.5 0 0014.5 10z"></path></svg>
+                                <span id="tts-btn-text">Listen to Briefing</span>
+                            </button>
+                            <button onclick="toggleReadingRoom()" class="w-full md:w-auto text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
+                        </div>
                     </div>
                     
-                    <div id="reading-room-content" class="reading-room-prose max-w-3xl mx-auto">
+                    <div class="max-w-3xl mx-auto">
+                        <div id="management-quotes-container" class="mb-8 p-6 bg-slate-50 border-l-4 border-blue-500 rounded-r-xl">
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                From the Desk of Management
+                            </h4>
+                            <div id="management-quotes" class="space-y-4"></div>
                         </div>
+
+                        <div id="reading-room-content" class="reading-room-prose"></div>
+                    </div>
                 </div>
 
             </div>
@@ -141,6 +192,7 @@
         let activeTicker = null;
         let chartInstance = null;
         let currentSort = 'earnings';
+        let currentSpeech = null;
 
         async function init() {
             try {
@@ -153,7 +205,41 @@
             }
         }
 
-        // --- NEW TRANSITION LOGIC ---
+        // --- NATIVE TEXT TO SPEECH LOGIC ---
+        function playReadingRoomAudio() {
+            if ('speechSynthesis' in window) {
+                // If it is already playing, stop it
+                if (currentSpeech && window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel(); 
+                    document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+                    return;
+                }
+
+                // Gather the text to read
+                const quotesText = document.getElementById('management-quotes').innerText;
+                const briefingText = document.getElementById('reading-room-content').innerText;
+                const fullText = "Key Management Quotes. " + quotesText + ". Executive Briefing. " + briefingText;
+
+                currentSpeech = new SpeechSynthesisUtterance(fullText);
+                currentSpeech.rate = 0.95; // Slightly slower for a professional news anchor tone
+                currentSpeech.pitch = 1;
+                
+                // Try to find a high-quality English voice
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB');
+                if (preferredVoice) currentSpeech.voice = preferredVoice;
+
+                currentSpeech.onend = () => {
+                    document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+                };
+
+                window.speechSynthesis.speak(currentSpeech);
+                document.getElementById('tts-btn-text').innerText = "Stop Audio";
+            } else {
+                alert("Text-to-Speech is not natively supported in your browser.");
+            }
+        }
+
         function toggleReadingRoom() {
             const mainContent = document.getElementById('modal-main-content');
             const readingRoom = document.getElementById('modal-reading-room');
@@ -164,11 +250,17 @@
             } else {
                 readingRoom.classList.add('hidden');
                 mainContent.classList.remove('hidden');
+                // Stop audio if they close the reading room
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
             }
         }
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
+            // Stop audio if they close the entire modal
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
         }
 
         function getExchangeGroup(ticker) {
@@ -249,9 +341,10 @@
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
             
-            // RESET VIEW EVERY TIME MODAL OPENS
             document.getElementById('modal-main-content').classList.remove('hidden');
             document.getElementById('modal-reading-room').classList.add('hidden');
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
 
             document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
             
@@ -263,6 +356,9 @@
 
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
+            document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
+            document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
+            document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
             
             const revLabel = s.actuals?.rev_label || 'Revenue';
 
@@ -279,7 +375,16 @@
 
             document.getElementById('news-summary').innerHTML = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('') || '<li>No news available.</li>';
             
-            // INJECT AI READING ROOM CONTENT
+            // INJECT AI QUOTES
+            const quotesHtml = (s.quotes || []).map(q => `
+                <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                    <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                    <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${q.replace(/^"|"$/g, '')}</p>
+                </blockquote>
+            `).join('');
+            document.getElementById('management-quotes').innerHTML = quotesHtml || '<p class="text-sm text-slate-500 italic">No direct management quotes currently available.</p>';
+
+            // INJECT AI READING ROOM
             document.getElementById('reading-room-content').innerHTML = s.reading_room || '<p>Briefing unavailable at this time.</p>';
 
             const sent = s.sentiment || 50;
