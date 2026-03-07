@@ -46,7 +46,6 @@ OTC_MAP = {
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
-# The Dictionary now acts strictly as a Safety Net
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '24)", "revenue_interim": "$3.79B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"rev_label": "REV", "revenue_fy": "$4.77B (FY '24)", "revenue_interim": "$1.39B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "net_income": "-$507M", "ebitda": "$181M", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -186,7 +185,6 @@ def get_stock_fundamentals(ticker, fx_rates):
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
-                # 1. FY Revenue
                 raw_rev_fy = None
                 if 'Total Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
                 elif 'Operating Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
@@ -194,7 +192,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                     fy_year = pd.to_datetime(income_annual.columns[0]).year
                     fy_rev_str = f"{format_money(raw_rev_fy, sym)} (FY '{str(fy_year)[-2:]})"
                 
-                # 2. Net Income
                 raw_ni = None
                 for key in ['Net Income Common Stockholders', 'Net Income', 'Net Income From Continuing Operations']:
                     if key in income_annual.index:
@@ -202,7 +199,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                         break
                 if pd.notna(raw_ni): dyn_net_inc = format_money(raw_ni, sym)
 
-                # 3. EBITDA
                 raw_ebitda = None
                 for key in ['Normalized EBITDA', 'EBITDA']:
                     if key in income_annual.index:
@@ -220,7 +216,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if 'Free Cash Flow' in cf.index:
                     raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
                 elif 'Operating Cash Flow' in cf.index and 'Capital Expenditure' in cf.index:
-                    # Calculate FCF manually if Yahoo hid it
                     raw_fcf = cf.loc['Operating Cash Flow'].iloc[0] + cf.loc['Capital Expenditure'].iloc[0]
                 if pd.notna(raw_fcf): dyn_fcf = format_money(raw_fcf, sym)
         except Exception: pass
@@ -354,7 +349,6 @@ def run_pipeline():
         ticker = co['ticker']
         print(f"\nProcessing {co['name']}...")
         
-        # Base fallback from verified data
         fin = VERIFIED_DATA.get(ticker, {
             "eps_actual": 0, "eps_forecast": 0, "net_income": "N/A", "ebitda": "N/A", "fcf": "N/A", "jurisdictions": [],
             "focus": "Diversified Gaming", "map_codes": [], "rev_label": "REV", "revenue_fy": "N/A", "revenue_interim": "N/A"
@@ -365,17 +359,14 @@ def run_pipeline():
         try:
             intel = ai_process_intelligence(co['name'], ticker)
             
-            # The Total Automation Engine
             last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est = get_stock_fundamentals(ticker, fx_rates)
             
-            # SMART MERGE: Prioritize dynamic API data, fallback to VERIFIED_DATA if missing
             fin["revenue_fy"] = dyn_fy_rev if dyn_fy_rev != "N/A" else fin.get("revenue_fy", "N/A")
             fin["revenue_interim"] = dyn_int_rev if dyn_int_rev != "N/A" else fin.get("revenue_interim", "N/A")
             fin["net_income"] = dyn_net_inc if dyn_net_inc != "N/A" else fin.get("net_income", "N/A")
             fin["ebitda"] = dyn_ebitda if dyn_ebitda != "N/A" else fin.get("ebitda", "N/A")
             fin["fcf"] = dyn_fcf if dyn_fcf != "N/A" else fin.get("fcf", "N/A")
             
-            # EPS Fallback Logic
             beat_miss = 0
             if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
                 fin["eps_actual"] = round(dyn_eps_act, 2)
@@ -396,7 +387,8 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "logo": f"https://logo.clearbit.com/{co['domain']}", # Added this line
+            # THE CRITICAL NEW LINE ADDING THE LOGO
+            "logo": f"https://logo.clearbit.com/{co['domain']}",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
