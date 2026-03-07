@@ -53,43 +53,6 @@
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
             
-            <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
-                <div class="max-w-2xl mx-auto">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
-                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
-                    </div>
-                    <div class="space-y-8">
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
-                        </section>
-                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
-                            <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-
             <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
                 <div class="flex items-center gap-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
@@ -205,26 +168,22 @@
             }
         }
 
-        // --- NATIVE TEXT TO SPEECH LOGIC ---
         function playReadingRoomAudio() {
             if ('speechSynthesis' in window) {
-                // If it is already playing, stop it
                 if (currentSpeech && window.speechSynthesis.speaking) {
                     window.speechSynthesis.cancel(); 
                     document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
                     return;
                 }
 
-                // Gather the text to read
                 const quotesText = document.getElementById('management-quotes').innerText;
                 const briefingText = document.getElementById('reading-room-content').innerText;
                 const fullText = "Key Management Quotes. " + quotesText + ". Executive Briefing. " + briefingText;
 
                 currentSpeech = new SpeechSynthesisUtterance(fullText);
-                currentSpeech.rate = 0.95; // Slightly slower for a professional news anchor tone
+                currentSpeech.rate = 0.95; 
                 currentSpeech.pitch = 1;
                 
-                // Try to find a high-quality English voice
                 const voices = window.speechSynthesis.getVoices();
                 const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB');
                 if (preferredVoice) currentSpeech.voice = preferredVoice;
@@ -250,7 +209,6 @@
             } else {
                 readingRoom.classList.add('hidden');
                 mainContent.classList.remove('hidden');
-                // Stop audio if they close the reading room
                 if (window.speechSynthesis) window.speechSynthesis.cancel();
                 document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
             }
@@ -258,7 +216,6 @@
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
-            // Stop audio if they close the entire modal
             if (window.speechSynthesis) window.speechSynthesis.cancel();
             document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
         }
@@ -307,7 +264,7 @@
                         <div>
                             <div class="flex justify-between items-start mb-3">
                                 <div class="flex gap-3 items-center">
-                                    <img src="${s.logo}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                                    <img src="${s.logo || fallbackUrl}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="this.onerror=null; this.src='${fallbackUrl}';">
                                     <div>
                                         <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
                                         <p class="text-[10px] font-mono text-slate-400 mt-0.5">${s.ticker} • ${locationLabel}</p>
@@ -338,66 +295,80 @@
         }
 
         function openModal(ticker) {
-            activeTicker = ticker;
-            const s = db.find(x => x.ticker === ticker);
-            
-            document.getElementById('modal-main-content').classList.remove('hidden');
-            document.getElementById('modal-reading-room').classList.add('hidden');
-            if (window.speechSynthesis) window.speechSynthesis.cancel();
-            document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+            try {
+                activeTicker = ticker;
+                const s = db.find(x => x.ticker === ticker);
+                
+                // RESET VIEW EVERY TIME MODAL OPENS
+                document.getElementById('modal-main-content').classList.remove('hidden');
+                document.getElementById('modal-reading-room').classList.add('hidden');
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
 
-            document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
-            
-            const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
-            const modalLogo = document.getElementById('modal-logo');
-            modalLogo.src = s.logo;
-            modalLogo.onerror = function() { this.onerror = null; this.src = fallbackUrl; };
-            modalLogo.classList.remove('hidden');
+                document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
+                
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+                const modalLogo = document.getElementById('modal-logo');
+                modalLogo.src = s.logo || fallbackUrl;
+                modalLogo.onerror = function() { this.onerror = null; this.src = fallbackUrl; };
+                modalLogo.classList.remove('hidden');
 
-            document.getElementById('modal-title').innerText = s.company;
-            document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
-            document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
-            document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
-            document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
-            
-            const revLabel = s.actuals?.rev_label || 'Revenue';
+                document.getElementById('modal-title').innerText = s.company;
+                document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
+                document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
+                document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
+                document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
+                
+                const revLabel = s.actuals?.rev_label || 'Revenue';
 
-            document.getElementById('modal-financials').innerHTML = `
-                <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
-                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
-                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
-                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
-                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
-                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
-                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
-                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
-            `;
+                document.getElementById('modal-financials').innerHTML = `
+                    <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
+                    <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
+                    <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
+                    <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+                `;
 
-            document.getElementById('news-summary').innerHTML = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('') || '<li>No news available.</li>';
-            
-            // INJECT AI QUOTES
-            const quotesHtml = (s.quotes || []).map(q => `
-                <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
-                    <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
-                    <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${q.replace(/^"|"$/g, '')}</p>
-                </blockquote>
-            `).join('');
-            document.getElementById('management-quotes').innerHTML = quotesHtml || '<p class="text-sm text-slate-500 italic">No direct management quotes currently available.</p>';
+                // HIGHLY DEFENSIVE DATA PARSING FOR AI GENERATED CONTENT
+                let newsArr = Array.isArray(s.news_summary) ? s.news_summary : [s.news_summary || 'No news available.'];
+                document.getElementById('news-summary').innerHTML = newsArr.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+                
+                let quotesArr = Array.isArray(s.quotes) ? s.quotes : (typeof s.quotes === 'string' ? [s.quotes] : []);
+                const quotesHtml = quotesArr.map(q => {
+                    const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
+                    return `
+                    <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                        <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                        <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${safeStr}</p>
+                    </blockquote>`;
+                }).join('');
+                document.getElementById('management-quotes').innerHTML = quotesHtml || '<p class="text-sm text-slate-500 italic">No direct management quotes currently available.</p>';
 
-            // INJECT AI READING ROOM
-            document.getElementById('reading-room-content').innerHTML = s.reading_room || '<p>Briefing unavailable at this time.</p>';
+                document.getElementById('reading-room-content').innerHTML = s.reading_room || '<p>Briefing unavailable at this time.</p>';
 
-            const sent = s.sentiment || 50;
-            const sLab = document.getElementById('sentiment-label');
-            sLab.innerText = sent + '%';
-            sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
-            const sFil = document.getElementById('modal-sentiment-fill');
-            sFil.style.width = sent + '%';
-            sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-emerald-500' : (sent < 40 ? 'bg-rose-500' : 'bg-amber-500'));
-            
-            document.getElementById('map-jurisdictions-text').innerText = (s.jurisdictions || []).slice(0, 4).join(' • ');
-            document.getElementById('modal').classList.remove('hidden');
-            setTimeout(() => { updateMainChart(); renderMap(s.map_codes || []); }, 100);
+                const sent = s.sentiment || 50;
+                const sLab = document.getElementById('sentiment-label');
+                sLab.innerText = sent + '%';
+                sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
+                const sFil = document.getElementById('modal-sentiment-fill');
+                sFil.style.width = sent + '%';
+                sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-emerald-500' : (sent < 40 ? 'bg-rose-500' : 'bg-amber-500'));
+                
+                document.getElementById('map-jurisdictions-text').innerText = (s.jurisdictions || []).slice(0, 4).join(' • ');
+
+            } catch (error) {
+                console.error("Data parsing error inside modal:", error);
+            } finally {
+                // ALWAYS trigger the modal to open, regardless of AI parsing errors above
+                document.getElementById('modal').classList.remove('hidden');
+                setTimeout(() => { 
+                    try { updateMainChart(); } catch(e){} 
+                    try { renderMap(db.find(x => x.ticker === activeTicker)?.map_codes || []); } catch(e){}
+                }, 100);
+            }
         }
 
         function renderMap(codes) {
