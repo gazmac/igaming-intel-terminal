@@ -226,8 +226,9 @@
             const grid = document.getElementById('stock-grid');
             grid.innerHTML = dataToRender.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
-                const period = s.actuals?.period || 'Q4 25';
                 const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
+                
+                const revLabel = s.actuals?.rev_label || 'REV';
                 
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
@@ -247,7 +248,7 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <div><span class="text-slate-400 font-bold uppercase">REV (${period})</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue || 'N/A'}</span></div>
+                                <div><span class="text-slate-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
                                 <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
                             </div>
                         </div>
@@ -272,13 +273,16 @@
             document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
             document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
             
-            // EXPANDED FINANCIALS STRIP
+            const revLabel = s.actuals?.rev_label || 'Revenue';
+
+            // THE NEW EXPANDED STRIP WITH BOTH FY AND INTERIM REVENUE
             document.getElementById('modal-financials').innerHTML = `
-                <div class="min-w-[120px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
+                <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
                 <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
                 <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
                 <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
-                <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Revenue</div><div class="font-mono text-sm font-bold">${s.actuals?.revenue || 'N/A'}</div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
+                <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
                 <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
                 <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
             `;
@@ -326,48 +330,23 @@
             
             chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
                 series: series,
-                chart: { 
-                    type: isComp ? 'line' : 'area', 
-                    height: 300, 
-                    toolbar: { show: false },
-                    zoom: { enabled: false },
-                    fontFamily: 'inherit'
-                },
+                chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
                 dataLabels: { enabled: false },
                 markers: { size: 0, hover: { size: 5 } },
                 stroke: { curve: 'smooth', width: 2.5 },
-                xaxis: { 
-                    type: 'datetime', 
-                    labels: { style: { colors: '#94a3b8', fontSize: '11px' } } 
-                },
-                yaxis: { 
-                    labels: { 
-                        style: { colors: '#94a3b8', fontSize: '11px' }, 
-                        formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) 
-                    } 
-                },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
+                yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) } },
                 colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
-                fill: { 
-                    type: isComp ? 'solid' : 'gradient', 
-                    gradient: { opacityFrom: 0.3, opacityTo: 0 } 
-                },
+                fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
                 grid: { borderColor: '#f1f5f9' },
-                tooltip: { 
-                    x: { format: 'dd MMM yyyy' }, 
-                    y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) },
-                    theme: 'light' 
-                },
+                tooltip: { x: { format: 'dd MMM yyyy' }, y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) }, theme: 'light' },
                 legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
                 noData: { text: "Loading..." }
             });
-            
             chartInstance.render();
         }
 
-        document.addEventListener('keydown', (e) => { 
-            if (e.key === 'Escape') closeModal(); 
-        });
-
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
         init();
     </script>
 </body>
