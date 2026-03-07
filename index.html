@@ -176,8 +176,8 @@
                     return;
                 }
 
-                const quotesText = document.getElementById('management-quotes').innerText;
-                const briefingText = document.getElementById('reading-room-content').innerText;
+                const quotesText = document.getElementById('management-quotes').innerText || "";
+                const briefingText = document.getElementById('reading-room-content').innerText || "";
                 const fullText = "Key Management Quotes. " + quotesText + ". Executive Briefing. " + briefingText;
 
                 currentSpeech = new SpeechSynthesisUtterance(fullText);
@@ -294,34 +294,50 @@
             }).join('');
         }
 
+        // --- SAFE INJECTOR HELPERS ---
+        function safeSetHTML(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        function safeSetText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
         function openModal(ticker) {
             try {
                 activeTicker = ticker;
                 const s = db.find(x => x.ticker === ticker);
+                if (!s) return; // Exit early if data is totally missing
                 
                 // RESET VIEW EVERY TIME MODAL OPENS
                 document.getElementById('modal-main-content').classList.remove('hidden');
                 document.getElementById('modal-reading-room').classList.add('hidden');
                 if (window.speechSynthesis) window.speechSynthesis.cancel();
-                document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+                safeSetText('tts-btn-text', "Listen to Briefing");
 
-                document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
+                const compareHtml = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
+                safeSetHTML('compare-select', compareHtml);
                 
-                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company || 'Unknown')}&background=f1f5f9&color=475569&rounded=true`;
                 const modalLogo = document.getElementById('modal-logo');
-                modalLogo.src = s.logo || fallbackUrl;
-                modalLogo.onerror = function() { this.onerror = null; this.src = fallbackUrl; };
-                modalLogo.classList.remove('hidden');
+                if (modalLogo) {
+                    modalLogo.src = s.logo || fallbackUrl;
+                    modalLogo.onerror = function() { this.onerror = null; this.src = fallbackUrl; };
+                    modalLogo.classList.remove('hidden');
+                }
 
-                document.getElementById('modal-title').innerText = s.company;
-                document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
-                document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
-                document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
-                document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
+                safeSetText('modal-title', s.company || 'Unknown Company');
+                safeSetHTML('modal-ticker', `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country || 'Unknown'} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`);
+                
+                safeSetText('modal-earnings-date', s.calendar?.date || 'TBD');
+                safeSetText('modal-report-time', s.calendar?.report_time || 'TBD');
+                safeSetText('modal-call-time', s.calendar?.call_time || 'TBD');
                 
                 const revLabel = s.actuals?.rev_label || 'Revenue';
 
-                document.getElementById('modal-financials').innerHTML = `
+                safeSetHTML('modal-financials', `
                     <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
@@ -330,40 +346,60 @@
                     <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
-                `;
+                `);
 
-                // HIGHLY DEFENSIVE DATA PARSING FOR AI GENERATED CONTENT
-                let newsArr = Array.isArray(s.news_summary) ? s.news_summary : [s.news_summary || 'No news available.'];
-                document.getElementById('news-summary').innerHTML = newsArr.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+                // HIGHLY DEFENSIVE AI DATA PARSING
+                let newsHtml = '<li class="text-slate-500 italic">No news available.</li>';
+                if (Array.isArray(s.news_summary) && s.news_summary.length > 0) {
+                    newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+                } else if (typeof s.news_summary === 'string') {
+                    newsHtml = `<li class="flex gap-2"><span class="text-blue-500">•</span>${s.news_summary}</li>`;
+                }
+                safeSetHTML('news-summary', newsHtml);
                 
-                let quotesArr = Array.isArray(s.quotes) ? s.quotes : (typeof s.quotes === 'string' ? [s.quotes] : []);
-                const quotesHtml = quotesArr.map(q => {
-                    const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
-                    return `
-                    <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
-                        <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
-                        <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${safeStr}</p>
-                    </blockquote>`;
-                }).join('');
-                document.getElementById('management-quotes').innerHTML = quotesHtml || '<p class="text-sm text-slate-500 italic">No direct management quotes currently available.</p>';
+                let quotesHtml = '<p class="text-sm text-slate-500 italic">No direct management quotes currently available.</p>';
+                if (Array.isArray(s.quotes) && s.quotes.length > 0) {
+                    quotesHtml = s.quotes.map(q => {
+                        const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
+                        return `
+                        <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                            <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${safeStr}</p>
+                        </blockquote>`;
+                    }).join('');
+                } else if (typeof s.quotes === 'string' && s.quotes.trim() !== '') {
+                    quotesHtml = `
+                        <blockquote class="relative p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                            <p class="text-sm font-medium text-slate-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p>
+                        </blockquote>`;
+                }
+                safeSetHTML('management-quotes', quotesHtml);
 
-                document.getElementById('reading-room-content').innerHTML = s.reading_room || '<p>Briefing unavailable at this time.</p>';
+                safeSetHTML('reading-room-content', s.reading_room || '<p>Briefing unavailable at this time.</p>');
 
                 const sent = s.sentiment || 50;
-                const sLab = document.getElementById('sentiment-label');
-                sLab.innerText = sent + '%';
-                sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
-                const sFil = document.getElementById('modal-sentiment-fill');
-                sFil.style.width = sent + '%';
-                sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-emerald-500' : (sent < 40 ? 'bg-rose-500' : 'bg-amber-500'));
+                safeSetText('sentiment-label', sent + '%');
                 
-                document.getElementById('map-jurisdictions-text').innerText = (s.jurisdictions || []).slice(0, 4).join(' • ');
+                const sLab = document.getElementById('sentiment-label');
+                if (sLab) sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
+                
+                const sFil = document.getElementById('modal-sentiment-fill');
+                if (sFil) {
+                    sFil.style.width = sent + '%';
+                    sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-emerald-500' : (sent < 40 ? 'bg-rose-500' : 'bg-amber-500'));
+                }
+                
+                const jurisdictions = Array.isArray(s.jurisdictions) ? s.jurisdictions.slice(0, 4).join(' • ') : '';
+                safeSetText('map-jurisdictions-text', jurisdictions);
 
             } catch (error) {
                 console.error("Data parsing error inside modal:", error);
             } finally {
-                // ALWAYS trigger the modal to open, regardless of AI parsing errors above
-                document.getElementById('modal').classList.remove('hidden');
+                // ALWAYS open the modal, even if rendering fails midway
+                const mod = document.getElementById('modal');
+                if (mod) mod.classList.remove('hidden');
+                
                 setTimeout(() => { 
                     try { updateMainChart(); } catch(e){} 
                     try { renderMap(db.find(x => x.ticker === activeTicker)?.map_codes || []); } catch(e){}
@@ -372,47 +408,61 @@
         }
 
         function renderMap(codes) {
-            $('#m-map').empty();
-            const regionColors = {}; codes.forEach(c => regionColors[c] = '#2563eb'); 
-            $('#m-map').vectorMap({
-                map: 'world_mill_en', backgroundColor: 'transparent', zoomOnScroll: false,
-                regionStyle: { initial: { fill: '#cbd5e1' }, hover: { "fill-opacity": 0.8 } },
-                series: { regions: [{ values: regionColors, attribute: 'fill' }] }
-            });
+            try {
+                $('#m-map').empty();
+                const regionColors = {}; codes.forEach(c => regionColors[c] = '#2563eb'); 
+                $('#m-map').vectorMap({
+                    map: 'world_mill_en', backgroundColor: 'transparent', zoomOnScroll: false,
+                    regionStyle: { initial: { fill: '#cbd5e1' }, hover: { "fill-opacity": 0.8 } },
+                    series: { regions: [{ values: regionColors, attribute: 'fill' }] }
+                });
+            } catch (e) {
+                console.warn("Map rendering failed", e);
+            }
         }
 
         function updateMainChart() {
-            const timeframe = document.getElementById('timeframe-select').value;
-            const compareTicker = document.getElementById('compare-select').value;
-            const s = db.find(x => x.ticker === activeTicker);
-            const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
-            if (chartInstance) chartInstance.destroy();
+            try {
+                const timeframeEl = document.getElementById('timeframe-select');
+                const compareEl = document.getElementById('compare-select');
+                if (!timeframeEl || !compareEl) return;
 
-            let series = []; let isComp = false;
-            if (compareTicker) {
-                isComp = true; const comp = db.find(x => x.ticker === compareTicker);
-                const norm = (d) => d.length ? d.map(p => [p[0], ((p[1] - d[0][1]) / d[0][1]) * 100]) : [];
-                series = [{ name: s.company, data: norm(baseData) }, { name: comp.company, data: norm(comp.history[timeframe] || []) }];
-            } else { 
-                series = [{ name: 'Price', data: baseData }]; 
+                const timeframe = timeframeEl.value;
+                const compareTicker = compareEl.value;
+                const s = db.find(x => x.ticker === activeTicker);
+                if (!s) return;
+
+                const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+                if (chartInstance) chartInstance.destroy();
+
+                let series = []; let isComp = false;
+                if (compareTicker) {
+                    isComp = true; const comp = db.find(x => x.ticker === compareTicker);
+                    const norm = (d) => d.length ? d.map(p => [p[0], ((p[1] - d[0][1]) / d[0][1]) * 100]) : [];
+                    series = [{ name: s.company, data: norm(baseData) }, { name: comp.company, data: norm(comp?.history?.[timeframe] || []) }];
+                } else { 
+                    series = [{ name: 'Price', data: baseData }]; 
+                }
+                
+                chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
+                    series: series,
+                    chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                    dataLabels: { enabled: false },
+                    markers: { size: 0, hover: { size: 5 } },
+                    stroke: { curve: 'smooth', width: 2.5 },
+                    xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
+                    yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) } },
+                    colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
+                    fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
+                    grid: { borderColor: '#f1f5f9' },
+                    tooltip: { x: { format: 'dd MMM yyyy' }, y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) }, theme: 'light' },
+                    legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
+                    noData: { text: "Loading..." }
+                });
+                chartInstance.render();
+            } catch (e) {
+                console.warn("Chart rendering failed", e);
             }
-            
-            chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
-                series: series,
-                chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
-                dataLabels: { enabled: false },
-                markers: { size: 0, hover: { size: 5 } },
-                stroke: { curve: 'smooth', width: 2.5 },
-                xaxis: { type: 'datetime', labels: { style: { colors: '#94a3b8', fontSize: '11px' } } },
-                yaxis: { labels: { style: { colors: '#94a3b8', fontSize: '11px' }, formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) } },
-                colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
-                fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
-                grid: { borderColor: '#f1f5f9' },
-                tooltip: { x: { format: 'dd MMM yyyy' }, y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) }, theme: 'light' },
-                legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
-                noData: { text: "Loading..." }
-            });
-            chartInstance.render();
         }
 
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
