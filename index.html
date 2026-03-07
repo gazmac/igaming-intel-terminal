@@ -16,6 +16,12 @@
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
         .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
         #methodology-overlay { transition: opacity 0.3s ease; }
+        
+        /* Beautiful Styling for the AI Reading Room HTML injection */
+        .reading-room-prose p { margin-bottom: 1.2em; font-size: 0.95rem; line-height: 1.6; color: #334155; }
+        .reading-room-prose strong { color: #0f172a; font-weight: 700; }
+        .reading-room-prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
+        .reading-room-prose li { margin-bottom: 0.5em; font-size: 0.95rem; color: #334155; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -48,43 +54,6 @@
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
             
-            <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
-                <div class="max-w-2xl mx-auto">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
-                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
-                    </div>
-                    <div class="space-y-8">
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
-                        </section>
-                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
-                            <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-
             <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
                 <div class="flex items-center gap-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
@@ -99,23 +68,10 @@
             </div>
             
             <div class="p-6">
-                <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 mb-6 flex justify-between items-center shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-blue-500 text-white p-2 rounded-lg"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-                        <div>
-                            <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-0.5">Next Earnings Event</div>
-                            <div id="modal-earnings-date" class="text-lg font-black text-slate-800"></div>
-                        </div>
-                    </div>
-                    <div class="text-right flex gap-4 md:gap-6">
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Report Release</div><div id="modal-report-time" class="text-xs md:text-sm font-bold text-slate-700"></div></div>
-                        <div><div class="text-[10px] font-bold text-slate-400 uppercase">Conference Call</div><div id="modal-call-time" class="text-xs md:text-sm font-bold text-blue-600"></div></div>
-                    </div>
-                </div>
-
                 <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" id="modal-main-content">
+                    
                     <div class="lg:col-span-2 flex flex-col gap-6">
                         <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-2">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
@@ -141,20 +97,16 @@
 
                     <div class="space-y-6">
                         <div>
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
-                                <button onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
-                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                                    How it works
-                                </button>
+                            <div class="flex justify-between items-end mb-2">
+                                <span id="sentiment-label" class="text-2xl font-bold"></span>
+                                <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Bullishness Index</span>
                             </div>
-                            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="flex justify-between items-end mb-2">
-                                    <span id="sentiment-label" class="text-2xl font-bold"></span>
-                                    <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Bullishness Index</span>
-                                </div>
-                                <div class="sentiment-bar"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
-                            </div>
+                            <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
+                            
+                            <button onclick="toggleReadingRoom()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                Enter Earnings Reading Room
+                            </button>
                         </div>
 
                         <div>
@@ -163,6 +115,23 @@
                         </div>
                     </div>
                 </div>
+                
+                <div id="modal-reading-room" class="hidden bg-white border border-slate-200 rounded-xl p-6 md:p-10 shadow-inner">
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                Executive Analyst Briefing
+                            </h3>
+                            <p class="text-sm text-slate-400 mt-1">AI-Synthesized Strategic Outline</p>
+                        </div>
+                        <button onclick="toggleReadingRoom()" class="text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
+                    </div>
+                    
+                    <div id="reading-room-content" class="reading-room-prose max-w-3xl mx-auto">
+                        </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -184,14 +153,22 @@
             }
         }
 
-        function toggleMethodology() {
-            const el = document.getElementById('methodology-overlay');
-            el.classList.toggle('hidden');
+        // --- NEW TRANSITION LOGIC ---
+        function toggleReadingRoom() {
+            const mainContent = document.getElementById('modal-main-content');
+            const readingRoom = document.getElementById('modal-reading-room');
+            
+            if (readingRoom.classList.contains('hidden')) {
+                mainContent.classList.add('hidden');
+                readingRoom.classList.remove('hidden');
+            } else {
+                readingRoom.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+            }
         }
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
-            document.getElementById('methodology-overlay').classList.add('hidden'); 
         }
 
         function getExchangeGroup(ticker) {
@@ -230,10 +207,7 @@
             grid.innerHTML = dataToRender.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
                 const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
-                
                 const revLabel = s.actuals?.rev_label || 'REV';
-                
-                // Fallback avatar URL generation
                 const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
 
                 return `
@@ -274,27 +248,24 @@
         function openModal(ticker) {
             activeTicker = ticker;
             const s = db.find(x => x.ticker === ticker);
+            
+            // RESET VIEW EVERY TIME MODAL OPENS
+            document.getElementById('modal-main-content').classList.remove('hidden');
+            document.getElementById('modal-reading-room').classList.add('hidden');
+
             document.getElementById('compare-select').innerHTML = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
             
-            // MODAL HEADER UPDATE (Title + Logo)
             const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
             const modalLogo = document.getElementById('modal-logo');
             modalLogo.src = s.logo;
-            modalLogo.onerror = function() {
-                this.onerror = null;
-                this.src = fallbackUrl;
-            };
+            modalLogo.onerror = function() { this.onerror = null; this.src = fallbackUrl; };
             modalLogo.classList.remove('hidden');
 
             document.getElementById('modal-title').innerText = s.company;
             document.getElementById('modal-ticker').innerHTML = `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`;
-            document.getElementById('modal-earnings-date').innerText = s.calendar?.date || 'TBD';
-            document.getElementById('modal-report-time').innerText = s.calendar?.report_time || 'TBD';
-            document.getElementById('modal-call-time').innerText = s.calendar?.call_time || 'TBD';
             
             const revLabel = s.actuals?.rev_label || 'Revenue';
 
-            // EXPANDED FINANCIALS STRIP
             document.getElementById('modal-financials').innerHTML = `
                 <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
                 <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
@@ -308,6 +279,9 @@
 
             document.getElementById('news-summary').innerHTML = (s.news_summary || []).map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('') || '<li>No news available.</li>';
             
+            // INJECT AI READING ROOM CONTENT
+            document.getElementById('reading-room-content').innerHTML = s.reading_room || '<p>Briefing unavailable at this time.</p>';
+
             const sent = s.sentiment || 50;
             const sLab = document.getElementById('sentiment-label');
             sLab.innerText = sent + '%';
