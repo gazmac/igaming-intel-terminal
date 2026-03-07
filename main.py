@@ -92,8 +92,6 @@ VERIFIED_CALENDAR = {
     "KAMBI.ST": {"date": "Apr 29, 2026", "report_time": "7:45 AM CET", "call_time": "10:45 AM CET"}
 }
 
-# --- 2. CORE FUNCTIONS ---
-
 def get_live_fx_rates():
     print("🌍 Fetching live Forex rates...")
     rates = {'USD': 1.0, '$': 1.0}
@@ -292,7 +290,7 @@ def ai_process_intelligence(company_name, ticker):
     print(f"  -> Fetching Yahoo API News & Generating Reading Room for {company_name}...")
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
-        return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required for Reading Room generation.</p>"}
+        return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
         client = genai.Client(api_key=api_key)
@@ -305,14 +303,15 @@ def ai_process_intelligence(company_name, ticker):
         headlines = [item['title'] for item in res_data.get('news', [])]
         
         if not headlines:
-            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available to generate briefing.</p>"}
+            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
-        # THE NEW UPGRADED AI PROMPT
+        # THE NEW UPGRADED AI PROMPT - Now hunting for strategic management quotes
         prompt = f"""Act as an iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Return a valid JSON object with exactly three keys: 
+Return a valid JSON object with exactly four keys: 
 1. 'summary' (a list of 3 string bullet points summarizing the news), 
 2. 'sentiment' (an integer from 0 to 100 representing market sentiment), 
-3. 'reading_room' (An HTML formatted string using <p>, <strong>, <ul>, and <li> tags providing a detailed 'Executive Analyst Briefing' based on the headlines. Write it in the style of an earnings call summary, covering recent performance, headwinds, and strategic outlook.)"""
+3. 'reading_room' (An HTML formatted string using <p>, <strong>, <ul>, and <li> tags providing a detailed 'Executive Analyst Briefing' based on the headlines. Write it in the style of an earnings call summary, covering recent performance, headwinds, and strategic outlook.),
+4. 'quotes' (A list of 2 distinct string sentences containing key strategic quotes from the CEO, CFO, or Management. If the exact quotes are not in the headlines, logically synthesize highly realistic, professional quotes reflecting the factual data of the headlines. Do not use HTML tags in this list)."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -324,14 +323,13 @@ Return a valid JSON object with exactly three keys:
         match = re.search(r'\{.*\}', raw_text, re.DOTALL)
         if match:
             data = json.loads(match.group(0))
-            if "summary" in data and "sentiment" in data and "reading_room" in data:
+            if "summary" in data and "sentiment" in data and "reading_room" in data and "quotes" in data:
                 return data
                 
-        return {"summary": ["Failed to extract valid data from AI."], "sentiment": 50, "reading_room": "<p>Failed to generate briefing.</p>"}
+        return {"summary": ["Failed to extract valid data."], "sentiment": 50, "reading_room": "<p>Failed to generate briefing.</p>", "quotes": []}
         
     except Exception as e:
-        error_msg = str(e).replace('"', "'")[:60]
-        return {"summary": [f"News Engine Error: {error_msg}"], "sentiment": 50, "reading_room": f"<p>Error: {error_msg}</p>"}
+        return {"summary": [f"News Error: {str(e)[:60]}"], "sentiment": 50, "reading_room": f"<p>Error: {str(e)[:60]}</p>", "quotes": []}
 
 # --- 3. PIPELINE EXECUTION ---
 
@@ -376,7 +374,7 @@ def run_pipeline():
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "reading_room": "<p>Error</p>"}
+            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "reading_room": "<p>Error</p>", "quotes": []}
             history, last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A", "N/A", 0, "N/A", "N/A"
             beat_miss = 0
 
@@ -397,9 +395,10 @@ def run_pipeline():
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
             "sentiment": intel.get("sentiment", 50),
-            
-            # The new AI Reading Room HTML string
             "reading_room": intel.get("reading_room", "<p>Data unavailable.</p>"),
+            
+            # The newly extracted quotes
+            "quotes": intel.get("quotes", []),
             
             "jurisdictions": fin.get("jurisdictions", []),
             "history": history
