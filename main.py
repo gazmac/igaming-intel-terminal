@@ -14,6 +14,8 @@ from google import genai
 from datetime import datetime
 
 # --- 1. CONFIGURATION ---
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
@@ -44,27 +46,28 @@ OTC_MAP = {
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
+# NEW: Added 'focus' tags and ISO 'map_codes' for the JVectorMap
 VERIFIED_DATA = {
-    "FLUT": {"period": "Q4 25", "eps_actual": 1.74, "eps_forecast": 1.91, "revenue": "$4.74B", "net_income": "$10M", "ebitda": "$832M", "ngr": "$4.74B", "fcf": "-$1.43B", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
-    "DKNG": {"period": "Q4 25", "eps_actual": 0.25, "eps_forecast": 0.18, "revenue": "$1.99B", "net_income": "$136.4M", "ebitda": "$343M", "ngr": "$1.99B", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
-    "ENT.L": {"period": "H2 25", "eps_actual": 0.62, "eps_forecast": 0.45, "revenue": "£3.2B", "net_income": "£150M", "ebitda": "£600M", "ngr": "£3.2B", "fcf": "£151M", "jurisdictions": ["UK", "Italy", "Brazil", "Australia"]},
-    "EVO.ST": {"period": "Q4 25", "eps_actual": 1.54, "eps_forecast": 1.46, "revenue": "€514M", "net_income": "€306M", "ebitda": "€393M", "ngr": "€514M", "fcf": "€250M", "jurisdictions": ["Europe", "North America", "LatAm", "Asia"]},
-    "MGM": {"period": "Q4 25", "eps_actual": 1.11, "eps_forecast": 0.56, "revenue": "$4.61B", "net_income": "$294M", "ebitda": "$635M", "ngr": "$4.61B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "Japan"]},
-    "CZR": {"period": "Q4 25", "eps_actual": -0.34, "eps_forecast": 0.10, "revenue": "$2.8B", "net_income": "-$72M", "ebitda": "$900M", "ngr": "$2.8B", "fcf": "$150M", "jurisdictions": ["US", "Canada"]},
-    "PENN": {"period": "Q4 25", "eps_actual": 0.07, "eps_forecast": 0.02, "revenue": "$1.6B", "net_income": "$15M", "ebitda": "$350M", "ngr": "$1.6B", "fcf": "$80M", "jurisdictions": ["US", "Canada"]},
-    "LVS": {"period": "Q4 25", "eps_actual": 0.65, "eps_forecast": 0.55, "revenue": "$2.9B", "net_income": "$450M", "ebitda": "$1.2B", "ngr": "$2.9B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
-    "WYNN": {"period": "Q4 25", "eps_actual": 1.20, "eps_forecast": 1.05, "revenue": "$1.8B", "net_income": "$200M", "ebitda": "$600M", "ngr": "$1.8B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
-    "EVOK.L": {"period": "H2 25", "eps_actual": -0.05, "eps_forecast": 0.01, "revenue": "£850M", "net_income": "-£40M", "ebitda": "£150M", "ngr": "£850M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
-    "SRAD": {"period": "Q4 25", "eps_actual": 0.14, "eps_forecast": 0.10, "revenue": "$280M", "net_income": "$35M", "ebitda": "$55M", "ngr": "$280M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
-    "BETS-B.ST": {"period": "Q4 25", "eps_actual": 0.35, "eps_forecast": 0.32, "revenue": "€260M", "net_income": "€45M", "ebitda": "€75M", "ngr": "€260M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
-    "PTEC.L": {"period": "H2 25", "eps_actual": 0.18, "eps_forecast": 0.20, "revenue": "€850M", "net_income": "€55M", "ebitda": "€200M", "ngr": "€850M", "fcf": "€80M", "jurisdictions": ["UK", "Italy"]},
-    "CHDN": {"period": "Q4 25", "eps_actual": 1.35, "eps_forecast": 1.20, "revenue": "$750M", "net_income": "$90M", "ebitda": "$300M", "ngr": "$750M", "fcf": "$120M", "jurisdictions": ["US"]},
-    "LNW": {"period": "Q4 25", "eps_actual": 0.45, "eps_forecast": 0.50, "revenue": "$800M", "net_income": "$45M", "ebitda": "$280M", "ngr": "$800M", "fcf": "$100M", "jurisdictions": ["US", "Australia", "UK"]},
-    "ALL.AX": {"period": "H2 25", "eps_actual": 0.95, "eps_forecast": 0.90, "revenue": "A$3.2B", "net_income": "A$600M", "ebitda": "A$1.1B", "ngr": "A$3.2B", "fcf": "A$750M", "jurisdictions": ["US", "Australia", "Global"]},
-    "SGHC": {"period": "Q4 25", "eps_actual": 0.08, "eps_forecast": 0.10, "revenue": "€360M", "net_income": "€35M", "ebitda": "€75M", "ngr": "€360M", "fcf": "€45M", "jurisdictions": ["Canada", "Africa", "Europe"]},
-    "RSI": {"period": "Q4 25", "eps_actual": 0.12, "eps_forecast": 0.08, "revenue": "$250M", "net_income": "$15M", "ebitda": "$40M", "ngr": "$250M", "fcf": "$20M", "jurisdictions": ["US", "Colombia", "Mexico"]},
-    "BRAG": {"period": "Q4 25", "eps_actual": -0.02, "eps_forecast": 0.01, "revenue": "€28M", "net_income": "-€1M", "ebitda": "€4M", "ngr": "€28M", "fcf": "€1M", "jurisdictions": ["US", "Europe", "Canada"]},
-    "KAMBI.ST": {"period": "Q4 25", "eps_actual": 0.18, "eps_forecast": 0.15, "revenue": "€45M", "net_income": "€5M", "ebitda": "€15M", "ngr": "€45M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
+    "FLUT": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "revenue": "$4.74B", "net_income": "$10M", "ebitda": "$832M", "ngr": "$4.74B", "fcf": "-$1.43B", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
+    "DKNG": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "revenue": "$1.99B", "net_income": "$136.4M", "ebitda": "$343M", "ngr": "$1.99B", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
+    "ENT.L": {"period": "H2 25", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "BR", "AU", "ES"], "eps_actual": 0.62, "eps_forecast": 0.45, "revenue": "£3.2B", "net_income": "£150M", "ebitda": "£600M", "ngr": "£3.2B", "fcf": "£151M", "jurisdictions": ["UK", "Italy", "Brazil", "Australia"]},
+    "EVO.ST": {"period": "Q4 25", "focus": "B2B Live Casino Technology", "map_codes": ["SE", "US", "CA", "MT", "LV", "GE", "RO"], "eps_actual": 1.54, "eps_forecast": 1.46, "revenue": "€514M", "net_income": "€306M", "ebitda": "€393M", "ngr": "€514M", "fcf": "€250M", "jurisdictions": ["Europe", "North America", "LatAm", "Asia"]},
+    "MGM": {"period": "Q4 25", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CN", "JP"], "eps_actual": 1.11, "eps_forecast": 0.56, "revenue": "$4.61B", "net_income": "$294M", "ebitda": "$635M", "ngr": "$4.61B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "Japan"]},
+    "CZR": {"period": "Q4 25", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CA", "GB", "AE"], "eps_actual": -0.34, "eps_forecast": 0.10, "revenue": "$2.8B", "net_income": "-$72M", "ebitda": "$900M", "ngr": "$2.8B", "fcf": "$150M", "jurisdictions": ["US", "Canada"]},
+    "PENN": {"period": "Q4 25", "focus": "Land-based Casinos & B2C Digital", "map_codes": ["US", "CA"], "eps_actual": 0.07, "eps_forecast": 0.02, "revenue": "$1.6B", "net_income": "$15M", "ebitda": "$350M", "ngr": "$1.6B", "fcf": "$80M", "jurisdictions": ["US", "Canada"]},
+    "LVS": {"period": "Q4 25", "focus": "Land-based Casino Resorts", "map_codes": ["CN", "SG"], "eps_actual": 0.65, "eps_forecast": 0.55, "revenue": "$2.9B", "net_income": "$450M", "ebitda": "$1.2B", "ngr": "$2.9B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
+    "WYNN": {"period": "Q4 25", "focus": "Luxury Land-based Resorts", "map_codes": ["US", "CN", "AE"], "eps_actual": 1.20, "eps_forecast": 1.05, "revenue": "$1.8B", "net_income": "$200M", "ebitda": "$600M", "ngr": "$1.8B", "fcf": "$300M", "jurisdictions": ["US", "Macau", "UAE"]},
+    "EVOK.L": {"period": "H2 25", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "ES", "RO"], "eps_actual": -0.05, "eps_forecast": 0.01, "revenue": "£850M", "net_income": "-£40M", "ebitda": "£150M", "ngr": "£850M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
+    "SRAD": {"period": "Q4 25", "focus": "B2B Sports Data & Technology", "map_codes": ["CH", "US", "GB", "DE", "AT"], "eps_actual": 0.14, "eps_forecast": 0.10, "revenue": "$280M", "net_income": "$35M", "ebitda": "$55M", "ngr": "$280M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
+    "BETS-B.ST": {"period": "Q4 25", "focus": "B2C & B2B iGaming/Sportsbook", "map_codes": ["SE", "MT", "IT", "AR", "CO", "PE"], "eps_actual": 0.35, "eps_forecast": 0.32, "revenue": "€260M", "net_income": "€45M", "ebitda": "€75M", "ngr": "€260M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
+    "PTEC.L": {"period": "H2 25", "focus": "B2B iGaming & Sportsbook Tech", "map_codes": ["GB", "IT", "BG", "UA", "EE"], "eps_actual": 0.18, "eps_forecast": 0.20, "revenue": "€850M", "net_income": "€55M", "ebitda": "€200M", "ngr": "€850M", "fcf": "€80M", "jurisdictions": ["UK", "Italy"]},
+    "CHDN": {"period": "Q4 25", "focus": "Racing, Casinos & Online Wagering", "map_codes": ["US"], "eps_actual": 1.35, "eps_forecast": 1.20, "revenue": "$750M", "net_income": "$90M", "ebitda": "$300M", "ngr": "$750M", "fcf": "$120M", "jurisdictions": ["US"]},
+    "LNW": {"period": "Q4 25", "focus": "B2B Gaming Machines & iGaming", "map_codes": ["US", "AU", "GB", "SE"], "eps_actual": 0.45, "eps_forecast": 0.50, "revenue": "$800M", "net_income": "$45M", "ebitda": "$280M", "ngr": "$800M", "fcf": "$100M", "jurisdictions": ["US", "Australia", "UK"]},
+    "ALL.AX": {"period": "H2 25", "focus": "B2B Slots, Social Casino & iGaming", "map_codes": ["AU", "US", "GB", "IL"], "eps_actual": 0.95, "eps_forecast": 0.90, "revenue": "A$3.2B", "net_income": "A$600M", "ebitda": "A$1.1B", "ngr": "A$3.2B", "fcf": "A$750M", "jurisdictions": ["US", "Australia", "Global"]},
+    "SGHC": {"period": "Q4 25", "focus": "B2C Sportsbook & iGaming", "map_codes": ["ZA", "CA", "GB", "MT", "FR"], "eps_actual": 0.08, "eps_forecast": 0.10, "revenue": "€360M", "net_income": "€35M", "ebitda": "€75M", "ngr": "€360M", "fcf": "€45M", "jurisdictions": ["Canada", "Africa", "Europe"]},
+    "RSI": {"period": "Q4 25", "focus": "B2C Casino-First iGaming", "map_codes": ["US", "CO", "MX", "CA"], "eps_actual": 0.12, "eps_forecast": 0.08, "revenue": "$250M", "net_income": "$15M", "ebitda": "$40M", "ngr": "$250M", "fcf": "$20M", "jurisdictions": ["US", "Colombia", "Mexico"]},
+    "BRAG": {"period": "Q4 25", "focus": "B2B iGaming Content & PAM", "map_codes": ["CA", "US", "NL", "BR", "FI"], "eps_actual": -0.02, "eps_forecast": 0.01, "revenue": "€28M", "net_income": "-€1M", "ebitda": "€4M", "ngr": "€28M", "fcf": "€1M", "jurisdictions": ["US", "Europe", "Canada"]},
+    "KAMBI.ST": {"period": "Q4 25", "focus": "B2B Sportsbook Technology", "map_codes": ["MT", "SE", "GB", "US", "RO", "CO"], "eps_actual": 0.18, "eps_forecast": 0.15, "revenue": "€45M", "net_income": "€5M", "ebitda": "€15M", "ngr": "€45M", "fcf": "€8M", "jurisdictions": ["Global B2B", "US", "LatAm"]}
 }
 
 VERIFIED_CALENDAR = {
@@ -129,12 +132,10 @@ def fetch_stock_history(ticker, native_price_raw):
     print(f"  -> Fetching charts for {ticker}...")
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
-    
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     
     try:
         ytk = yf.Ticker(fetch_ticker)
-        
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
@@ -161,13 +162,10 @@ def fetch_stock_history(ticker, native_price_raw):
                     
     except Exception as e:
         print(f"  ❌ yfinance failed for {ticker}: {e}")
-        
     return history
 
 def ai_process_intelligence(company_name, ticker):
     print(f"  -> Fetching Yahoo API News for {company_name}...")
-    
-    # SAFETY NET: Fetch and validate API key only when needed, inside the try block
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {"summary": ["System Error: API key missing."], "sentiment": 50}
@@ -219,11 +217,11 @@ def run_pipeline():
         
         fin = VERIFIED_DATA.get(ticker, {
             "period": "N/A", "eps_actual": 0, "eps_forecast": 0, "revenue": "N/A", 
-            "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": []
+            "net_income": "N/A", "ebitda": "N/A", "ngr": "N/A", "fcf": "N/A", "jurisdictions": [],
+            "focus": "Diversified Gaming", "map_codes": []
         })
         
         cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
-        
         beat_miss = 0
         if fin.get("eps_forecast", 0) != 0:
             beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
@@ -241,6 +239,8 @@ def run_pipeline():
             "ticker": ticker,
             "company": co["name"],
             "base_country": co["base_country"],
+            "focus": fin.get("focus", "Diversified Gaming"), # Injects specific business sector
+            "map_codes": fin.get("map_codes", []),           # Injects map coordinates
             "calendar": cal, 
             "last_price": last_price_str,
             "actuals": fin,
