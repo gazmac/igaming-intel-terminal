@@ -108,7 +108,6 @@ def get_live_fx_rates():
     return rates
 
 def format_money(raw_val, sym):
-    """Helper to cleanly format large financial numbers"""
     if pd.isna(raw_val): return "N/A"
     is_neg = raw_val < 0
     abs_val = abs(raw_val)
@@ -118,7 +117,7 @@ def format_money(raw_val, sym):
     return f"-{res}" if is_neg else res
 
 def get_stock_fundamentals(ticker, fx_rates):
-    """TOTAL AUTOMATION ENGINE: Hunts for Revenue, EBITDA, Net Income, FCF, and EPS."""
+    """TOTAL AUTOMATION ENGINE"""
     price, mc_usd_val = 0, 0
     price_str, mc_display, pe_str, de_str = "N/A", "N/A", "N/A", "N/A"
     fy_rev_str, interim_rev_str = "N/A", "N/A"
@@ -129,7 +128,6 @@ def get_stock_fundamentals(ticker, fx_rates):
     try:
         ytk = yf.Ticker(ticker)
         
-        # --- TIER 1 & 2: PRICE & MARKET CAP ---
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
@@ -159,7 +157,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                     mc_display = mc_native
         except Exception: pass
 
-        # --- TIER 3: P/E & DEBT-TO-EQUITY ---
         try:
             info = ytk.info
             pe_raw = info.get('trailingPE') or info.get('forwardPE')
@@ -181,7 +178,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                 elif total_debt == 0: de_str = "0.00%"
         except Exception: pass 
 
-        # --- TIER 4: THE FORENSIC ACCOUNTANT (Revenue, EBITDA, Net Income) ---
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
@@ -205,10 +201,8 @@ def get_stock_fundamentals(ticker, fx_rates):
                         raw_ebitda = income_annual.loc[key].iloc[0]
                         break
                 if pd.notna(raw_ebitda): dyn_ebitda = format_money(raw_ebitda, sym)
-
         except Exception: pass
 
-        # --- TIER 5: CASH FLOW (FCF) ---
         try:
             cf = ytk.cashflow
             if not cf.empty:
@@ -220,7 +214,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if pd.notna(raw_fcf): dyn_fcf = format_money(raw_fcf, sym)
         except Exception: pass
 
-        # --- TIER 6: INTERIM REVENUE & EPS BEAT/MISS ---
         try:
             income_quarterly = ytk.quarterly_income_stmt
             if not income_quarterly.empty:
@@ -292,16 +285,14 @@ def fetch_stock_history(ticker, native_price_raw):
                 ratio = native_price_raw / latest_otc
                 for period in history:
                     history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
-                    
-    except Exception as e:
-        print(f"  ❌ yfinance failed for {ticker}: {e}")
+    except Exception: pass
     return history
 
 def ai_process_intelligence(company_name, ticker):
-    print(f"  -> Fetching Yahoo API News for {company_name}...")
+    print(f"  -> Fetching Yahoo API News & Generating Reading Room for {company_name}...")
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
-        return {"summary": ["System Error: API key missing."], "sentiment": 50}
+        return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required for Reading Room generation.</p>"}
         
     try:
         client = genai.Client(api_key=api_key)
@@ -314,9 +305,14 @@ def ai_process_intelligence(company_name, ticker):
         headlines = [item['title'] for item in res_data.get('news', [])]
         
         if not headlines:
-            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50}
+            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available to generate briefing.</p>"}
 
-        prompt = f"Act as an iGaming financial analyst. Review these headlines for {company_name}: {' | '.join(headlines)}. Return a valid JSON object with exactly two keys: 'summary' (a list of 3 string bullet points summarizing the news) and 'sentiment' (an integer from 0 to 100 representing market sentiment)."
+        # THE NEW UPGRADED AI PROMPT
+        prompt = f"""Act as an iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
+Return a valid JSON object with exactly three keys: 
+1. 'summary' (a list of 3 string bullet points summarizing the news), 
+2. 'sentiment' (an integer from 0 to 100 representing market sentiment), 
+3. 'reading_room' (An HTML formatted string using <p>, <strong>, <ul>, and <li> tags providing a detailed 'Executive Analyst Briefing' based on the headlines. Write it in the style of an earnings call summary, covering recent performance, headwinds, and strategic outlook.)"""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -328,14 +324,14 @@ def ai_process_intelligence(company_name, ticker):
         match = re.search(r'\{.*\}', raw_text, re.DOTALL)
         if match:
             data = json.loads(match.group(0))
-            if "summary" in data and "sentiment" in data:
+            if "summary" in data and "sentiment" in data and "reading_room" in data:
                 return data
                 
-        return {"summary": ["Failed to extract valid data from AI."], "sentiment": 50}
+        return {"summary": ["Failed to extract valid data from AI."], "sentiment": 50, "reading_room": "<p>Failed to generate briefing.</p>"}
         
     except Exception as e:
         error_msg = str(e).replace('"', "'")[:60]
-        return {"summary": [f"News Engine Error: {error_msg}"], "sentiment": 50}
+        return {"summary": [f"News Engine Error: {error_msg}"], "sentiment": 50, "reading_room": f"<p>Error: {error_msg}</p>"}
 
 # --- 3. PIPELINE EXECUTION ---
 
@@ -380,14 +376,13 @@ def run_pipeline():
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
+            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "reading_room": "<p>Error</p>"}
             history, last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A", "N/A", 0, "N/A", "N/A"
             beat_miss = 0
 
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            # THE CRITICAL NEW LINE ADDING THE LOGO
             "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
@@ -402,6 +397,10 @@ def run_pipeline():
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
             "sentiment": intel.get("sentiment", 50),
+            
+            # The new AI Reading Room HTML string
+            "reading_room": intel.get("reading_room", "<p>Data unavailable.</p>"),
+            
             "jurisdictions": fin.get("jurisdictions", []),
             "history": history
         })
@@ -413,13 +412,8 @@ def run_pipeline():
             json.dump(master_db, f, indent=4)
         print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
     else:
-        print("\n❌ Pipeline Error: No data collected.")
         sys.exit(1)
 
 if __name__ == "__main__":
-    try:
-        run_pipeline()
-    except Exception as e:
-        print("\n❌ FATAL CRASH: The script encountered a module-level error.")
-        traceback.print_exc()
-        sys.exit(1)
+    try: run_pipeline()
+    except Exception: sys.exit(1)
