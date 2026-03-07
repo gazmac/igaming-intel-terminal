@@ -46,6 +46,7 @@ OTC_MAP = {
     "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF"
 }
 
+# The Dictionary now acts strictly as a Safety Net
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '24)", "revenue_interim": "$3.79B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"rev_label": "REV", "revenue_fy": "$4.77B (FY '24)", "revenue_interim": "$1.39B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "net_income": "-$507M", "ebitda": "$181M", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -107,23 +108,29 @@ def get_live_fx_rates():
             rates[currency] = 1.0 
     return rates
 
+def format_money(raw_val, sym):
+    """Helper to cleanly format large financial numbers"""
+    if pd.isna(raw_val): return "N/A"
+    is_neg = raw_val < 0
+    abs_val = abs(raw_val)
+    if abs_val >= 1e9: res = f"{sym}{round(abs_val/1e9, 2)}B"
+    elif abs_val >= 1e6: res = f"{sym}{round(abs_val/1e6, 2)}M"
+    else: res = f"{sym}{abs_val}"
+    return f"-{res}" if is_neg else res
+
 def get_stock_fundamentals(ticker, fx_rates):
-    """Multi-tiered approach to fetch market cap, pe, debt, and strictly labeled revenue periods."""
-    price = 0
-    price_str = "N/A"
-    mc_display = "N/A"
-    mc_usd_val = 0
-    pe_str = "N/A"
-    de_str = "N/A"
-    fy_rev_str = "N/A"
-    interim_rev_str = "N/A"
-    sym = "$"
-    currency = "USD"
+    """TOTAL AUTOMATION ENGINE: Hunts for Revenue, EBITDA, Net Income, FCF, and EPS."""
+    price, mc_usd_val = 0, 0
+    price_str, mc_display, pe_str, de_str = "N/A", "N/A", "N/A", "N/A"
+    fy_rev_str, interim_rev_str = "N/A", "N/A"
+    dyn_net_inc, dyn_ebitda, dyn_fcf = "N/A", "N/A", "N/A"
+    dyn_eps_act, dyn_eps_est = None, None
+    sym, currency = "$", "USD"
     
     try:
         ytk = yf.Ticker(ticker)
         
-        # --- TIER 1: PRICE & CURRENCY ---
+        # --- TIER 1 & 2: PRICE & MARKET CAP ---
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
@@ -139,27 +146,21 @@ def get_stock_fundamentals(ticker, fx_rates):
         
         if price > 0: price_str = f"{sym}{round(price, 2)}"
             
-        # --- TIER 2: MARKET CAP ---
         try:
             mc_raw = ytk.fast_info['marketCap']
             if mc_raw and mc_raw > 0:
-                if mc_raw >= 1e9: mc_native = f"{sym}{round(mc_raw/1e9, 2)}B"
-                elif mc_raw >= 1e6: mc_native = f"{sym}{round(mc_raw/1e6, 2)}M"
-                else: mc_native = f"{sym}{mc_raw}"
-                
+                mc_native = format_money(mc_raw, sym)
                 fx_rate = fx_rates.get(currency, 1.0)
                 mc_usd_val = mc_raw * fx_rate
                 
                 if currency not in ["USD", "$"]:
-                    if mc_usd_val >= 1e9: mc_usd_str = f"${round(mc_usd_val/1e9, 2)}B"
-                    elif mc_usd_val >= 1e6: mc_usd_str = f"${round(mc_usd_val/1e6, 2)}M"
-                    else: mc_usd_str = f"${round(mc_usd_val, 2)}"
+                    mc_usd_str = format_money(mc_usd_val, "$")
                     mc_display = f"{mc_native} ({mc_usd_str})"
                 else:
                     mc_display = mc_native
         except Exception: pass
 
-        # --- TIER 3: FORENSIC P/E & DEBT-TO-EQUITY ---
+        # --- TIER 3: P/E & DEBT-TO-EQUITY ---
         try:
             info = ytk.info
             pe_raw = info.get('trailingPE') or info.get('forwardPE')
@@ -181,29 +182,54 @@ def get_stock_fundamentals(ticker, fx_rates):
                 elif total_debt == 0: de_str = "0.00%"
         except Exception: pass 
 
-        # --- TIER 4: FY & INTERIM REVENUE TAGGING ---
-        # FULL YEAR
+        # --- TIER 4: THE FORENSIC ACCOUNTANT (Revenue, EBITDA, Net Income) ---
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
-                raw_rev_fy = 0
+                # 1. FY Revenue
+                raw_rev_fy = None
                 if 'Total Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
                 elif 'Operating Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
-                    
-                if pd.notna(raw_rev_fy) and raw_rev_fy > 0:
-                    fy_date = income_annual.columns[0]
-                    fy_year = pd.to_datetime(fy_date).year
-                    if raw_rev_fy >= 1e9: rev_val = f"{sym}{round(raw_rev_fy/1e9, 2)}B"
-                    elif raw_rev_fy >= 1e6: rev_val = f"{sym}{round(raw_rev_fy/1e6, 2)}M"
-                    else: rev_val = f"{sym}{raw_rev_fy}"
-                    fy_rev_str = f"{rev_val} (FY '{str(fy_year)[-2:]})"
+                if pd.notna(raw_rev_fy):
+                    fy_year = pd.to_datetime(income_annual.columns[0]).year
+                    fy_rev_str = f"{format_money(raw_rev_fy, sym)} (FY '{str(fy_year)[-2:]})"
+                
+                # 2. Net Income
+                raw_ni = None
+                for key in ['Net Income Common Stockholders', 'Net Income', 'Net Income From Continuing Operations']:
+                    if key in income_annual.index:
+                        raw_ni = income_annual.loc[key].iloc[0]
+                        break
+                if pd.notna(raw_ni): dyn_net_inc = format_money(raw_ni, sym)
+
+                # 3. EBITDA
+                raw_ebitda = None
+                for key in ['Normalized EBITDA', 'EBITDA']:
+                    if key in income_annual.index:
+                        raw_ebitda = income_annual.loc[key].iloc[0]
+                        break
+                if pd.notna(raw_ebitda): dyn_ebitda = format_money(raw_ebitda, sym)
+
         except Exception: pass
 
-        # INTERIM (Quarterly or Half-Yearly)
+        # --- TIER 5: CASH FLOW (FCF) ---
+        try:
+            cf = ytk.cashflow
+            if not cf.empty:
+                raw_fcf = None
+                if 'Free Cash Flow' in cf.index:
+                    raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
+                elif 'Operating Cash Flow' in cf.index and 'Capital Expenditure' in cf.index:
+                    # Calculate FCF manually if Yahoo hid it
+                    raw_fcf = cf.loc['Operating Cash Flow'].iloc[0] + cf.loc['Capital Expenditure'].iloc[0]
+                if pd.notna(raw_fcf): dyn_fcf = format_money(raw_fcf, sym)
+        except Exception: pass
+
+        # --- TIER 6: INTERIM REVENUE & EPS BEAT/MISS ---
         try:
             income_quarterly = ytk.quarterly_income_stmt
             if not income_quarterly.empty:
-                raw_rev_q = 0
+                raw_rev_q = None
                 if 'Total Revenue' in income_quarterly.index: raw_rev_q = income_quarterly.loc['Total Revenue'].iloc[0]
                 elif 'Operating Revenue' in income_quarterly.index: raw_rev_q = income_quarterly.loc['Operating Revenue'].iloc[0]
                     
@@ -211,30 +237,34 @@ def get_stock_fundamentals(ticker, fx_rates):
                     q_date = income_quarterly.columns[0]
                     q_month = pd.to_datetime(q_date).month
                     q_year = pd.to_datetime(q_date).year
-                    
                     q_label = "Q4"
                     if q_month <= 3: q_label = "Q1"
                     elif q_month <= 6: q_label = "Q2"
                     elif q_month <= 9: q_label = "Q3"
                     
-                    # Smart check for European half-yearly reporting gaps
                     try:
                         if len(income_quarterly.columns) > 1:
                             days_diff = (pd.to_datetime(income_quarterly.columns[0]) - pd.to_datetime(income_quarterly.columns[1])).days
                             if days_diff > 120: q_label = "H1" if q_month <= 6 else "H2"
                     except Exception: pass
                     
-                    if raw_rev_q >= 1e9: rev_val = f"{sym}{round(raw_rev_q/1e9, 2)}B"
-                    elif raw_rev_q >= 1e6: rev_val = f"{sym}{round(raw_rev_q/1e6, 2)}M"
-                    else: rev_val = f"{sym}{raw_rev_q}"
-                    interim_rev_str = f"{rev_val} ({q_label} '{str(q_year)[-2:]})"
+                    interim_rev_str = f"{format_money(raw_rev_q, sym)} ({q_label} '{str(q_year)[-2:]})"
+        except Exception: pass
+        
+        try:
+            ed = ytk.earnings_dates
+            if ed is not None and not ed.empty:
+                past_ed = ed[ed['Reported EPS'].notna()]
+                if not past_ed.empty:
+                    dyn_eps_act = past_ed['Reported EPS'].iloc[0]
+                    dyn_eps_est = past_ed['Estimate EPS'].iloc[0]
         except Exception: pass
             
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est
         
     except Exception as e:
         print(f"  ❌ FATAL Fundamentals fetch failed for {ticker}: {e}")
-        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A"
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None
 
 def fetch_stock_history(ticker, native_price_raw):
     print(f"  -> Fetching charts for {ticker}...")
@@ -324,30 +354,44 @@ def run_pipeline():
         ticker = co['ticker']
         print(f"\nProcessing {co['name']}...")
         
+        # Base fallback from verified data
         fin = VERIFIED_DATA.get(ticker, {
             "eps_actual": 0, "eps_forecast": 0, "net_income": "N/A", "ebitda": "N/A", "fcf": "N/A", "jurisdictions": [],
             "focus": "Diversified Gaming", "map_codes": [], "rev_label": "REV", "revenue_fy": "N/A", "revenue_interim": "N/A"
         })
         
         cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
-        beat_miss = 0
-        if fin.get("eps_forecast", 0) != 0:
-            beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
             
-            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev = get_stock_fundamentals(ticker, fx_rates)
+            # The Total Automation Engine
+            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est = get_stock_fundamentals(ticker, fx_rates)
             
-            # Prioritize dynamic data if available, otherwise use hardcoded verification
+            # SMART MERGE: Prioritize dynamic API data, fallback to VERIFIED_DATA if missing
             fin["revenue_fy"] = dyn_fy_rev if dyn_fy_rev != "N/A" else fin.get("revenue_fy", "N/A")
             fin["revenue_interim"] = dyn_int_rev if dyn_int_rev != "N/A" else fin.get("revenue_interim", "N/A")
+            fin["net_income"] = dyn_net_inc if dyn_net_inc != "N/A" else fin.get("net_income", "N/A")
+            fin["ebitda"] = dyn_ebitda if dyn_ebitda != "N/A" else fin.get("ebitda", "N/A")
+            fin["fcf"] = dyn_fcf if dyn_fcf != "N/A" else fin.get("fcf", "N/A")
             
+            # EPS Fallback Logic
+            beat_miss = 0
+            if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
+                fin["eps_actual"] = round(dyn_eps_act, 2)
+                fin["eps_forecast"] = round(dyn_eps_est, 2)
+                beat_miss = round(((dyn_eps_act - dyn_eps_est) / abs(dyn_eps_est)) * 100, 2)
+            else:
+                if fin.get("eps_forecast", 0) != 0:
+                    beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
+
             history = fetch_stock_history(ticker, native_price_raw)
+            
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50}
             history, last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A", "N/A", 0, "N/A", "N/A"
+            beat_miss = 0
 
         master_db.append({
             "ticker": ticker,
