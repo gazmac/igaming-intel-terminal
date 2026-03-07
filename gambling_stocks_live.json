@@ -3,7 +3,11 @@
         "ticker": "FLUT",
         "company": "Flutter Entertainment",
         "base_country": "Ireland",
-        "release_gmt": "2026-05-06T21:00:00Z",
+        "calendar": {
+            "date": "May 6, 2026",
+            "report_time": "Post-Market",
+            "call_time": "4:30 PM EST"
+        },
         "last_price": "$112.25",
         "actuals": {
             "period": "Q4 25",
@@ -24,9 +28,9 @@
         },
         "eps_beat_miss_pct": -8.9,
         "news_summary": [
-            "Flutter Entertainment's stock experienced a significant 7.0% decline due to a projected 2025 loss and a cautious 2026 financial outlook.",
-            "Jefferies drastically cut Flutter's price target by 45%, although maintaining a 'buy' rating, suggesting the market may be overly pessimistic by pricing in zero US growth.",
-            "Flutter's FanDuel division continues its US expansion with new offerings like 'FanDuel Predicts,' but faces ongoing pressures to balance growth with profitability."
+            "Flutter Entertainment's stock recently dropped 7.0% following a projected loss for 2025 and an uninspiring 2026 financial outlook, coinciding with the launch of FanDuel Predicts.",
+            "Jefferies significantly reduced Flutter's price target by 45% but maintained a 'buy' rating, suggesting current market valuations may overly discount future US growth prospects.",
+            "The company continues to face considerable profit pressures as it prioritizes aggressive growth and expansion within the competitive US market, particularly through its FanDuel brand."
         ],
         "sentiment": 25,
         "jurisdictions": [
@@ -3069,7 +3073,11 @@
         "ticker": "DKNG",
         "company": "DraftKings",
         "base_country": "USA",
-        "release_gmt": "2026-05-07T21:00:00Z",
+        "calendar": {
+            "date": "May 8, 2026",
+            "report_time": "Pre-Market",
+            "call_time": "8:30 AM EST"
+        },
         "last_price": "$25.15",
         "actuals": {
             "period": "Q4 25",
@@ -3088,11 +3096,11 @@
         },
         "eps_beat_miss_pct": 38.89,
         "news_summary": [
-            "DraftKings is strategically expanding into prediction markets, leveraging its proven sports betting expertise to capture a new growth opportunity.",
-            "This strategic move has attracted institutional investor interest, highlighted by Cathie Wood's recent purchase of DraftKings stock, viewing it as a bargain.",
-            "However, the company's aggressive push into prediction markets is raising significant ethical and legal questions, posing potential regulatory challenges and risks."
+            "Cathie Wood's ARK Invest has recently acquired DraftKings stock, signaling a positive outlook from a prominent investor.",
+            "DraftKings is aggressively expanding into prediction markets, aiming to leverage its established sports-betting expertise for this new growth avenue.",
+            "This strategic pivot, however, is being scrutinized for potential ethical and legal risks, with some market observers suggesting other AI-driven investments may offer superior returns."
         ],
-        "sentiment": 68,
+        "sentiment": 45,
         "jurisdictions": [
             "US",
             "Ontario",
@@ -3202,7 +3210,7 @@
                 ],
                 [
                     1772829900000,
-                    25.15
+                    25.14
                 ]
             ],
             "1w": [
@@ -6131,7 +6139,11 @@
         "ticker": "ENT.L",
         "company": "Entain PLC",
         "base_country": "UK",
-        "release_gmt": "2026-04-29T07:00:00Z",
+        "calendar": {
+            "date": "Apr 16, 2026",
+            "report_time": "7:00 AM BST",
+            "call_time": "9:00 AM BST"
+        },
         "last_price": "GBp 584.2",
         "actuals": {
             "period": "H2 25",
@@ -6151,11 +6163,11 @@
         },
         "eps_beat_miss_pct": 37.78,
         "news_summary": [
-            "Entain anticipates strong financial performance for Full Year 2025, as highlighted in its recent earnings call.",
-            "The company has revealed a substantial \u00a3500 million financial impact stemming from increased taxation, referred to as 'Reeves\u2019s tax raid'.",
-            "The broader UK iGaming sector, including Entain, is experiencing a shifting market narrative due to the imposition of higher gaming taxes."
+            "Entain PLC is projecting strong financial performance for Full Year 2025, as highlighted in their recent earnings call.",
+            "The company, owner of Ladbrokes, has revealed a substantial \u00a3500 million financial impact attributed to increased UK gaming taxes, referred to as 'Reeves\u2019s tax raid'.",
+            "The broader UK gaming sector is experiencing a significant shift in narrative and facing financial pressure due to higher UK gaming taxes, affecting industry players like Entain."
         ],
-        "sentiment": 35,
+        "sentiment": 45,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -9086,7 +9098,11 @@
         "ticker": "EVO.ST",
         "company": "Evolution AB",
         "base_country": "Sweden",
-        "release_gmt": "2026-04-22T06:30:00Z",
+        "calendar": {
+            "date": "Apr 22, 2026",
+            "report_time": "7:30 AM CET",
+            "call_time": "9:00 AM CET"
+        },
         "last_price": "SEK 561.4",
         "actuals": {
             "period": "Q4 25",
@@ -9106,9 +9122,9 @@
         },
         "eps_beat_miss_pct": 5.48,
         "news_summary": [
-            "Evolution AB is preparing for its Q4 2025 earnings report and subsequent call, with previews indicating key focus areas for investors.",
-            "The upcoming earnings discussion will address how the company is managing and overcoming existing operational or market challenges.",
-            "A significant theme for the earnings call will be the company's strategies for future growth and expansion into new markets or product offerings."
+            "Evolution AB (EVVTY) is currently in focus due to its Q4 2025 earnings period, with both an earnings report preview and call highlights being discussed.",
+            "The company's performance and strategy are characterized by a dual approach of 'Navigating Challenges' while simultaneously 'Expanding Horizons', indicating a period of active management.",
+            "Investors are keen to review the Q4 2025 earnings report and subsequent call for insights into financial results and future growth initiatives."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -12098,7 +12114,11 @@
         "ticker": "MGM",
         "company": "MGM Resorts",
         "base_country": "USA",
-        "release_gmt": "2026-05-01T21:00:00Z",
+        "calendar": {
+            "date": "May 1, 2026",
+            "report_time": "Post-Market",
+            "call_time": "5:00 PM EST"
+        },
         "last_price": "$35.57",
         "actuals": {
             "period": "Q4 25",
@@ -12117,11 +12137,11 @@
         },
         "eps_beat_miss_pct": 98.21,
         "news_summary": [
-            "MGM Resorts (MGM) stock saw a significant 7.6% increase, primarily driven by strategic corporate announcements.",
-            "Key factors contributing to the positive share performance include detailed share buybacks, payouts from its BetMGM online gaming venture, and progress on the Osaka integrated resort project.",
-            "Despite the recent share rebound, there are mixed valuation signals, indicating ongoing analysis of MGM's current pricing."
+            "MGM Resorts (MGM) experienced a recent share rebound, although valuation signals are currently mixed.",
+            "The company's stock rose significantly by 7.6% following several positive announcements.",
+            "Key drivers for the stock increase include detailed share buyback programs, successful BetMGM payouts, and progress on the Osaka development project."
         ],
-        "sentiment": 90,
+        "sentiment": 85,
         "jurisdictions": [
             "US",
             "Macau",
@@ -15160,7 +15180,11 @@
         "ticker": "CZR",
         "company": "Caesars Entertainment",
         "base_country": "USA",
-        "release_gmt": "2026-05-05T21:00:00Z",
+        "calendar": {
+            "date": "Apr 28, 2026",
+            "report_time": "Post-Market",
+            "call_time": "5:00 PM EST"
+        },
         "last_price": "$26.4",
         "actuals": {
             "period": "Q4 25",
@@ -15178,11 +15202,11 @@
         },
         "eps_beat_miss_pct": -440.0,
         "news_summary": [
-            "Institutional investor confidence in Caesars Entertainment appears mixed, with reports of a $16 million exit and Nut Tree Capital dumping its entire $54 million stake, raising questions about the stock's future value.",
-            "The market narrative for CZR is shifting, focusing on evolving perceptions around its cash flow and inherent risks associated with its Las Vegas operations.",
-            "Despite these financial concerns, Kalshi traders are assigning a 68% probability to Caesars being acquired this year, while the company continues its operational expansion with the opening of a new Race & Sportsbook in Summerlin."
+            "The financial narrative for Caesars Entertainment is reportedly shifting, focusing on cash flow concerns and increased risks associated with its Las Vegas operations.",
+            "Institutional confidence appears mixed to negative, with reports of over $70 million in institutional exits, including Nut Tree Capital dumping its entire $54 million stake.",
+            "Despite these financial movements, there's significant market speculation, with Kalshi traders assigning a 68% probability of Caesars being acquired this year, alongside continued operational expansion with a new sportsbook opening."
         ],
-        "sentiment": 55,
+        "sentiment": 48,
         "jurisdictions": [
             "US",
             "Canada"
@@ -15291,7 +15315,7 @@
                 ],
                 [
                     1772829900000,
-                    26.4
+                    26.42
                 ]
             ],
             "1w": [
@@ -18220,7 +18244,11 @@
         "ticker": "PENN",
         "company": "Penn Entertainment",
         "base_country": "USA",
-        "release_gmt": "2026-05-07T21:00:00Z",
+        "calendar": {
+            "date": "May 7, 2026",
+            "report_time": "7:00 AM EST",
+            "call_time": "8:00 AM EST"
+        },
         "last_price": "$14.64",
         "actuals": {
             "period": "Q4 25",
@@ -18238,11 +18266,11 @@
         },
         "eps_beat_miss_pct": 250.0,
         "news_summary": [
-            "PENN Entertainment's stock experienced a significant decline following recent news.",
-            "The downturn was attributed to the company missing its third-quarter earnings expectations.",
-            "Further impacting market sentiment, PENN also finalized its exit from the ESPN partnership."
+            "Penn Entertainment's stock experienced a significant slide following its Q3 earnings report.",
+            "The decline was primarily attributed to the company missing its third-quarter financial expectations.",
+            "Further negative pressure came from the reported exit of its partnership with ESPN, indicating a strategic shift or challenge."
         ],
-        "sentiment": 15,
+        "sentiment": 25,
         "jurisdictions": [
             "US",
             "Canada"
@@ -18351,7 +18379,7 @@
                 ],
                 [
                     1772829900000,
-                    14.63
+                    14.64
                 ]
             ],
             "1w": [
@@ -21280,7 +21308,11 @@
         "ticker": "LVS",
         "company": "Las Vegas Sands",
         "base_country": "USA",
-        "release_gmt": "2026-04-20T21:00:00Z",
+        "calendar": {
+            "date": "Apr 22, 2026",
+            "report_time": "Post-Market",
+            "call_time": "4:30 PM EST"
+        },
         "last_price": "$53.6",
         "actuals": {
             "period": "Q4 25",
@@ -21298,11 +21330,11 @@
         },
         "eps_beat_miss_pct": 18.18,
         "news_summary": [
-            "Las Vegas Sands (LVS) is being highlighted as both a strong value stock and a top long-term momentum play, indicating positive investor and analytical sentiment.",
-            "The company's stock has shown significant strength, increasing 6.2% since its last earnings report, suggesting a favorable market reaction to recent performance or guidance.",
-            "Sands China is bolstering its commitment to corporate social responsibility through the launch of a Responsible Gaming Academy and collaboration with the University of Macau, enhancing its ESG profile."
+            "Las Vegas Sands (LVS) is being highlighted as both a strong value stock and a top momentum stock, with recent post-earnings performance showing a 6.2% increase.",
+            "Sands China is enhancing its commitment to corporate social responsibility through the launch of a Responsible Gaming Academy and collaboration with the University of Macau.",
+            "Despite positive indicators and recent stock performance, there are ongoing discussions and conflicting signals regarding the fair pricing and valuation of LVS shares."
         ],
-        "sentiment": 88,
+        "sentiment": 80,
         "jurisdictions": [
             "Macau",
             "Singapore"
@@ -24340,7 +24372,11 @@
         "ticker": "WYNN",
         "company": "Wynn Resorts",
         "base_country": "USA",
-        "release_gmt": "2026-05-06T21:00:00Z",
+        "calendar": {
+            "date": "May 6, 2026",
+            "report_time": "Post-Market",
+            "call_time": "4:30 PM EST"
+        },
         "last_price": "$101.61",
         "actuals": {
             "period": "Q4 25",
@@ -24359,11 +24395,11 @@
         },
         "eps_beat_miss_pct": 14.29,
         "news_summary": [
-            "Wynn Resorts posted steady Q4 financial results, indicating a stable performance quarter.",
-            "Progress on Wynn's crucial UAE project is advancing, highlighting the company's commitment to future growth and expansion.",
-            "Most of the other headlines provided focus on investment firm Kettle Hill's activities in various tech and retail stocks, which are not directly related to Wynn Resorts' operations or financial performance."
+            "Wynn Resorts (WYNN) reported steady Q4 results, indicating stable performance.",
+            "Significant progress was noted on Wynn Resorts' UAE project, signaling future growth and development.",
+            "Other headlines primarily focus on investment firm Kettle Hill's stakes in various tech (Braze, SentinelOne) and retail (RH) companies, which are not directly related to Wynn Resorts' financial or operational news."
         ],
-        "sentiment": 70,
+        "sentiment": 80,
         "jurisdictions": [
             "US",
             "Macau",
@@ -24473,7 +24509,7 @@
                 ],
                 [
                     1772829900000,
-                    101.63
+                    101.64
                 ]
             ],
             "1w": [
@@ -27402,7 +27438,11 @@
         "ticker": "EVOK.L",
         "company": "Evoke plc",
         "base_country": "UK",
-        "release_gmt": "2026-04-15T07:00:00Z",
+        "calendar": {
+            "date": "Apr 15, 2026",
+            "report_time": "7:00 AM BST",
+            "call_time": "8:30 AM BST"
+        },
         "last_price": "GBp 29.1",
         "actuals": {
             "period": "H2 25",
@@ -27421,11 +27461,11 @@
         },
         "eps_beat_miss_pct": -600.0,
         "news_summary": [
-            "Evoke plc's market trajectory and investor narrative are undergoing significant change, according to recent reports.",
-            "Key drivers influencing this shift include recent UK gaming tax revisions and broader regulatory review plans impacting the iGaming sector.",
-            "There are strong indications of potential takeover terms, suggesting the company might be involved in M&A activity, which could significantly reshape its future."
+            "Evoke's financial outlook and strategic direction are undergoing significant re-evaluation due to recent changes in UK gaming tax regulations.",
+            "The company's future narrative is being actively influenced by ongoing discussions around potential takeover terms.",
+            "Analysts are signaling a fundamental shift in the investment story for Evoke, driven by both regulatory impacts and M&A considerations."
         ],
-        "sentiment": 65,
+        "sentiment": 45,
         "jurisdictions": [
             "UK",
             "Italy",
@@ -30355,7 +30395,11 @@
         "ticker": "SRAD",
         "company": "Sportradar",
         "base_country": "Switzerland",
-        "release_gmt": "2026-05-12T12:00:00Z",
+        "calendar": {
+            "date": "May 12, 2026",
+            "report_time": "Pre-Market",
+            "call_time": "8:30 AM EST"
+        },
         "last_price": "$18.55",
         "actuals": {
             "period": "Q4 25",
@@ -30374,11 +30418,11 @@
         },
         "eps_beat_miss_pct": 40.0,
         "news_summary": [
-            "Sportradar has renewed its significant FIFA integrity partnership, which is expected to extend its market reach and strengthen its data advantage within the iGaming and sports integrity sectors.",
-            "The company reported a robust financial performance in Q4 2025, highlighted by record revenue figures discussed during its recent earnings call.",
-            "Macquarie has adjusted its price target for Sportradar Group downwards from $34 to $30 but has maintained its 'Outperform' rating, indicating continued confidence in the stock's future potential despite a revised valuation."
+            "Sportradar has renewed its integrity partnership with FIFA, which is expected to expand its market reach and strengthen its data advantage in sports integrity.",
+            "The company announced record revenue during its Q4 2025 earnings call, highlighting strong financial performance and strategic achievements.",
+            "Macquarie slightly lowered its price target for Sportradar Group from $34 to $30 but maintained an 'Outperform' rating on the stock."
         ],
-        "sentiment": 70,
+        "sentiment": 75,
         "jurisdictions": [
             "Global B2B",
             "US",
@@ -33309,7 +33353,11 @@
         "ticker": "BETS-B.ST",
         "company": "Betsson AB",
         "base_country": "Sweden",
-        "release_gmt": "2026-04-23T06:30:00Z",
+        "calendar": {
+            "date": "Apr 24, 2026",
+            "report_time": "7:30 AM CET",
+            "call_time": "9:00 AM CET"
+        },
         "last_price": "SEK 96.0",
         "actuals": {
             "period": "Q4 25",
@@ -33328,11 +33376,11 @@
         },
         "eps_beat_miss_pct": 9.37,
         "news_summary": [
-            "Betsson AB highlighted strong casino performance during its Q4 2025 earnings call, indicating robust segmental growth.",
-            "The company is potentially identified among 'European Gems' recognized for strong fundamental performance, suggesting positive analyst perception.",
-            "Betsson AB could also be considered one of the 'European Dividend Stocks,' signaling its potential as a stable, income-generating investment."
+            "Betsson AB (BTSNY) showcased robust casino performance during its Q4 2025 earnings call, highlighting strength in a core operational segment.",
+            "The company is recognized as a 'European Gem' possessing strong fundamentals, underscoring its underlying financial health and stability.",
+            "Betsson AB is also featured among European dividend stocks, indicating its potential appeal to income-oriented investors."
         ],
-        "sentiment": 85,
+        "sentiment": 90,
         "jurisdictions": [
             "Nordics",
             "LatAm",
@@ -36262,7 +36310,11 @@
         "ticker": "PTEC.L",
         "company": "Playtech",
         "base_country": "UK",
-        "release_gmt": "2026-03-25T07:00:00Z",
+        "calendar": {
+            "date": "Mar 25, 2026",
+            "report_time": "7:00 AM GMT",
+            "call_time": "9:00 AM GMT"
+        },
         "last_price": "GBp 356.5",
         "actuals": {
             "period": "H2 25",
@@ -36280,11 +36332,11 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "The headlines primarily discuss general UK growth companies and stocks with strong insider ownership.",
-            "Multiple articles focus on identifying promising UK penny stocks with market caps under \u00a3900M.",
-            "There is no specific news or direct mention of Playtech within any of the provided headlines."
+            "The provided headlines do not explicitly mention Playtech, making it impossible to derive direct company-specific news regarding its operations or financial performance.",
+            "The news broadly covers themes relevant to the general UK stock market, including identifying top growth companies, stocks with strong insider ownership, and those potentially priced below intrinsic estimates.",
+            "There is also a focus on 'promising UK penny stocks' and companies with market caps under \u00a3900M, categories whose relevance to Playtech cannot be determined from these headlines alone."
         ],
-        "sentiment": 50,
+        "sentiment": 45,
         "jurisdictions": [
             "UK",
             "Italy"
@@ -39213,7 +39265,11 @@
         "ticker": "CHDN",
         "company": "Churchill Downs",
         "base_country": "USA",
-        "release_gmt": "2026-04-22T21:00:00Z",
+        "calendar": {
+            "date": "Apr 22, 2026",
+            "report_time": "Post-Market",
+            "call_time": "9:00 AM EST (Next Day)"
+        },
         "last_price": "$83.83",
         "actuals": {
             "period": "Q4 25",
@@ -39230,11 +39286,11 @@
         },
         "eps_beat_miss_pct": 12.5,
         "news_summary": [
-            "Churchill Downs achieved record results in 2025, signaling strong financial performance.",
-            "The company's Q4 earnings and revenues for 2025 notably exceeded analyst estimates.",
-            "The introduction of a new Kentucky venue is expected to significantly enhance the investment thesis for CHDN."
+            "Churchill Downs (CHDN) reported robust Q4 2025 financial results, with both earnings and revenues exceeding analyst expectations.",
+            "The company achieved record-breaking performance for the full year 2025, signaling strong operational success and growth.",
+            "The introduction of a new Kentucky venue is poised to significantly enhance Churchill Downs' investment case and future expansion opportunities."
         ],
-        "sentiment": 92,
+        "sentiment": 95,
         "jurisdictions": [
             "US"
         ],
@@ -39342,7 +39398,7 @@
                 ],
                 [
                     1772829900000,
-                    83.81
+                    83.83
                 ]
             ],
             "1w": [
@@ -42271,7 +42327,11 @@
         "ticker": "LNW",
         "company": "Light & Wonder",
         "base_country": "USA",
-        "release_gmt": "2026-05-08T21:00:00Z",
+        "calendar": {
+            "date": "May 8, 2026",
+            "report_time": "Post-Market",
+            "call_time": "4:30 PM EST"
+        },
         "last_price": "$91.88",
         "actuals": {
             "period": "Q4 25",
@@ -42290,11 +42350,11 @@
         },
         "eps_beat_miss_pct": -10.0,
         "news_summary": [
-            "Light & Wonder reported a strong Q4 performance, highlighted by record revenue.",
-            "The company successfully surpassed its Q4 earnings estimates, indicating better-than-expected financial results.",
-            "Despite mentioning a quarterly loss, the company engaged in heavy share buybacks, suggesting management confidence and a strategy to return value to shareholders."
+            "Light & Wonder reported record revenue for Q4 and successfully surpassed earnings estimates, indicating robust financial performance.",
+            "The company experienced significant top-line growth, reinforcing its strong operational momentum within the iGaming sector.",
+            "Despite a mention of a quarterly loss, the positive investor sentiment is likely bolstered by strong revenue, earnings beats, and substantial share buybacks."
         ],
-        "sentiment": 80,
+        "sentiment": 88,
         "jurisdictions": [
             "US",
             "Australia",
@@ -42780,7 +42840,11 @@
         "ticker": "ALL.AX",
         "company": "Aristocrat Leisure",
         "base_country": "Australia",
-        "release_gmt": "2026-05-13T00:00:00Z",
+        "calendar": {
+            "date": "May 13, 2026",
+            "report_time": "8:00 AM AEST",
+            "call_time": "10:30 AM AEST"
+        },
         "last_price": "A$47.12",
         "actuals": {
             "period": "H2 25",
@@ -42799,9 +42863,9 @@
         },
         "eps_beat_miss_pct": 5.56,
         "news_summary": [
-            "Analysts estimate Aristocrat Leisure's shares may be undervalued by 26% compared to their intrinsic value.",
-            "The company has successfully resolved its litigation with Light & Wonder, removing a significant legal uncertainty.",
-            "Aristocrat Leisure has delivered robust three-year total shareholder returns that outpace its underlying earnings growth."
+            "An analysis suggests Aristocrat Leisure's shares may be significantly undervalued, estimated to be 26% below their intrinsic value.",
+            "Aristocrat Leisure has successfully resolved its litigation with Light & Wonder, removing legal uncertainties and potential associated costs.",
+            "The company has demonstrated strong financial performance with its three-year total shareholder returns outpacing underlying earnings growth."
         ],
         "sentiment": 90,
         "jurisdictions": [
@@ -45733,7 +45797,11 @@
         "ticker": "SGHC",
         "company": "Super Group",
         "base_country": "Guernsey",
-        "release_gmt": "2026-05-14T12:00:00Z",
+        "calendar": {
+            "date": "May 14, 2026",
+            "report_time": "Pre-Market",
+            "call_time": "8:30 AM EST"
+        },
         "last_price": "$10.64",
         "actuals": {
             "period": "Q4 25",
@@ -45752,9 +45820,9 @@
         },
         "eps_beat_miss_pct": -20.0,
         "news_summary": [
-            "The provided headlines primarily refer to 'Superior Group (SGC)' and 'Stride Stock', not Super Group (SGHC).",
-            "'Superior Group (SGC)' reported beating Q4 earnings and revenue estimates, with earnings call highlights also noted.",
-            "No specific financial or operational news pertaining to Super Group (SGHC) can be directly inferred from these headlines."
+            "The majority of the provided headlines specifically concern 'Superior Group (SGC)', an apparel and logistics company, reporting strong financial performance for Q4 2025, including beating earnings and revenue estimates.",
+            "No direct news or financial updates pertaining to Super Group (SGHC), an iGaming operator, were found among the given headlines.",
+            "Other headlines were either generic market advice or related to unrelated entities ('Divisadero Dumps Stride Stock'), offering no specific insight into Super Group's performance."
         ],
         "sentiment": 50,
         "jurisdictions": [
@@ -48795,7 +48863,11 @@
         "ticker": "RSI",
         "company": "Rush Street Interactive",
         "base_country": "USA",
-        "release_gmt": "2026-05-06T21:00:00Z",
+        "calendar": {
+            "date": "May 6, 2026",
+            "report_time": "Post-Market",
+            "call_time": "5:00 PM EST"
+        },
         "last_price": "$20.87",
         "actuals": {
             "period": "Q4 25",
@@ -48814,9 +48886,9 @@
         },
         "eps_beat_miss_pct": 50.0,
         "news_summary": [
-            "Rush Street Interactive (RSI) experienced a 6.6% stock increase following robust 2025 profit projections and a favorable 2026 revenue outlook.",
-            "Investor sentiment is likely tempered by the significant news of RSI's CEO selling nearly 250,000 shares valued over $40 million.",
-            "The company operates within a potentially positive market for discretionary stocks due to rebounding consumer confidence, though some general headlines indicate the company may be among those facing scrutiny."
+            "Rush Street Interactive (RSI) saw its stock increase by 6.6% following strong projections for a 2025 profit jump and a positive 2026 revenue outlook, indicating robust financial performance.",
+            "The CEO of Rush Street Interactive executed a significant insider sale, divesting nearly 250,000 shares for over $40 million.",
+            "The company operates within a broader market context of rebounding consumer confidence, which generally bodes well for discretionary stocks like those in the iGaming sector."
         ],
         "sentiment": 65,
         "jurisdictions": [
@@ -51857,7 +51929,11 @@
         "ticker": "BRAG",
         "company": "Bragg Gaming Group",
         "base_country": "Canada",
-        "release_gmt": "2026-05-14T12:00:00Z",
+        "calendar": {
+            "date": "May 14, 2026",
+            "report_time": "Pre-Market",
+            "call_time": "8:30 AM EST"
+        },
         "last_price": "$1.61",
         "actuals": {
             "period": "Q4 25",
@@ -51876,11 +51952,11 @@
         },
         "eps_beat_miss_pct": -300.0,
         "news_summary": [
-            "Bragg Gaming announced preliminary Q4 2025 revenue growth of 1.8% and provided full-year 2026 guidance.",
-            "The company is bolstering its executive team to drive an enhanced content strategy, North American growth, and an AI-first transformation.",
-            "The official release of the full Fourth Quarter and Full Year 2025 financial results is scheduled for March 19."
+            "Bragg Gaming announced preliminary Q4 and Full Year 2025 financial results, reporting a modest 1.8% increase in Q4 revenue, and has issued Full Year 2026 guidance.",
+            "The company is strategically strengthening its executive team to enhance content strategy, accelerate North American growth, and drive an AI-first transformation.",
+            "Official Q4 and Full Year 2025 results are scheduled for release on March 19, following the facilitation of an executive block trade."
         ],
-        "sentiment": 70,
+        "sentiment": 65,
         "jurisdictions": [
             "US",
             "Europe",
@@ -54843,7 +54919,11 @@
         "ticker": "KAMBI.ST",
         "company": "Kambi Group",
         "base_country": "Malta",
-        "release_gmt": "2026-04-29T06:30:00Z",
+        "calendar": {
+            "date": "Apr 29, 2026",
+            "report_time": "7:45 AM CET",
+            "call_time": "10:45 AM CET"
+        },
         "last_price": "SEK 107.6",
         "actuals": {
             "period": "Q4 25",
@@ -54862,11 +54942,11 @@
         },
         "eps_beat_miss_pct": 20.0,
         "news_summary": [
-            "Kambi Group PLC presented its Q4 2025 earnings call highlights.",
-            "The report underscored strong EBITDA growth for the period.",
-            "Strategic initiatives and developments were also a key topic of discussion."
+            "Kambi Group PLC's Q4 2025 earnings call emphasized key financial and strategic developments.",
+            "The company reported strong EBITDA growth, indicating robust operational profitability for the quarter.",
+            "Strategic initiatives and future direction were also significant topics highlighted during the earnings discussion."
         ],
-        "sentiment": 85,
+        "sentiment": 90,
         "jurisdictions": [
             "Global B2B",
             "US",
