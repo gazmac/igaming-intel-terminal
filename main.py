@@ -18,26 +18,26 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 TARGET_COMPANIES = [
-    {"name": "Flutter Entertainment", "ticker": "FLUT", "base_country": "Ireland"},
-    {"name": "DraftKings", "ticker": "DKNG", "base_country": "USA"},
-    {"name": "Entain PLC", "ticker": "ENT.L", "base_country": "UK"},
-    {"name": "Evolution AB", "ticker": "EVO.ST", "base_country": "Sweden"},
-    {"name": "MGM Resorts", "ticker": "MGM", "base_country": "USA"},
-    {"name": "Caesars Entertainment", "ticker": "CZR", "base_country": "USA"},
-    {"name": "Penn Entertainment", "ticker": "PENN", "base_country": "USA"},
-    {"name": "Las Vegas Sands", "ticker": "LVS", "base_country": "USA"},
-    {"name": "Wynn Resorts", "ticker": "WYNN", "base_country": "USA"},
-    {"name": "Evoke plc", "ticker": "EVOK.L", "base_country": "UK"},
-    {"name": "Sportradar", "ticker": "SRAD", "base_country": "Switzerland"},
-    {"name": "Betsson AB", "ticker": "BETS-B.ST", "base_country": "Sweden"},
-    {"name": "Playtech", "ticker": "PTEC.L", "base_country": "UK"},
-    {"name": "Churchill Downs", "ticker": "CHDN", "base_country": "USA"},
-    {"name": "Light & Wonder", "ticker": "LNW", "base_country": "USA"},
-    {"name": "Aristocrat Leisure", "ticker": "ALL.AX", "base_country": "Australia"},
-    {"name": "Super Group", "ticker": "SGHC", "base_country": "Guernsey"},
-    {"name": "Rush Street Interactive", "ticker": "RSI", "base_country": "USA"},
-    {"name": "Bragg Gaming Group", "ticker": "BRAG", "base_country": "Canada"},
-    {"name": "Kambi Group", "ticker": "KAMBI.ST", "base_country": "Malta"}
+    {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
+    {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
+    {"name": "Entain PLC", "ticker": "ENT.L", "domain": "entaingroup.com", "base_country": "UK"},
+    {"name": "Evolution AB", "ticker": "EVO.ST", "domain": "evolution.com", "base_country": "Sweden"},
+    {"name": "MGM Resorts", "ticker": "MGM", "domain": "mgmresorts.com", "base_country": "USA"},
+    {"name": "Caesars Entertainment", "ticker": "CZR", "domain": "caesars.com", "base_country": "USA"},
+    {"name": "Penn Entertainment", "ticker": "PENN", "domain": "pennentertainment.com", "base_country": "USA"},
+    {"name": "Las Vegas Sands", "ticker": "LVS", "domain": "sands.com", "base_country": "USA"},
+    {"name": "Wynn Resorts", "ticker": "WYNN", "domain": "wynnresorts.com", "base_country": "USA"},
+    {"name": "Evoke plc", "ticker": "EVOK.L", "domain": "evokegroup.com", "base_country": "UK"},
+    {"name": "Sportradar", "ticker": "SRAD", "domain": "sportradar.com", "base_country": "Switzerland"},
+    {"name": "Betsson AB", "ticker": "BETS-B.ST", "domain": "betssongroup.com", "base_country": "Sweden"},
+    {"name": "Playtech", "ticker": "PTEC.L", "domain": "playtech.com", "base_country": "UK"},
+    {"name": "Churchill Downs", "ticker": "CHDN", "domain": "churchilldownsincorporated.com", "base_country": "USA"},
+    {"name": "Light & Wonder", "ticker": "LNW", "domain": "lnw.com", "base_country": "USA"},
+    {"name": "Aristocrat Leisure", "ticker": "ALL.AX", "domain": "aristocrat.com", "base_country": "Australia"},
+    {"name": "Super Group", "ticker": "SGHC", "domain": "sg-hc.com", "base_country": "Guernsey"},
+    {"name": "Rush Street Interactive", "ticker": "RSI", "domain": "rushstreetinteractive.com", "base_country": "USA"},
+    {"name": "Bragg Gaming Group", "ticker": "BRAG", "domain": "bragg.group", "base_country": "Canada"},
+    {"name": "Kambi Group", "ticker": "KAMBI.ST", "domain": "kambi.com", "base_country": "Malta"}
 ]
 
 OTC_MAP = {
@@ -396,6 +396,7 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
+            "logo": f"https://logo.clearbit.com/{co['domain']}", # Added this line
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
