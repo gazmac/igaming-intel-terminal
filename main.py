@@ -39,18 +39,18 @@ TARGET_COMPANIES = [
     {"name": "Bragg Gaming Group", "ticker": "BRAG", "domain": "bragg.group", "base_country": "Canada"},
     {"name": "Kambi Group", "ticker": "KAMBI.ST", "domain": "kambi.com", "base_country": "Malta"},
     {"name": "Galaxy Entertainment", "ticker": "0027.HK", "domain": "galaxyentertainment.com", "base_country": "Hong Kong"},
-    {"name": "Melco Resorts", "ticker": "MLCO", "domain": "melco-group.com", "base_country": "Hong Kong"},
-    {"name": "SJM Holdings", "ticker": "1980.HK", "domain": "sjm.mo", "base_country": "Hong Kong"},
-    {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnmacau.com", "base_country": "Macau"},
+    {"name": "Melco Resorts", "ticker": "MLCO", "domain": "melco-resorts.com", "base_country": "Hong Kong"}, # Corrected Domain
+    {"name": "SJM Holdings", "ticker": "1980.HK", "domain": "sjmholdings.com", "base_country": "Hong Kong"}, # Corrected Domain
+    {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnresorts.com", "base_country": "Macau"}, # Redirected to Parent for Logo
     {"name": "Genting Singapore", "ticker": "G13.SI", "domain": "gentingsingapore.com", "base_country": "Singapore"},
     {"name": "La Française des Jeux", "ticker": "FDJ.PA", "domain": "fdjunited.com", "base_country": "France"},
     {"name": "Lottomatica Group", "ticker": "LOTO.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
-    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "www.catenamedia.com", "base_country": "Malta"},
+    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta"}, # Corrected Domain
     {"name": "Bally's Corporation", "ticker": "BALY", "domain": "ballys.com", "base_country": "USA"},
     {"name": "Boyd Gaming", "ticker": "BYD", "domain": "boydgaming.com", "base_country": "USA"},
-    {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "redrockresorts.com", "base_country": "USA"},
+    {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"}, # Swapped to operational domain for logo
     {"name": "Golden Entertainment", "ticker": "GDEN", "domain": "goldenent.com", "base_country": "USA"},
     {"name": "Monarch Casino", "ticker": "MCRI", "domain": "monarchcasino.com", "base_country": "USA"},
     {"name": "Century Casinos", "ticker": "CNTY", "domain": "cnty.com", "base_country": "USA"},
@@ -69,8 +69,6 @@ TARGET_COMPANIES = [
     {"name": "Groupe Partouche", "ticker": "PARP.PA", "domain": "groupepartouche.com", "base_country": "France"},
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
-    
-    # THE NEW JOINT VENTURE
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"}
 ]
 
@@ -136,12 +134,61 @@ VERIFIED_DATA = {
     "PARP.PA": {"rev_label": "REV", "revenue_fy": "€430M (FY '24)", "revenue_interim": "€110M (Q4 '24)", "focus": "French Casino Operator", "map_codes": ["FR", "CH"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€25M", "ebitda": "€85M", "fcf": "€40M", "jurisdictions": ["France", "Switzerland"]},
     "ACX.DE": {"rev_label": "REV", "revenue_fy": "€55M (FY '24)", "revenue_interim": "€14M (Q4 '24)", "focus": "European Sportsbook", "map_codes": ["DE", "AT"], "eps_actual": -0.15, "eps_forecast": -0.10, "net_income": "-€5M", "ebitda": "€2M", "fcf": "-€1M", "jurisdictions": ["DACH Region"]},
     "GAMB": {"rev_label": "REV", "revenue_fy": "$115M (FY '24)", "revenue_interim": "$32M (Q4 '24)", "focus": "iGaming Performance Marketing", "map_codes": ["US", "GB", "IE"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$45M", "fcf": "$30M", "jurisdictions": ["US", "UK"]},
-    
-    # NEW JV DATA HARDCODED FOR FALLBACK
     "BETMGM": {"rev_label": "REV", "revenue_fy": "$2.8B (FY '25)", "revenue_interim": "$780M (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0, "eps_forecast": 0, "net_income": "$175M", "ebitda": "$220M", "fcf": "N/A", "jurisdictions": ["US", "Ontario", "Puerto Rico"]}
 }
 
 VERIFIED_CALENDAR = {
+    "FLUT": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "DKNG": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "ENT.L": {"date": "Apr 16, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "EVO.ST": {"date": "Apr 22, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "MGM": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "CZR": {"date": "Apr 28, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "PENN": {"date": "May 7, 2026", "report_time": "7:00 AM EST", "call_time": "8:00 AM EST"},
+    "LVS": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "WYNN": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "EVOK.L": {"date": "Apr 15, 2026", "report_time": "7:00 AM BST", "call_time": "8:30 AM BST"},
+    "SRAD": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "BETS-B.ST": {"date": "Apr 24, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "PTEC.L": {"date": "Mar 25, 2026", "report_time": "7:00 AM GMT", "call_time": "9:00 AM GMT"},
+    "CHDN": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST"},
+    "LNW": {"date": "May 8, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "ALL.AX": {"date": "May 13, 2026", "report_time": "8:00 AM AEST", "call_time": "10:30 AM AEST"},
+    "SGHC": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "RSI": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "BRAG": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "KAMBI.ST": {"date": "Apr 29, 2026", "report_time": "7:45 AM CET", "call_time": "10:45 AM CET"},
+    "0027.HK": {"date": "May 14, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "MLCO": {"date": "May 7, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
+    "1980.HK": {"date": "May 12, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "1128.HK": {"date": "May 6, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "G13.SI": {"date": "May 14, 2026", "report_time": "Post-Market SGX", "call_time": "TBD"},
+    "FDJ.PA": {"date": "Apr 16, 2026", "report_time": "Post-Market CET", "call_time": "TBD"},
+    "LOTO.MI": {"date": "Apr 30, 2026", "report_time": "Pre-Market CET", "call_time": "TBD"},
+    "RNK.L": {"date": "Aug 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "BETCO.ST": {"date": "May 20, 2026", "report_time": "8:00 AM CET", "call_time": "10:00 AM CET"},
+    "CTM.ST": {"date": "May 21, 2026", "report_time": "7:00 AM CET", "call_time": "9:00 AM CET"},
+    "BALY": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "BYD": {"date": "Apr 23, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "RRR": {"date": "May 4, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "GDEN": {"date": "May 8, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "MCRI": {"date": "Jul 22, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "CNTY": {"date": "May 9, 2026", "report_time": "Pre-Market", "call_time": "10:00 AM EST"},
+    "GENI": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
+    "IGT": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
+    "INSE": {"date": "May 9, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "SGR.AX": {"date": "Aug 26, 2026", "report_time": "Pre-Market AEST", "call_time": "10:00 AM AEST"},
+    "GENM.KL": {"date": "May 28, 2026", "report_time": "Post-Market MYT", "call_time": "TBD"},
+    "VICI": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
+    "GLPI": {"date": "Apr 24, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST"},
+    "FLL": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
+    "EVRI": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "11:00 AM EST"},
+    "OPAP.AT": {"date": "May 26, 2026", "report_time": "Post-Market EET", "call_time": "4:00 PM EET"},
+    "TIMA.F": {"date": "May 7, 2026", "report_time": "Pre-Market CET", "call_time": "10:00 AM CET"},
+    "GMR.L": {"date": "Sep 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "PARP.PA": {"date": "Jun 10, 2026", "report_time": "Post-Market CET", "call_time": "TBD"},
+    "ACX.DE": {"date": "May 5, 2026", "report_time": "Pre-Market CET", "call_time": "TBD"},
+    "GAMB": {"date": "May 16, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
     "BETMGM": {"date": "Tied to MGM/Entain", "report_time": "N/A", "call_time": "N/A"}
 }
 
@@ -176,7 +223,7 @@ def get_stock_fundamentals(ticker, fx_rates):
     price_str, mc_display, pe_str, de_str = "N/A", "N/A", "N/A", "N/A"
     fy_rev_str, interim_rev_str = "N/A", "N/A"
     dyn_net_inc, dyn_ebitda, dyn_fcf = "N/A", "N/A", "N/A"
-    dyn_eps_act, dyn_eps_est = None, None
+    dyn_eps_act, dyn_eps_est, dyn_date = None, None, None
     sym, currency = "$", "USD"
     
     try:
@@ -304,15 +351,25 @@ def get_stock_fundamentals(ticker, fx_rates):
                     dyn_eps_act = past_ed['Reported EPS'].iloc[0]
                     dyn_eps_est = past_ed['Estimate EPS'].iloc[0]
         except Exception: pass
-            
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est
         
-    except Exception as e:
-        print(f"  ❌ FATAL Fundamentals fetch failed for {ticker}: {e}")
-        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None
+        try:
+            cal_data = ytk.calendar
+            if isinstance(cal_data, dict) and 'Earnings Date' in cal_data:
+                dates = cal_data['Earnings Date']
+                if isinstance(dates, list) and len(dates) > 0:
+                    first_date = dates[0]
+                    if hasattr(first_date, 'strftime'):
+                        dyn_date = first_date.strftime('%b %d, %Y')
+                    else:
+                        dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
+        except Exception: pass
+            
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date
+        
+    except Exception:
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
 
 def fetch_stock_history(ticker, native_price_raw):
-    print(f"  -> Fetching charts for {ticker}...")
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
@@ -346,7 +403,6 @@ def fetch_stock_history(ticker, native_price_raw):
     return history
 
 def ai_process_intelligence(company_name, ticker):
-    print(f"  -> Fetching Yahoo API News & Generating Reading Room for {company_name}...")
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
@@ -364,12 +420,14 @@ def ai_process_intelligence(company_name, ticker):
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
+        # --- THE JSON-SAFE, EXECUTIVE-NAMING PROMPT ---
         prompt = f"""Act as an iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Return a valid JSON object with exactly four keys: 
-1. 'summary' (a list of 3 string bullet points summarizing the news), 
-2. 'sentiment' (an integer from 0 to 100 representing market sentiment), 
-3. 'reading_room' (An HTML formatted string using <p>, <strong>, <ul>, and <li> tags providing a detailed 'Executive Analyst Briefing' based on the headlines. Write it in the style of an earnings call summary, covering recent performance, headwinds, and strategic outlook.),
-4. 'quotes' (A list of exactly 2 distinct string sentences containing key strategic management quotes. You MUST strictly assign the speaker's name and exact executive title at the start of every quote, formatted exactly like this: "Jane Doe, CEO: 'We had a great quarter...'. If exact quotes are missing, logically synthesize them based on the headlines using generic titles like 'Company Management:')."""
+Generate a JSON response. CRITICAL: Your response must be strictly valid JSON. Do not use unescaped double quotes inside strings. Use single quotes for all HTML attributes.
+Format exactly with these four keys:
+1. "summary": A list of 3 string bullet points summarizing the news.
+2. "sentiment": An integer from 0 to 100 representing market sentiment.
+3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news. Use single quotes for any HTML classes or attributes.
+4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. You MUST attribute the quote to the ACTUAL NAME of the executive (e.g., "Jason Robins, CEO: '...' " or "Rob Goldstein, CEO: '...' "). DO NOT use the generic phrase "Company Management". Use your internal knowledge of {company_name}'s current leadership to find the real name of the CEO or CFO."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -377,14 +435,21 @@ Return a valid JSON object with exactly four keys:
             config={"response_mime_type": "application/json"}
         )
         
-        raw_text = ai_resp.text.strip()
-        match = re.search(r'\{.*\}', raw_text, re.DOTALL)
-        if match:
-            data = json.loads(match.group(0))
-            if "summary" in data and "sentiment" in data and "reading_room" in data and "quotes" in data:
-                return data
-                
-        return {"summary": ["Failed to extract valid data."], "sentiment": 50, "reading_room": "<p>Failed to generate briefing.</p>", "quotes": []}
+        try:
+            # First try direct parsing
+            data = json.loads(ai_resp.text.strip())
+            return data
+        except json.JSONDecodeError:
+            # Fallback regex parsing if AI still hallucinates invalid JSON
+            raw_text = ai_resp.text.strip()
+            match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+            if match:
+                try:
+                    data = json.loads(match.group(0))
+                    return data
+                except Exception:
+                    pass
+            return {"summary": ["Data formatting error."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
         
     except Exception as e:
         return {"summary": [f"News Error: {str(e)[:60]}"], "sentiment": 50, "reading_room": f"<p>Error: {str(e)[:60]}</p>", "quotes": []}
@@ -411,13 +476,16 @@ def run_pipeline():
         try:
             intel = ai_process_intelligence(co['name'], ticker)
             
-            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est = get_stock_fundamentals(ticker, fx_rates)
+            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
             
             fin["revenue_fy"] = dyn_fy_rev if dyn_fy_rev != "N/A" else fin.get("revenue_fy", "N/A")
             fin["revenue_interim"] = dyn_int_rev if dyn_int_rev != "N/A" else fin.get("revenue_interim", "N/A")
             fin["net_income"] = dyn_net_inc if dyn_net_inc != "N/A" else fin.get("net_income", "N/A")
             fin["ebitda"] = dyn_ebitda if dyn_ebitda != "N/A" else fin.get("ebitda", "N/A")
             fin["fcf"] = dyn_fcf if dyn_fcf != "N/A" else fin.get("fcf", "N/A")
+            
+            if dyn_date and dyn_date != "N/A":
+                cal["date"] = dyn_date
             
             beat_miss = 0
             if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
