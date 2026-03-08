@@ -51,13 +51,13 @@
     </div>
 
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
+        <div id="modal-scroll-container" class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
             
             <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
                 <div class="max-w-2xl mx-auto">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
-                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
+                        <button type="button" onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
                     </div>
                     <div class="space-y-8">
                         <section>
@@ -72,17 +72,17 @@
                             <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
                         </section>
-                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                    <div class="w-3 h-3 rounded-full bg-amber-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                    <div class="w-3 h-3 rounded-full bg-rose-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
                                 </div>
                             </div>
                         </section>
@@ -98,7 +98,7 @@
                         <div id="modal-ticker" class="mt-1"></div>
                     </div>
                 </div>
-                <button onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
+                <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -135,7 +135,7 @@
                         <div>
                             <div class="flex justify-between items-center mb-3">
                                 <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
-                                <button onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
+                                <button type="button" onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                                     How it works
                                 </button>
@@ -147,7 +147,7 @@
                             </div>
                             <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
                             
-                            <button onclick="toggleReadingRoom()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                            <button type="button" onclick="toggleReadingRoom()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                 Enter Earnings Reading Room
                             </button>
@@ -170,11 +170,11 @@
                             <p class="text-sm text-slate-400 mt-1">AI-Synthesized Strategic Outline</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto">
-                            <button onclick="playReadingRoomAudio()" class="w-full md:w-auto text-sm font-bold text-slate-700 hover:text-slate-900 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors border border-slate-200 shadow-sm">
+                            <button type="button" onclick="playReadingRoomAudio()" class="w-full md:w-auto text-sm font-bold text-slate-700 hover:text-slate-900 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors border border-slate-200 shadow-sm">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.4 4.038a1 1 0 00-1.077.092l-3.8 2.87H4a2 2 0 00-2 2v2a2 2 0 002 2h1.523l3.8 2.87A1 1 0 0011 15V5a1 1 0 00-.6-.962zM14.5 10a4.5 4.5 0 00-1.84-3.61 1 1 0 111.18-1.61A6.5 6.5 0 0116.5 10a6.5 6.5 0 01-2.66 5.22 1 1 0 01-1.18-1.61A4.5 4.5 0 0014.5 10z"></path></svg>
                                 <span id="tts-btn-text">Listen to Briefing</span>
                             </button>
-                            <button onclick="toggleReadingRoom()" class="w-full md:w-auto text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
+                            <button type="button" onclick="toggleReadingRoom()" class="w-full md:w-auto text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
                         </div>
                     </div>
                     
@@ -213,10 +213,20 @@
             }
         }
 
-        // --- NEW TOGGLE METHODOLOGY LOGIC ---
+        // --- UPDATED TOGGLE METHODOLOGY LOGIC FOR MOBILE ---
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
-            if (el) el.classList.toggle('hidden');
+            if (el) {
+                el.classList.toggle('hidden');
+                
+                // If it is being opened, instantly snap the scrollbar to the top
+                if (!el.classList.contains('hidden')) {
+                    const modalContainer = document.getElementById('modal-scroll-container');
+                    if (modalContainer) {
+                        modalContainer.scrollTop = 0;
+                    }
+                }
+            }
         }
 
         function playReadingRoomAudio() {
@@ -257,6 +267,11 @@
             if (readingRoom.classList.contains('hidden')) {
                 mainContent.classList.add('hidden');
                 readingRoom.classList.remove('hidden');
+                
+                // Snap to top of the reading room when entering
+                const modalContainer = document.getElementById('modal-scroll-container');
+                if (modalContainer) modalContainer.scrollTop = 0;
+                
             } else {
                 readingRoom.classList.add('hidden');
                 mainContent.classList.remove('hidden');
@@ -267,7 +282,6 @@
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
-            // Also hide methodology overlay if it was left open
             document.getElementById('methodology-overlay').classList.add('hidden');
             if (window.speechSynthesis) window.speechSynthesis.cancel();
             document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
@@ -448,7 +462,12 @@
                 console.error("Data parsing error inside modal:", error);
             } finally {
                 const mod = document.getElementById('modal');
-                if (mod) mod.classList.remove('hidden');
+                if (mod) {
+                    mod.classList.remove('hidden');
+                    // Reset modal scroll on fresh open
+                    const modalContainer = document.getElementById('modal-scroll-container');
+                    if (modalContainer) modalContainer.scrollTop = 0;
+                }
                 
                 setTimeout(() => { 
                     try { updateMainChart(); } catch(e){} 
