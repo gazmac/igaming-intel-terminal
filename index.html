@@ -221,7 +221,6 @@
             }
         }
 
-        // --- UPDATED SORTING ALGORITHM - PUSHES PAST DATES TO THE BOTTOM ---
         function updateDashboardView() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const currentSort = document.getElementById('sort-select').value;
@@ -239,7 +238,6 @@
                     const getValidTime = (dateStr) => {
                         if (!dateStr || dateStr === 'TBD') return Infinity;
                         const d = new Date(dateStr);
-                        // If it's invalid or in the past, treat as Infinity to drop to the bottom
                         if (isNaN(d) || d < today) return Infinity;
                         return d.getTime();
                     };
@@ -247,7 +245,6 @@
                     const timeA = getValidTime(a.calendar?.date);
                     const timeB = getValidTime(b.calendar?.date);
                     
-                    // Alphabetical tie breaker if both are TBD or same date
                     if (timeA === timeB) return a.company.localeCompare(b.company);
                     return timeA - timeB;
                 } 
@@ -289,9 +286,11 @@
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
                 const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
                 const revLabel = s.actuals?.rev_label || 'REV';
-                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+                
+                // LOGO FIX: Stripping single quotes from the company name so it doesn't break the HTML
+                const cleanCompany = s.company.replace(/'/g, '');
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanCompany)}&background=f1f5f9&color=475569&rounded=true`;
 
-                // VISUAL FILTER: Auto-hide past dates on the cards
                 let nextEarningsDate = s.calendar?.date || 'TBD';
                 if (nextEarningsDate !== 'TBD') {
                     const d = new Date(nextEarningsDate);
@@ -429,7 +428,8 @@
                 const compareHtml = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
                 safeSetHTML('compare-select', compareHtml);
                 
-                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company || 'Unknown')}&background=f1f5f9&color=475569&rounded=true`;
+                const cleanCompany = (s.company || 'Unknown').replace(/'/g, '');
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanCompany)}&background=f1f5f9&color=475569&rounded=true`;
                 const modalLogo = document.getElementById('modal-logo');
                 if (modalLogo) {
                     modalLogo.src = s.logo || fallbackUrl;
@@ -440,7 +440,6 @@
                 safeSetText('modal-title', s.company || 'Unknown Company');
                 safeSetHTML('modal-ticker', `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country || 'Unknown'} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`);
                 
-                // VISUAL FILTER: Auto-hide past dates in the Modal
                 let nextEarningsDate = s.calendar?.date || 'TBD';
                 if (nextEarningsDate !== 'TBD') {
                     const d = new Date(nextEarningsDate);
