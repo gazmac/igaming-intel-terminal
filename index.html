@@ -80,7 +80,9 @@
                 <div class="max-w-2xl mx-auto">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
-                        <button type="button" onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
+                        <button type="button" onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 transition-colors shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
                     </div>
                     <div class="space-y-8">
                         <section>
@@ -114,76 +116,74 @@
             </div>
 
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white rounded-t-2xl">
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-4 pr-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
                     <div>
                         <h2 id="modal-title" class="text-2xl font-bold text-slate-900"></h2>
                         <div id="modal-ticker" class="mt-1"></div>
                     </div>
                 </div>
-                <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400">
+                <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 shrink-0">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             
             <div class="p-6">
-                <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
+                <div id="modal-main-content">
+                    <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" id="modal-main-content">
-                    
-                    <div class="lg:col-span-2 flex flex-col gap-6">
-                        <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-2">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
-                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
-                                <div class="flex gap-2 w-full sm:w-auto">
-                                    <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer"><option value="">Compare...</option></select>
-                                    <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-slate-700 cursor-pointer">
-                                        <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
-                                    </select>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 flex flex-col gap-6">
+                            <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-2">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
+                                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
+                                    <div class="flex gap-2 w-full sm:w-auto">
+                                        <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer"><option value="">Compare...</option></select>
+                                        <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-slate-700 cursor-pointer">
+                                            <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <div id="main-chart" class="w-full min-h-[300px]"></div>
                             </div>
-                            <div id="main-chart" class="w-full min-h-[300px]"></div>
+
+                            <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex flex-col h-[280px]">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Global Operational Footprint</h3>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="map-jurisdictions-text"></div>
+                                </div>
+                                <div class="relative flex-grow rounded-lg overflow-hidden bg-slate-50 border border-slate-100"><div id="m-map" class="absolute inset-0"></div></div>
+                            </div>
                         </div>
 
-                        <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex flex-col h-[280px]">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Global Operational Footprint</h3>
-                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest" id="map-jurisdictions-text"></div>
-                            </div>
-                            <div class="relative flex-grow rounded-lg overflow-hidden bg-slate-50 border border-slate-100"><div id="m-map" class="absolute inset-0"></div></div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
-                                <button type="button" onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
-                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                                    How it works
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
+                                    <button type="button" onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                        How it works
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-end mb-2">
+                                    <span id="sentiment-label" class="text-2xl font-bold"></span>
+                                    <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Sentiment Index</span>
+                                </div>
+                                <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
+                                
+                                <button type="button" onclick="toggleView('reading-room')" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                    Enter Earnings Reading Room
+                                </button>
+                                <button type="button" onclick="toggleView('regulatory-room')" class="w-full mt-3 bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                    State Regulatory Data (T12M)
                                 </button>
                             </div>
-                            
-                            <div class="flex justify-between items-end mb-2">
-                                <span id="sentiment-label" class="text-2xl font-bold"></span>
-                                <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Sentiment Index</span>
+                            <div class="pt-2">
+                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
+                                <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100 shadow-sm"></ul>
                             </div>
-                            <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
-                            
-                            <button type="button" onclick="toggleView('reading-room')" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                Enter Earnings Reading Room
-                            </button>
-
-                            <button type="button" onclick="toggleView('regulatory-room')" class="w-full mt-3 bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
-                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                                State Regulatory Data (T12M)
-                            </button>
-                        </div>
-
-                        <div class="pt-2">
-                            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Core News Summary</h3>
-                            <ul id="news-summary" class="space-y-3 text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-xl border border-slate-100 shadow-sm"></ul>
                         </div>
                     </div>
                 </div>
@@ -197,12 +197,14 @@
                             </h3>
                             <p class="text-sm text-slate-400 mt-1">AI-Synthesized Strategic Outline</p>
                         </div>
-                        <div class="flex gap-2 w-full md:w-auto">
+                        <div class="flex gap-2 w-full md:w-auto items-center">
                             <button type="button" onclick="playReadingRoomAudio()" class="w-full md:w-auto text-sm font-bold text-slate-700 hover:text-slate-900 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors border border-slate-200 shadow-sm">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.4 4.038a1 1 0 00-1.077.092l-3.8 2.87H4a2 2 0 00-2 2v2a2 2 0 002 2h1.523l3.8 2.87A1 1 0 0011 15V5a1 1 0 00-.6-.962zM14.5 10a4.5 4.5 0 00-1.84-3.61 1 1 0 111.18-1.61A6.5 6.5 0 0116.5 10a6.5 6.5 0 01-2.66 5.22 1 1 0 01-1.18-1.61A4.5 4.5 0 0014.5 10z"></path></svg>
-                                <span id="tts-btn-text">Listen to Briefing</span>
+                                <span id="tts-btn-text">Listen</span>
                             </button>
-                            <button type="button" onclick="toggleView('main')" class="w-full md:w-auto text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg">Close Room [X]</button>
+                            <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
                         </div>
                     </div>
                     
@@ -226,23 +228,43 @@
                                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                                 State Regulatory Ledger
                             </h3>
-                            <p class="text-sm text-slate-400 mt-1">Trailing 12 Months (T12M) Handle & Hold Validation</p>
+                            <p class="text-sm text-slate-400 mt-1">Trailing 12 Months (T12M) Performance Validation</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto items-center">
-                            <select id="reg-state-select" onchange="renderRegulatoryTable()" class="bg-slate-50 border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer">
+                            <select id="reg-state-select" onchange="renderRegulatoryData()" class="bg-slate-50 border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer">
                                 <option value="NY">New York (NYSGC)</option>
                                 <option value="NJ">New Jersey (DGE)</option>
                                 <option value="PA">Pennsylvania (PGCB)</option>
+                                <option value="MI">Michigan (MGCB)</option>
+                                <option value="OH">Ohio (OCCC)</option>
+                                <option value="IL">Illinois (IGB)</option>
                             </select>
-                            <button type="button" onclick="toggleView('main')" class="text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-lg shrink-0">Close [X]</button>
+                            <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
                         </div>
                     </div>
                     
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Total Handle ($)</h4>
+                            <div id="chart-reg-handle" class="w-full h-[180px]"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Hold Percentage (%)</h4>
+                            <div id="chart-reg-hold" class="w-full h-[180px]"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">GGR vs NGR ($)</h4>
+                            <div id="chart-reg-revenue" class="w-full h-[180px]"></div>
+                        </div>
+                    </div>
+
                     <div class="overflow-x-auto rounded-lg border border-slate-200">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
-                                    <th class="p-4 font-bold">Month</th>
+                                    <th class="p-4 font-bold">Reporting Month</th>
                                     <th class="p-4 font-bold">
                                         Handle ($)
                                         <div class="info-tooltip">ℹ️<span class="tooltiptext">The total amount of money wagered by players before any payouts or deductions.</span></div>
@@ -265,6 +287,12 @@
                                 </tbody>
                         </table>
                     </div>
+
+                    <div class="mt-6 bg-slate-50 border border-blue-100 rounded-lg p-4 flex gap-3 text-xs text-slate-600 shadow-sm">
+                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p><strong>Market Coverage Note:</strong> The states tracked above represent the largest US markets that legally require and publish individual operator-level disclosure. <strong>Nevada</strong>, while historically the largest overall market, is excluded from this tracking table because the Nevada Gaming Control Board only reports aggregate statewide totals and legally prohibits the disclosure of individual company market share.</p>
+                    </div>
+
                 </div>
 
             </div>
@@ -273,16 +301,32 @@
 
     <script>
         let db = [];
+        let regDb = {}; // NEW REGULATORY DATABASE VAR
         let activeTicker = null;
         let chartInstance = null;
         let currentSort = 'earnings';
         let currentSpeech = null;
 
+        let regHandleChart = null;
+        let regHoldChart = null;
+        let regRevChart = null;
+
+        // --- NEW DUAL-FETCH ENGINE ---
         async function init() {
             try {
+                // Fetch Main Financial Data
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
                 document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                
+                // Fetch Regulatory Data
+                try {
+                    const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
+                    regDb = await regResponse.json();
+                } catch (err) {
+                    console.warn("Regulatory JSON not found yet. It will load when the Python script runs.");
+                }
+
                 updateDashboardView(); 
             } catch (e) { 
                 document.getElementById('last-update').innerText = 'Data Fetch Failed';
@@ -302,17 +346,14 @@
                 if (currentSort === 'earnings') {
                     const today = new Date();
                     today.setHours(0,0,0,0);
-                    
                     const getValidTime = (dateStr) => {
                         if (!dateStr || dateStr === 'TBD') return Infinity;
                         const d = new Date(dateStr);
                         if (isNaN(d) || d < today) return Infinity;
                         return d.getTime();
                     };
-
                     const timeA = getValidTime(a.calendar?.date);
                     const timeB = getValidTime(b.calendar?.date);
-                    
                     if (timeA === timeB) return a.company.localeCompare(b.company);
                     return timeA - timeB;
                 } 
@@ -347,14 +388,11 @@
             return { name: 'US MKT', color: 'bg-blue-100 text-blue-700 border-blue-200' };
         }
 
-        // --- NEW CASCADING LOGO FALLBACK ENGINE ---
         function handleImageFallback(img, domain, compName) {
             if (!img.dataset.triedGoogle && domain) {
-                // Stage 1 Failed. Try Google Favicon.
                 img.dataset.triedGoogle = 'true';
                 img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
             } else {
-                // Stage 2 Failed. Use Initials.
                 img.onerror = null; 
                 img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(compName)}&background=f1f5f9&color=475569&rounded=true`;
             }
@@ -362,7 +400,6 @@
 
         function renderGrid(dataToRender, currentSort) {
             const grid = document.getElementById('stock-grid');
-            
             if (dataToRender.length === 0) {
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-medium">No companies found matching your search.</div>`;
                 return;
@@ -370,9 +407,7 @@
 
             grid.innerHTML = dataToRender.map(s => {
                 const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
-                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
                 const revLabel = s.actuals?.rev_label || 'REV';
-                
                 const safeName = s.company.replace(/['"]/g, '');
                 const domain = s.logo ? s.logo.split('/').pop() : '';
                 const badge = getExchangeBadge(s.ticker);
@@ -382,9 +417,7 @@
                     const d = new Date(nextEarningsDate);
                     const today = new Date();
                     today.setHours(0,0,0,0);
-                    if (!isNaN(d) && d < today) {
-                        nextEarningsDate = 'TBD';
-                    }
+                    if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
                 return `
@@ -439,10 +472,9 @@
             if ('speechSynthesis' in window) {
                 if (currentSpeech && window.speechSynthesis.speaking) {
                     window.speechSynthesis.cancel(); 
-                    document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+                    document.getElementById('tts-btn-text').innerText = "Listen";
                     return;
                 }
-
                 const quotesText = document.getElementById('management-quotes').innerText || "";
                 const briefingText = document.getElementById('reading-room-content').innerText || "";
                 const fullText = "Key Management Quotes. " + quotesText + ". Executive Briefing. " + briefingText;
@@ -455,12 +487,9 @@
                 const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB');
                 if (preferredVoice) currentSpeech.voice = preferredVoice;
 
-                currentSpeech.onend = () => {
-                    document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
-                };
-
+                currentSpeech.onend = () => { document.getElementById('tts-btn-text').innerText = "Listen"; };
                 window.speechSynthesis.speak(currentSpeech);
-                document.getElementById('tts-btn-text').innerText = "Stop Audio";
+                document.getElementById('tts-btn-text').innerText = "Stop";
             } else {
                 alert("Text-to-Speech is not natively supported in your browser.");
             }
@@ -472,7 +501,7 @@
             const regRoom = document.getElementById('modal-regulatory-room');
             
             if (window.speechSynthesis) window.speechSynthesis.cancel();
-            document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+            document.getElementById('tts-btn-text').innerText = "Listen";
 
             mainContent.classList.add('hidden');
             readingRoom.classList.add('hidden');
@@ -482,7 +511,7 @@
                 readingRoom.classList.remove('hidden');
             } else if (viewName === 'regulatory-room') {
                 regRoom.classList.remove('hidden');
-                renderRegulatoryTable();
+                renderRegulatoryData(); // Generate data instantly when opened
             } else {
                 mainContent.classList.remove('hidden');
                 setTimeout(updateMainChart, 50); 
@@ -496,14 +525,13 @@
             document.getElementById('modal').classList.add('hidden'); 
             document.getElementById('methodology-overlay').classList.add('hidden');
             if (window.speechSynthesis) window.speechSynthesis.cancel();
-            document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
+            document.getElementById('tts-btn-text').innerText = "Listen";
         }
 
         function safeSetHTML(id, html) {
             const el = document.getElementById(id);
             if (el) el.innerHTML = html;
         }
-
         function safeSetText(id, text) {
             const el = document.getElementById(id);
             if (el) el.innerText = text;
@@ -524,7 +552,7 @@
                 const domain = s.logo ? s.logo.split('/').pop() : '';
                 const modalLogo = document.getElementById('modal-logo');
                 if (modalLogo) {
-                    delete modalLogo.dataset.triedGoogle; // Reset cascade state
+                    delete modalLogo.dataset.triedGoogle; 
                     modalLogo.src = s.logo;
                     modalLogo.onerror = function() { handleImageFallback(this, domain, safeName); };
                     modalLogo.classList.remove('hidden');
@@ -538,9 +566,7 @@
                     const d = new Date(nextEarningsDate);
                     const today = new Date();
                     today.setHours(0,0,0,0);
-                    if (!isNaN(d) && d < today) {
-                        nextEarningsDate = 'TBD';
-                    }
+                    if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
                 safeSetText('modal-earnings-date', nextEarningsDate);
@@ -591,7 +617,6 @@
 
                 const sent = s.sentiment || 50;
                 safeSetText('sentiment-label', sent + '%');
-                
                 const sLab = document.getElementById('sentiment-label');
                 if (sLab) sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-emerald-600' : (sent < 40 ? 'text-rose-600' : 'text-amber-600'));
                 
@@ -673,35 +698,90 @@
             }
         }
 
-        function renderRegulatoryTable() {
+        // --- NEW DATA-DRIVEN REGULATORY RENDERER ---
+        function renderRegulatoryData() {
             const state = document.getElementById('reg-state-select').value;
             const tbody = document.getElementById('regulatory-table-body');
             
-            const months = ["Jan 2026", "Dec 2025", "Nov 2025", "Oct 2025", "Sep 2025", "Aug 2025", "Jul 2025", "Jun 2025", "May 2025", "Apr 2025", "Mar 2025", "Feb 2025"];
-            const baseHandle = state === 'NY' ? 850 : (state === 'NJ' ? 410 : 380);
+            // Check if our new regulatory JSON has loaded
+            if (!regDb || !regDb[state] || regDb[state].length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400">Loading Regulatory Data Pipeline...</td></tr>`;
+                if (regHandleChart) regHandleChart.destroy();
+                if (regHoldChart) regHoldChart.destroy();
+                if (regRevChart) regRevChart.destroy();
+                return;
+            }
+
+            const stateData = regDb[state]; 
             
+            const chartLabels = [];
+            const handleSeries = [];
+            const holdSeries = [];
+            const ggrSeries = [];
+            const ngrSeries = [];
+
+            // Data arrives newest-to-oldest or oldest-to-newest depending on generator.
+            // Our generator outputs oldest-to-newest, so we reverse it for the table.
             let html = '';
-            months.forEach((month, index) => {
-                let seasonalBoost = (index === 1 || index === 2 || index === 3) ? 1.4 : 1.0; 
-                let variance = 0.9 + (Math.random() * 0.2);
-                let handle = baseHandle * seasonalBoost * variance;
-                let hold = 7.5 + (Math.random() * 3.5); 
-                let ggr = handle * (hold / 100);
-                
-                let ngrTaxMultiplier = state === 'NY' ? 0.49 : 0.85; 
-                let ngr = ggr * ngrTaxMultiplier * 0.9; 
-                
+            
+            // Process for Charts (Oldest to Newest)
+            stateData.forEach(row => {
+                chartLabels.push(row.month);
+                handleSeries.push(row.handle);
+                holdSeries.push(row.hold);
+                ggrSeries.push(row.ggr);
+                ngrSeries.push(row.ngr);
+            });
+
+            // Destroy existing charts to prevent visual memory leaks
+            if (regHandleChart) regHandleChart.destroy();
+            if (regHoldChart) regHoldChart.destroy();
+            if (regRevChart) regRevChart.destroy();
+
+            regHandleChart = new ApexCharts(document.querySelector("#chart-reg-handle"), {
+                series: [{ name: 'Handle ($M)', data: handleSeries }],
+                chart: { type: 'area', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => '$' + Math.round(v) } },
+                colors: ['#3b82f6'], fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0 } }
+            });
+            regHandleChart.render();
+
+            regHoldChart = new ApexCharts(document.querySelector("#chart-reg-hold"), {
+                series: [{ name: 'Hold %', data: holdSeries }],
+                chart: { type: 'line', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => v + '%' } },
+                colors: ['#10b981']
+            });
+            regHoldChart.render();
+
+            regRevChart = new ApexCharts(document.querySelector("#chart-reg-revenue"), {
+                series: [{ name: 'GGR ($M)', data: ggrSeries }, { name: 'NGR ($M)', data: ngrSeries }],
+                chart: { type: 'bar', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit', stacked: false },
+                plotOptions: { bar: { columnWidth: '60%', borderRadius: 2 } },
+                dataLabels: { enabled: false }, stroke: { show: true, width: 2, colors: ['transparent'] },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => '$' + Math.round(v) } },
+                colors: ['#6366f1', '#38bdf8'], legend: { position: 'top', horizontalAlign: 'right', fontSize: '10px', markers: { radius: 12 } }
+            });
+            regRevChart.render();
+
+            // Render Table (Reverse to show newest first)
+            for(let i = stateData.length - 1; i >= 0; i--) {
+                let row = stateData[i];
                 html += `
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-4 font-medium text-slate-700 whitespace-nowrap">${month}</td>
-                        <td class="p-4 text-slate-900 font-mono">$${handle.toFixed(1)}M</td>
-                        <td class="p-4 font-bold ${hold > 9.5 ? 'text-emerald-600' : 'text-slate-600'}">${hold.toFixed(1)}%</td>
-                        <td class="p-4 text-slate-700 font-mono">$${ggr.toFixed(1)}M</td>
-                        <td class="p-4 text-blue-600 font-bold font-mono">$${ngr.toFixed(1)}M</td>
+                        <td class="p-4 font-medium text-slate-700 whitespace-nowrap">${row.month}</td>
+                        <td class="p-4 text-slate-900 font-mono">$${row.handle.toFixed(1)}M</td>
+                        <td class="p-4 font-bold ${row.hold > 9.5 ? 'text-emerald-600' : 'text-slate-600'}">${row.hold.toFixed(1)}%</td>
+                        <td class="p-4 text-slate-700 font-mono">$${row.ggr.toFixed(1)}M</td>
+                        <td class="p-4 text-blue-600 font-bold font-mono">$${row.ngr.toFixed(1)}M</td>
                     </tr>
                 `;
-            });
-            
+            }
             tbody.innerHTML = html;
         }
 
