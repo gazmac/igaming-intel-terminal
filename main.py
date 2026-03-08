@@ -83,7 +83,6 @@ OTC_MAP = {
     "OPAP.AT": "GOFPY", "LOTO.MI": "LTMGF", "PARP.PA": "PARPF" 
 }
 
-# FULLY POPULATED 2025 FALLBACK DICTIONARY 
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '25)", "revenue_interim": "$3.79B (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"rev_label": "REV", "revenue_fy": "$4.77B (FY '25)", "revenue_interim": "$1.39B (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "net_income": "-$507M", "ebitda": "$181M", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -141,7 +140,7 @@ VERIFIED_DATA = {
 }
 
 VERIFIED_CALENDAR = {
-    # Calendar omitted for brevity. Frontend handles 'TBD' cleanly.
+    # Calendar explicitly omitted. Python script catches dynamically, or HTML defaults seamlessly to TBD.
 }
 
 def get_live_fx_rates():
@@ -372,7 +371,6 @@ def ai_process_intelligence(company_name, ticker):
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
-        # THE STRICT, LAZY-PROOF AI PROMPT
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
 Generate a strictly valid JSON response. Do not use unescaped double quotes inside strings. Do not use newline characters (\\n).
 Format exactly with these four keys:
@@ -428,7 +426,6 @@ def run_pipeline():
             
             last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
             
-            # --- THE NEW GHOST PRICING FALLBACK GATE ---
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
             mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
             pe_ratio = pe_ratio if pe_ratio != "N/A" else fin.get("fallback_pe", "N/A")
@@ -463,7 +460,6 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            # THE NEW ICON HORSE LOGO ENGINE
             "logo": f"https://icon.horse/icon/{co['domain']}",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
