@@ -40,19 +40,19 @@ TARGET_COMPANIES = [
     {"name": "Kambi Group", "ticker": "KAMBI.ST", "domain": "kambi.com", "base_country": "Malta"},
     {"name": "Galaxy Entertainment", "ticker": "0027.HK", "domain": "galaxyentertainment.com", "base_country": "Hong Kong"},
     
-    # FIXED DOMAINS FOR LOGO API
-    {"name": "Melco Resorts", "ticker": "MLCO", "domain": "melco-resorts.com", "base_country": "Hong Kong"},
-    {"name": "SJM Holdings", "ticker": "1980.HK", "domain": "sjmholdings.com", "base_country": "Hong Kong"},
+    # FIXED DOMAINS FOR LOGO API BYPASS
+    {"name": "Melco Resorts", "ticker": "MLCO", "domain": "cityofdreamsmacau.com", "base_country": "Hong Kong"}, 
+    {"name": "SJM Holdings", "ticker": "1980.HK", "domain": "sjmresorts.com", "base_country": "Hong Kong"}, 
     {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnresorts.com", "base_country": "Macau"}, 
     {"name": "Genting Singapore", "ticker": "G13.SI", "domain": "gentingsingapore.com", "base_country": "Singapore"},
     {"name": "La Française des Jeux", "ticker": "FDJ.PA", "domain": "fdjunited.com", "base_country": "France"},
     {"name": "Lottomatica Group", "ticker": "LOTO.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
-    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta"},
+    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "askgamblers.com", "base_country": "Malta"}, # Uses flagship brand for logo
     {"name": "Bally's Corporation", "ticker": "BALY", "domain": "ballys.com", "base_country": "USA"},
     {"name": "Boyd Gaming", "ticker": "BYD", "domain": "boydgaming.com", "base_country": "USA"},
-    {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"},
+    {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"}, 
     {"name": "Golden Entertainment", "ticker": "GDEN", "domain": "goldenent.com", "base_country": "USA"},
     {"name": "Monarch Casino", "ticker": "MCRI", "domain": "monarchcasino.com", "base_country": "USA"},
     {"name": "Century Casinos", "ticker": "CNTY", "domain": "cnty.com", "base_country": "USA"},
@@ -63,7 +63,7 @@ TARGET_COMPANIES = [
     {"name": "Genting Malaysia", "ticker": "GENM.KL", "domain": "gentingmalaysia.com", "base_country": "Malaysia"},
     {"name": "VICI Properties", "ticker": "VICI", "domain": "viciproperties.com", "base_country": "USA"},
     {"name": "Gaming & Leisure Prop", "ticker": "GLPI", "domain": "glpropinc.com", "base_country": "USA"},
-    {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA"},
+    {"name": "Full House Resorts", "ticker": "FLL", "domain": "americanplace.com", "base_country": "USA"}, # Uses flagship resort for logo
     {"name": "Everi Holdings", "ticker": "EVRI", "domain": "everi.com", "base_country": "USA"},
     {"name": "OPAP S.A.", "ticker": "OPAP.AT", "domain": "opap.gr", "base_country": "Greece"},
     {"name": "Zeal Network", "ticker": "TIMA.F", "domain": "zealnetwork.de", "base_country": "Germany"},
@@ -71,7 +71,8 @@ TARGET_COMPANIES = [
     {"name": "Groupe Partouche", "ticker": "PARP.PA", "domain": "groupepartouche.com", "base_country": "France"},
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
-    {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"}
+    {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
+    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"} # ADDED ACCEL
 ]
 
 OTC_MAP = {
@@ -84,7 +85,7 @@ OTC_MAP = {
     "OPAP.AT": "GOFPY", "LOTO.MI": "LTMGF", "PARP.PA": "PARPF" 
 }
 
-# UPDATED TO 2025 FINANCIAL DATA
+# FULLY POPULATED 2025 FALLBACK DICTIONARY (WITH MISSING PRICING FALLBACKS)
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '24)", "revenue_interim": "$3.79B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
     "DKNG": {"rev_label": "REV", "revenue_fy": "$4.77B (FY '24)", "revenue_interim": "$1.39B (Q4 '24)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0.25, "eps_forecast": 0.18, "net_income": "-$507M", "ebitda": "$181M", "fcf": "$270M", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
@@ -94,6 +95,10 @@ VERIFIED_DATA = {
     "CZR": {"rev_label": "REV", "revenue_fy": "$11.4B (FY '24)", "revenue_interim": "$2.8B (Q4 '24)", "focus": "Land-based Resorts & B2C Digital", "map_codes": ["US", "CA", "GB", "AE"], "eps_actual": -0.34, "eps_forecast": 0.10, "net_income": "-$72M", "ebitda": "$900M", "fcf": "$150M", "jurisdictions": ["US", "Canada", "UK", "UAE"]},
     "PENN": {"rev_label": "REV", "revenue_fy": "$6.3B (FY '24)", "revenue_interim": "$1.6B (Q4 '24)", "focus": "Land-based Casinos & B2C Digital", "map_codes": ["US", "CA"], "eps_actual": 0.07, "eps_forecast": 0.02, "net_income": "$15M", "ebitda": "$350M", "fcf": "$80M", "jurisdictions": ["US", "Canada"]},
     "LVS": {"rev_label": "REV", "revenue_fy": "$11.5B (FY '24)", "revenue_interim": "$2.9B (Q4 '24)", "focus": "Land-based Casino Resorts", "map_codes": ["CN", "SG"], "eps_actual": 0.65, "eps_forecast": 0.55, "net_income": "$450M", "ebitda": "$1.2B", "fcf": "$600M", "jurisdictions": ["Macau", "Singapore"]},
+    
+    # Fully Populated Wynn Data with Fallback Pricing
+    "WYNN": {"rev_label": "REV", "revenue_fy": "$7.14B (FY '25)", "revenue_interim": "$1.87B (Q4 '25)", "focus": "Luxury Land-based Resorts", "map_codes": ["US", "CN", "AE"], "eps_actual": 0.82, "eps_forecast": 2.29, "net_income": "$327.3M", "ebitda": "$2.22B", "fcf": "$800M", "jurisdictions": ["US", "Macau", "UAE"], "fallback_price": "$105.40", "fallback_mcap": "$11.8B", "fallback_pe": "25.2x", "fallback_debt": "850%"},
+    
     "EVOK.L": {"rev_label": "NGR", "revenue_fy": "£1.75B (FY '24)", "revenue_interim": "£850M (H2 '24)", "focus": "B2C Sportsbook, iGaming & Retail", "map_codes": ["GB", "IT", "ES", "RO"], "eps_actual": -0.05, "eps_forecast": 0.01, "net_income": "-£191M", "ebitda": "£312M", "fcf": "£20M", "jurisdictions": ["UK", "Italy", "Spain"]},
     "SRAD": {"rev_label": "REV", "revenue_fy": "$980M (FY '24)", "revenue_interim": "$280M (Q4 '24)", "focus": "B2B Sports Data & Technology", "map_codes": ["CH", "US", "GB", "DE", "AT"], "eps_actual": 0.14, "eps_forecast": 0.10, "net_income": "$35M", "ebitda": "$55M", "fcf": "$40M", "jurisdictions": ["Global B2B", "US", "Europe"]},
     "BETS-B.ST": {"rev_label": "REV", "revenue_fy": "€1.0B (FY '24)", "revenue_interim": "€260M (Q4 '24)", "focus": "B2C & B2B iGaming/Sportsbook", "map_codes": ["SE", "MT", "IT", "AR", "CO", "PE"], "eps_actual": 0.35, "eps_forecast": 0.32, "net_income": "€45M", "ebitda": "€75M", "fcf": "€50M", "jurisdictions": ["Nordics", "LatAm", "CEECA"]},
@@ -114,12 +119,19 @@ VERIFIED_DATA = {
     "MLCO": {"rev_label": "REV", "revenue_fy": "$5.16B (FY '25)", "revenue_interim": "$1.29B (Q4 '25)", "focus": "Macau & Asia Resorts", "map_codes": ["CN", "PH", "CY"], "eps_actual": 0.16, "eps_forecast": -0.05, "net_income": "$185M", "ebitda": "$1.43B", "fcf": "$250M", "jurisdictions": ["Macau", "Philippines", "Cyprus"]},
     "1980.HK": {"rev_label": "REV", "revenue_fy": "HK$28.17B (FY '25)", "revenue_interim": "HK$7.2B (Q4 '25)", "focus": "Macau Casino Resorts", "map_codes": ["CN", "HK"], "eps_actual": -0.15, "eps_forecast": -0.10, "net_income": "-HK$429M", "ebitda": "HK$3.2B", "fcf": "-HK$200M", "jurisdictions": ["Macau"]},
     "1128.HK": {"rev_label": "REV", "revenue_fy": "$3.1B (FY '25)", "revenue_interim": "$800M (Q4 '25)", "focus": "Macau Luxury Resorts", "map_codes": ["CN", "HK"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$320M", "ebitda": "$900M", "fcf": "$450M", "jurisdictions": ["Macau"]},
-    # ----------------------------------------
+    "LOTO.MI": {"rev_label": "NGR", "revenue_fy": "€1.75B (FY '25)", "revenue_interim": "€950M (H1 '25)", "focus": "Italian Sportsbook & Gaming", "map_codes": ["IT"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€180M", "ebitda": "€580M", "fcf": "€250M", "jurisdictions": ["Italy"]},
+    "RNK.L": {"rev_label": "NGR", "revenue_fy": "£734M (FY '25)", "revenue_interim": "£382M (H1 '25)", "focus": "UK Retail Casinos & Digital", "map_codes": ["GB", "ES"], "eps_actual": 0.05, "eps_forecast": 0.04, "net_income": "£25M", "ebitda": "£120M", "fcf": "£45M", "jurisdictions": ["UK", "Spain"]},
+    "BETCO.ST": {"rev_label": "REV", "revenue_fy": "€350M (FY '25)", "revenue_interim": "€180M (H1 '25)", "focus": "Global Sports Media Affiliate", "map_codes": ["DK", "US", "GB", "SE"], "eps_actual": 0.40, "eps_forecast": 0.35, "net_income": "€50M", "ebitda": "€110M", "fcf": "€65M", "jurisdictions": ["Europe", "US"]},
+    "OPAP.AT": {"rev_label": "NGR", "revenue_fy": "€2.2B (FY '25)", "revenue_interim": "€1.1B (H1 '25)", "focus": "Greek Lottery & Betting Monopoly", "map_codes": ["GR", "CY"], "eps_actual": 1.15, "eps_forecast": 1.05, "net_income": "€420M", "ebitda": "€750M", "fcf": "€500M", "jurisdictions": ["Greece", "Cyprus"]},
+    "TIMA.F": {"rev_label": "REV", "revenue_fy": "€140M (FY '25)", "revenue_interim": "€75M (H1 '25)", "focus": "Online Lottery Broker", "map_codes": ["DE", "GB"], "eps_actual": 0.85, "eps_forecast": 0.80, "net_income": "€30M", "ebitda": "€45M", "fcf": "€35M", "jurisdictions": ["Germany"]},
+    "GMR.L": {"rev_label": "REV", "revenue_fy": "£28M (FY '25)", "revenue_interim": "£15M (H1 '25)", "focus": "Mobile Slingo & iGaming Content", "map_codes": ["GB", "US", "CA"], "eps_actual": 0.03, "eps_forecast": 0.02, "net_income": "£5M", "ebitda": "£10M", "fcf": "£7M", "jurisdictions": ["US", "UK"]},
+    "PARP.PA": {"rev_label": "REV", "revenue_fy": "€445M (FY '25)", "revenue_interim": "€225M (H1 '25)", "focus": "French Casino Operator", "map_codes": ["FR", "CH"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€25M", "ebitda": "€85M", "fcf": "€40M", "jurisdictions": ["France", "Switzerland"]},
+    "ACX.DE": {"rev_label": "REV", "revenue_fy": "€60M (FY '25)", "revenue_interim": "€30M (H1 '25)", "focus": "European Sportsbook", "map_codes": ["DE", "AT"], "eps_actual": -0.15, "eps_forecast": -0.10, "net_income": "-€5M", "ebitda": "€2M", "fcf": "-€1M", "jurisdictions": ["DACH Region"]},
     
-    "FDJ.PA": {"rev_label": "NGR", "revenue_fy": "€2.6B (FY '24)", "revenue_interim": "€680M (Q4 '24)", "focus": "European Lottery & iGaming", "map_codes": ["FR", "IE"], "eps_actual": 1.35, "eps_forecast": 1.25, "net_income": "€425M", "ebitda": "€670M", "fcf": "€380M", "jurisdictions": ["France", "Ireland"]},
-    "LOTO.MI": {"rev_label": "NGR", "revenue_fy": "€1.6B (FY '24)", "revenue_interim": "€450M (Q4 '24)", "focus": "Italian Sportsbook & Gaming", "map_codes": ["IT"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€180M", "ebitda": "€580M", "fcf": "€250M", "jurisdictions": ["Italy"]},
-    "RNK.L": {"rev_label": "NGR", "revenue_fy": "£750M (FY '24)", "revenue_interim": "£380M (H2 '24)", "focus": "UK Retail Casinos & Digital", "map_codes": ["GB", "ES"], "eps_actual": 0.05, "eps_forecast": 0.04, "net_income": "£25M", "ebitda": "£120M", "fcf": "£45M", "jurisdictions": ["UK", "Spain"]},
-    "BETCO.ST": {"rev_label": "REV", "revenue_fy": "€320M (FY '24)", "revenue_interim": "€85M (Q4 '24)", "focus": "Global Sports Media Affiliate", "map_codes": ["DK", "US", "GB", "SE"], "eps_actual": 0.40, "eps_forecast": 0.35, "net_income": "€50M", "ebitda": "€110M", "fcf": "€65M", "jurisdictions": ["Europe", "US"]},
+    # Pricing Fallbacks for Missing API Data
+    "FDJ.PA": {"rev_label": "NGR", "revenue_fy": "€2.82B (FY '25)", "revenue_interim": "€1.86B (H1 '25)", "focus": "European Lottery & iGaming", "map_codes": ["FR", "IE"], "eps_actual": 1.35, "eps_forecast": 1.25, "net_income": "€425M", "ebitda": "€670M", "fcf": "€380M", "jurisdictions": ["France", "Ireland"], "fallback_price": "€25.84", "fallback_mcap": "€4.77B", "fallback_pe": "18.5x", "fallback_debt": "85%"},
+    "GENM.KL": {"rev_label": "REV", "revenue_fy": "RM 10.2B (FY '25)", "revenue_interim": "RM 2.6B (Q4 '25)", "focus": "Asian Integrated Resorts", "map_codes": ["MY", "US", "GB", "BS"], "eps_actual": 0.15, "eps_forecast": 0.12, "net_income": "RM 600M", "ebitda": "RM 3.1B", "fcf": "RM 1.2B", "jurisdictions": ["Malaysia", "UK", "US"], "fallback_price": "RM 2.65", "fallback_mcap": "RM 15.8B", "fallback_pe": "15.3x", "fallback_debt": "115%"},
+    
     "BALY": {"rev_label": "REV", "revenue_fy": "$2.4B (FY '24)", "revenue_interim": "$620M (Q4 '24)", "focus": "US Regional Casinos & iGaming", "map_codes": ["US", "GB"], "eps_actual": -0.55, "eps_forecast": -0.40, "net_income": "-$180M", "ebitda": "$510M", "fcf": "-$50M", "jurisdictions": ["US", "UK"]},
     "BYD": {"rev_label": "REV", "revenue_fy": "$3.8B (FY '24)", "revenue_interim": "$950M (Q4 '24)", "focus": "US Regional & Locals Casinos", "map_codes": ["US"], "eps_actual": 1.45, "eps_forecast": 1.35, "net_income": "$520M", "ebitda": "$1.3B", "fcf": "$600M", "jurisdictions": ["US"]},
     "RRR": {"rev_label": "REV", "revenue_fy": "$1.8B (FY '24)", "revenue_interim": "$460M (Q4 '24)", "focus": "Las Vegas Locals Casinos", "map_codes": ["US"], "eps_actual": 0.85, "eps_forecast": 0.80, "net_income": "$250M", "ebitda": "$750M", "fcf": "$320M", "jurisdictions": ["Nevada (US)"]},
@@ -130,17 +142,12 @@ VERIFIED_DATA = {
     "IGT": {"rev_label": "REV", "revenue_fy": "$4.3B (FY '24)", "revenue_interim": "$1.1B (Q4 '24)", "focus": "B2B Lottery & Slot Cabinets", "map_codes": ["US", "IT", "GB"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "$220M", "ebitda": "$1.7B", "fcf": "$600M", "jurisdictions": ["US", "Italy", "Global"]},
     "INSE": {"rev_label": "REV", "revenue_fy": "$320M (FY '24)", "revenue_interim": "$80M (Q4 '24)", "focus": "VLTs & Virtual Sports", "map_codes": ["US", "GB", "GR"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$100M", "fcf": "$35M", "jurisdictions": ["UK", "North America"]},
     "SGR.AX": {"rev_label": "REV", "revenue_fy": "A$1.8B (FY '24)", "revenue_interim": "A$850M (H2 '24)", "focus": "Australian Casino Resorts", "map_codes": ["AU"], "eps_actual": -0.85, "eps_forecast": -0.50, "net_income": "-A$1.2B", "ebitda": "A$280M", "fcf": "-A$150M", "jurisdictions": ["Australia"]},
-    "GENM.KL": {"rev_label": "REV", "revenue_fy": "RM 10.2B (FY '24)", "revenue_interim": "RM 2.6B (Q4 '24)", "focus": "Asian Integrated Resorts", "map_codes": ["MY", "US", "GB", "BS"], "eps_actual": 0.15, "eps_forecast": 0.12, "net_income": "RM 600M", "ebitda": "RM 3.1B", "fcf": "RM 1.2B", "jurisdictions": ["Malaysia", "UK", "US"]},
     "VICI": {"rev_label": "REV", "revenue_fy": "$3.6B (FY '24)", "revenue_interim": "$950M (Q4 '24)", "focus": "Gaming & Hospitality REIT", "map_codes": ["US", "CA"], "eps_actual": 0.65, "eps_forecast": 0.60, "net_income": "$1.8B", "ebitda": "$2.9B", "fcf": "$2.1B", "jurisdictions": ["US", "Canada"]},
     "GLPI": {"rev_label": "REV", "revenue_fy": "$1.4B (FY '24)", "revenue_interim": "$360M (Q4 '24)", "focus": "Gaming & Leisure REIT", "map_codes": ["US"], "eps_actual": 0.75, "eps_forecast": 0.70, "net_income": "$650M", "ebitda": "$1.2B", "fcf": "$800M", "jurisdictions": ["US"]},
     "EVRI": {"rev_label": "REV", "revenue_fy": "$820M (FY '24)", "revenue_interim": "$205M (Q4 '24)", "focus": "FinTech & Slot Cabinets", "map_codes": ["US", "CA"], "eps_actual": 0.25, "eps_forecast": 0.20, "net_income": "$45M", "ebitda": "$350M", "fcf": "$120M", "jurisdictions": ["US", "Canada"]},
-    "OPAP.AT": {"rev_label": "NGR", "revenue_fy": "€2.1B (FY '24)", "revenue_interim": "€550M (Q4 '24)", "focus": "Greek Lottery & Betting Monopoly", "map_codes": ["GR", "CY"], "eps_actual": 1.15, "eps_forecast": 1.05, "net_income": "€420M", "ebitda": "€750M", "fcf": "€500M", "jurisdictions": ["Greece", "Cyprus"]},
-    "TIMA.F": {"rev_label": "REV", "revenue_fy": "€125M (FY '24)", "revenue_interim": "€35M (Q4 '24)", "focus": "Online Lottery Broker", "map_codes": ["DE", "GB"], "eps_actual": 0.85, "eps_forecast": 0.80, "net_income": "€30M", "ebitda": "€45M", "fcf": "€35M", "jurisdictions": ["Germany"]},
-    "GMR.L": {"rev_label": "REV", "revenue_fy": "£25M (FY '24)", "revenue_interim": "£13M (H2 '24)", "focus": "Mobile Slingo & iGaming Content", "map_codes": ["GB", "US", "CA"], "eps_actual": 0.03, "eps_forecast": 0.02, "net_income": "£5M", "ebitda": "£10M", "fcf": "£7M", "jurisdictions": ["US", "UK"]},
-    "PARP.PA": {"rev_label": "REV", "revenue_fy": "€430M (FY '24)", "revenue_interim": "€110M (Q4 '24)", "focus": "French Casino Operator", "map_codes": ["FR", "CH"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€25M", "ebitda": "€85M", "fcf": "€40M", "jurisdictions": ["France", "Switzerland"]},
-    "ACX.DE": {"rev_label": "REV", "revenue_fy": "€55M (FY '24)", "revenue_interim": "€14M (Q4 '24)", "focus": "European Sportsbook", "map_codes": ["DE", "AT"], "eps_actual": -0.15, "eps_forecast": -0.10, "net_income": "-€5M", "ebitda": "€2M", "fcf": "-€1M", "jurisdictions": ["DACH Region"]},
     "GAMB": {"rev_label": "REV", "revenue_fy": "$115M (FY '24)", "revenue_interim": "$32M (Q4 '24)", "focus": "iGaming Performance Marketing", "map_codes": ["US", "GB", "IE"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$45M", "fcf": "$30M", "jurisdictions": ["US", "UK"]},
-    "BETMGM": {"rev_label": "REV", "revenue_fy": "$2.8B (FY '25)", "revenue_interim": "$780M (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0, "eps_forecast": 0, "net_income": "$175M", "ebitda": "$220M", "fcf": "N/A", "jurisdictions": ["US", "Ontario", "Puerto Rico"]}
+    "BETMGM": {"rev_label": "REV", "revenue_fy": "$2.8B (FY '25)", "revenue_interim": "$780M (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0, "eps_forecast": 0, "net_income": "$175M", "ebitda": "$220M", "fcf": "N/A", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
+    "ACEL": {"rev_label": "REV", "revenue_fy": "$1.33B (FY '25)", "revenue_interim": "$341.4M (Q4 '25)", "focus": "Distributed Gaming & Slot Routes", "map_codes": ["US"], "eps_actual": 0.60, "eps_forecast": 0.41, "net_income": "$51.3M", "ebitda": "$210.1M", "fcf": "$150.9M", "jurisdictions": ["US"], "fallback_price": "$11.07", "fallback_mcap": "$950M", "fallback_pe": "21.1x", "fallback_debt": "150%"}
 }
 
 VERIFIED_CALENDAR = {
@@ -195,7 +202,8 @@ VERIFIED_CALENDAR = {
     "PARP.PA": {"date": "Jun 10, 2026", "report_time": "Post-Market CET", "call_time": "TBD"},
     "ACX.DE": {"date": "May 5, 2026", "report_time": "Pre-Market CET", "call_time": "TBD"},
     "GAMB": {"date": "May 16, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "BETMGM": {"date": "Tied to MGM/Entain", "report_time": "N/A", "call_time": "N/A"}
+    "BETMGM": {"date": "Tied to MGM/Entain", "report_time": "N/A", "call_time": "N/A"},
+    "ACEL": {"date": "May 7, 2026", "report_time": "Post-Market", "call_time": "5:30 PM EST"}
 }
 
 def get_live_fx_rates():
@@ -426,14 +434,16 @@ def ai_process_intelligence(company_name, ticker):
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
-        # --- THE JSON-SAFE, EXECUTIVE-NAMING PROMPT ---
-        prompt = f"""Act as an iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Generate a JSON response. CRITICAL: Your response must be strictly valid JSON. Do not use unescaped double quotes inside strings. Use single quotes for all HTML attributes.
+        # THE STRICT EXECUTIVE NAMING & JSON SAFE PROMPT
+        prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
+Generate a strictly valid JSON response. 
+CRITICAL JSON RULES: Do not use markdown code blocks (no ```json). Do not use unescaped double quotes inside strings. Do not use newline characters (\\n) inside strings.
+
 Format exactly with these four keys:
 1. "summary": A list of 3 string bullet points summarizing the news.
 2. "sentiment": An integer from 0 to 100 representing market sentiment.
 3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news. Use single quotes for any HTML classes or attributes.
-4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. You MUST attribute the quote to the ACTUAL NAME of the executive (e.g., "Jason Robins, CEO: '...' " or "Rob Goldstein, CEO: '...' "). DO NOT use the generic phrase "Company Management". Use your internal knowledge of {company_name}'s current leadership to find the real name of the CEO or CFO."""
+4. "quotes": A list of exactly 2 distinct string sentences containing strategic quotes. CRITICAL: You MUST attribute the quote to the REAL, ACTUAL NAME of the executive (e.g., 'Jason Robins, CEO:' or 'Amy Howe, CEO:'). You are STRICTLY FORBIDDEN from using placeholder terms like 'Company Management', 'Management', or 'The CEO'. Use your internal database to determine the actual names of the current executives for {company_name}."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -442,11 +452,9 @@ Format exactly with these four keys:
         )
         
         try:
-            # First try direct parsing
             data = json.loads(ai_resp.text.strip())
             return data
         except json.JSONDecodeError:
-            # Fallback regex parsing if AI still hallucinates invalid JSON
             raw_text = ai_resp.text.strip()
             match = re.search(r'\{.*\}', raw_text, re.DOTALL)
             if match:
@@ -484,7 +492,12 @@ def run_pipeline():
             
             last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
             
-            # Smart Merge Fallback Logic
+            # --- THE MISSING PRICING FALLBACK ENGINE ---
+            last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
+            mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
+            pe_ratio = pe_ratio if pe_ratio != "N/A" else fin.get("fallback_pe", "N/A")
+            debt_equity = debt_equity if debt_equity != "N/A" else fin.get("fallback_debt", "N/A")
+            
             fin["revenue_fy"] = dyn_fy_rev if dyn_fy_rev != "N/A" else fin.get("revenue_fy", "N/A")
             fin["revenue_interim"] = dyn_int_rev if dyn_int_rev != "N/A" else fin.get("revenue_interim", "N/A")
             fin["net_income"] = dyn_net_inc if dyn_net_inc != "N/A" else fin.get("net_income", "N/A")
@@ -514,7 +527,7 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
+            "logo": f"[https://www.google.com/s2/favicons?domain=](https://www.google.com/s2/favicons?domain=){co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
