@@ -34,15 +34,24 @@
             <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
                 <div id="last-update" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded">Loading Data...</div>
                 
-                <div class="flex items-center gap-2 w-full">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">Sort By:</span>
-                    <select id="sort-select" onchange="applySort()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
-                        <option value="earnings">Nearest Earnings Date</option>
-                        <option value="marketcap">Market Cap (High to Low)</option>
-                        <option value="beat">Highest EPS Beat</option>
-                        <option value="exchange">Stock Exchange Group</option>
-                        <option value="alpha">Alphabetical</option>
-                    </select>
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+                    <div class="relative w-full md:w-64">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input type="text" id="search-input" oninput="updateDashboardView()" placeholder="Search companies..." class="w-full bg-white border border-slate-200 text-sm rounded-lg pl-10 pr-4 py-2 font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm placeholder-slate-400">
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden lg:inline">Sort:</span>
+                        <select id="sort-select" onchange="updateDashboardView()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
+                            <option value="earnings">Nearest Earnings Date</option>
+                            <option value="marketcap">Market Cap (High to Low)</option>
+                            <option value="beat">Highest EPS Beat</option>
+                            <option value="exchange">Stock Exchange Group</option>
+                            <option value="alpha">Alphabetical</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </header>
@@ -199,7 +208,6 @@
         let db = [];
         let activeTicker = null;
         let chartInstance = null;
-        let currentSort = 'earnings';
         let currentSpeech = null;
 
         async function init() {
@@ -207,24 +215,113 @@
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
                 document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
-                applySort(); 
+                updateDashboardView(); 
             } catch (e) { 
                 document.getElementById('last-update').innerText = 'Data Fetch Failed';
             }
         }
 
-        // --- UPDATED TOGGLE METHODOLOGY LOGIC FOR MOBILE ---
+        // --- NEW UNIFIED SEARCH & SORT ENGINE ---
+        function updateDashboardView() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const currentSort = document.getElementById('sort-select').value;
+            
+            // 1. Filter by Search
+            let filteredDb = db.filter(s => 
+                s.company.toLowerCase().includes(searchTerm) || 
+                s.ticker.toLowerCase().includes(searchTerm)
+            );
+
+            // 2. Apply Sort
+            filteredDb.sort((a, b) => {
+                if (currentSort === 'earnings') {
+                    const timeA = new Date(a.calendar?.date || '').getTime() || Infinity;
+                    const timeB = new Date(b.calendar?.date || '').getTime() || Infinity;
+                    return timeA - timeB;
+                } 
+                else if (currentSort === 'marketcap') {
+                    return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
+                }
+                else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
+                else if (currentSort === 'exchange') {
+                    const exA = getExchangeGroup(a.ticker); const exB = getExchangeGroup(b.ticker);
+                    return exA === exB ? a.company.localeCompare(b.company) : exA.localeCompare(exB);
+                } 
+                else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
+                return 0;
+            });
+
+            // 3. Render
+            renderGrid(filteredDb, currentSort);
+        }
+
+        function getExchangeGroup(ticker) {
+            if (ticker.endsWith('.L')) return 'LSE (UK)';
+            if (ticker.endsWith('.ST')) return 'Nasdaq Stockholm';
+            if (ticker.endsWith('.PA')) return 'Euronext Paris';
+            if (ticker.endsWith('.AX')) return 'ASX (Australia)';
+            if (ticker.endsWith('.HK')) return 'Hong Kong SE';
+            if (ticker.endsWith('.MI')) return 'Borsa Italiana';
+            if (ticker.endsWith('.SI')) return 'SGX (Singapore)';
+            return 'US Markets (NYSE/NASDAQ)';
+        }
+
+        function renderGrid(dataToRender, currentSort) {
+            const grid = document.getElementById('stock-grid');
+            
+            if (dataToRender.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-medium">No companies found matching your search.</div>`;
+                return;
+            }
+
+            grid.innerHTML = dataToRender.map(s => {
+                const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
+                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
+                const revLabel = s.actuals?.rev_label || 'REV';
+                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
+
+                return `
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex gap-3 items-center">
+                                    <img src="${s.logo || fallbackUrl}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="this.onerror=null; this.src='${fallbackUrl}';">
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
+                                        <p class="text-[10px] font-mono text-slate-400 mt-0.5">${s.ticker} • ${locationLabel}</p>
+                                        <span class="inline-block mt-1.5 bg-slate-100 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">${s.focus || 'Diversified Gaming'}</span>
+                                    </div>
+                                </div>
+                                <div class="text-right shrink-0"><div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div></div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2">
+                                <span class="text-slate-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
+                                <span class="font-bold text-slate-700">${s.market_cap_str || 'N/A'}</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <div><span class="text-slate-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
+                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${s.calendar?.date || 'TBD'}</span></div>
+                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
+                            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase"><span>Sentiment</span><span>${s.sentiment || 50}%</span></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
             if (el) {
                 el.classList.toggle('hidden');
-                
-                // If it is being opened, instantly snap the scrollbar to the top
                 if (!el.classList.contains('hidden')) {
                     const modalContainer = document.getElementById('modal-scroll-container');
-                    if (modalContainer) {
-                        modalContainer.scrollTop = 0;
-                    }
+                    if (modalContainer) modalContainer.scrollTop = 0;
                 }
             }
         }
@@ -268,7 +365,6 @@
                 mainContent.classList.add('hidden');
                 readingRoom.classList.remove('hidden');
                 
-                // Snap to top of the reading room when entering
                 const modalContainer = document.getElementById('modal-scroll-container');
                 if (modalContainer) modalContainer.scrollTop = 0;
                 
@@ -287,81 +383,6 @@
             document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
         }
 
-        function getExchangeGroup(ticker) {
-            if (ticker.endsWith('.L')) return 'LSE (UK)';
-            if (ticker.endsWith('.ST')) return 'Nasdaq Stockholm';
-            if (ticker.endsWith('.PA')) return 'Euronext Paris';
-            if (ticker.endsWith('.AX')) return 'ASX (Australia)';
-            return 'US Markets (NYSE/NASDAQ)';
-        }
-
-        function applySort() {
-            currentSort = document.getElementById('sort-select').value;
-            let sortedDb = [...db];
-            sortedDb.sort((a, b) => {
-                if (currentSort === 'earnings') {
-                    const timeA = new Date(a.calendar?.date || '').getTime() || Infinity;
-                    const timeB = new Date(b.calendar?.date || '').getTime() || Infinity;
-                    return timeA - timeB;
-                } 
-                else if (currentSort === 'marketcap') {
-                    return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
-                }
-                else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
-                else if (currentSort === 'exchange') {
-                    const exA = getExchangeGroup(a.ticker); const exB = getExchangeGroup(b.ticker);
-                    return exA === exB ? a.company.localeCompare(b.company) : exA.localeCompare(exB);
-                } 
-                else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
-                return 0;
-            });
-            renderGrid(sortedDb);
-        }
-
-        function renderGrid(dataToRender) {
-            const grid = document.getElementById('stock-grid');
-            grid.innerHTML = dataToRender.map(s => {
-                const color = s.sentiment > 60 ? 'bg-emerald-500' : (s.sentiment < 40 ? 'bg-rose-500' : 'bg-amber-500');
-                const locationLabel = currentSort === 'exchange' ? getExchangeGroup(s.ticker) : s.base_country;
-                const revLabel = s.actuals?.rev_label || 'REV';
-                const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
-
-                return `
-                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex gap-3 items-center">
-                                    <img src="${s.logo || fallbackUrl}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="this.onerror=null; this.src='${fallbackUrl}';">
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">${s.company}</h3>
-                                        <p class="text-[10px] font-mono text-slate-400 mt-0.5">${s.ticker} • ${locationLabel}</p>
-                                        <span class="inline-block mt-1.5 bg-slate-100 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">${s.focus || 'Diversified Gaming'}</span>
-                                    </div>
-                                </div>
-                                <div class="text-right shrink-0"><div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div></div>
-                            </div>
-                            
-                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2">
-                                <span class="text-slate-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
-                                <span class="font-bold text-slate-700">${s.market_cap_str || 'N/A'}</span>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <div><span class="text-slate-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-slate-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
-                                <div class="text-right"><span class="text-slate-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${s.calendar?.date || 'TBD'}</span></div>
-                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
-                            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase"><span>Sentiment</span><span>${s.sentiment || 50}%</span></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // --- SAFE INJECTOR HELPERS ---
         function safeSetHTML(id, html) {
             const el = document.getElementById(id);
             if (el) el.innerHTML = html;
@@ -464,7 +485,6 @@
                 const mod = document.getElementById('modal');
                 if (mod) {
                     mod.classList.remove('hidden');
-                    // Reset modal scroll on fresh open
                     const modalContainer = document.getElementById('modal-scroll-container');
                     if (modalContainer) modalContainer.scrollTop = 0;
                 }
