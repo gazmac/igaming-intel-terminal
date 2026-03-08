@@ -462,7 +462,7 @@ def run_pipeline():
             "history": history
         })
         
-        time.sleep(5)
+        time.sleep(10)
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
