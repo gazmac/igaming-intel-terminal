@@ -45,7 +45,7 @@
                     <div class="flex items-center gap-2 w-full sm:w-auto">
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden lg:inline">Sort:</span>
                         <select id="sort-select" onchange="updateDashboardView()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
-                            <option value="earnings">Nearest Earnings Date</option>
+                            <option value="earnings">Upcoming Earnings</option>
                             <option value="marketcap">Market Cap (High to Low)</option>
                             <option value="beat">Highest EPS Beat</option>
                             <option value="exchange">Stock Exchange Group</option>
@@ -116,7 +116,6 @@
                 <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" id="modal-main-content">
-                    
                     <div class="lg:col-span-2 flex flex-col gap-6">
                         <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-2">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
@@ -222,6 +221,7 @@
             }
         }
 
+        // --- UPDATED SORTING ALGORITHM - PUSHES PAST DATES TO THE BOTTOM ---
         function updateDashboardView() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const currentSort = document.getElementById('sort-select').value;
@@ -233,8 +233,22 @@
 
             filteredDb.sort((a, b) => {
                 if (currentSort === 'earnings') {
-                    const timeA = new Date(a.calendar?.date || '').getTime() || Infinity;
-                    const timeB = new Date(b.calendar?.date || '').getTime() || Infinity;
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    
+                    const getValidTime = (dateStr) => {
+                        if (!dateStr || dateStr === 'TBD') return Infinity;
+                        const d = new Date(dateStr);
+                        // If it's invalid or in the past, treat as Infinity to drop to the bottom
+                        if (isNaN(d) || d < today) return Infinity;
+                        return d.getTime();
+                    };
+
+                    const timeA = getValidTime(a.calendar?.date);
+                    const timeB = getValidTime(b.calendar?.date);
+                    
+                    // Alphabetical tie breaker if both are TBD or same date
+                    if (timeA === timeB) return a.company.localeCompare(b.company);
                     return timeA - timeB;
                 } 
                 else if (currentSort === 'marketcap') {
@@ -277,6 +291,17 @@
                 const revLabel = s.actuals?.rev_label || 'REV';
                 const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.company)}&background=f1f5f9&color=475569&rounded=true`;
 
+                // VISUAL FILTER: Auto-hide past dates on the cards
+                let nextEarningsDate = s.calendar?.date || 'TBD';
+                if (nextEarningsDate !== 'TBD') {
+                    const d = new Date(nextEarningsDate);
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    if (!isNaN(d) && d < today) {
+                        nextEarningsDate = 'TBD';
+                    }
+                }
+
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
                         <div>
@@ -303,7 +328,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${s.calendar?.date || 'TBD'}</span></div>
+                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${nextEarningsDate}</span></div>
                             <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
                             <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase"><span>Sentiment</span><span>${s.sentiment || 50}%</span></div>
                         </div>
@@ -415,9 +440,20 @@
                 safeSetText('modal-title', s.company || 'Unknown Company');
                 safeSetHTML('modal-ticker', `<span class="text-slate-500 font-mono text-sm">${ticker} | ${s.base_country || 'Unknown'} Based</span><span class="ml-3 inline-block bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded align-middle">${s.focus || 'Diversified Gaming'}</span>`);
                 
-                safeSetText('modal-earnings-date', s.calendar?.date || 'TBD');
-                safeSetText('modal-report-time', s.calendar?.report_time || 'TBD');
-                safeSetText('modal-call-time', s.calendar?.call_time || 'TBD');
+                // VISUAL FILTER: Auto-hide past dates in the Modal
+                let nextEarningsDate = s.calendar?.date || 'TBD';
+                if (nextEarningsDate !== 'TBD') {
+                    const d = new Date(nextEarningsDate);
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    if (!isNaN(d) && d < today) {
+                        nextEarningsDate = 'TBD';
+                    }
+                }
+
+                safeSetText('modal-earnings-date', nextEarningsDate);
+                safeSetText('modal-report-time', nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.report_time || 'TBD'));
+                safeSetText('modal-call-time', nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.call_time || 'TBD'));
                 
                 const revLabel = s.actuals?.rev_label || 'Revenue';
 
