@@ -53,6 +53,43 @@
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto shadow-2xl relative">
             
+            <div id="methodology-overlay" class="absolute inset-0 bg-white/95 backdrop-blur-md z-50 hidden p-8 overflow-y-auto">
+                <div class="max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
+                        <button onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 font-bold text-sm">CLOSE [X]</button>
+                    </div>
+                    <div class="space-y-8">
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
+                        </section>
+                        <section class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                            <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
             <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
                 <div class="flex items-center gap-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
@@ -96,9 +133,17 @@
 
                     <div class="space-y-6">
                         <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
+                                <button onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    How it works
+                                </button>
+                            </div>
+                            
                             <div class="flex justify-between items-end mb-2">
                                 <span id="sentiment-label" class="text-2xl font-bold"></span>
-                                <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Bullishness Index</span>
+                                <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Sentiment Index</span>
                             </div>
                             <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
                             
@@ -168,6 +213,12 @@
             }
         }
 
+        // --- NEW TOGGLE METHODOLOGY LOGIC ---
+        function toggleMethodology() {
+            const el = document.getElementById('methodology-overlay');
+            if (el) el.classList.toggle('hidden');
+        }
+
         function playReadingRoomAudio() {
             if ('speechSynthesis' in window) {
                 if (currentSpeech && window.speechSynthesis.speaking) {
@@ -216,6 +267,8 @@
 
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
+            // Also hide methodology overlay if it was left open
+            document.getElementById('methodology-overlay').classList.add('hidden');
             if (window.speechSynthesis) window.speechSynthesis.cancel();
             document.getElementById('tts-btn-text').innerText = "Listen to Briefing";
         }
@@ -309,9 +362,8 @@
             try {
                 activeTicker = ticker;
                 const s = db.find(x => x.ticker === ticker);
-                if (!s) return; // Exit early if data is totally missing
+                if (!s) return;
                 
-                // RESET VIEW EVERY TIME MODAL OPENS
                 document.getElementById('modal-main-content').classList.remove('hidden');
                 document.getElementById('modal-reading-room').classList.add('hidden');
                 if (window.speechSynthesis) window.speechSynthesis.cancel();
@@ -348,7 +400,6 @@
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
                 `);
 
-                // HIGHLY DEFENSIVE AI DATA PARSING
                 let newsHtml = '<li class="text-slate-500 italic">No news available.</li>';
                 if (Array.isArray(s.news_summary) && s.news_summary.length > 0) {
                     newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
@@ -396,7 +447,6 @@
             } catch (error) {
                 console.error("Data parsing error inside modal:", error);
             } finally {
-                // ALWAYS open the modal, even if rendering fails midway
                 const mod = document.getElementById('modal');
                 if (mod) mod.classList.remove('hidden');
                 
