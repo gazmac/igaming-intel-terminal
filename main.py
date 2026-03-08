@@ -462,4 +462,15 @@ def run_pipeline():
             "history": history
         })
         
-        time.sleep(5
+        time.sleep(5)
+
+    if master_db:
+        with open('gambling_stocks_live.json', 'w') as f:
+            json.dump(master_db, f, indent=4)
+        print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
+    else:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    try: run_pipeline()
+    except Exception: sys.exit(1)
