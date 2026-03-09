@@ -436,7 +436,6 @@ Format exactly with these four keys:
             config={"response_mime_type": "application/json"}
         )
         
-        # --- THE AI HALLUCINATION FIX: REGEX SANITIZER ---
         raw_text = ai_resp.text.strip()
         raw_text = re.sub(r'^```json\s*', '', raw_text)
         raw_text = re.sub(r'^```\s*', '', raw_text)
@@ -463,6 +462,9 @@ Format exactly with these four keys:
 def run_pipeline():
     master_db = []
     print(f"🚀 Starting Pipeline processing {len(TARGET_COMPANIES)} companies...")
+    
+    # NEW: Generate UTC Timestamp for the frontend
+    run_time_utc = datetime.utcnow().isoformat() + "Z"
     
     fx_rates = get_live_fx_rates()
     
@@ -533,7 +535,8 @@ def run_pipeline():
             "reading_room": intel.get("reading_room", "<p>Data unavailable.</p>"),
             "quotes": intel.get("quotes", []),
             "jurisdictions": fin.get("jurisdictions", []),
-            "history": history
+            "history": history,
+            "last_updated": run_time_utc # INJECTED TIMESTAMP
         })
         
         time.sleep(10)
