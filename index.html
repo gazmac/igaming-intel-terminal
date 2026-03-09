@@ -342,7 +342,14 @@
             try {
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
-                document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                
+                // Read global update timestamp from the first record (if available)
+                if (db.length > 0 && db[0].last_updated) {
+                    const localTime = new Date(db[0].last_updated).toLocaleString();
+                    document.getElementById('last-update').innerText = 'Last Sync: ' + localTime;
+                } else {
+                    document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                }
                 
                 try {
                     const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
@@ -454,7 +461,6 @@
                     if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
-                // --- UI FIX: CALCULATE THE DAILY % CHANGE FROM HISTORICAL ARRAY ---
                 let changePctHtml = '';
                 if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
                     const len = s.history['1m'].length;
@@ -468,14 +474,16 @@
                     }
                 }
 
+                // UI FIX: Replaced "truncate" on the company name with "leading-snug" and allowed it to naturally multi-line wrap
+                // Also added "h-full" to the main div so all cards in a CSS Grid row stretch to match the tallest card
                 return `
-                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between min-h-[240px]">
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between min-h-[240px] h-full">
                         <div>
                             <div class="flex justify-between items-start mb-2.5 gap-2">
                                 <div class="flex gap-3 items-start min-w-0">
                                     <img src="${s.logo}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}')">
                                     <div class="min-w-0 flex-1">
-                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight truncate" title="${s.company}">${s.company}</h3>
+                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug pr-2" title="${s.company}">${s.company}</h3>
                                         <div class="flex flex-wrap items-center gap-1.5 mt-1">
                                             <span class="text-[12px] font-black font-mono text-slate-800 tracking-tight">${s.ticker}</span>
                                             <span class="text-[9px] font-bold px-1.5 py-0.5 rounded border ${badge.color}">${badge.name}</span>
@@ -652,7 +660,6 @@
 
                 const catBadge = getIndustryCategory(s.ticker);
 
-                // --- UI FIX: Add Percentage Change to Modal Header ---
                 let modalChangeHtml = '';
                 if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
                     const len = s.history['1m'].length;
@@ -666,14 +673,19 @@
                     }
                 }
 
+                let syncTimeString = "Unknown";
+                if (s.last_updated) {
+                    syncTimeString = new Date(s.last_updated).toLocaleString();
+                }
+
                 safeSetText('modal-title', s.company || 'Unknown Company');
                 safeSetHTML('modal-ticker', `
                     <span class="text-slate-800 font-bold font-mono text-sm">${ticker} | <span class="text-slate-500 font-medium">${s.base_country || 'Unknown'} Based</span></span>
                     <span class="ml-3 inline-block ${catBadge.color} text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border align-middle shadow-sm">${catBadge.name}</span>
-                    <div class="mt-2 md:mt-1 flex items-center gap-2">
+                    <div class="mt-2 md:mt-1 flex flex-wrap items-center gap-2">
                         <span class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</span>
                         ${modalChangeHtml}
-                        <span class="text-[9px] text-slate-400 uppercase tracking-widest ml-2 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">Pricing As Of Last Sync</span>
+                        <span class="text-[9px] text-slate-400 uppercase tracking-widest ml-1 md:ml-2 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100" title="Updated: ${syncTimeString}">Pricing As Of Last Sync</span>
                     </div>
                 `);
                 
