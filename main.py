@@ -139,8 +139,25 @@ VERIFIED_DATA = {
     "ACEL": {"rev_label": "REV", "revenue_fy": "$1.33B (FY '25)", "revenue_interim": "$341.4M (Q4 '25)", "focus": "Distributed Gaming & Slot Routes", "map_codes": ["US"], "eps_actual": 0.60, "eps_forecast": 0.41, "net_income": "$51.3M", "ebitda": "$210.1M", "fcf": "$150.9M", "jurisdictions": ["US"], "fallback_price": "$11.07", "fallback_mcap": "$950M", "fallback_pe": "21.1x", "fallback_debt": "150%"}
 }
 
+# --- THE TBD CALENDAR FIX --- 
+# Manually injected future Q1 / H1 2026 upcoming dates for non-US companies whose FY25 dates auto-expired.
 VERIFIED_CALENDAR = {
-    # Calendar explicitly omitted. Python script catches dynamically, or HTML defaults seamlessly to TBD.
+    "ENT.L": {"date": "Aug 12, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "EVO.ST": {"date": "Apr 22, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "PTEC.L": {"date": "Mar 25, 2026", "report_time": "7:00 AM GMT", "call_time": "9:00 AM GMT"},
+    "BETS-B.ST": {"date": "Apr 24, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
+    "KAMBI.ST": {"date": "Apr 29, 2026", "report_time": "7:45 AM CET", "call_time": "10:45 AM CET"},
+    "ALL.AX": {"date": "May 13, 2026", "report_time": "8:00 AM AEST", "call_time": "10:30 AM AEST"},
+    "FDJ.PA": {"date": "Apr 16, 2026", "report_time": "Post-Market CET", "call_time": "TBD"},
+    "LOTO.MI": {"date": "Apr 30, 2026", "report_time": "Pre-Market CET", "call_time": "TBD"},
+    "RNK.L": {"date": "Aug 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
+    "BETCO.ST": {"date": "May 20, 2026", "report_time": "8:00 AM CET", "call_time": "10:00 AM CET"},
+    "CTM.ST": {"date": "May 21, 2026", "report_time": "7:00 AM CET", "call_time": "9:00 AM CET"},
+    "1980.HK": {"date": "May 12, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "1128.HK": {"date": "May 6, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "0027.HK": {"date": "May 14, 2026", "report_time": "Post-Market HK", "call_time": "TBD"},
+    "G13.SI": {"date": "May 14, 2026", "report_time": "Post-Market SGX", "call_time": "TBD"},
+    "GENM.KL": {"date": "May 28, 2026", "report_time": "Post-Market MYT", "call_time": "TBD"}
 }
 
 def get_live_fx_rates():
