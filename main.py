@@ -55,10 +55,7 @@ TARGET_COMPANIES = [
     {"name": "Monarch Casino", "ticker": "MCRI", "domain": "monarchcasino.com", "base_country": "USA"},
     {"name": "Century Casinos", "ticker": "CNTY", "domain": "cnty.com", "base_country": "USA"},
     {"name": "Genius Sports", "ticker": "GENI", "domain": "geniussports.com", "base_country": "UK"},
-    
-    # BRSL REPLACES IGT
     {"name": "Brightstar Lottery (fka IGT)", "ticker": "BRSL", "domain": "brightstarlottery.com", "base_country": "UK"},
-    
     {"name": "Inspired Entertainment", "ticker": "INSE", "domain": "inseinc.com", "base_country": "USA"},
     {"name": "Star Entertainment", "ticker": "SGR.AX", "domain": "starentertainmentgroup.com.au", "base_country": "Australia"},
     {"name": "Genting Malaysia", "ticker": "GENM.KL", "domain": "gentingmalaysia.com", "base_country": "Malaysia"},
@@ -123,10 +120,7 @@ VERIFIED_DATA = {
     "MCRI": {"rev_label": "REV", "revenue_fy": "$520M (FY '25)", "revenue_interim": "$130M (Q4 '25)", "focus": "Regional US Casinos", "map_codes": ["US"], "eps_actual": 1.15, "eps_forecast": 1.10, "net_income": "$90M", "ebitda": "$170M", "fcf": "$80M", "jurisdictions": ["US"]},
     "CNTY": {"rev_label": "REV", "revenue_fy": "$550M (FY '25)", "revenue_interim": "$140M (Q4 '25)", "focus": "International Regional Casinos", "map_codes": ["US", "CA", "PL"], "eps_actual": -0.20, "eps_forecast": -0.15, "net_income": "-$35M", "ebitda": "$110M", "fcf": "$25M", "jurisdictions": ["US", "Canada", "Poland"]},
     "GENI": {"rev_label": "REV", "revenue_fy": "$410M (FY '25)", "revenue_interim": "$120M (Q4 '25)", "focus": "B2B Sports Data Rights", "map_codes": ["GB", "US", "CO"], "eps_actual": 0.05, "eps_forecast": 0.02, "net_income": "$15M", "ebitda": "$55M", "fcf": "$20M", "jurisdictions": ["Global B2B"]},
-    
-    # BRSL FALLBACK (Using recently published FY25 data)
     "BRSL": {"rev_label": "REV", "revenue_fy": "$2.65B (FY '25)", "revenue_interim": "$668M (Q4 '25)", "focus": "Pure-Play Global Lottery", "map_codes": ["US", "IT", "GB"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "$220M", "ebitda": "$1.2B", "fcf": "$600M", "jurisdictions": ["US", "Italy", "Global"], "fallback_price": "$16.47", "fallback_mcap": "$3.34B", "fallback_pe": "15.2x", "fallback_debt": "150%"},
-    
     "INSE": {"rev_label": "REV", "revenue_fy": "$320M (FY '25)", "revenue_interim": "$80M (Q4 '25)", "focus": "VLTs & Virtual Sports", "map_codes": ["US", "GB", "GR"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$100M", "fcf": "$35M", "jurisdictions": ["UK", "North America"]},
     "SGR.AX": {"rev_label": "REV", "revenue_fy": "A$1.8B (FY '25)", "revenue_interim": "A$850M (H2 '25)", "focus": "Australian Casino Resorts", "map_codes": ["AU"], "eps_actual": -0.85, "eps_forecast": -0.50, "net_income": "-A$1.2B", "ebitda": "A$280M", "fcf": "-A$150M", "jurisdictions": ["Australia"]},
     "GENM.KL": {"rev_label": "REV", "revenue_fy": "RM 10.2B (FY '25)", "revenue_interim": "RM 2.6B (Q4 '25)", "focus": "Asian Integrated Resorts", "map_codes": ["MY", "US", "GB", "BS"], "eps_actual": 0.15, "eps_forecast": 0.12, "net_income": "RM 600M", "ebitda": "RM 3.1B", "fcf": "RM 1.2B", "jurisdictions": ["Malaysia", "UK", "US"], "fallback_price": "RM 2.65", "fallback_mcap": "RM 15.8B", "fallback_pe": "15.3x", "fallback_debt": "115%"},
@@ -181,10 +175,7 @@ VERIFIED_CALENDAR = {
     "MCRI": {"date": "Jul 22, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
     "CNTY": {"date": "May 9, 2026", "report_time": "Pre-Market", "call_time": "10:00 AM EST"},
     "GENI": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    
-    # BRSL NEXT EARNINGS
     "BRSL": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    
     "INSE": {"date": "May 9, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
     "SGR.AX": {"date": "Aug 26, 2026", "report_time": "Pre-Market AEST", "call_time": "10:00 AM AEST"},
     "GENM.KL": {"date": "May 28, 2026", "report_time": "5:30 PM MYT", "call_time": "9:00 AM MYT (Next Day)"},
@@ -430,12 +421,14 @@ def ai_process_intelligence(company_name, ticker):
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Generate a strictly valid JSON response. Do not use unescaped double quotes inside strings. Do not use newline characters (\\n).
+Generate a strictly valid JSON response. 
+CRITICAL RULE: DO NOT WRAP YOUR RESPONSE IN MARKDOWN BLOCKQUOTES. DO NOT USE ```json. START IMMEDIATELY WITH {{ AND END WITH }}.
+
 Format exactly with these four keys:
 1. "summary": A list of 3 string bullet points summarizing the news.
 2. "sentiment": An integer from 0 to 100 representing market sentiment.
 3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news. Use single quotes for any HTML classes or attributes.
-4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. CRITICAL INSTRUCTION: You MUST attribute the quote to the REAL, VERIFIED NAME of the executive (e.g., 'Jason Robins, CEO:' or 'Amy Howe, CEO:'). You are STRICTLY FORBIDDEN from using placeholder terms like 'Company Management', 'Management', or 'The CEO'. You must cross-reference your internal knowledge to find the exact name of the current CEO or CFO for {company_name}."""
+4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. CRITICAL INSTRUCTION: You MUST attribute the quote to the REAL, VERIFIED NAME of the executive (e.g., 'Jason Robins, CEO:' or 'Amy Howe, CEO:'). You are STRICTLY FORBIDDEN from using placeholder terms like 'Company Management', 'Management', or 'The CEO'."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -443,11 +436,16 @@ Format exactly with these four keys:
             config={"response_mime_type": "application/json"}
         )
         
+        # --- THE AI HALLUCINATION FIX: REGEX SANITIZER ---
+        raw_text = ai_resp.text.strip()
+        raw_text = re.sub(r'^```json\s*', '', raw_text)
+        raw_text = re.sub(r'^```\s*', '', raw_text)
+        raw_text = re.sub(r'\s*```$', '', raw_text)
+        
         try:
-            data = json.loads(ai_resp.text.strip())
+            data = json.loads(raw_text)
             return data
         except json.JSONDecodeError:
-            raw_text = ai_resp.text.strip()
             match = re.search(r'\{.*\}', raw_text, re.DOTALL)
             if match:
                 try:
@@ -455,7 +453,7 @@ Format exactly with these four keys:
                     return data
                 except Exception:
                     pass
-            return {"summary": ["Data formatting error."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
+            return {"summary": ["Data temporarily unavailable while AI processes news."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
         
     except Exception as e:
         return {"summary": [f"News Error: {str(e)[:60]}"], "sentiment": 50, "reading_room": f"<p>Error: {str(e)[:60]}</p>", "quotes": []}
