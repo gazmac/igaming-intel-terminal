@@ -154,6 +154,7 @@
                                 <div id="main-chart-container" class="w-full min-h-[300px] relative">
                                     <div id="main-chart" class="w-full h-full"></div>
                                 </div>
+                                <div id="chart-note-container" class="px-3 pb-2"></div>
                             </div>
 
                             <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex flex-col h-[280px]">
@@ -548,13 +549,11 @@
             document.getElementById('modal').classList.add('hidden'); 
             document.getElementById('methodology-overlay').classList.add('hidden');
             
-            // UI FIX: Clear the comparison select dropdown memory
             const compSelect = document.getElementById('compare-select');
             if (compSelect) {
                 compSelect.value = "";
             }
             
-            // UI FIX: Nuke the chart engine completely so the overlay doesn't persist
             if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;
@@ -583,7 +582,6 @@
                 
                 toggleView('main');
 
-                // US-Only Regulatory Data Room Verification
                 const regBtn = document.getElementById('btn-regulatory');
                 if (regBtn) {
                     if (s.base_country === 'USA') {
@@ -619,7 +617,14 @@
                     if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
-                // UI FIX: Render the specific call time and report time data to the financial strip
+                // DYNAMIC CHART NOTE FOR BRSL
+                let chartNoteHtml = '';
+                if (ticker === 'BRSL') {
+                    chartNoteHtml = `<div class="text-[10px] text-slate-500 bg-slate-50 p-2 rounded mt-2 border border-slate-200"><strong>Data Note:</strong> Historical chart data prior to July 2, 2025 reflects IGT (International Game Technology). Following the sale of its Gaming & Digital division to Apollo, the remaining public lottery business rebranded to Brightstar Lottery (BRSL).</div>`;
+                }
+                const noteContainer = document.getElementById('chart-note-container');
+                if (noteContainer) noteContainer.innerHTML = chartNoteHtml;
+
                 const revLabel = s.actuals?.rev_label || 'Revenue';
                 safeSetHTML('modal-financials', `
                     <div class="min-w-[120px] bg-white border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
@@ -730,7 +735,6 @@
                     chartInstance = null;
                 }
 
-                // UI FIX: Guard against blank/broken chart data arrays from APIs
                 if (!baseData || baseData.length < 2) {
                     document.getElementById('main-chart').innerHTML = `<div class="flex items-center justify-center h-full text-sm text-slate-400 font-medium">Insufficient historical data for this timeframe.</div>`;
                     return;
