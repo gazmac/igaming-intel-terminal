@@ -22,7 +22,6 @@
         .reading-room-prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
         .reading-room-prose li { margin-bottom: 0.5em; font-size: 0.95rem; color: #334155; }
 
-        /* FIXED TOOLTIP CSS - DROPS DOWN TO PREVENT CLIPPING */
         .info-tooltip { position: relative; display: inline-block; cursor: help; margin-left: 4px; color: #94a3b8; }
         .info-tooltip .tooltiptext {
             visibility: hidden; width: 220px; background-color: #1e293b; color: #fff; text-align: center; 
@@ -38,7 +37,6 @@
         .info-tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
         .info-tooltip:hover { color: #3b82f6; }
         
-        /* SWIPE ANIMATION FOR MOBILE */
         @keyframes swipe-hint {
             0%, 100% { transform: translateX(0); }
             50% { transform: translateX(5px); }
@@ -153,7 +151,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div id="main-chart" class="w-full min-h-[300px]"></div>
+                                <div id="main-chart-container" class="w-full min-h-[300px] relative">
+                                    <div id="main-chart" class="w-full h-full"></div>
+                                </div>
                             </div>
 
                             <div class="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex flex-col h-[280px]">
@@ -227,7 +227,13 @@
                             <div id="management-quotes" class="space-y-4"></div>
                         </div>
 
-                        <div id="reading-room-content" class="reading-room-prose"></div>
+                        <div id="reading-room-content" class="reading-room-prose mb-8"></div>
+                        
+                        <div class="border-t border-slate-100 pt-6 flex justify-center">
+                            <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -305,6 +311,12 @@
                     <div class="mt-6 bg-slate-50 border border-blue-100 rounded-lg p-4 flex gap-3 text-xs text-slate-600 shadow-sm">
                         <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <p><strong>Market Coverage Note:</strong> The states tracked above represent the largest US markets that legally require and publish individual operator-level disclosure. <strong>Nevada</strong>, while historically the largest overall market, is excluded from this tracking table because the Nevada Gaming Control Board only reports aggregate statewide totals and legally prohibits the disclosure of individual company market share.</p>
+                    </div>
+
+                    <div class="border-t border-slate-100 mt-6 pt-6 flex justify-center">
+                        <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
                     </div>
 
                 </div>
@@ -535,6 +547,11 @@
         function closeModal() { 
             document.getElementById('modal').classList.add('hidden'); 
             document.getElementById('methodology-overlay').classList.add('hidden');
+            
+            // UI FIX: Clear the comparison select dropdown when modal is closed
+            const compSelect = document.getElementById('compare-select');
+            if (compSelect) compSelect.value = "";
+            
             if (window.speechSynthesis) window.speechSynthesis.cancel();
             document.getElementById('tts-btn-text').innerText = "Listen";
         }
@@ -556,7 +573,6 @@
                 
                 toggleView('main');
 
-                // DYNAMIC US-ONLY REGULATORY BUTTON CHECK
                 const regBtn = document.getElementById('btn-regulatory');
                 if (regBtn) {
                     if (s.base_country === 'USA') {
@@ -592,14 +608,23 @@
                     if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
-                safeSetText('modal-earnings-date', nextEarningsDate);
-                safeSetText('modal-report-time', nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.report_time || 'TBD'));
-                safeSetText('modal-call-time', nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.call_time || 'TBD'));
-                
+                // UI FIX: Injected the Next Earnings, Report Time, and Call Time explicitly into the top of the strip
                 const revLabel = s.actuals?.rev_label || 'Revenue';
-
                 safeSetHTML('modal-financials', `
-                    <div class="min-w-[110px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
+                    <div class="min-w-[120px] bg-white border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Next Earnings</div>
+                        <div class="font-mono text-xs font-bold text-blue-600">${nextEarningsDate}</div>
+                    </div>
+                    <div class="min-w-[100px] bg-white border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Report Time</div>
+                        <div class="font-mono text-xs font-bold text-slate-800">${nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.report_time || 'TBD')}</div>
+                    </div>
+                    <div class="min-w-[100px] bg-white border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Call Time</div>
+                        <div class="font-mono text-xs font-bold text-slate-800">${nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.call_time || 'TBD')}</div>
+                    </div>
+                    <div class="w-px h-8 bg-slate-200 mx-2 hidden md:block"></div>
+                    <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Market Cap</div><div class="font-mono text-sm font-bold text-slate-800">${s.market_cap_str || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">P/E Ratio</div><div class="font-mono text-sm font-bold text-slate-800">${s.pe_ratio || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Debt/Eq</div><div class="font-mono text-sm font-bold text-slate-800">${s.debt_to_equity || 'N/A'}</div></div>
                     <div class="min-w-[100px]"><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-slate-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
@@ -691,6 +716,14 @@
                 const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
                 if (chartInstance) chartInstance.destroy();
 
+                // UI FIX: Guard against blank/broken chart data
+                if (!baseData || baseData.length < 2) {
+                    document.getElementById('main-chart').innerHTML = `<div class="flex items-center justify-center h-full text-sm text-slate-400 font-medium">Insufficient historical data for this timeframe.</div>`;
+                    return;
+                } else {
+                    document.getElementById('main-chart').innerHTML = ''; // Clear message if data exists
+                }
+
                 let series = []; let isComp = false;
                 if (compareTicker) {
                     isComp = true; const comp = db.find(x => x.ticker === compareTicker);
@@ -721,14 +754,12 @@
             }
         }
 
-        // --- BULLETPROOF FRONT-END FALLBACK ENGINE ---
         function renderRegulatoryData() {
             const state = document.getElementById('reg-state-select').value;
             const tbody = document.getElementById('regulatory-table-body');
             
             let stateData = [];
 
-            // If Python script hasn't run yet, generate mock data invisibly so the UI stays perfect
             if (regDb && regDb[state] && regDb[state].length > 0) {
                 stateData = regDb[state];
             } else {
