@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white rounded-t-2xl">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-start md:items-center bg-white rounded-t-2xl flex-col md:flex-row gap-4">
                 <div class="flex items-center gap-4 pr-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden">
                     <div>
@@ -130,7 +130,7 @@
                         <div id="modal-ticker" class="mt-1"></div>
                     </div>
                 </div>
-                <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 shrink-0">
+                <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 shrink-0 self-end md:self-auto">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
@@ -412,14 +412,12 @@
             return { name: 'US MKT', color: 'bg-blue-100 text-blue-700 border-blue-200' };
         }
 
-        // --- NEW INDUSTRY CATEGORY BADGE FUNCTION ---
         function getIndustryCategory(ticker) {
             if (['VICI', 'GLPI'].includes(ticker)) return { name: 'Gaming REIT', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
             if (['BETCO.ST', 'CTM.ST', 'GAMB'].includes(ticker)) return { name: 'Affiliate & Media', color: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200' };
             if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'IGT', 'BRSL', 'INSE', 'EVRI', 'ACEL', 'GMR.L', 'TIMA.F'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
             if (['MGM', 'CZR', 'PENN', 'LVS', 'WYNN', '0027.HK', 'MLCO', '1980.HK', '1128.HK', 'G13.SI', 'BALY', 'BYD', 'RRR', 'GDEN', 'MCRI', 'CNTY', 'SGR.AX', 'GENM.KL', 'FLL', 'PARP.PA', 'RNK.L', 'CHDN'].includes(ticker)) return { name: 'Land-Based Casino', color: 'bg-amber-50 text-amber-700 border-amber-200' };
             if (['FLUT', 'DKNG', 'ENT.L', 'EVOK.L', 'BETS-B.ST', 'SGHC', 'RSI', 'FDJ.PA', 'LOTO.MI', 'ACX.DE', 'BETMGM', 'OPAP.AT'].includes(ticker)) return { name: 'Digital Operator', color: 'bg-rose-50 text-rose-700 border-rose-200' };
-            
             return { name: 'Diversified', color: 'bg-slate-50 text-slate-700 border-slate-200' };
         }
 
@@ -445,7 +443,6 @@
                 const revLabel = s.actuals?.rev_label || 'REV';
                 const safeName = s.company.replace(/['"]/g, '');
                 const domain = s.logo ? s.logo.split('/').pop() : '';
-                
                 const badge = getExchangeBadge(s.ticker);
                 const catBadge = getIndustryCategory(s.ticker);
 
@@ -457,30 +454,49 @@
                     if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
-                // Ticker made bolder and category badge injected alongside exchange label
+                // --- UI FIX: CALCULATE THE DAILY % CHANGE FROM HISTORICAL ARRAY ---
+                let changePctHtml = '';
+                if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
+                    const len = s.history['1m'].length;
+                    const latestPrice = s.history['1m'][len - 1][1];
+                    const prevPrice = s.history['1m'][len - 2][1];
+                    if (prevPrice > 0) {
+                        const pct = ((latestPrice - prevPrice) / prevPrice) * 100;
+                        const sign = pct > 0 ? '+' : '';
+                        const changeColor = pct >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                        changePctHtml = `<div class="text-[11px] font-black ${changeColor} tracking-tighter">${sign}${pct.toFixed(2)}%</div>`;
+                    }
+                }
+
                 return `
-                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between min-h-[240px]">
                         <div>
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex gap-3 items-center">
+                            <div class="flex justify-between items-start mb-2.5 gap-2">
+                                <div class="flex gap-3 items-start min-w-0">
                                     <img src="${s.logo}" alt="${s.company} Logo" class="w-10 h-10 rounded-full border border-slate-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}')">
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">${s.company}</h3>
-                                        <div class="flex items-center gap-2 mt-1">
+                                    <div class="min-w-0 flex-1">
+                                        <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight truncate" title="${s.company}">${s.company}</h3>
+                                        <div class="flex flex-wrap items-center gap-1.5 mt-1">
                                             <span class="text-[12px] font-black font-mono text-slate-800 tracking-tight">${s.ticker}</span>
                                             <span class="text-[9px] font-bold px-1.5 py-0.5 rounded border ${badge.color}">${badge.name}</span>
-                                            <span class="text-[10px] text-slate-400 font-medium hidden sm:inline-block">• ${s.base_country}</span>
-                                        </div>
-                                        <div class="flex items-center gap-1.5 mt-1.5">
-                                            <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}">${catBadge.name}</span>
-                                            <span class="text-[9px] text-slate-500 truncate hidden xl:block max-w-[100px]" title="${s.focus || ''}">${s.focus || ''}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right shrink-0"><div class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</div></div>
+                                <div class="text-right shrink-0 pl-2">
+                                    <div class="text-lg font-bold text-slate-900 leading-none">${s.last_price || 'N/A'}</div>
+                                    ${changePctHtml}
+                                </div>
                             </div>
                             
-                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2 mt-2">
+                            <div class="mb-3">
+                                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                                    <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}">${catBadge.name}</span>
+                                    <span class="text-[10px] text-slate-400 font-medium bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${s.base_country}</span>
+                                </div>
+                                <p class="text-[10px] text-slate-500 leading-snug line-clamp-2 pr-2" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center text-[10px] mb-2 border-b border-slate-50 pb-2">
                                 <span class="text-slate-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
                                 <span class="font-bold text-slate-700">${s.market_cap_str || 'N/A'}</span>
                             </div>
@@ -491,9 +507,18 @@
                             </div>
                         </div>
                         <div>
-                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100"><span>🗓️ NEXT EARNINGS:</span><span class="text-blue-600">${nextEarningsDate}</span></div>
+                            <div class="text-[10px] font-bold text-slate-500 flex justify-between items-center mb-3 pb-3 border-b border-slate-100">
+                                <span>🗓️ NEXT EARNINGS:</span>
+                                <span class="text-blue-600">${nextEarningsDate}</span>
+                            </div>
                             <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
-                            <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase"><span>Sentiment</span><span>${s.sentiment || 50}%</span></div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase">Sentiment</span>
+                                <div class="flex items-center gap-2">
+                                     <span class="text-[8px] text-slate-400 uppercase tracking-widest px-1.5 rounded bg-slate-50 border border-slate-100">Delayed Pricing</span>
+                                     <span class="text-[10px] font-bold text-slate-400">${s.sentiment || 50}%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -627,8 +652,30 @@
 
                 const catBadge = getIndustryCategory(s.ticker);
 
+                // --- UI FIX: Add Percentage Change to Modal Header ---
+                let modalChangeHtml = '';
+                if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
+                    const len = s.history['1m'].length;
+                    const latestPrice = s.history['1m'][len - 1][1];
+                    const prevPrice = s.history['1m'][len - 2][1];
+                    if (prevPrice > 0) {
+                        const pct = ((latestPrice - prevPrice) / prevPrice) * 100;
+                        const sign = pct > 0 ? '+' : '';
+                        const changeColor = pct >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                        modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
+                    }
+                }
+
                 safeSetText('modal-title', s.company || 'Unknown Company');
-                safeSetHTML('modal-ticker', `<span class="text-slate-800 font-bold font-mono text-sm">${ticker} | <span class="text-slate-500 font-medium">${s.base_country || 'Unknown'} Based</span></span><span class="ml-3 inline-block ${catBadge.color} text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border align-middle shadow-sm">${catBadge.name}</span>`);
+                safeSetHTML('modal-ticker', `
+                    <span class="text-slate-800 font-bold font-mono text-sm">${ticker} | <span class="text-slate-500 font-medium">${s.base_country || 'Unknown'} Based</span></span>
+                    <span class="ml-3 inline-block ${catBadge.color} text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border align-middle shadow-sm">${catBadge.name}</span>
+                    <div class="mt-2 md:mt-1 flex items-center gap-2">
+                        <span class="text-lg font-bold text-slate-900">${s.last_price || 'N/A'}</span>
+                        ${modalChangeHtml}
+                        <span class="text-[9px] text-slate-400 uppercase tracking-widest ml-2 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">Pricing As Of Last Sync</span>
+                    </div>
+                `);
                 
                 let nextEarningsDate = s.calendar?.date || 'TBD';
                 if (nextEarningsDate !== 'TBD') {
