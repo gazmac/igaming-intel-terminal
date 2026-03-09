@@ -55,14 +55,16 @@ TARGET_COMPANIES = [
     {"name": "Monarch Casino", "ticker": "MCRI", "domain": "monarchcasino.com", "base_country": "USA"},
     {"name": "Century Casinos", "ticker": "CNTY", "domain": "cnty.com", "base_country": "USA"},
     {"name": "Genius Sports", "ticker": "GENI", "domain": "geniussports.com", "base_country": "UK"},
-    {"name": "IGT", "ticker": "IGT", "domain": "igt.com", "base_country": "UK"},
+    
+    # BRSL REPLACES IGT
+    {"name": "Brightstar Lottery (fka IGT)", "ticker": "BRSL", "domain": "brightstarlottery.com", "base_country": "UK"},
+    
     {"name": "Inspired Entertainment", "ticker": "INSE", "domain": "inseinc.com", "base_country": "USA"},
     {"name": "Star Entertainment", "ticker": "SGR.AX", "domain": "starentertainmentgroup.com.au", "base_country": "Australia"},
     {"name": "Genting Malaysia", "ticker": "GENM.KL", "domain": "gentingmalaysia.com", "base_country": "Malaysia"},
     {"name": "VICI Properties", "ticker": "VICI", "domain": "viciproperties.com", "base_country": "USA"},
     {"name": "Gaming & Leisure Prop", "ticker": "GLPI", "domain": "glpropinc.com", "base_country": "USA"},
     {"name": "Full House Resorts", "ticker": "FLL", "domain": "americanplace.com", "base_country": "USA"}, 
-    {"name": "Everi Holdings", "ticker": "EVRI", "domain": "everi.com", "base_country": "USA"},
     {"name": "OPAP S.A.", "ticker": "OPAP.AT", "domain": "opap.gr", "base_country": "Greece"},
     {"name": "Zeal Network", "ticker": "TIMA.F", "domain": "zealnetwork.de", "base_country": "Germany"},
     {"name": "Gaming Realms", "ticker": "GMR.L", "domain": "gamingrealms.com", "base_country": "UK"},
@@ -121,14 +123,16 @@ VERIFIED_DATA = {
     "MCRI": {"rev_label": "REV", "revenue_fy": "$520M (FY '25)", "revenue_interim": "$130M (Q4 '25)", "focus": "Regional US Casinos", "map_codes": ["US"], "eps_actual": 1.15, "eps_forecast": 1.10, "net_income": "$90M", "ebitda": "$170M", "fcf": "$80M", "jurisdictions": ["US"]},
     "CNTY": {"rev_label": "REV", "revenue_fy": "$550M (FY '25)", "revenue_interim": "$140M (Q4 '25)", "focus": "International Regional Casinos", "map_codes": ["US", "CA", "PL"], "eps_actual": -0.20, "eps_forecast": -0.15, "net_income": "-$35M", "ebitda": "$110M", "fcf": "$25M", "jurisdictions": ["US", "Canada", "Poland"]},
     "GENI": {"rev_label": "REV", "revenue_fy": "$410M (FY '25)", "revenue_interim": "$120M (Q4 '25)", "focus": "B2B Sports Data Rights", "map_codes": ["GB", "US", "CO"], "eps_actual": 0.05, "eps_forecast": 0.02, "net_income": "$15M", "ebitda": "$55M", "fcf": "$20M", "jurisdictions": ["Global B2B"]},
-    "IGT": {"rev_label": "REV", "revenue_fy": "$4.3B (FY '25)", "revenue_interim": "$1.1B (Q4 '25)", "focus": "B2B Lottery & Slot Cabinets", "map_codes": ["US", "IT", "GB"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "$220M", "ebitda": "$1.7B", "fcf": "$600M", "jurisdictions": ["US", "Italy", "Global"]},
+    
+    # BRSL FALLBACK (Using recently published FY25 data)
+    "BRSL": {"rev_label": "REV", "revenue_fy": "$2.65B (FY '25)", "revenue_interim": "$668M (Q4 '25)", "focus": "Pure-Play Global Lottery", "map_codes": ["US", "IT", "GB"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "$220M", "ebitda": "$1.2B", "fcf": "$600M", "jurisdictions": ["US", "Italy", "Global"], "fallback_price": "$16.47", "fallback_mcap": "$3.34B", "fallback_pe": "15.2x", "fallback_debt": "150%"},
+    
     "INSE": {"rev_label": "REV", "revenue_fy": "$320M (FY '25)", "revenue_interim": "$80M (Q4 '25)", "focus": "VLTs & Virtual Sports", "map_codes": ["US", "GB", "GR"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$100M", "fcf": "$35M", "jurisdictions": ["UK", "North America"]},
     "SGR.AX": {"rev_label": "REV", "revenue_fy": "A$1.8B (FY '25)", "revenue_interim": "A$850M (H2 '25)", "focus": "Australian Casino Resorts", "map_codes": ["AU"], "eps_actual": -0.85, "eps_forecast": -0.50, "net_income": "-A$1.2B", "ebitda": "A$280M", "fcf": "-A$150M", "jurisdictions": ["Australia"]},
     "GENM.KL": {"rev_label": "REV", "revenue_fy": "RM 10.2B (FY '25)", "revenue_interim": "RM 2.6B (Q4 '25)", "focus": "Asian Integrated Resorts", "map_codes": ["MY", "US", "GB", "BS"], "eps_actual": 0.15, "eps_forecast": 0.12, "net_income": "RM 600M", "ebitda": "RM 3.1B", "fcf": "RM 1.2B", "jurisdictions": ["Malaysia", "UK", "US"], "fallback_price": "RM 2.65", "fallback_mcap": "RM 15.8B", "fallback_pe": "15.3x", "fallback_debt": "115%"},
     "VICI": {"rev_label": "REV", "revenue_fy": "$3.6B (FY '25)", "revenue_interim": "$950M (Q4 '25)", "focus": "Gaming & Hospitality REIT", "map_codes": ["US", "CA"], "eps_actual": 0.65, "eps_forecast": 0.60, "net_income": "$1.8B", "ebitda": "$2.9B", "fcf": "$2.1B", "jurisdictions": ["US", "Canada"]},
     "GLPI": {"rev_label": "REV", "revenue_fy": "$1.4B (FY '25)", "revenue_interim": "$360M (Q4 '25)", "focus": "Gaming & Leisure REIT", "map_codes": ["US"], "eps_actual": 0.75, "eps_forecast": 0.70, "net_income": "$650M", "ebitda": "$1.2B", "fcf": "$800M", "jurisdictions": ["US"]},
     "FLL": {"rev_label": "REV", "revenue_fy": "$300M (FY '25)", "revenue_interim": "$75.5M (Q4 '25)", "focus": "US Regional Casinos", "map_codes": ["US"], "eps_actual": -0.34, "eps_forecast": -0.23, "net_income": "-$10M", "ebitda": "$48.1M", "fcf": "$5M", "jurisdictions": ["US"]},
-    "EVRI": {"rev_label": "REV", "revenue_fy": "$820M (FY '25)", "revenue_interim": "$205M (Q4 '25)", "focus": "FinTech & Slot Cabinets", "map_codes": ["US", "CA"], "eps_actual": 0.25, "eps_forecast": 0.20, "net_income": "$45M", "ebitda": "$350M", "fcf": "$120M", "jurisdictions": ["US", "Canada"]},
     "OPAP.AT": {"rev_label": "NGR", "revenue_fy": "€2.2B (FY '25)", "revenue_interim": "€1.1B (H1 '25)", "focus": "Greek Lottery & Betting Monopoly", "map_codes": ["GR", "CY"], "eps_actual": 1.15, "eps_forecast": 1.05, "net_income": "€420M", "ebitda": "€750M", "fcf": "€500M", "jurisdictions": ["Greece", "Cyprus"]},
     "TIMA.F": {"rev_label": "REV", "revenue_fy": "€140M (FY '25)", "revenue_interim": "€75M (H1 '25)", "focus": "Online Lottery Broker", "map_codes": ["DE", "GB"], "eps_actual": 0.85, "eps_forecast": 0.80, "net_income": "€30M", "ebitda": "€45M", "fcf": "€35M", "jurisdictions": ["Germany"]},
     "GMR.L": {"rev_label": "REV", "revenue_fy": "£28M (FY '25)", "revenue_interim": "£15M (H1 '25)", "focus": "Mobile Slingo & iGaming Content", "map_codes": ["GB", "US", "CA"], "eps_actual": 0.03, "eps_forecast": 0.02, "net_income": "£5M", "ebitda": "£10M", "fcf": "£7M", "jurisdictions": ["US", "UK"]},
@@ -139,8 +143,6 @@ VERIFIED_DATA = {
     "ACEL": {"rev_label": "REV", "revenue_fy": "$1.33B (FY '25)", "revenue_interim": "$341.4M (Q4 '25)", "focus": "Distributed Gaming & Slot Routes", "map_codes": ["US"], "eps_actual": 0.60, "eps_forecast": 0.41, "net_income": "$51.3M", "ebitda": "$210.1M", "fcf": "$150.9M", "jurisdictions": ["US"], "fallback_price": "$11.07", "fallback_mcap": "$950M", "fallback_pe": "21.1x", "fallback_debt": "150%"}
 }
 
-# --- THE TBD CALENDAR FIX --- 
-# Completely populated with verified standard historical IR reporting patterns
 VERIFIED_CALENDAR = {
     "FLUT": {"date": "May 6, 2026", "report_time": "Pre-Market US", "call_time": "8:30 AM EST"},
     "DKNG": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
@@ -179,14 +181,16 @@ VERIFIED_CALENDAR = {
     "MCRI": {"date": "Jul 22, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
     "CNTY": {"date": "May 9, 2026", "report_time": "Pre-Market", "call_time": "10:00 AM EST"},
     "GENI": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "IGT": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
+    
+    # BRSL NEXT EARNINGS
+    "BRSL": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
+    
     "INSE": {"date": "May 9, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
     "SGR.AX": {"date": "Aug 26, 2026", "report_time": "Pre-Market AEST", "call_time": "10:00 AM AEST"},
     "GENM.KL": {"date": "May 28, 2026", "report_time": "5:30 PM MYT", "call_time": "9:00 AM MYT (Next Day)"},
     "VICI": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "10:00 AM EST (Next Day)"},
     "GLPI": {"date": "Apr 24, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST (Next Day)"},
     "FLL": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "EVRI": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "11:00 AM EST"},
     "OPAP.AT": {"date": "May 26, 2026", "report_time": "5:30 PM EET", "call_time": "4:00 PM EET (Next Day)"},
     "TIMA.F": {"date": "May 7, 2026", "report_time": "7:30 AM CET", "call_time": "10:00 AM CET"},
     "GMR.L": {"date": "Sep 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
