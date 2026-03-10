@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Stocks Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script src="[https://cdn.jsdelivr.net/npm/apexcharts](https://cdn.jsdelivr.net/npm/apexcharts)"></script>
+    <script src="[https://code.jquery.com/jquery-3.6.0.min.js](https://code.jquery.com/jquery-3.6.0.min.js)"></script>
+    <script src="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js)"></script>
+    <link rel="stylesheet" href="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css)">
+    <script src="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js)"></script>
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap)" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
@@ -186,7 +186,7 @@
                                     Enter Earnings Reading Room
                                 </button>
                                 
-                                <button type="button" id="btn-regulatory" onclick="toggleView('regulatory-room')" class="w-full mt-3 bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-bold py-3 px-4 rounded-xl transition-all hidden items-center justify-center gap-2 shadow-sm">
+                                <button type="button" id="btn-regulatory" onclick="toggleView('regulatory-room')" class="w-full mt-3 bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-bold py-3 px-4 rounded-xl transition-all items-center justify-center gap-2 shadow-sm" style="display: none;">
                                     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                                     State Regulatory Data (T12M)
                                 </button>
@@ -343,7 +343,6 @@
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
                 
-                // Read global update timestamp from the first record
                 if (db.length > 0 && db[0].last_updated) {
                     const localTime = new Date(db[0].last_updated).toLocaleString();
                     document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
@@ -422,7 +421,7 @@
         function getIndustryCategory(ticker) {
             if (['VICI', 'GLPI'].includes(ticker)) return { name: 'Gaming REIT', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
             if (['BETCO.ST', 'CTM.ST', 'GAMB'].includes(ticker)) return { name: 'Affiliate & Media', color: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200' };
-            if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'IGT', 'BRSL', 'INSE', 'EVRI', 'ACEL', 'GMR.L', 'TIMA.F'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
+            if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'BRSL', 'INSE', 'ACEL', 'GMR.L', 'TIMA.F'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
             if (['MGM', 'CZR', 'PENN', 'LVS', 'WYNN', '0027.HK', 'MLCO', '1980.HK', '1128.HK', 'G13.SI', 'BALY', 'BYD', 'RRR', 'GDEN', 'MCRI', 'CNTY', 'SGR.AX', 'GENM.KL', 'FLL', 'PARP.PA', 'RNK.L', 'CHDN'].includes(ticker)) return { name: 'Land-Based Casino', color: 'bg-amber-50 text-amber-700 border-amber-200' };
             if (['FLUT', 'DKNG', 'ENT.L', 'EVOK.L', 'BETS-B.ST', 'SGHC', 'RSI', 'FDJ.PA', 'LOTO.MI', 'ACX.DE', 'BETMGM', 'OPAP.AT'].includes(ticker)) return { name: 'Digital Operator', color: 'bg-rose-50 text-rose-700 border-rose-200' };
             return { name: 'Diversified', color: 'bg-slate-50 text-slate-700 border-slate-200' };
@@ -474,8 +473,6 @@
                     }
                 }
 
-                // UI FIX: Replaced "truncate" on the company name with "leading-snug" and allowed it to naturally multi-line wrap
-                // Also added "h-full" to the main div so all cards in a CSS Grid row stretch to match the tallest card
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between min-h-[240px] h-full">
                         <div>
@@ -637,11 +634,9 @@
                 const regBtn = document.getElementById('btn-regulatory');
                 if (regBtn) {
                     if (s.base_country === 'USA') {
-                        regBtn.classList.remove('hidden');
-                        regBtn.classList.add('flex');
+                        regBtn.style.display = 'flex';
                     } else {
-                        regBtn.classList.remove('flex');
-                        regBtn.classList.add('hidden');
+                        regBtn.style.display = 'none';
                     }
                 }
 
