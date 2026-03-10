@@ -1,13 +1,9 @@
-import requests
 import json
-import urllib.parse
-import urllib.request
 import os
 import pandas as pd
 import time
 import yfinance as yf
 import re
-import traceback
 import sys
 from google import genai
 from datetime import datetime
@@ -322,7 +318,6 @@ def get_stock_fundamentals(ticker, fx_rates):
         return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
 
 def fetch_stock_history(ticker):
-    """Fetches clean native chart data."""
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     try:
         ytk = yf.Ticker(ticker)
@@ -351,7 +346,6 @@ def ai_process_intelligence(company_name, ticker):
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
-        # THE FIX: Safely retrieve news via direct Yahoo Finance JSON API endpoint
         clean_name = urllib.parse.quote(company_name)
         url = "https://query2.finance.yahoo.com/v1/finance/search?q=" + clean_name + "&newsCount=5"
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
@@ -360,7 +354,6 @@ def ai_process_intelligence(company_name, ticker):
         res_data = res.json()
         headlines = [item['title'] for item in res_data.get('news', [])]
         
-        # Fallback: Try ticker if name yields nothing
         if not headlines:
             url_ticker = "https://query2.finance.yahoo.com/v1/finance/search?q=" + ticker + "&newsCount=5"
             res_ticker = requests.get(url_ticker, headers=headers, timeout=10)
@@ -387,9 +380,11 @@ def ai_process_intelligence(company_name, ticker):
         )
         
         raw_text = ai_resp.text.strip()
+        raw_text = re.sub(r'^```json\s*', '', raw_text)
+        raw_text = re.sub(r'^```\s*', '', raw_text)
+        raw_text = re.sub(r'\s*```$', '', raw_text)
         
         try:
-            # Check for direct JSON match in case Gemini still tries to use markdown
             match = re.search(r'\{.*\}', raw_text, re.DOTALL)
             if match:
                 return json.loads(match.group(0))
@@ -457,8 +452,8 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            # THE FIX: Tier 1 Clearbit High-Res Logo Base
-            "logo": f"[https://logo.clearbit.com/](https://logo.clearbit.com/){co['domain']}",
+            # THE FIX: Tier 1 Google High-Res Favicon Base
+            "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
