@@ -343,7 +343,7 @@
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 db = await response.json();
                 
-                // Read global update timestamp from the first record (if available)
+                // Read global update timestamp from the first record
                 if (db.length > 0 && db[0].last_updated) {
                     const localTime = new Date(db[0].last_updated).toLocaleString();
                     document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
