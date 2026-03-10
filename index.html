@@ -252,7 +252,7 @@
                         </div>
                         <div class="flex gap-2 w-full md:w-auto items-center">
                             
-                            <span id="reg-source-badge" class="px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block"></span>
+                            <span id="reg-source-badge" class="px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border inline-block"></span>
                             
                             <select id="reg-state-select" onchange="renderRegulatoryData()" class="bg-slate-50 border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer">
                                 <option value="NY">New York (NYSGC)</option>
@@ -270,11 +270,11 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Total Handle ($)</h4>
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Statewide Handle ($M)</h4>
                             <div id="chart-reg-handle" class="w-full" style="height: 180px;"></div>
                         </div>
                         <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Hold Percentage (%)</h4>
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Statewide Hold (%)</h4>
                             <div id="chart-reg-hold" class="w-full" style="height: 180px;"></div>
                         </div>
                         <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
@@ -291,23 +291,11 @@
                         <table class="w-full text-left border-collapse" style="min-width: 600px;">
                             <thead>
                                 <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
-                                    <th class="p-4 font-bold">Reporting Month</th>
-                                    <th class="p-4 font-bold">
-                                        Handle ($)
-                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">The total amount of money wagered by players before any payouts or deductions.</span></div>
-                                    </th>
-                                    <th class="p-4 font-bold">
-                                        Hold (%)
-                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">The percentage of the Handle that the operator physically kept as revenue after paying out all winning bets.</span></div>
-                                    </th>
-                                    <th class="p-4 font-bold">
-                                        GGR ($)
-                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">Gross Gaming Revenue. Calculated strictly as Total Handle minus Player Winnings.</span></div>
-                                    </th>
-                                    <th class="p-4 font-bold text-blue-600">
-                                        NGR ($)
-                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">Net Gaming Revenue. GGR minus operator promo deductions, free bets, and state gaming taxes. This is the actual bottom line.</span></div>
-                                    </th>
+                                    <th class="p-4 font-bold">Licensed Operator</th>
+                                    <th class="p-4 font-bold">Handle ($)</th>
+                                    <th class="p-4 font-bold">Hold (%)</th>
+                                    <th class="p-4 font-bold">GGR ($)</th>
+                                    <th class="p-4 font-bold text-blue-600">NGR ($)</th>
                                 </tr>
                             </thead>
                             <tbody id="regulatory-table-body" class="bg-white divide-y divide-slate-100 text-sm">
@@ -847,50 +835,50 @@
             }
         }
 
+        // --- THE FULLY RESTORED REGULATORY FUNCTION WITH OPERATOR SUPPORT ---
         function renderRegulatoryData() {
             const state = document.getElementById('reg-state-select').value;
             const tbody = document.getElementById('regulatory-table-body');
             
-            let stateData = [];
+            let stateHist = [];
+            let stateOps = [];
             let dataSource = "Simulated Dummy Data";
+            let latestMonth = "Recent";
 
-            if (regDb && regDb[state] && regDb[state].data && regDb[state].data.length > 0) {
-                stateData = regDb[state].data;
+            if (regDb && regDb[state] && regDb[state].history) {
+                stateHist = regDb[state].history;
+                stateOps = regDb[state].operators || [];
                 dataSource = regDb[state].source;
-            } else if (regDb && regDb[state] && Array.isArray(regDb[state]) && regDb[state].length > 0) {
-                stateData = regDb[state];
+                latestMonth = regDb[state].latest_month;
             } else {
-                const d = new Date();
-                d.setMonth(d.getMonth() - 1); 
-                const baseHandleMap = { 'NY': 1200, 'NJ': 900, 'PA': 650, 'MI': 400, 'OH': 600, 'IL': 850 };
-                const taxMap = { 'NY': 0.49, 'NJ': 0.8575, 'PA': 0.64, 'MI': 0.916, 'OH': 0.80, 'IL': 0.85 };
-                const baseHandle = baseHandleMap[state] || 500;
-                const taxMult = taxMap[state] || 0.80;
-
+                // Fallback generator if the AI data hasn't processed yet
+                const d = new Date(); d.setMonth(d.getMonth() - 1); 
                 for (let i = 0; i < 12; i++) {
-                    const mStr = d.toLocaleString('en-US', { month: 'short', year: 'numeric' });
-                    let isNFL = mStr.includes('Sep') || mStr.includes('Oct') || mStr.includes('Nov') || mStr.includes('Dec');
-                    let handle = baseHandle * (isNFL ? 1.3 : 0.9) * (0.9 + (Math.random() * 0.2));
-                    let hold = 7.5 + (Math.random() * 3.5); 
-                    let ggr = handle * (hold / 100);
-                    let ngr = ggr * taxMult * 0.9; 
-                    
-                    stateData.unshift({
-                        month: mStr, handle: handle, hold: hold, ggr: ggr, ngr: ngr
+                    stateHist.push({
+                        month: d.toLocaleString('en-US', {month: 'short', year: 'numeric'}), 
+                        handle: 500 + Math.random()*100, 
+                        hold: 8.5, 
+                        ggr: 42.5, 
+                        ngr: 20
                     });
                     d.setMonth(d.getMonth() - 1);
                 }
+                stateOps = [
+                    {name: "DraftKings", handle: 250, hold: 9.0, ggr: 22.5, ngr: 11},
+                    {name: "FanDuel", handle: 200, hold: 10.1, ggr: 20.2, ngr: 10}
+                ];
             }
 
+            // DYNAMIC BADGE COLOR LOGIC - Removed "hidden md:inline-block" so it stays visible on mobile!
             const sourceBadge = document.getElementById('reg-source-badge');
             if (sourceBadge) {
                 sourceBadge.innerText = dataSource;
                 if (dataSource.includes("Live") || dataSource.includes("API")) {
-                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-green-50 text-green-600 border-green-200";
-                } else if (dataSource.includes("AI Extracted") || dataSource.includes("Partial")) {
-                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-purple-50 text-purple-600 border-purple-200";
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border inline-block bg-green-50 text-green-600 border-green-200";
+                } else if (dataSource.includes("AI Extracted") || dataSource.includes("Drop") || dataSource.includes("Partial")) {
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border inline-block bg-purple-50 text-purple-600 border-purple-200";
                 } else {
-                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-red-50 text-red-600 border-red-200";
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border inline-block bg-red-50 text-red-600 border-red-200";
                 }
             }
 
@@ -900,7 +888,9 @@
             const ggrSeries = [];
             const ngrSeries = [];
 
-            stateData.forEach(row => {
+            // Reverse history so charts render left-to-right chronologically
+            let reversedHist = [...stateHist].reverse();
+            reversedHist.forEach(row => {
                 chartLabels.push(row.month);
                 handleSeries.push(row.handle);
                 holdSeries.push(row.hold);
@@ -943,19 +933,45 @@
             });
             regRevChart.render();
 
+            // TABLE HEADER DYNAMIC UPDATE
+            const tableHead = document.querySelector("#regulatory-table-body").previousElementSibling;
+            if (tableHead) {
+                tableHead.innerHTML = `
+                    <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                        <th class="p-4 font-bold">Licensed Operator <span class="text-[9px] text-gray-400 normal-case block">Data for ${latestMonth}</span></th>
+                        <th class="p-4 font-bold">
+                            Handle ($)
+                            <div class="info-tooltip">ℹ️<span class="tooltiptext">The total amount of money wagered by players before any payouts or deductions.</span></div>
+                        </th>
+                        <th class="p-4 font-bold">
+                            Hold (%)
+                            <div class="info-tooltip">ℹ️<span class="tooltiptext">The percentage of the Handle that the operator physically kept as revenue after paying out all winning bets.</span></div>
+                        </th>
+                        <th class="p-4 font-bold">
+                            GGR ($)
+                            <div class="info-tooltip">ℹ️<span class="tooltiptext">Gross Gaming Revenue. Calculated strictly as Total Handle minus Player Winnings.</span></div>
+                        </th>
+                        <th class="p-4 font-bold text-blue-600">
+                            NGR ($)
+                            <div class="info-tooltip">ℹ️<span class="tooltiptext">Net Gaming Revenue. GGR minus operator promo deductions, free bets, and state gaming taxes. This is the actual bottom line.</span></div>
+                        </th>
+                    </tr>
+                `;
+            }
+
+            // TABLE ROWS POPULATION (Now loops through Operators instead of Months)
             let html = '';
-            for(let i = stateData.length - 1; i >= 0; i--) {
-                let row = stateData[i];
+            stateOps.forEach(row => {
                 html += `
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="p-4 font-medium text-gray-700 whitespace-nowrap">${row.month}</td>
+                    <tr class="hover:bg-gray-50 transition-colors border-b border-slate-50 last:border-0">
+                        <td class="p-4 font-bold text-gray-800 whitespace-nowrap">${row.name}</td>
                         <td class="p-4 text-gray-900 font-mono">$${parseFloat(row.handle).toFixed(1)}M</td>
                         <td class="p-4 font-bold ${row.hold > 9.5 ? 'text-green-600' : 'text-gray-600'}">${parseFloat(row.hold).toFixed(1)}%</td>
                         <td class="p-4 text-gray-700 font-mono">$${parseFloat(row.ggr).toFixed(1)}M</td>
                         <td class="p-4 text-blue-600 font-bold font-mono">$${parseFloat(row.ngr).toFixed(1)}M</td>
                     </tr>
                 `;
-            }
+            });
             tbody.innerHTML = html;
         }
 
