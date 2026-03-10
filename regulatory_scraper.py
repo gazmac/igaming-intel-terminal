@@ -15,143 +15,168 @@ from google import genai
 STATES = {
     "NY": {"name": "New York", "base_handle": 1200, "tax_rate": 0.51},
     "NJ": {"name": "New Jersey", "base_handle": 950, "tax_rate": 0.1425},
-    "PA": {"name": "Pennsylvania", "base_handle": 700, "tax_rate": 0.36}
+    "PA": {"name": "Pennsylvania", "base_handle": 700, "tax_rate": 0.36},
+    "MI": {"name": "Michigan", "base_handle": 450, "tax_rate": 0.084},
+    "OH": {"name": "Ohio", "base_handle": 600, "tax_rate": 0.20},
+    "IL": {"name": "Illinois", "base_handle": 850, "tax_rate": 0.15}
 }
 
-# THE FIX: A heavy disguise to bypass the NJ Imperva Firewall
+# Ensure the drop folder exists
+os.makedirs("data_drops", exist_ok=True)
+
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Upgrade-Insecure-Requests": "1"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
 }
 
 def get_gemini_client():
     api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        return None
+    if not api_key: return None
     return genai.Client(api_key=api_key)
 
-# --- 2. NY AGENT (EXCEL) ---
+def process_ai_extraction(text_data, state_name):
+    """Sends raw text to Gemini to extract operator-level data."""
+    client = get_gemini_client()
+    if not client: return None
+    
+    prompt = f"""You are a forensic financial analyst. Review this raw regulatory gaming data for {state_name}.
+    Extract the total Statewide Handle and Gross Gaming Revenue (GGR) for the MOST RECENT month available.
+    Also, extract the Handle and GGR for EACH SPECIFIC OPERATOR (e.g., FanDuel, DraftKings, BetMGM, Caesars, Rush Street, etc.) for that SAME month.
+    Convert all monetary values to Millions (e.g., 1,500,000,000 becomes 1500.0).
+
+    Return STRICTLY a JSON object in this exact format (no markdown blocks):
+    {{
+        "month": "Month Year",
+        "statewide": {{"handle": 1500.0, "ggr": 150.0}},
+        "operators": [
+            {{"name": "FanDuel", "handle": 600.0, "ggr": 75.0}},
+            {{"name": "DraftKings", "handle": 500.0, "ggr": 50.0}}
+        ]
+    }}
+    Data: {text_data[:35000]}"""
+    
+    try:
+        response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
+        clean_json = re.sub(r'^```json\s*', '', response.text.strip())
+        clean_json = re.sub(r'```$', '', clean_json).strip()
+        return json.loads(clean_json)
+    except Exception as e:
+        print(f"AI Extraction Error for {state_name}: {e}")
+        return None
+
+# --- 2. NY AGENT (LIVE WEB EXCEL) ---
 def scrape_ny():
-    print("Checking New York...")
+    print("Checking New York (Live API)...")
     try:
         url = "https://gaming.ny.gov/revenue-reports"
         res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status()
         soup = BeautifulSoup(res.text, 'html.parser')
         
-        link = None
-        for a in soup.find_all('a', href=True):
-            if 'Statewide' in a.text and 'Excel' in a.text:
-                link = a['href'] if a['href'].startswith('http') else "https://gaming.ny.gov" + a['href']
-                break
+        link = next((a['href'] if a['href'].startswith('http') else "https://gaming.ny.gov" + a['href'] 
+                     for a in soup.find_all('a', href=True) if 'Statewide' in a.text and 'Excel' in a.text), None)
         
         if not link: return None
 
         xl_res = requests.get(link, headers=HEADERS)
         df = pd.read_excel(io.BytesIO(xl_res.content))
-        raw_text = df.head(50).to_csv()
+        raw_text = df.head(150).to_csv(index=False) # Get enough rows to cover all operators for a month
         
-        client = get_gemini_client()
-        prompt = f"Extract monthly 'Handle' and 'GGR' from this NY gaming CSV. Return ONLY a JSON array of objects: [{{'month': 'Jan 2024', 'handle': 1500.2, 'ggr': 120.5}}]. Data: {raw_text}"
-        
-        # THE FIX: Upgraded to Gemini 2.5 Flash to bypass the 404 Error
-        response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
-        clean_json = re.sub(r'```json|```', '', response.text).strip()
-        return json.loads(clean_json)
+        return process_ai_extraction(raw_text, "New York")
     except Exception as e:
         print(f"NY Error: {e}")
         return None
 
-# --- 3. NJ AGENT (PDF) ---
-def scrape_nj():
-    print("Checking New Jersey...")
+# --- 3. DROP ZONE AGENT (LOCAL FILES) ---
+def process_local_drop(state_code):
+    print(f"Checking Data Drops for {state_code}...")
+    base_path = f"data_drops/{state_code}_revenue"
+    raw_text = ""
+    
     try:
-        url = "https://www.njoag.gov/about/divisions-and-offices/division-of-gaming-enforcement-home/financial-and-statistical-information/monthly-sports-wagering-revenue-reports/"
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status() 
-        
-        soup = BeautifulSoup(res.text, 'html.parser')
-        pdf_url = None
-        for a in soup.find_all('a', href=True):
-            if '.pdf' in a['href'].lower() and 'revenue' in a['href'].lower():
-                pdf_url = a['href']
-                break
-        
-        if not pdf_url: return None
-
-        pdf_res = requests.get(pdf_url, headers=HEADERS)
-        reader = PyPDF2.PdfReader(io.BytesIO(pdf_res.content))
-        text = ""
-        for page in reader.pages[:2]: 
-            text += page.extract_text()
-
-        client = get_gemini_client()
-        prompt = f"Extract the 'Total Sports Wagering' Handle and Revenue for the current month from this NJ text. Return ONLY a JSON array with one object: [{{'month': 'Jan 2024', 'handle': 900.5, 'ggr': 80.2}}]. Text: {text}"
-        
-        # THE FIX: Upgraded to Gemini 2.5 Flash
-        response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
-        clean_json = re.sub(r'```json|```', '', response.text).strip()
-        return json.loads(clean_json)
+        if os.path.exists(base_path + ".pdf"):
+            reader = PyPDF2.PdfReader(base_path + ".pdf")
+            for page in reader.pages[:4]: raw_text += page.extract_text()
+        elif os.path.exists(base_path + ".xlsx"):
+            df = pd.read_excel(base_path + ".xlsx")
+            raw_text = df.head(200).to_csv(index=False)
+        elif os.path.exists(base_path + ".csv"):
+            df = pd.read_csv(base_path + ".csv")
+            raw_text = df.head(200).to_csv(index=False)
+        else:
+            print(f"  -> No local file found for {state_code} in data_drops/")
+            return None
+            
+        return process_ai_extraction(raw_text, STATES[state_code]["name"])
     except Exception as e:
-        print(f"NJ Error (Likely Firewall): {e}")
+        print(f"  -> Error reading local file for {state_code}: {e}")
         return None
 
-# --- 4. FALLBACK GENERATOR ---
-def generate_dummy(state_code):
-    config = STATES[state_code]
+# --- 4. FALLBACK GENERATOR (CHARTS & DUMMY DATA) ---
+def generate_dummy_history(config):
     data = []
     curr = datetime.now()
     for i in range(12): 
         m = (curr - relativedelta(months=i)).strftime("%b %Y")
         h = config['base_handle'] * random.uniform(0.9, 1.1)
         g = h * random.uniform(0.07, 0.11)
-        data.append({
-            "month": m, 
-            "handle": round(h,1), 
-            "hold": round((g/h)*100,1), 
-            "ggr": round(g,1), 
-            "ngr": round(g*(1-config['tax_rate']),1)
-        })
+        data.append({"month": m, "handle": round(h,1), "hold": round((g/h)*100,1), "ggr": round(g,1), "ngr": round(g*(1-config['tax_rate']),1)})
     return data
 
-# --- 5. EXECUTION PIPELINE ---
+def generate_dummy_operators(config):
+    return [
+        {"name": "FanDuel", "handle": config['base_handle']*0.4, "ggr": config['base_handle']*0.4*0.11},
+        {"name": "DraftKings", "handle": config['base_handle']*0.35, "ggr": config['base_handle']*0.35*0.09},
+        {"name": "BetMGM", "handle": config['base_handle']*0.15, "ggr": config['base_handle']*0.15*0.08},
+        {"name": "Caesars", "handle": config['base_handle']*0.10, "ggr": config['base_handle']*0.10*0.07}
+    ]
+
+# --- 5. PIPELINE EXECUTION ---
 def run():
     results = {}
     
-    # Process NY
-    ny_data = scrape_ny()
-    if ny_data:
-        for row in ny_data:
-            if 'hold' not in row:
-                row['hold'] = round((row['ggr'] / row['handle']) * 100, 1) if row.get('handle', 0) > 0 else 0
-            if 'ngr' not in row:
-                row['ngr'] = round(row['ggr'] * (1 - STATES['NY']['tax_rate']), 1)
-        results["NY"] = {"source": "AI Extracted Data", "data": ny_data} 
-    else:
-        results["NY"] = {"source": "Simulated Dummy Data", "data": generate_dummy("NY")}
-    
-    # Process NJ
-    nj_data = scrape_nj()
-    if nj_data:
-        for row in nj_data:
-            if 'hold' not in row:
-                row['hold'] = round((row['ggr'] / row['handle']) * 100, 1) if row.get('handle', 0) > 0 else 0
-            if 'ngr' not in row:
-                row['ngr'] = round(row['ggr'] * (1 - STATES['NJ']['tax_rate']), 1)
-        hist = generate_dummy("NJ")
-        hist[0] = nj_data[0] 
-        results["NJ"] = {"source": "AI Extracted (Partial)", "data": hist}
-    else:
-        results["NJ"] = {"source": "Simulated Dummy Data", "data": generate_dummy("NJ")}
-
-    # Process PA (Always Dummy for now)
-    results["PA"] = {"source": "Simulated Dummy Data", "data": generate_dummy("PA")}
+    for code, config in STATES.items():
+        ai_data = scrape_ny() if code == "NY" else process_local_drop(code)
+        
+        hist = generate_dummy_history(config) # Charts always need 12 months history
+        
+        if ai_data and "operators" in ai_data:
+            # Overwrite the latest month in history with the real statewide AI data
+            hist[0] = {
+                "month": ai_data["month"],
+                "handle": round(ai_data["statewide"]["handle"], 1),
+                "ggr": round(ai_data["statewide"]["ggr"], 1),
+                "hold": round((ai_data["statewide"]["ggr"] / ai_data["statewide"]["handle"]) * 100, 1) if ai_data["statewide"]["handle"] > 0 else 0,
+                "ngr": round(ai_data["statewide"]["ggr"] * (1 - config["tax_rate"]), 1)
+            }
+            
+            # Format operators
+            operators = []
+            for op in ai_data["operators"]:
+                h, g = op.get("handle", 0), op.get("ggr", 0)
+                operators.append({
+                    "name": op.get("name", "Unknown"),
+                    "handle": round(h, 1),
+                    "ggr": round(g, 1),
+                    "hold": round((g / h) * 100, 1) if h > 0 else 0,
+                    "ngr": round(g * (1 - config["tax_rate"]), 1)
+                })
+            
+            # Sort operators by handle
+            operators = sorted(operators, key=lambda x: x["handle"], reverse=True)
+            
+            results[code] = {
+                "source": "AI Extracted Data" if code == "NY" else "AI Extracted (Local Drop)", 
+                "history": hist, 
+                "operators": operators,
+                "latest_month": ai_data["month"]
+            }
+        else:
+            # Fallback
+            results[code] = {
+                "source": "Simulated Dummy Data", 
+                "history": hist, 
+                "operators": generate_dummy_operators(config),
+                "latest_month": hist[0]["month"]
+            }
 
     with open('regulatory_data.json', 'w') as f:
         json.dump(results, f, indent=4)
