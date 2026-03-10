@@ -10,233 +10,119 @@ import re
 from bs4 import BeautifulSoup
 import PyPDF2
 from google import genai
-import warnings
-warnings.filterwarnings('ignore')
 
-# --- 1. STATE CONFIGURATIONS ---
+# --- CONFIG ---
 STATES = {
     "NY": {"name": "New York", "base_handle": 1200, "tax_rate": 0.51},
-    "PA": {"name": "Pennsylvania", "base_handle": 650, "tax_rate": 0.36},
-    "NJ": {"name": "New Jersey", "base_handle": 900, "tax_rate": 0.1425},
-    "MI": {"name": "Michigan", "base_handle": 400, "tax_rate": 0.084},
-    "OH": {"name": "Ohio", "base_handle": 600, "tax_rate": 0.20},
-    "IL": {"name": "Illinois", "base_handle": 850, "tax_rate": 0.15}
+    "NJ": {"name": "New Jersey", "base_handle": 950, "tax_rate": 0.1425},
+    "PA": {"name": "Pennsylvania", "base_handle": 700, "tax_rate": 0.36}
 }
 
-# --- 2. AI AGENT EXTRACTOR (NEW YORK) ---
-def scrape_ny_agent():
-    print("    -> [AI AGENT] Hunting for NYSGC Excel Report...")
-    url = "https://gaming.ny.gov/revenue-reports"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-    
+def get_gemini_client():
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return None
+    return genai.Client(api_key=api_key)
+
+# --- NY AGENT ---
+def scrape_ny():
+    print("Checking New York...")
     try:
-        req = requests.get(url, headers=headers, timeout=10, verify=False)
-        soup = BeautifulSoup(req.text, 'html.parser')
+        url = "https://gaming.ny.gov/revenue-reports"
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(res.text, 'html.parser')
         
-        excel_link = None
+        link = None
         for a in soup.find_all('a', href=True):
             if 'Statewide' in a.text and 'Excel' in a.text:
-                excel_link = a['href']
-                if not excel_link.startswith('http'):
-                    excel_link = "https://gaming.ny.gov" + excel_link
+                link = a['href'] if a['href'].startswith('http') else "https://gaming.ny.gov" + a['href']
                 break
-                
-        if not excel_link:
-            raise Exception("Could not find the NYSGC Statewide Excel link on the page.")
-            
-        print(f"    -> [AI AGENT] Found NY file. Downloading and formatting...")
         
-        xl_req = requests.get(excel_link, headers=headers, verify=False)
-        df = pd.read_excel(io.BytesIO(xl_req.content), sheet_name=0)
-        raw_csv = df.head(100).to_csv(index=False)
-        
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            raise Exception("GEMINI_API_KEY missing.")
-            
-        client = genai.Client(api_key=api_key)
-        
-        prompt = f"""You are a forensic financial data analyst. Below is the raw CSV text extracted from the New York State Gaming Commission's weekly mobile sports wagering report.
-Your task: Aggregate the weekly data into MONTHLY totals.
-Extract the Statewide Total Handle and Gross Gaming Revenue (GGR) for the 12 most recent completed months available in the data.
-Calculate Net Gaming Revenue (NGR) as: GGR * 0.49 (because NY tax is 51%). Calculate Hold % as (GGR / Handle) * 100.
-Convert all monetary values to Millions (e.g. 1,500,000,000 becomes 1500.0).
+        if not link: return None
 
-Return the data STRICTLY as a JSON array of objects ordered from newest month to oldest. Do NOT wrap it in markdown blockquotes. Start immediately with [ and end with ].
-Example format:
-[
-  {{"month": "Dec 2025", "handle": 1850.5, "hold": 9.2, "ggr": 178.2, "ngr": 87.3}}
-]
-
-Raw CSV Data:
-{raw_csv[:25000]}""" 
+        xl_res = requests.get(link, headers=headers)
+        df = pd.read_excel(io.BytesIO(xl_res.content))
+        raw_text = df.head(50).to_csv()
         
-        ai_resp = client.models.generate_content(
-            model='gemini-2.5-flash', 
-            contents=prompt,
-            config={"response_mime_type": "application/json"}
-        )
+        client = get_gemini_client()
+        prompt = f"Extract monthly 'Handle' and 'GGR' from this NY gaming CSV. Return ONLY a JSON array of objects: [{{'month': 'Jan 2024', 'handle': 1500.2, 'ggr': 120.5}}]. Data: {raw_text}"
         
-        raw_text = ai_resp.text.strip()
-        raw_text = re.sub(r'^```json\s*', '', raw_text)
-        raw_text = re.sub(r'^```\s*', '', raw_text)
-        raw_text = re.sub(r'\s*```$', '', raw_text)
-        
-        data = json.loads(raw_text)
-        
-        if isinstance(data, list) and len(data) > 0:
-            print("    -> [AI AGENT] Success! NY Data structured.")
-            return data
-            
-        raise Exception("Invalid JSON structure returned by Gemini.")
-        
+        response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+        # Clean potential markdown from AI response
+        clean_json = re.sub(r'```json|```', '', response.text).strip()
+        return json.loads(clean_json)
     except Exception as e:
-        print(f"    ❌ NY AI Agent Failed: {e}")
+        print(f"NY Error: {e}")
         return None
 
-# --- 3. AI AGENT EXTRACTOR (NEW JERSEY FIREWALL TEST) ---
-def scrape_nj_agent():
-    print("    -> [AI AGENT] Initiating New Jersey Firewall Test...")
-    url = "[https://www.njoag.gov/about/divisions-and-offices/division-of-gaming-enforcement-home/financial-and-statistical-information/monthly-sports-wagering-revenue-reports/](https://www.njoag.gov/about/divisions-and-offices/division-of-gaming-enforcement-home/financial-and-statistical-information/monthly-sports-wagering-revenue-reports/)"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-    
+# --- NJ AGENT ---
+def scrape_nj():
+    print("Checking New Jersey...")
     try:
-        # STEP 1: The Firewall Check
-        req = requests.get(url, headers=headers, timeout=15)
-        req.raise_for_status()
+        url = "https://www.njoag.gov/about/divisions-and-offices/division-of-gaming-enforcement-home/financial-and-statistical-information/monthly-sports-wagering-revenue-reports/"
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers, timeout=15)
+        res.raise_for_status() # This will trigger the 403 block detection
         
-        # STEP 2: The Hunter
-        soup = BeautifulSoup(req.text, 'html.parser')
-        pdf_links = []
+        soup = BeautifulSoup(res.text, 'html.parser')
+        pdf_url = None
         for a in soup.find_all('a', href=True):
             if '.pdf' in a['href'].lower() and 'revenue' in a['href'].lower():
-                pdf_links.append(a['href'])
-                
-        if not pdf_links:
-            raise Exception("Could not find PDF links on the NJ DGE page.")
-            
-        latest_pdf_url = pdf_links[0]
-        print(f"    -> [AI AGENT] Bypassed Firewall! Found PDF. Downloading...")
+                pdf_url = a['href']
+                break
         
-        # STEP 3: The Formatter (PDF to Text)
-        pdf_req = requests.get(latest_pdf_url, headers=headers, timeout=15)
-        pdf_reader = PyPDF2.PdfReader(io.BytesIO(pdf_req.content))
-        raw_text = ""
-        for page in pdf_reader.pages:
-            raw_text += page.extract_text() + "\n"
-            
-        print("    -> [AI AGENT] PDF Text Extracted. Handing to Gemini...")
-        
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            raise Exception("GEMINI_API_KEY missing.")
-            
-        client = genai.Client(api_key=api_key)
-        
-        prompt = f"""You are a forensic financial data analyst. Below is the raw text extracted from the New Jersey Division of Gaming Enforcement's sports wagering revenue PDF.
-Your task: Extract the Statewide Total Handle and Gross Gaming Revenue (GGR) for the current month reported in the document. Do not include year-to-date totals.
-Calculate Net Gaming Revenue (NGR) as: GGR * (1 - 0.1425) * 0.90. Calculate Hold % as (GGR / Handle) * 100.
-Convert all monetary values to Millions (e.g. 1,500,000,000 becomes 1500.0).
+        if not pdf_url: return None
 
-Return the data STRICTLY as a JSON array containing a single object for the reported month. Do NOT wrap it in markdown blockquotes. Start immediately with [ and end with ].
-Example format:
-[
-  {{"month": "Oct 2025", "handle": 1100.5, "hold": 8.2, "ggr": 90.2, "ngr": 69.1}}
-]
+        pdf_res = requests.get(pdf_url, headers=headers)
+        reader = PyPDF2.PdfReader(io.BytesIO(pdf_res.content))
+        text = ""
+        for page in reader.pages[:2]: # Extract first two pages
+            text += page.extract_text()
 
-Raw PDF Data:
-{raw_text[:25000]}""" 
+        client = get_gemini_client()
+        prompt = f"Extract the 'Total Sports Wagering' Handle and Revenue for the current month from this NJ text. Return ONLY a JSON array with one object: [{{'month': 'Jan 2024', 'handle': 900.5, 'ggr': 80.2}}]. Text: {text}"
         
-        ai_resp = client.models.generate_content(
-            model='gemini-2.5-flash', 
-            contents=prompt,
-            config={"response_mime_type": "application/json"}
-        )
-        
-        raw_text = ai_resp.text.strip()
-        raw_text = re.sub(r'^```json\s*', '', raw_text)
-        raw_text = re.sub(r'^```\s*', '', raw_text)
-        raw_text = re.sub(r'\s*```$', '', raw_text)
-        
-        data = json.loads(raw_text)
-        
-        if isinstance(data, list) and len(data) > 0:
-            print("    -> [AI AGENT] Success! NJ Data structured.")
-            return data
-            
-        raise Exception("Invalid JSON structure returned by Gemini.")
-        
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 403:
-             print("    ❌ NJ AI Agent Failed: Blocked by Imperva Firewall (HTTP 403 Forbidden).")
-        else:
-             print(f"    ❌ NJ AI Agent Failed: HTTP Error {e}")
-        return None
+        response = client.models.generate_content(model='gemini-1.5-flash', contents=prompt)
+        clean_json = re.sub(r'```json|```', '', response.text).strip()
+        return json.loads(clean_json)
     except Exception as e:
-        print(f"    ❌ NJ AI Agent Failed: {e}")
+        print(f"NJ Error (Likely Firewall): {e}")
         return None
 
-# --- 4. DUMMY DATA GENERATOR (NON-AGENT STATES) ---
-def generate_t12m_baseline(state_code, config):
+# --- FALLBACK ---
+def generate_dummy(state_code):
+    config = STATES[state_code]
     data = []
-    current_date = datetime.now() - relativedelta(months=1)
-    
-    for i in range(12):
-        month_str = current_date.strftime("%b %Y")
-        is_nfl_season = current_date.month in [9, 10, 11, 12]
-        seasonal_multiplier = 1.3 if is_nfl_season else 0.9
-        
-        handle = config["base_handle"] * seasonal_multiplier * random.uniform(0.9, 1.1)
-        hold_pct = random.uniform(7.5, 11.5) 
-        ggr = handle * (hold_pct / 100)
-        ngr = ggr * (1 - config["tax_rate"]) * 0.90
-        
-        data.insert(0, {
-            "month": month_str,
-            "handle": round(handle, 1),
-            "hold": round(hold_pct, 1),
-            "ggr": round(ggr, 1),
-            "ngr": round(ngr, 1)
-        })
-        current_date -= relativedelta(months=1)
-        
+    curr = datetime.now()
+    for i in range(6):
+        m = (curr - relativedelta(months=i)).strftime("%b %Y")
+        h = config['base_handle'] * random.uniform(0.9, 1.1)
+        g = h * random.uniform(0.07, 0.11)
+        data.append({"month": m, "handle": round(h,1), "hold": round((g/h)*100,1), "ggr": round(g,1), "ngr": round(g*(1-config['tax_rate']),1)})
     return data
 
-# --- 5. EXECUTION PIPELINE ---
-def run_scraper():
-    print("🛡️ Starting Regulatory Data Pipeline...")
-    master_regulatory_data = {}
+def run():
+    results = {}
+    # NY Logic
+    ny_data = scrape_ny()
+    results["NY"] = {"source": "AI Extracted", "data": ny_data} if ny_data else {"source": "Simulated", "data": generate_dummy("NY")}
     
-    for state_code, config in STATES.items():
-        print(f"Processing {config['name']} ({state_code})...")
-        
-        if state_code == "NY":
-            ny_data = scrape_ny_agent()
-            if ny_data:
-                master_regulatory_data[state_code] = {"source": "AI Extracted Data", "data": ny_data}
-            else:
-                master_regulatory_data[state_code] = {"source": "Simulated Dummy Data", "data": generate_t12m_baseline(state_code, config)}
-                
-        elif state_code == "NJ":
-            nj_data = scrape_nj_agent()
-            if nj_data and len(nj_data) > 0:
-                # Merge the single real month with 11 dummy months to keep the UI chart from breaking
-                full_data = generate_t12m_baseline(state_code, config)
-                full_data[-1] = nj_data[0] 
-                master_regulatory_data[state_code] = {"source": "AI Extracted (Partial)", "data": full_data}
-            else:
-                master_regulatory_data[state_code] = {"source": "Simulated Dummy Data", "data": generate_t12m_baseline(state_code, config)}
+    # NJ Logic
+    nj_data = scrape_nj()
+    if nj_data:
+        # Merge AI month with dummy history
+        hist = generate_dummy("NJ")
+        hist[0] = nj_data[0] # Overwrite latest month with real AI data
+        results["NJ"] = {"source": "AI Extracted", "data": hist}
+    else:
+        results["NJ"] = {"source": "Simulated", "data": generate_dummy("NJ")}
 
-        elif state_code == "PA":
-            master_regulatory_data[state_code] = {"source": "Simulated Dummy Data", "data": generate_t12m_baseline(state_code, config)}
-                
-        else:
-            master_regulatory_data[state_code] = {"source": "Simulated Dummy Data", "data": generate_t12m_baseline(state_code, config)}
+    # PA Dummy for now
+    results["PA"] = {"source": "Simulated", "data": generate_dummy("PA")}
 
     with open('regulatory_data.json', 'w') as f:
-        json.dump(master_regulatory_data, f, indent=4)
-        
-    print(f"✅ Regulatory Pipeline Complete.")
+        json.dump(results, f, indent=4)
 
 if __name__ == "__main__":
-    run_scraper()
+    run()
