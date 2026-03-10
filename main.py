@@ -5,6 +5,7 @@ import time
 import yfinance as yf
 import re
 import sys
+import feedparser
 from google import genai
 from datetime import datetime
 
@@ -47,7 +48,8 @@ TARGET_COMPANIES = [
     {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnresorts.com", "base_country": "Macau"}, 
     {"name": "Genting Singapore", "ticker": "G13.SI", "domain": "gentingsingapore.com", "base_country": "Singapore"},
     {"name": "La Française des Jeux", "ticker": "FDJ.PA", "domain": "fdjunited.com", "base_country": "France"},
-    {"name": "Lottomatica Group", "ticker": "LOTO.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
+    # THE FIX: Lottomatica Ticker changed by exchange to LTMC.MI
+    {"name": "Lottomatica Group", "ticker": "LTMC.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
     {"name": "Catena Media", "ticker": "CTM.ST", "domain": "askgamblers.com", "base_country": "Malta"}, 
@@ -75,6 +77,7 @@ TARGET_COMPANIES = [
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"}
 ]
 
+# THE FIX: Reinstate OTC mapping for flawless non-US mathematical charting
 OTC_MAP = {
     "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
     "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
@@ -82,7 +85,7 @@ OTC_MAP = {
     "0027.HK": "GXYEF", "1980.HK": "SJMHF", "1128.HK": "WYNMF",
     "G13.SI": "GIGNF", "FDJ.PA": "LFDJF", "RNK.L": "RANKF",
     "SGR.AX": "EHGRF", "GENM.KL": "GMALY",
-    "OPAP.AT": "GOFPY", "LOTO.MI": "LTMGF", "PARP.PA": "PARPF" 
+    "OPAP.AT": "GOFPY", "LTMC.MI": "LTMGF", "PARP.PA": "PARPF" 
 }
 
 VERIFIED_DATA = {
@@ -112,7 +115,7 @@ VERIFIED_DATA = {
     "1128.HK": {"rev_label": "REV", "revenue_fy": "$3.1B (FY '25)", "revenue_interim": "$800M (Q4 '25)", "focus": "Macau Luxury Resorts", "map_codes": ["CN", "HK"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$320M", "ebitda": "$900M", "fcf": "$450M", "jurisdictions": ["Macau"]},
     "G13.SI": {"rev_label": "REV", "revenue_fy": "S$2.45B (FY '25)", "revenue_interim": "S$1.2B (H2 '25)", "focus": "Singapore Integrated Resorts", "map_codes": ["SG"], "eps_actual": 0.03, "eps_forecast": 0.04, "net_income": "S$390.3M", "ebitda": "S$815.8M", "fcf": "S$450M", "jurisdictions": ["Singapore"]},
     "FDJ.PA": {"rev_label": "NGR", "revenue_fy": "€2.82B (FY '25)", "revenue_interim": "€1.86B (H1 '25)", "focus": "European Lottery & iGaming", "map_codes": ["FR", "IE"], "eps_actual": 1.35, "eps_forecast": 1.25, "net_income": "€425M", "ebitda": "€670M", "fcf": "€380M", "jurisdictions": ["France", "Ireland"], "fallback_price": "€25.84", "fallback_mcap": "€4.77B", "fallback_pe": "18.5x", "fallback_debt": "85%"},
-    "LOTO.MI": {"rev_label": "NGR", "revenue_fy": "€1.75B (FY '25)", "revenue_interim": "€950M (H1 '25)", "focus": "Italian Sportsbook & Gaming", "map_codes": ["IT"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€180M", "ebitda": "€580M", "fcf": "€250M", "jurisdictions": ["Italy"]},
+    "LTMC.MI": {"rev_label": "NGR", "revenue_fy": "€1.75B (FY '25)", "revenue_interim": "€950M (H1 '25)", "focus": "Italian Sportsbook & Gaming", "map_codes": ["IT"], "eps_actual": 0.45, "eps_forecast": 0.40, "net_income": "€180M", "ebitda": "€580M", "fcf": "€250M", "jurisdictions": ["Italy"]},
     "RNK.L": {"rev_label": "NGR", "revenue_fy": "£734M (FY '25)", "revenue_interim": "£382M (H1 '25)", "focus": "UK Retail Casinos & Digital", "map_codes": ["GB", "ES"], "eps_actual": 0.05, "eps_forecast": 0.04, "net_income": "£25M", "ebitda": "£120M", "fcf": "£45M", "jurisdictions": ["UK", "Spain"]},
     "BETCO.ST": {"rev_label": "REV", "revenue_fy": "€350M (FY '25)", "revenue_interim": "€180M (H1 '25)", "focus": "Global Sports Media Affiliate", "map_codes": ["DK", "US", "GB", "SE"], "eps_actual": 0.40, "eps_forecast": 0.35, "net_income": "€50M", "ebitda": "€110M", "fcf": "€65M", "jurisdictions": ["Europe", "US"]},
     "CTM.ST": {"rev_label": "REV", "revenue_fy": "€46.6M (FY '25)", "revenue_interim": "€15.6M (Q4 '25)", "focus": "iGaming Lead Generation", "map_codes": ["MT", "US", "SE"], "eps_actual": -0.15, "eps_forecast": -0.05, "net_income": "-€16.5M", "ebitda": "€10.6M", "fcf": "€4M", "jurisdictions": ["US", "Europe"]},
@@ -317,13 +320,17 @@ def get_stock_fundamentals(ticker, fx_rates):
     except Exception:
         return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
 
-def fetch_stock_history(ticker):
+# THE FIX: Reinstated the mathematical OTC scaling specifically for history charts to fix non-US percentage errors
+def fetch_stock_history(ticker, native_price_raw):
+    is_otc = ticker in OTC_MAP
+    fetch_ticker = OTC_MAP.get(ticker, ticker)
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+    
     try:
-        ytk = yf.Ticker(ticker)
+        ytk = yf.Ticker(fetch_ticker)
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
-            history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
+            history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_1d.iterrows()]
 
         df_5y = ytk.history(period="5y", interval="1d")
         if not df_5y.empty:
@@ -331,13 +338,26 @@ def fetch_stock_history(ticker):
             def slice_data(days):
                 cutoff = df_5y.index[-1] - pd.Timedelta(days=days)
                 sliced = df_5y[df_5y.index >= cutoff]
-                return [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in sliced.iterrows()]
+                return [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in sliced.iterrows()]
             
-            history["1w"], history["1m"], history["3m"] = slice_data(7), slice_data(30), slice_data(90)
-            history["6m"], history["1y"] = slice_data(180), slice_data(365)
+            history["1w"] = slice_data(7)
+            history["1m"] = slice_data(30)
+            history["3m"] = slice_data(90)
+            history["6m"] = slice_data(180)
+            history["1y"] = slice_data(365)
             df_5y_weekly = df_5y.resample('W').last().dropna()
-            history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
-    except Exception: pass
+            history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_5y_weekly.iterrows()]
+            
+        # Scale OTC back to native based on the last solid 1-month close
+        if is_otc and native_price_raw and history["1m"]:
+            latest_otc = history["1m"][-1][1]
+            if latest_otc > 0:
+                ratio = native_price_raw / latest_otc
+                for period in history:
+                    history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
+    except Exception as e:
+        print(f"    Chart Error for {ticker}: {e}")
+        pass
     return history
 
 def ai_process_intelligence(company_name, ticker):
@@ -346,21 +366,16 @@ def ai_process_intelligence(company_name, ticker):
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
-        clean_name = urllib.parse.quote(company_name)
-        url = "https://query2.finance.yahoo.com/v1/finance/search?q=" + clean_name + "&newsCount=5"
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-        
-        res = requests.get(url, headers=headers, timeout=10)
-        res_data = res.json()
-        headlines = [item['title'] for item in res_data.get('news', [])]
-        
-        if not headlines:
-            url_ticker = "https://query2.finance.yahoo.com/v1/finance/search?q=" + ticker + "&newsCount=5"
-            res_ticker = requests.get(url_ticker, headers=headers, timeout=10)
-            headlines = [item['title'] for item in res_ticker.json().get('news', [])]
+        # THE FIX: Bulletproof RSS Feed completely bypassing Yahoo's aggressive cookie blockers
+        feed_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}"
+        try:
+            feed = feedparser.parse(feed_url)
+            headlines = [entry.title for entry in feed.entries[:5]]
+        except Exception:
+            headlines = []
             
         if not headlines:
-            return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
+            return {"summary": [f"No recent specific financial news found for {company_name}."], "sentiment": 50, "reading_room": "<p>Awaiting fresh press releases or earnings reports to generate strategic briefing.</p>", "quotes": []}
 
         client = genai.Client(api_key=api_key)
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
@@ -394,7 +409,7 @@ def ai_process_intelligence(company_name, ticker):
             
     except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
-        return {"summary": [f"News Error: Processing delayed."], "sentiment": 50, "reading_room": f"<p>Briefing currently unavailable.</p>", "quotes": []}
+        return {"summary": [f"News Error: Gathering delayed."], "sentiment": 50, "reading_room": f"<p>Briefing currently unavailable due to data feed latency.</p>", "quotes": []}
 
 def run_pipeline():
     master_db = []
@@ -441,7 +456,8 @@ def run_pipeline():
                 if fin.get("eps_forecast", 0) != 0:
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
-            history = fetch_stock_history(ticker)
+            # Pass the price into the history fetcher to ensure flawless mathematical scaling
+            history = fetch_stock_history(ticker, price_raw)
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
@@ -452,7 +468,7 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            # THE FIX: Tier 1 Google High-Res Favicon Base
+            # THE FIX: Google High-Res Favicon Base
             "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
