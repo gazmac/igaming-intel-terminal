@@ -1,9 +1,13 @@
+import requests
 import json
+import urllib.parse
+import urllib.request
 import os
 import pandas as pd
 import time
 import yfinance as yf
 import re
+import traceback
 import sys
 from google import genai
 from datetime import datetime
@@ -74,6 +78,16 @@ TARGET_COMPANIES = [
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"}
 ]
+
+OTC_MAP = {
+    "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
+    "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
+    "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF",
+    "0027.HK": "GXYEF", "1980.HK": "SJMHF", "1128.HK": "WYNMF",
+    "G13.SI": "GIGNF", "FDJ.PA": "LFDJF", "RNK.L": "RANKF",
+    "SGR.AX": "EHGRF", "GENM.KL": "GMALY",
+    "OPAP.AT": "GOFPY", "LOTO.MI": "LTMGF", "PARP.PA": "PARPF" 
+}
 
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '25)", "revenue_interim": "$3.79B (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
@@ -308,7 +322,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
 
 def fetch_stock_history(ticker):
-    """Fetches native historical chart data. Removes complex OTC scaling."""
+    """Fetches clean native chart data."""
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     try:
         ytk = yf.Ticker(ticker)
@@ -337,23 +351,34 @@ def ai_process_intelligence(company_name, ticker):
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
-        client = genai.Client(api_key=api_key)
+        # THE FIX: Safely retrieve news via direct Yahoo Finance JSON API endpoint
+        clean_name = urllib.parse.quote(company_name)
+        url = "https://query2.finance.yahoo.com/v1/finance/search?q=" + clean_name + "&newsCount=5"
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
         
-        # --- THE FIX: NATIVE YFINANCE NEWS FETCH ---
-        ytk = yf.Ticker(ticker)
-        news = ytk.news
-        headlines = [n['title'] for n in news[:5]] if news else []
+        res = requests.get(url, headers=headers, timeout=10)
+        res_data = res.json()
+        headlines = [item['title'] for item in res_data.get('news', [])]
         
+        # Fallback: Try ticker if name yields nothing
+        if not headlines:
+            url_ticker = "https://query2.finance.yahoo.com/v1/finance/search?q=" + ticker + "&newsCount=5"
+            res_ticker = requests.get(url_ticker, headers=headers, timeout=10)
+            headlines = [item['title'] for item in res_ticker.json().get('news', [])]
+            
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
+        client = genai.Client(api_key=api_key)
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Generate a strictly valid JSON response. Do not use unescaped double quotes inside strings. Do not use newline characters (\\n).
-Format exactly with these four keys:
-1. "summary": A list of 3 string bullet points summarizing the news.
-2. "sentiment": An integer from 0 to 100 representing market sentiment.
-3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news. Use single quotes for any HTML classes or attributes.
-4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. CRITICAL INSTRUCTION: You MUST attribute the quote to the REAL, VERIFIED NAME of the executive (e.g., 'Jason Robins, CEO:' or 'Amy Howe, CEO:'). You are STRICTLY FORBIDDEN from using placeholder terms like 'Company Management', 'Management', or 'The CEO'."""
+        Generate a strictly valid JSON response. 
+        CRITICAL RULE: DO NOT WRAP YOUR RESPONSE IN MARKDOWN BLOCKQUOTES. DO NOT USE ```json. START IMMEDIATELY WITH {{ AND END WITH }}.
+
+        Format exactly with these four keys:
+        1. "summary": A list of 3 string bullet points summarizing the news.
+        2. "sentiment": An integer from 0 to 100 representing market sentiment.
+        3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news. Use single quotes for any HTML classes or attributes.
+        4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes. CRITICAL INSTRUCTION: You MUST attribute the quote to the REAL, VERIFIED NAME of the executive (e.g., 'Jason Robins, CEO:' or 'Amy Howe, CEO:'). You are STRICTLY FORBIDDEN from using placeholder terms like 'Company Management', 'Management', or 'The CEO'."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -361,28 +386,20 @@ Format exactly with these four keys:
             config={"response_mime_type": "application/json"}
         )
         
-        # --- THE FIX: STRICT REGEX SANITIZER ---
         raw_text = ai_resp.text.strip()
-        raw_text = re.sub(r'^```json\s*', '', raw_text)
-        raw_text = re.sub(r'^```\s*', '', raw_text)
-        raw_text = re.sub(r'\s*```$', '', raw_text)
         
         try:
-            data = json.loads(raw_text)
-            return data
-        except json.JSONDecodeError:
+            # Check for direct JSON match in case Gemini still tries to use markdown
             match = re.search(r'\{.*\}', raw_text, re.DOTALL)
             if match:
-                try:
-                    data = json.loads(match.group(0))
-                    return data
-                except Exception:
-                    pass
+                return json.loads(match.group(0))
+            return json.loads(raw_text)
+        except json.JSONDecodeError:
             return {"summary": ["Data temporarily unavailable while AI processes news."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
-        
+            
     except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
-        return {"summary": [f"News processing delayed."], "sentiment": 50, "reading_room": f"<p>Briefing currently unavailable.</p>", "quotes": []}
+        return {"summary": [f"News Error: Processing delayed."], "sentiment": 50, "reading_room": f"<p>Briefing currently unavailable.</p>", "quotes": []}
 
 def run_pipeline():
     master_db = []
@@ -440,7 +457,8 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "logo": f"[https://icon.horse/icon/](https://icon.horse/icon/){co['domain']}",
+            # THE FIX: Tier 1 Clearbit High-Res Logo Base
+            "logo": f"[https://logo.clearbit.com/](https://logo.clearbit.com/){co['domain']}",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
@@ -461,7 +479,7 @@ def run_pipeline():
             "last_updated": run_time_utc
         })
         
-        time.sleep(10)
+        time.sleep(5)
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
