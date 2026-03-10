@@ -330,15 +330,12 @@
     </div>
 
     <script>
-        // THE FIX: 3-TIER LOGO CASCADE FALLBACK
+        // TIER 2 & 3 LOGO FALLBACK ENGINE
         function handleImageFallback(img, domain, compName) {
-            // Tier 2: Icon Horse
             if (!img.dataset.triedIconHorse && domain) {
                 img.dataset.triedIconHorse = 'true';
                 img.src = `https://icon.horse/icon/${domain}`;
-            } 
-            // Tier 3: UI Avatars (Indestructible Text Initials)
-            else {
+            } else {
                 img.onerror = null; 
                 img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(compName)}&background=f3f4f6&color=374151&rounded=true&bold=true`;
             }
@@ -467,17 +464,13 @@
                     if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
                 }
 
+                // THE FIX: Directly read the percentage change from Yahoo Finance
                 let changePctHtml = '';
-                if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
-                    const len = s.history['1m'].length;
-                    const latestPrice = s.history['1m'][len - 1][1];
-                    const prevPrice = s.history['1m'][len - 2][1];
-                    if (prevPrice > 0) {
-                        const pct = ((latestPrice - prevPrice) / prevPrice) * 100;
-                        const sign = pct > 0 ? '+' : '';
-                        const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
-                        changePctHtml = `<div class="font-black ${changeColor} tracking-tighter" style="font-size: 11px;">${sign}${pct.toFixed(2)}%</div>`;
-                    }
+                if (s.daily_change_pct && s.daily_change_pct !== "N/A") {
+                    const pct = parseFloat(s.daily_change_pct);
+                    const sign = pct > 0 ? '+' : '';
+                    const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
+                    changePctHtml = `<div class="font-black ${changeColor} tracking-tighter" style="font-size: 11px;">${sign}${pct.toFixed(2)}%</div>`;
                 }
 
                 return `
@@ -663,17 +656,13 @@
 
                 const catBadge = getIndustryCategory(s.ticker);
 
+                // THE FIX: Directly read the percentage change from Yahoo Finance
                 let modalChangeHtml = '';
-                if (s.history && s.history['1m'] && s.history['1m'].length >= 2) {
-                    const len = s.history['1m'].length;
-                    const latestPrice = s.history['1m'][len - 1][1];
-                    const prevPrice = s.history['1m'][len - 2][1];
-                    if (prevPrice > 0) {
-                        const pct = ((latestPrice - prevPrice) / prevPrice) * 100;
-                        const sign = pct > 0 ? '+' : '';
-                        const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
-                        modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
-                    }
+                if (s.daily_change_pct && s.daily_change_pct !== "N/A") {
+                    const pct = parseFloat(s.daily_change_pct);
+                    const sign = pct > 0 ? '+' : '';
+                    const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
+                    modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
                 }
 
                 let syncTimeString = "Unknown";
