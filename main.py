@@ -48,7 +48,6 @@ TARGET_COMPANIES = [
     {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnresorts.com", "base_country": "Macau"}, 
     {"name": "Genting Singapore", "ticker": "G13.SI", "domain": "gentingsingapore.com", "base_country": "Singapore"},
     {"name": "La Française des Jeux", "ticker": "FDJ.PA", "domain": "fdjunited.com", "base_country": "France"},
-    # THE FIX: Lottomatica Ticker changed by exchange to LTMC.MI
     {"name": "Lottomatica Group", "ticker": "LTMC.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
@@ -77,7 +76,6 @@ TARGET_COMPANIES = [
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"}
 ]
 
-# THE FIX: Reinstate OTC mapping for flawless non-US mathematical charting
 OTC_MAP = {
     "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
     "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
@@ -175,6 +173,7 @@ def get_stock_fundamentals(ticker, fx_rates):
     fy_rev_str, interim_rev_str = "N/A", "N/A"
     dyn_net_inc, dyn_ebitda, dyn_fcf = "N/A", "N/A", "N/A"
     dyn_eps_act, dyn_eps_est, dyn_date = None, None, None
+    daily_change_pct = "N/A"
     sym, currency = "$", "USD"
     
     try:
@@ -183,6 +182,10 @@ def get_stock_fundamentals(ticker, fx_rates):
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
+            
+            prev_close = ytk.fast_info.get('previousClose')
+            if price and prev_close and prev_close > 0:
+                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
         except Exception: pass 
             
         if currency == "GBp": sym = "GBp "
@@ -315,12 +318,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                         dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
         except Exception: pass
             
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct
         
     except Exception:
-        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None, "N/A"
 
-# THE FIX: Reinstated the mathematical OTC scaling specifically for history charts to fix non-US percentage errors
 def fetch_stock_history(ticker, native_price_raw):
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
@@ -348,7 +350,6 @@ def fetch_stock_history(ticker, native_price_raw):
             df_5y_weekly = df_5y.resample('W').last().dropna()
             history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_5y_weekly.iterrows()]
             
-        # Scale OTC back to native based on the last solid 1-month close
         if is_otc and native_price_raw and history["1m"]:
             latest_otc = history["1m"][-1][1]
             if latest_otc > 0:
@@ -356,7 +357,6 @@ def fetch_stock_history(ticker, native_price_raw):
                 for period in history:
                     history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
     except Exception as e:
-        print(f"    Chart Error for {ticker}: {e}")
         pass
     return history
 
@@ -366,7 +366,6 @@ def ai_process_intelligence(company_name, ticker):
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
-        # THE FIX: Bulletproof RSS Feed completely bypassing Yahoo's aggressive cookie blockers
         feed_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}"
         try:
             feed = feedparser.parse(feed_url)
@@ -431,7 +430,7 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
+            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
             mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
@@ -456,25 +455,24 @@ def run_pipeline():
                 if fin.get("eps_forecast", 0) != 0:
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
-            # Pass the price into the history fetcher to ensure flawless mathematical scaling
             history = fetch_stock_history(ticker, price_raw)
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "reading_room": "<p>Error</p>", "quotes": []}
             history, last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}, "N/A", "N/A", 0, "N/A", "N/A"
-            beat_miss = 0
+            beat_miss, daily_change_pct = 0, "N/A"
 
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            # THE FIX: Google High-Res Favicon Base
             "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
             "calendar": cal, 
             "last_price": last_price_str,
+            "daily_change_pct": daily_change_pct,
             "market_cap_str": mc_str,
             "market_cap_usd": mc_usd,
             "pe_ratio": pe_ratio,
@@ -490,7 +488,7 @@ def run_pipeline():
             "last_updated": run_time_utc
         })
         
-        time.sleep(5)
+        time.sleep(10)
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
