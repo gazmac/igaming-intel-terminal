@@ -224,4 +224,743 @@
                     
                     <div class="max-w-3xl mx-auto">
                         <div id="management-quotes-container" class="mb-8 p-6 bg-slate-50 border-l-4 border-blue-500 rounded-r-xl">
-                            <h4 class="text-xs font-bold uppercase tracking-widest text-blue-600
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4 flex items-center gap-2">
+                                <svg width="24" height="24" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                From the Desk of Management
+                            </h4>
+                            <div id="management-quotes" class="space-y-4"></div>
+                        </div>
+
+                        <div id="reading-room-content" class="reading-room-prose mb-8"></div>
+                        
+                        <div class="border-t border-slate-100 pt-6 flex justify-center">
+                            <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200">
+                                <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modal-regulatory-room" class="hidden bg-white border border-slate-200 rounded-xl p-6 md:p-10 shadow-inner" style="min-height: 500px;">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-4 gap-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                                <svg width="24" height="24" class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                State Regulatory Ledger
+                            </h3>
+                            <p class="text-sm text-slate-400 mt-1">Trailing 12 Months (T12M) Performance Validation</p>
+                        </div>
+                        <div class="flex gap-2 w-full md:w-auto items-center">
+                            <span id="reg-source-badge" class="px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block"></span>
+                            
+                            <select id="reg-state-select" onchange="renderRegulatoryData()" class="bg-slate-50 border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer">
+                                <option value="NY">New York (NYSGC)</option>
+                                <option value="NJ">New Jersey (DGE)</option>
+                                <option value="PA">Pennsylvania (PGCB)</option>
+                                <option value="MI">Michigan (MGCB)</option>
+                                <option value="OH">Ohio (OCCC)</option>
+                                <option value="IL">Illinois (IGB)</option>
+                            </select>
+                            <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0">
+                                <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Total Handle ($)</h4>
+                            <div id="chart-reg-handle" class="w-full" style="height: 180px;"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">Hold Percentage (%)</h4>
+                            <div id="chart-reg-hold" class="w-full" style="height: 180px;"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">GGR vs NGR ($)</h4>
+                            <div id="chart-reg-revenue" class="w-full" style="height: 180px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="md:hidden text-xs text-blue-500 font-bold text-center mb-2 flex items-center justify-center gap-2">
+                        <span class="animate-swipe">←</span> Swipe table to view more <span class="animate-swipe">→</span>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-lg border border-slate-200 pb-12">
+                        <table class="w-full text-left border-collapse" style="min-width: 600px;">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                    <th class="p-4 font-bold">Reporting Month</th>
+                                    <th class="p-4 font-bold">
+                                        Handle ($)
+                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">The total amount of money wagered by players before any payouts or deductions.</span></div>
+                                    </th>
+                                    <th class="p-4 font-bold">
+                                        Hold (%)
+                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">The percentage of the Handle that the operator physically kept as revenue after paying out all winning bets.</span></div>
+                                    </th>
+                                    <th class="p-4 font-bold">
+                                        GGR ($)
+                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">Gross Gaming Revenue. Calculated strictly as Total Handle minus Player Winnings.</span></div>
+                                    </th>
+                                    <th class="p-4 font-bold text-blue-600">
+                                        NGR ($)
+                                        <div class="info-tooltip">ℹ️<span class="tooltiptext">Net Gaming Revenue. GGR minus operator promo deductions, free bets, and state gaming taxes. This is the actual bottom line.</span></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="regulatory-table-body" class="bg-white divide-y divide-slate-100 text-sm">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6 bg-slate-50 border border-blue-100 rounded-lg p-4 flex gap-3 text-xs text-slate-600 shadow-sm">
+                        <svg width="24" height="24" class="w-5 h-5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p><strong>Market Coverage Note:</strong> The states tracked above represent the largest US markets that legally require and publish individual operator-level disclosure. <strong>Nevada</strong>, while historically the largest overall market, is excluded from this tracking table because the Nevada Gaming Control Board only reports aggregate statewide totals and legally prohibits the disclosure of individual company market share.</p>
+                    </div>
+
+                    <div class="border-t border-slate-100 mt-6 pt-6 flex justify-center">
+                        <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200">
+                            <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleImageFallback(img, domain, compName) {
+            if (!img.dataset.triedIconHorse && domain) {
+                img.dataset.triedIconHorse = 'true';
+                img.src = `https://icon.horse/icon/${domain}`;
+            } else {
+                img.onerror = null; 
+                img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(compName)}&background=f3f4f6&color=374151&rounded=true&bold=true`;
+            }
+        }
+
+        let db = [];
+        let regDb = {}; 
+        let activeTicker = null;
+        let chartInstance = null;
+        let currentSort = 'earnings';
+        let currentSpeech = null;
+
+        let regHandleChart = null;
+        let regHoldChart = null;
+        let regRevChart = null;
+
+        async function init() {
+            try {
+                const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
+                if (!response.ok) throw new Error('Stocks JSON not found');
+                db = await response.json();
+                
+                if (db && db.length > 0 && db[0].last_updated) {
+                    const localTime = new Date(db[0].last_updated).toLocaleString();
+                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
+                } else {
+                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + new Date().toLocaleTimeString();
+                }
+                
+                try {
+                    const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
+                    if (regResponse.ok) {
+                        regDb = await regResponse.json();
+                    }
+                } catch (err) {
+                    console.warn("Regulatory JSON missing. Using local UI generation.");
+                }
+
+                updateDashboardView(); 
+            } catch (e) { 
+                console.error("Initialization Crash: ", e);
+                document.getElementById('last-update').innerText = 'Data Fetch Failed';
+            }
+        }
+
+        function updateDashboardView() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const currentSort = document.getElementById('sort-select').value;
+            
+            let filteredDb = db.filter(s => 
+                s.company.toLowerCase().includes(searchTerm) || 
+                s.ticker.toLowerCase().includes(searchTerm)
+            );
+
+            filteredDb.sort((a, b) => {
+                if (currentSort === 'earnings') {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const getValidTime = (dateStr) => {
+                        if (!dateStr || dateStr === 'TBD') return Infinity;
+                        const d = new Date(dateStr);
+                        if (isNaN(d) || d < today) return Infinity;
+                        return d.getTime();
+                    };
+                    const timeA = getValidTime(a.calendar?.date);
+                    const timeB = getValidTime(b.calendar?.date);
+                    if (timeA === timeB) return a.company.localeCompare(b.company);
+                    return timeA - timeB;
+                } 
+                else if (currentSort === 'marketcap') {
+                    return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
+                }
+                else if (currentSort === 'alpha') return a.company.localeCompare(b.company);
+                else if (currentSort === 'exchange') {
+                    const exA = getExchangeBadge(a.ticker).name; 
+                    const exB = getExchangeBadge(b.ticker).name;
+                    return exA === exB ? a.company.localeCompare(b.company) : exA.localeCompare(exB);
+                } 
+                else if (currentSort === 'beat') return (b.eps_beat_miss_pct || -999) - (a.eps_beat_miss_pct || -999);
+                return 0;
+            });
+
+            renderGrid(filteredDb, currentSort);
+        }
+
+        function getExchangeBadge(ticker) {
+            if (ticker.endsWith('.L')) return { name: 'LSE', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' };
+            if (ticker.endsWith('.ST')) return { name: 'STO', color: 'bg-yellow-100 text-yellow-700 border-yellow-200' };
+            if (ticker.endsWith('.PA')) return { name: 'EPA', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' };
+            if (ticker.endsWith('.AX')) return { name: 'ASX', color: 'bg-teal-100 text-teal-700 border-teal-200' };
+            if (ticker.endsWith('.HK')) return { name: 'HKG', color: 'bg-red-100 text-red-700 border-red-200' };
+            if (ticker.endsWith('.MI')) return { name: 'BIT', color: 'bg-green-100 text-green-700 border-green-200' };
+            if (ticker.endsWith('.SI')) return { name: 'SGX', color: 'bg-orange-100 text-orange-700 border-orange-200' };
+            if (ticker.endsWith('.KL')) return { name: 'KLSE', color: 'bg-pink-100 text-pink-700 border-pink-200' };
+            if (ticker.endsWith('.AT')) return { name: 'ATH', color: 'bg-blue-100 text-blue-700 border-blue-200' };
+            if (ticker.endsWith('.F') || ticker.endsWith('.DE')) return { name: 'FRA', color: 'bg-gray-200 text-gray-700 border-gray-300' };
+            if (ticker === 'BETMGM') return { name: 'PRIVATE JV', color: 'bg-gray-800 text-white border-gray-700' };
+            return { name: 'US MKT', color: 'bg-blue-100 text-blue-700 border-blue-200' };
+        }
+
+        function getIndustryCategory(ticker) {
+            if (['VICI', 'GLPI'].includes(ticker)) return { name: 'Gaming REIT', color: 'bg-green-50 text-green-700 border-green-200' };
+            if (['BETCO.ST', 'CTM.ST', 'GAMB'].includes(ticker)) return { name: 'Affiliate & Media', color: 'bg-pink-50 text-pink-700 border-pink-200' };
+            if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'BRSL', 'INSE', 'ACEL', 'GMR.L', 'TIMA.F'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
+            if (['MGM', 'CZR', 'PENN', 'LVS', 'WYNN', '0027.HK', 'MLCO', '1980.HK', '1128.HK', 'G13.SI', 'BALY', 'BYD', 'RRR', 'GDEN', 'MCRI', 'CNTY', 'SGR.AX', 'GENM.KL', 'FLL', 'PARP.PA', 'RNK.L', 'CHDN'].includes(ticker)) return { name: 'Land-Based Casino', color: 'bg-yellow-50 text-yellow-700 border-yellow-200' };
+            if (['FLUT', 'DKNG', 'ENT.L', 'EVOK.L', 'BETS-B.ST', 'SGHC', 'RSI', 'FDJ.PA', 'LOTO.MI', 'ACX.DE', 'BETMGM', 'OPAP.AT'].includes(ticker)) return { name: 'Digital Operator', color: 'bg-red-50 text-red-700 border-red-200' };
+            return { name: 'Diversified', color: 'bg-gray-50 text-gray-700 border-gray-200' };
+        }
+
+        function renderGrid(dataToRender, currentSort) {
+            const grid = document.getElementById('stock-grid');
+            if (dataToRender.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-medium">No companies found matching your search.</div>`;
+                return;
+            }
+
+            grid.innerHTML = dataToRender.map(s => {
+                const color = s.sentiment > 60 ? 'bg-green-500' : (s.sentiment < 40 ? 'bg-red-500' : 'bg-yellow-500');
+                const revLabel = s.actuals?.rev_label || 'REV';
+                const safeName = s.company.replace(/['"]/g, '');
+                const domain = s.logo ? s.logo.split('domain=').pop().split('&')[0] : '';
+                const badge = getExchangeBadge(s.ticker);
+                const catBadge = getIndustryCategory(s.ticker);
+
+                let nextEarningsDate = s.calendar?.date || 'TBD';
+                if (nextEarningsDate !== 'TBD') {
+                    const d = new Date(nextEarningsDate);
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
+                }
+
+                let changePctHtml = '';
+                if (s.daily_change_pct && s.daily_change_pct !== "N/A") {
+                    const pct = parseFloat(s.daily_change_pct);
+                    const sign = pct > 0 ? '+' : '';
+                    const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
+                    changePctHtml = `<div class="font-black ${changeColor} tracking-tighter" style="font-size: 11px;">${sign}${pct.toFixed(2)}%</div>`;
+                }
+
+                return `
+                    <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between h-full" style="min-height: 240px;">
+                        <div>
+                            <div class="flex justify-between items-start mb-2 gap-2">
+                                <div class="flex gap-3 items-start min-w-0">
+                                    <img src="${s.logo}" alt="${s.company} Logo" width="40" height="40" class="rounded-full border border-gray-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}')">
+                                    <div class="min-w-0 flex-1">
+                                        <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors pr-2" style="line-height: 1.25;" title="${s.company}">${s.company}</h3>
+                                        <div class="flex flex-wrap items-center gap-1.5 mt-1">
+                                            <span class="font-black font-mono text-gray-800 tracking-tight" style="font-size: 12px;">${s.ticker}</span>
+                                            <span class="font-bold px-1.5 py-0.5 rounded border ${badge.color}" style="font-size: 9px;">${badge.name}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right shrink-0 pl-2">
+                                    <div class="text-lg font-bold text-gray-900 leading-none">${s.last_price || 'N/A'}</div>
+                                    ${changePctHtml}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <span class="font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}" style="font-size: 9px;">${catBadge.name}</span>
+                                    <span class="text-gray-400 font-medium bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 10px;">${s.base_country}</span>
+                                </div>
+                                <p class="text-gray-500 pr-2" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center mb-2 border-b border-gray-50 pb-2" style="font-size: 10px;">
+                                <span class="text-gray-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
+                                <span class="font-bold text-gray-700">${s.market_cap_str || 'N/A'}</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 mb-3 bg-gray-50 p-2 rounded-lg border border-gray-100" style="font-size: 10px;">
+                                <div><span class="text-gray-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-gray-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
+                                <div class="text-right"><span class="text-gray-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-500 flex justify-between items-center mb-3 pb-3 border-b border-gray-100" style="font-size: 10px;">
+                                <span>🗓️ NEXT EARNINGS:</span>
+                                <span class="text-blue-600">${nextEarningsDate}</span>
+                            </div>
+                            <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-gray-400 uppercase" style="font-size: 10px;">Sentiment</span>
+                                <div class="flex items-center gap-2">
+                                     <span class="text-gray-400 uppercase tracking-widest px-1.5 rounded bg-gray-50 border border-gray-100" style="font-size: 8px;">Delayed Pricing</span>
+                                     <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleMethodology() {
+            const el = document.getElementById('methodology-overlay');
+            if (el) {
+                el.classList.toggle('hidden');
+                if (!el.classList.contains('hidden')) {
+                    const modalContainer = document.getElementById('modal-scroll-container');
+                    if (modalContainer) modalContainer.scrollTop = 0;
+                }
+            }
+        }
+
+        function playReadingRoomAudio() {
+            if ('speechSynthesis' in window) {
+                if (currentSpeech && window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel(); 
+                    document.getElementById('tts-btn-text').innerText = "Listen";
+                    return;
+                }
+                const quotesText = document.getElementById('management-quotes').innerText || "";
+                const briefingText = document.getElementById('reading-room-content').innerText || "";
+                const fullText = "Key Management Quotes. " + quotesText + ". Executive Briefing. " + briefingText;
+
+                currentSpeech = new SpeechSynthesisUtterance(fullText);
+                currentSpeech.rate = 0.95; 
+                currentSpeech.pitch = 1;
+                
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB');
+                if (preferredVoice) currentSpeech.voice = preferredVoice;
+
+                currentSpeech.onend = () => { document.getElementById('tts-btn-text').innerText = "Listen"; };
+                window.speechSynthesis.speak(currentSpeech);
+                document.getElementById('tts-btn-text').innerText = "Stop";
+            } else {
+                alert("Text-to-Speech is not natively supported in your browser.");
+            }
+        }
+
+        function toggleView(viewName) {
+            const mainContent = document.getElementById('modal-main-content');
+            const readingRoom = document.getElementById('modal-reading-room');
+            const regRoom = document.getElementById('modal-regulatory-room');
+            
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            document.getElementById('tts-btn-text').innerText = "Listen";
+
+            mainContent.classList.add('hidden');
+            readingRoom.classList.add('hidden');
+            regRoom.classList.add('hidden');
+
+            if (viewName === 'reading-room') {
+                readingRoom.classList.remove('hidden');
+            } else if (viewName === 'regulatory-room') {
+                regRoom.classList.remove('hidden');
+                renderRegulatoryData(); 
+            } else {
+                mainContent.classList.remove('hidden');
+                setTimeout(updateMainChart, 50); 
+            }
+
+            const modalContainer = document.getElementById('modal-scroll-container');
+            if (modalContainer) modalContainer.scrollTop = 0;
+        }
+
+        function closeModal() { 
+            document.getElementById('modal').classList.add('hidden'); 
+            document.getElementById('methodology-overlay').classList.add('hidden');
+            
+            const compSelect = document.getElementById('compare-select');
+            if (compSelect) {
+                compSelect.value = "";
+            }
+            
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+            const chartEl = document.getElementById('main-chart');
+            if (chartEl) chartEl.innerHTML = '';
+            
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            document.getElementById('tts-btn-text').innerText = "Listen";
+        }
+
+        function safeSetHTML(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+        function safeSetText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function openModal(ticker) {
+            try {
+                activeTicker = ticker;
+                const s = db.find(x => x.ticker === ticker);
+                if (!s) return;
+                
+                toggleView('main');
+
+                const regBtn = document.getElementById('btn-regulatory');
+                if (regBtn) {
+                    if (s.base_country === 'USA') {
+                        regBtn.style.display = 'flex';
+                    } else {
+                        regBtn.style.display = 'none';
+                    }
+                }
+
+                const compareHtml = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
+                safeSetHTML('compare-select', compareHtml);
+                
+                const safeName = (s.company || 'Unknown').replace(/['"]/g, '');
+                const domain = s.logo ? s.logo.split('domain=').pop().split('&')[0] : '';
+                const modalLogo = document.getElementById('modal-logo');
+                if (modalLogo) {
+                    delete modalLogo.dataset.triedGoogle; 
+                    delete modalLogo.dataset.triedIconHorse;
+                    modalLogo.src = s.logo;
+                    modalLogo.onerror = function() { handleImageFallback(this, domain, safeName); };
+                    modalLogo.classList.remove('hidden');
+                }
+
+                const catBadge = getIndustryCategory(s.ticker);
+
+                let modalChangeHtml = '';
+                if (s.daily_change_pct && s.daily_change_pct !== "N/A") {
+                    const pct = parseFloat(s.daily_change_pct);
+                    const sign = pct > 0 ? '+' : '';
+                    const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
+                    modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
+                }
+
+                let syncTimeString = "Unknown";
+                if (s.last_updated) {
+                    syncTimeString = new Date(s.last_updated).toLocaleString();
+                }
+
+                safeSetText('modal-title', s.company || 'Unknown Company');
+                safeSetHTML('modal-ticker', `
+                    <span class="text-gray-800 font-bold font-mono text-sm">${ticker} | <span class="text-gray-500 font-medium">${s.base_country || 'Unknown'} Based</span></span>
+                    <span class="ml-3 inline-block ${catBadge.color} font-bold uppercase tracking-wider px-2 py-0.5 rounded border align-middle shadow-sm" style="font-size: 10px;">${catBadge.name}</span>
+                    <div class="mt-2 md:mt-1 flex flex-wrap items-center gap-2">
+                        <span class="text-lg font-bold text-gray-900">${s.last_price || 'N/A'}</span>
+                        ${modalChangeHtml}
+                        <span class="text-gray-400 uppercase tracking-widest ml-1 md:ml-2 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 9px;" title="Updated: ${syncTimeString}">Pricing As Of Last Sync</span>
+                    </div>
+                `);
+                
+                let nextEarningsDate = s.calendar?.date || 'TBD';
+                if (nextEarningsDate !== 'TBD') {
+                    const d = new Date(nextEarningsDate);
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    if (!isNaN(d) && d < today) { nextEarningsDate = 'TBD'; }
+                }
+
+                let chartNoteHtml = '';
+                if (ticker === 'BRSL') {
+                    chartNoteHtml = `<div class="text-gray-500 bg-gray-50 p-2 rounded mt-2 border border-gray-200" style="font-size: 10px;"><strong>Data Note:</strong> Historical chart data prior to July 2, 2025 reflects IGT (International Game Technology). Following the sale of its Gaming & Digital division to Apollo, the remaining public lottery business rebranded to Brightstar Lottery (BRSL).</div>`;
+                }
+                const noteContainer = document.getElementById('chart-note-container');
+                if (noteContainer) noteContainer.innerHTML = chartNoteHtml;
+
+                const revLabel = s.actuals?.rev_label || 'Revenue';
+                safeSetHTML('modal-financials', `
+                    <div class="min-w-[120px] bg-white border border-gray-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest mb-1" style="font-size: 9px;">Next Earnings</div>
+                        <div class="font-mono text-xs font-bold text-blue-600">${nextEarningsDate}</div>
+                    </div>
+                    <div class="min-w-[100px] bg-white border border-gray-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest mb-1" style="font-size: 9px;">Report Time</div>
+                        <div class="font-mono text-xs font-bold text-gray-800">${nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.report_time || 'TBD')}</div>
+                    </div>
+                    <div class="min-w-[100px] bg-white border border-gray-200 px-3 py-2 rounded-lg shadow-sm">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest mb-1" style="font-size: 9px;">Call Time</div>
+                        <div class="font-mono text-xs font-bold text-gray-800">${nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.call_time || 'TBD')}</div>
+                    </div>
+                    <div class="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div>
+                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Market Cap</div><div class="font-mono text-sm font-bold text-gray-800">${s.market_cap_str || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">P/E Ratio</div><div class="font-mono text-sm font-bold text-gray-800">${s.pe_ratio || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Debt/Eq</div><div class="font-mono text-sm font-bold text-gray-800">${s.debt_to_equity || 'N/A'}</div></div>
+                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-gray-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
+                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
+                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+                `);
+
+                let newsHtml = '<li class="text-gray-500 italic">No news available.</li>';
+                if (Array.isArray(s.news_summary) && s.news_summary.length > 0) {
+                    newsHtml = s.news_summary.map(item => `<li class="flex gap-2"><span class="text-blue-500">•</span>${item}</li>`).join('');
+                } else if (typeof s.news_summary === 'string') {
+                    newsHtml = `<li class="flex gap-2"><span class="text-blue-500">•</span>${s.news_summary}</li>`;
+                }
+                safeSetHTML('news-summary', newsHtml);
+                
+                let quotesHtml = '<p class="text-sm text-gray-500 italic">No direct management quotes currently available.</p>';
+                if (Array.isArray(s.quotes) && s.quotes.length > 0) {
+                    quotesHtml = s.quotes.map(q => {
+                        const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
+                        return `
+                        <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                            <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${safeStr}</p>
+                        </blockquote>`;
+                    }).join('');
+                } else if (typeof s.quotes === 'string' && s.quotes.trim() !== '') {
+                    quotesHtml = `
+                        <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                            <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p>
+                        </blockquote>`;
+                }
+                safeSetHTML('management-quotes', quotesHtml);
+
+                safeSetHTML('reading-room-content', s.reading_room || '<p>Briefing unavailable at this time.</p>');
+
+                const sent = s.sentiment || 50;
+                safeSetText('sentiment-label', sent + '%');
+                const sLab = document.getElementById('sentiment-label');
+                if (sLab) sLab.className = 'text-2xl font-bold ' + (sent > 60 ? 'text-green-600' : (sent < 40 ? 'text-red-600' : 'text-yellow-600'));
+                
+                const sFil = document.getElementById('modal-sentiment-fill');
+                if (sFil) {
+                    sFil.style.width = sent + '%';
+                    sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-green-500' : (sent < 40 ? 'bg-red-500' : 'bg-yellow-500'));
+                }
+                
+                const jurisdictions = Array.isArray(s.jurisdictions) ? s.jurisdictions.slice(0, 4).join(' • ') : '';
+                safeSetText('map-jurisdictions-text', jurisdictions);
+
+            } catch (error) {
+                console.error("Data parsing error inside modal:", error);
+            } finally {
+                const mod = document.getElementById('modal');
+                if (mod) mod.classList.remove('hidden');
+                setTimeout(() => { 
+                    try { renderMap(db.find(x => x.ticker === activeTicker)?.map_codes || []); } catch(e){}
+                }, 100);
+            }
+        }
+
+        function renderMap(codes) {
+            try {
+                $('#m-map').empty();
+                const regionColors = {}; codes.forEach(c => regionColors[c] = '#2563eb'); 
+                $('#m-map').vectorMap({
+                    map: 'world_mill_en', backgroundColor: 'transparent', zoomOnScroll: false,
+                    regionStyle: { initial: { fill: '#cbd5e1' }, hover: { "fill-opacity": 0.8 } },
+                    series: { regions: [{ values: regionColors, attribute: 'fill' }] }
+                });
+            } catch (e) {
+                console.warn("Map rendering failed", e);
+            }
+        }
+
+        function updateMainChart() {
+            try {
+                const timeframeEl = document.getElementById('timeframe-select');
+                const compareEl = document.getElementById('compare-select');
+                if (!timeframeEl || !compareEl) return;
+
+                const timeframe = timeframeEl.value;
+                const compareTicker = compareEl.value;
+                const s = db.find(x => x.ticker === activeTicker);
+                if (!s) return;
+
+                const baseData = (s.history && s.history[timeframe]) ? s.history[timeframe] : [];
+                if (chartInstance) {
+                    chartInstance.destroy();
+                    chartInstance = null;
+                }
+
+                if (!baseData || baseData.length < 2) {
+                    document.getElementById('main-chart').innerHTML = `<div class="flex items-center justify-center h-full text-sm text-gray-400 font-medium">Insufficient historical data for this timeframe.</div>`;
+                    return;
+                } else {
+                    document.getElementById('main-chart').innerHTML = '';
+                }
+
+                let series = []; let isComp = false;
+                if (compareTicker) {
+                    isComp = true; const comp = db.find(x => x.ticker === compareTicker);
+                    const norm = (d) => d.length ? d.map(p => [p[0], ((p[1] - d[0][1]) / d[0][1]) * 100]) : [];
+                    series = [{ name: s.company, data: norm(baseData) }, { name: comp.company, data: norm(comp?.history?.[timeframe] || []) }];
+                } else { 
+                    series = [{ name: 'Price', data: baseData }]; 
+                }
+                
+                chartInstance = new ApexCharts(document.querySelector("#main-chart"), {
+                    series: series,
+                    chart: { type: isComp ? 'line' : 'area', height: 300, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit', animations: { enabled: false } },
+                    dataLabels: { enabled: false },
+                    markers: { size: 0, hover: { size: 5 } },
+                    stroke: { curve: 'smooth', width: 2.5 },
+                    xaxis: { type: 'datetime', labels: { style: { colors: '#9ca3af', fontSize: '11px' } } },
+                    yaxis: { labels: { style: { colors: '#9ca3af', fontSize: '11px' }, formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) } },
+                    colors: isComp ? ['#3b82f6', '#8b5cf6'] : ['#3b82f6'],
+                    fill: { type: isComp ? 'solid' : 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
+                    grid: { borderColor: '#f3f4f6' },
+                    tooltip: { x: { format: 'dd MMM yyyy' }, y: { formatter: (v) => isComp ? (v > 0 ? '+' : '') + v.toFixed(2) + '%' : v.toFixed(2) }, theme: 'light' },
+                    legend: { show: isComp, position: 'top', horizontalAlign: 'right' },
+                    noData: { text: "Loading..." }
+                });
+                chartInstance.render();
+            } catch (e) {
+                console.warn("Chart rendering failed", e);
+            }
+        }
+
+        // THE RESTORED REGULATORY DATA FUNCTION WITH THE COLOR BADGES
+        function renderRegulatoryData() {
+            const state = document.getElementById('reg-state-select').value;
+            const tbody = document.getElementById('regulatory-table-body');
+            
+            let stateData = [];
+            let dataSource = "Simulated Dummy Data";
+
+            if (regDb && regDb[state] && regDb[state].data && regDb[state].data.length > 0) {
+                stateData = regDb[state].data;
+                dataSource = regDb[state].source;
+            } else if (regDb && regDb[state] && regDb[state].length > 0) {
+                stateData = regDb[state];
+            } else {
+                const d = new Date();
+                d.setMonth(d.getMonth() - 1); 
+                const baseHandleMap = { 'NY': 1200, 'NJ': 900, 'PA': 650, 'MI': 400, 'OH': 600, 'IL': 850 };
+                const taxMap = { 'NY': 0.49, 'NJ': 0.8575, 'PA': 0.64, 'MI': 0.916, 'OH': 0.80, 'IL': 0.85 };
+                const baseHandle = baseHandleMap[state] || 500;
+                const taxMult = taxMap[state] || 0.80;
+
+                for (let i = 0; i < 12; i++) {
+                    const mStr = d.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+                    let isNFL = mStr.includes('Sep') || mStr.includes('Oct') || mStr.includes('Nov') || mStr.includes('Dec');
+                    let handle = baseHandle * (isNFL ? 1.3 : 0.9) * (0.9 + (Math.random() * 0.2));
+                    let hold = 7.5 + (Math.random() * 3.5); 
+                    let ggr = handle * (hold / 100);
+                    let ngr = ggr * taxMult * 0.9; 
+                    
+                    stateData.unshift({
+                        month: mStr, handle: handle, hold: hold, ggr: ggr, ngr: ngr
+                    });
+                    d.setMonth(d.getMonth() - 1);
+                }
+            }
+
+            const sourceBadge = document.getElementById('reg-source-badge');
+            if (sourceBadge) {
+                sourceBadge.innerText = dataSource;
+                if (dataSource.includes("Live") || dataSource.includes("API")) {
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-green-50 text-green-600 border-green-200";
+                } else if (dataSource.includes("AI Extracted") || dataSource.includes("Partial")) {
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-purple-50 text-purple-600 border-purple-200";
+                } else {
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-red-50 text-red-600 border-red-200";
+                }
+            }
+
+            const chartLabels = [];
+            const handleSeries = [];
+            const holdSeries = [];
+            const ggrSeries = [];
+            const ngrSeries = [];
+
+            stateData.forEach(row => {
+                chartLabels.push(row.month);
+                handleSeries.push(row.handle);
+                holdSeries.push(row.hold);
+                ggrSeries.push(row.ggr);
+                ngrSeries.push(row.ngr);
+            });
+
+            if (regHandleChart) regHandleChart.destroy();
+            if (regHoldChart) regHoldChart.destroy();
+            if (regRevChart) regRevChart.destroy();
+
+            regHandleChart = new ApexCharts(document.querySelector("#chart-reg-handle"), {
+                series: [{ name: 'Handle ($M)', data: handleSeries.map(v => v.toFixed(1)) }],
+                chart: { type: 'area', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => '$' + Math.round(v) } },
+                colors: ['#3b82f6'], fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0 } }
+            });
+            regHandleChart.render();
+
+            regHoldChart = new ApexCharts(document.querySelector("#chart-reg-hold"), {
+                series: [{ name: 'Hold %', data: holdSeries.map(v => v.toFixed(1)) }],
+                chart: { type: 'line', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => v + '%' } },
+                colors: ['#10b981']
+            });
+            regHoldChart.render();
+
+            regRevChart = new ApexCharts(document.querySelector("#chart-reg-revenue"), {
+                series: [{ name: 'GGR ($M)', data: ggrSeries.map(v => v.toFixed(1)) }, { name: 'NGR ($M)', data: ngrSeries.map(v => v.toFixed(1)) }],
+                chart: { type: 'bar', height: 180, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit', stacked: false },
+                plotOptions: { bar: { columnWidth: '60%', borderRadius: 2 } },
+                dataLabels: { enabled: false }, stroke: { show: true, width: 2, colors: ['transparent'] },
+                xaxis: { categories: chartLabels, labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+                yaxis: { labels: { style: { fontSize: '10px' }, formatter: (v) => '$' + Math.round(v) } },
+                colors: ['#6366f1', '#38bdf8'], legend: { position: 'top', horizontalAlign: 'right', fontSize: '10px', markers: { radius: 12 } }
+            });
+            regRevChart.render();
+
+            let html = '';
+            for(let i = stateData.length - 1; i >= 0; i--) {
+                let row = stateData[i];
+                html += `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-4 font-medium text-gray-700 whitespace-nowrap">${row.month}</td>
+                        <td class="p-4 text-gray-900 font-mono">$${row.handle.toFixed(1)}M</td>
+                        <td class="p-4 font-bold ${row.hold > 9.5 ? 'text-green-600' : 'text-gray-600'}">${row.hold.toFixed(1)}%</td>
+                        <td class="p-4 text-gray-700 font-mono">$${row.ggr.toFixed(1)}M</td>
+                        <td class="p-4 text-blue-600 font-bold font-mono">$${row.ngr.toFixed(1)}M</td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = html;
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
