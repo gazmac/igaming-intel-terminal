@@ -1,14 +1,9 @@
-import requests
 import json
-import urllib.parse
-import urllib.request
 import os
 import pandas as pd
-import feedparser
 import time
 import yfinance as yf
 import re
-import traceback
 import sys
 from google import genai
 from datetime import datetime
@@ -17,7 +12,7 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# DYNAMIC CALENDAR LOAD: Replaces the hardcoded dictionary
+# DYNAMIC CALENDAR LOAD
 try:
     with open('verified_calendar.json', 'r') as f:
         VERIFIED_CALENDAR = json.load(f)
@@ -79,16 +74,6 @@ TARGET_COMPANIES = [
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"}
 ]
-
-OTC_MAP = {
-    "ENT.L": "GMVHF", "EVO.ST": "EVVTY", "EVOK.L": "EIHDF", 
-    "BETS-B.ST": "BTSBF", "PTEC.L": "PYTCF", 
-    "ALL.AX": "ARLUF", "KAMBI.ST": "KMBIF",
-    "0027.HK": "GXYEF", "1980.HK": "SJMHF", "1128.HK": "WYNMF",
-    "G13.SI": "GIGNF", "FDJ.PA": "LFDJF", "RNK.L": "RANKF",
-    "SGR.AX": "EHGRF", "GENM.KL": "GMALY",
-    "OPAP.AT": "GOFPY", "LOTO.MI": "LTMGF", "PARP.PA": "PARPF" 
-}
 
 VERIFIED_DATA = {
     "FLUT": {"rev_label": "NGR", "revenue_fy": "$14.05B (FY '25)", "revenue_interim": "$3.79B (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"], "eps_actual": 1.74, "eps_forecast": 1.91, "net_income": "$162M", "ebitda": "$2.36B", "fcf": "$941M", "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]},
@@ -322,13 +307,11 @@ def get_stock_fundamentals(ticker, fx_rates):
     except Exception:
         return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None
 
-def fetch_stock_history(ticker, native_price_raw):
-    is_otc = ticker in OTC_MAP
-    fetch_ticker = OTC_MAP.get(ticker, ticker)
+def fetch_stock_history(ticker):
+    """Fetches native historical chart data. Removes complex OTC scaling."""
     history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
-    
     try:
-        ytk = yf.Ticker(fetch_ticker)
+        ytk = yf.Ticker(ticker)
         df_1d = ytk.history(period="1d", interval="15m")
         if not df_1d.empty:
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_1d.iterrows()]
@@ -345,13 +328,6 @@ def fetch_stock_history(ticker, native_price_raw):
             history["6m"], history["1y"] = slice_data(180), slice_data(365)
             df_5y_weekly = df_5y.resample('W').last().dropna()
             history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), round(row['Close'], 2)] for idx, row in df_5y_weekly.iterrows()]
-            
-        if is_otc and native_price_raw and history["1d"]:
-            latest_otc = history["1d"][-1][1]
-            if latest_otc > 0:
-                ratio = native_price_raw / latest_otc
-                for period in history:
-                    history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
     except Exception: pass
     return history
 
@@ -362,13 +338,11 @@ def ai_process_intelligence(company_name, ticker):
         
     try:
         client = genai.Client(api_key=api_key)
-        clean_name = urllib.parse.quote(company_name)
-        url = f"[https://query2.finance.yahoo.com/v1/finance/search?q=](https://query2.finance.yahoo.com/v1/finance/search?q=){clean_name}&newsCount=5"
-        headers = {'User-Agent': 'Mozilla/5.0'}
         
-        res = requests.get(url, headers=headers, timeout=10)
-        res_data = res.json()
-        headlines = [item['title'] for item in res_data.get('news', [])]
+        # --- THE FIX: NATIVE YFINANCE NEWS FETCH ---
+        ytk = yf.Ticker(ticker)
+        news = ytk.news
+        headlines = [n['title'] for n in news[:5]] if news else []
         
         if not headlines:
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
@@ -387,6 +361,7 @@ Format exactly with these four keys:
             config={"response_mime_type": "application/json"}
         )
         
+        # --- THE FIX: STRICT REGEX SANITIZER ---
         raw_text = ai_resp.text.strip()
         raw_text = re.sub(r'^```json\s*', '', raw_text)
         raw_text = re.sub(r'^```\s*', '', raw_text)
@@ -406,7 +381,8 @@ Format exactly with these four keys:
             return {"summary": ["Data temporarily unavailable while AI processes news."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
         
     except Exception as e:
-        return {"summary": [f"News Error: {str(e)[:60]}"], "sentiment": 50, "reading_room": f"<p>Error: {str(e)[:60]}</p>", "quotes": []}
+        print(f"  ⚠️ AI process failed for {ticker}: {e}")
+        return {"summary": [f"News processing delayed."], "sentiment": 50, "reading_room": f"<p>Briefing currently unavailable.</p>", "quotes": []}
 
 def run_pipeline():
     master_db = []
@@ -428,7 +404,7 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
+            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
             mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
@@ -453,7 +429,7 @@ def run_pipeline():
                 if fin.get("eps_forecast", 0) != 0:
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
-            history = fetch_stock_history(ticker, native_price_raw)
+            history = fetch_stock_history(ticker)
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
@@ -464,7 +440,7 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "logo": f"https://icon.horse/icon/{co['domain']}",
+            "logo": f"[https://icon.horse/icon/](https://icon.horse/icon/){co['domain']}",
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
