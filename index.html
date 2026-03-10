@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Stocks Terminal</title>
     
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="[https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css](https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css)" rel="stylesheet">
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css">
-    <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="[https://cdn.jsdelivr.net/npm/apexcharts](https://cdn.jsdelivr.net/npm/apexcharts)"></script>
+    <script src="[https://code.jquery.com/jquery-3.6.0.min.js](https://code.jquery.com/jquery-3.6.0.min.js)"></script>
+    <script src="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js)"></script>
+    <link rel="stylesheet" href="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.css)">
+    <script src="[https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js](https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js)"></script>
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap)" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
@@ -847,19 +847,19 @@
             }
         }
 
+        // THE FIX: RED WARNING BADGE LOGIC
         function renderRegulatoryData() {
             const state = document.getElementById('reg-state-select').value;
             const tbody = document.getElementById('regulatory-table-body');
             
             let stateData = [];
-            let dataSource = "Local Fallback Engine";
+            let dataSource = "Simulated Dummy Data";
 
             if (regDb && regDb[state] && regDb[state].data && regDb[state].data.length > 0) {
                 stateData = regDb[state].data;
                 dataSource = regDb[state].source;
             } else if (regDb && regDb[state] && regDb[state].length > 0) {
                 stateData = regDb[state];
-                dataSource = "Algorithmic Proxy";
             } else {
                 const d = new Date();
                 d.setMonth(d.getMonth() - 1); 
@@ -886,12 +886,12 @@
             const sourceBadge = document.getElementById('reg-source-badge');
             if (sourceBadge) {
                 sourceBadge.innerText = dataSource;
-                if (dataSource.includes("Live")) {
+                if (dataSource.includes("Live") || dataSource.includes("API")) {
                     sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-green-50 text-green-600 border-green-200";
                 } else if (dataSource.includes("AI Extracted")) {
                     sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-purple-50 text-purple-600 border-purple-200";
                 } else {
-                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-yellow-50 text-yellow-600 border-yellow-200";
+                    sourceBadge.className = "px-2 py-1 text-[9px] font-bold uppercase tracking-widest rounded border hidden md:inline-block bg-red-50 text-red-600 border-red-200";
                 }
             }
 
@@ -961,7 +961,7 @@
         }
 
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-        init();
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
