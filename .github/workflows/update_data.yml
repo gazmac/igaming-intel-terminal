@@ -2,7 +2,6 @@ name: Update Gaming Terminal Data
 
 on:
   schedule:
-    # Runs every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
     - cron: '0 */6 * * *'
   workflow_dispatch: 
 
@@ -22,9 +21,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests pandas feedparser yfinance google-genai python-dateutil
+        pip install requests pandas feedparser yfinance google-genai python-dateutil beautifulsoup4 openpyxl
 
     - name: Run Regulatory Data Scraper
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       run: python regulatory_scraper.py
 
     - name: Run AI Calendar Agent
