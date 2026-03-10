@@ -17,6 +17,14 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+# DYNAMIC CALENDAR LOAD: Replaces the hardcoded dictionary
+try:
+    with open('verified_calendar.json', 'r') as f:
+        VERIFIED_CALENDAR = json.load(f)
+except FileNotFoundError:
+    print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
+    VERIFIED_CALENDAR = {}
+
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
@@ -135,61 +143,6 @@ VERIFIED_DATA = {
     "GAMB": {"rev_label": "REV", "revenue_fy": "$115M (FY '25)", "revenue_interim": "$32M (Q4 '25)", "focus": "iGaming Performance Marketing", "map_codes": ["US", "GB", "IE"], "eps_actual": 0.35, "eps_forecast": 0.30, "net_income": "$25M", "ebitda": "$45M", "fcf": "$30M", "jurisdictions": ["US", "UK"]},
     "BETMGM": {"rev_label": "REV", "revenue_fy": "$2.8B (FY '25)", "revenue_interim": "$780M (Q4 '25)", "focus": "B2C Sportsbook & iGaming", "map_codes": ["US", "CA", "PR"], "eps_actual": 0, "eps_forecast": 0, "net_income": "$175M", "ebitda": "$220M", "fcf": "N/A", "jurisdictions": ["US", "Ontario", "Puerto Rico"]},
     "ACEL": {"rev_label": "REV", "revenue_fy": "$1.33B (FY '25)", "revenue_interim": "$341.4M (Q4 '25)", "focus": "Distributed Gaming & Slot Routes", "map_codes": ["US"], "eps_actual": 0.60, "eps_forecast": 0.41, "net_income": "$51.3M", "ebitda": "$210.1M", "fcf": "$150.9M", "jurisdictions": ["US"], "fallback_price": "$11.07", "fallback_mcap": "$950M", "fallback_pe": "21.1x", "fallback_debt": "150%"}
-}
-
-VERIFIED_CALENDAR = {
-    "FLUT": {"date": "May 6, 2026", "report_time": "Pre-Market US", "call_time": "8:30 AM EST"},
-    "DKNG": {"date": "May 8, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
-    "ENT.L": {"date": "Aug 12, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
-    "EVO.ST": {"date": "Apr 22, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
-    "MGM": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "CZR": {"date": "Apr 28, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "PENN": {"date": "May 7, 2026", "report_time": "7:00 AM EST", "call_time": "9:00 AM EST"},
-    "LVS": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "WYNN": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "EVOK.L": {"date": "Apr 15, 2026", "report_time": "7:00 AM BST", "call_time": "8:30 AM BST"},
-    "SRAD": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "BETS-B.ST": {"date": "Apr 24, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
-    "PTEC.L": {"date": "Mar 25, 2026", "report_time": "7:00 AM GMT", "call_time": "9:00 AM GMT"},
-    "CHDN": {"date": "Apr 22, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST (Next Day)"},
-    "LNW": {"date": "May 8, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "ALL.AX": {"date": "May 13, 2026", "report_time": "8:00 AM AEST", "call_time": "10:30 AM AEST"},
-    "SGHC": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
-    "RSI": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "BRAG": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
-    "KAMBI.ST": {"date": "Apr 29, 2026", "report_time": "7:45 AM CET", "call_time": "10:45 AM CET"},
-    "0027.HK": {"date": "May 14, 2026", "report_time": "4:30 PM HKT", "call_time": "6:30 PM HKT"},
-    "MLCO": {"date": "May 7, 2026", "report_time": "Pre-Market", "call_time": "8:30 AM EST"},
-    "1980.HK": {"date": "May 12, 2026", "report_time": "4:30 PM HKT", "call_time": "6:30 PM HKT"},
-    "1128.HK": {"date": "May 6, 2026", "report_time": "4:00 PM EST", "call_time": "5:00 PM EST"},
-    "G13.SI": {"date": "May 14, 2026", "report_time": "5:30 PM SGT", "call_time": "10:00 AM SGT (Next Day)"},
-    "FDJ.PA": {"date": "Apr 16, 2026", "report_time": "5:45 PM CET", "call_time": "6:30 PM CET"},
-    "LOTO.MI": {"date": "Apr 30, 2026", "report_time": "7:30 AM CET", "call_time": "9:00 AM CET"},
-    "RNK.L": {"date": "Aug 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
-    "BETCO.ST": {"date": "May 20, 2026", "report_time": "8:00 AM CET", "call_time": "10:00 AM CET"},
-    "CTM.ST": {"date": "May 21, 2026", "report_time": "7:00 AM CET", "call_time": "9:00 AM CET"},
-    "BALY": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "BYD": {"date": "Apr 23, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "RRR": {"date": "May 4, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "GDEN": {"date": "May 8, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "MCRI": {"date": "Jul 22, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "CNTY": {"date": "May 9, 2026", "report_time": "Pre-Market", "call_time": "10:00 AM EST"},
-    "GENI": {"date": "May 14, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "BRSL": {"date": "May 12, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "INSE": {"date": "May 9, 2026", "report_time": "Post-Market", "call_time": "5:00 PM EST"},
-    "SGR.AX": {"date": "Aug 26, 2026", "report_time": "Pre-Market AEST", "call_time": "10:00 AM AEST"},
-    "GENM.KL": {"date": "May 28, 2026", "report_time": "5:30 PM MYT", "call_time": "9:00 AM MYT (Next Day)"},
-    "VICI": {"date": "May 1, 2026", "report_time": "Post-Market", "call_time": "10:00 AM EST (Next Day)"},
-    "GLPI": {"date": "Apr 24, 2026", "report_time": "Post-Market", "call_time": "9:00 AM EST (Next Day)"},
-    "FLL": {"date": "May 6, 2026", "report_time": "Post-Market", "call_time": "4:30 PM EST"},
-    "OPAP.AT": {"date": "May 26, 2026", "report_time": "5:30 PM EET", "call_time": "4:00 PM EET (Next Day)"},
-    "TIMA.F": {"date": "May 7, 2026", "report_time": "7:30 AM CET", "call_time": "10:00 AM CET"},
-    "GMR.L": {"date": "Sep 15, 2026", "report_time": "7:00 AM BST", "call_time": "9:00 AM BST"},
-    "PARP.PA": {"date": "Jun 10, 2026", "report_time": "6:00 PM CET", "call_time": "No Call"},
-    "ACX.DE": {"date": "May 5, 2026", "report_time": "7:30 AM CET", "call_time": "10:00 AM CET"},
-    "GAMB": {"date": "May 16, 2026", "report_time": "Pre-Market", "call_time": "8:00 AM EST"},
-    "BETMGM": {"date": "Tied to MGM/Entain", "report_time": "N/A", "call_time": "N/A"},
-    "ACEL": {"date": "May 7, 2026", "report_time": "Post-Market", "call_time": "5:30 PM EST"}
 }
 
 def get_live_fx_rates():
@@ -410,7 +363,7 @@ def ai_process_intelligence(company_name, ticker):
     try:
         client = genai.Client(api_key=api_key)
         clean_name = urllib.parse.quote(company_name)
-        url = f"https://query2.finance.yahoo.com/v1/finance/search?q={clean_name}&newsCount=5"
+        url = f"[https://query2.finance.yahoo.com/v1/finance/search?q=](https://query2.finance.yahoo.com/v1/finance/search?q=){clean_name}&newsCount=5"
         headers = {'User-Agent': 'Mozilla/5.0'}
         
         res = requests.get(url, headers=headers, timeout=10)
@@ -421,9 +374,7 @@ def ai_process_intelligence(company_name, ticker):
             return {"summary": [f"No news headlines found recently for {company_name}."], "sentiment": 50, "reading_room": "<p>No recent news available.</p>", "quotes": []}
 
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
-Generate a strictly valid JSON response. 
-CRITICAL RULE: DO NOT WRAP YOUR RESPONSE IN MARKDOWN BLOCKQUOTES. DO NOT USE ```json. START IMMEDIATELY WITH {{ AND END WITH }}.
-
+Generate a strictly valid JSON response. Do not use unescaped double quotes inside strings. Do not use newline characters (\\n).
 Format exactly with these four keys:
 1. "summary": A list of 3 string bullet points summarizing the news.
 2. "sentiment": An integer from 0 to 100 representing market sentiment.
@@ -457,15 +408,11 @@ Format exactly with these four keys:
     except Exception as e:
         return {"summary": [f"News Error: {str(e)[:60]}"], "sentiment": 50, "reading_room": f"<p>Error: {str(e)[:60]}</p>", "quotes": []}
 
-# --- 3. PIPELINE EXECUTION ---
-
 def run_pipeline():
     master_db = []
     print(f"🚀 Starting Pipeline processing {len(TARGET_COMPANIES)} companies...")
     
-    # NEW: Generate UTC Timestamp for the frontend
     run_time_utc = datetime.utcnow().isoformat() + "Z"
-    
     fx_rates = get_live_fx_rates()
     
     for co in TARGET_COMPANIES:
@@ -481,7 +428,6 @@ def run_pipeline():
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
-            
             last_price_str, native_price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
@@ -495,7 +441,7 @@ def run_pipeline():
             fin["ebitda"] = dyn_ebitda if dyn_ebitda != "N/A" else fin.get("ebitda", "N/A")
             fin["fcf"] = dyn_fcf if dyn_fcf != "N/A" else fin.get("fcf", "N/A")
             
-            if dyn_date and dyn_date != "N/A":
+            if cal.get("date", "TBD") == "TBD" and dyn_date and dyn_date != "N/A":
                 cal["date"] = dyn_date
             
             beat_miss = 0
@@ -536,7 +482,7 @@ def run_pipeline():
             "quotes": intel.get("quotes", []),
             "jurisdictions": fin.get("jurisdictions", []),
             "history": history,
-            "last_updated": run_time_utc # INJECTED TIMESTAMP
+            "last_updated": run_time_utc
         })
         
         time.sleep(10)
