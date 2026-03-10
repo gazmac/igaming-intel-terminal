@@ -1,94 +1,115 @@
 {
     "NY": {
-        "source": "AI Extracted Data",
+        "source": "Simulated Dummy Data",
         "history": [
             {
-                "month": "February 2026",
-                "handle": 3.4,
-                "ggr": 53.2,
-                "hold": 1574.6,
-                "ngr": 26.1
+                "month": "Mar 2026",
+                "handle": 1278.6,
+                "hold": 9.7,
+                "ggr": 124.5,
+                "ngr": 61.0
             },
             {
                 "month": "Feb 2026",
-                "handle": 1263.4,
-                "hold": 10.6,
-                "ggr": 133.9,
-                "ngr": 65.6
+                "handle": 1196.2,
+                "hold": 10.2,
+                "ggr": 122.1,
+                "ngr": 59.8
             },
             {
                 "month": "Jan 2026",
-                "handle": 1136.3,
-                "hold": 10.4,
-                "ggr": 118.0,
-                "ngr": 57.8
+                "handle": 1180.6,
+                "hold": 7.6,
+                "ggr": 90.0,
+                "ngr": 44.1
             },
             {
                 "month": "Dec 2025",
-                "handle": 1229.6,
-                "hold": 7.6,
-                "ggr": 93.4,
-                "ngr": 45.8
-            },
-            {
-                "month": "Nov 2025",
-                "handle": 1206.9,
-                "hold": 9.4,
-                "ggr": 113.6,
-                "ngr": 55.7
-            },
-            {
-                "month": "Oct 2025",
-                "handle": 1288.3,
-                "hold": 10.5,
-                "ggr": 135.7,
-                "ngr": 66.5
-            },
-            {
-                "month": "Sep 2025",
-                "handle": 1183.0,
-                "hold": 8.1,
-                "ggr": 95.6,
-                "ngr": 46.8
-            },
-            {
-                "month": "Aug 2025",
-                "handle": 1315.1,
-                "hold": 10.2,
-                "ggr": 134.7,
-                "ngr": 66.0
-            },
-            {
-                "month": "Jul 2025",
-                "handle": 1098.3,
-                "hold": 9.1,
-                "ggr": 99.7,
-                "ngr": 48.8
-            },
-            {
-                "month": "Jun 2025",
-                "handle": 1169.9,
-                "hold": 10.7,
-                "ggr": 125.4,
+                "handle": 1243.5,
+                "hold": 10.1,
+                "ggr": 125.3,
                 "ngr": 61.4
             },
             {
+                "month": "Nov 2025",
+                "handle": 1265.3,
+                "hold": 10.3,
+                "ggr": 130.6,
+                "ngr": 64.0
+            },
+            {
+                "month": "Oct 2025",
+                "handle": 1307.3,
+                "hold": 8.8,
+                "ggr": 115.1,
+                "ngr": 56.4
+            },
+            {
+                "month": "Sep 2025",
+                "handle": 1142.0,
+                "hold": 10.5,
+                "ggr": 120.5,
+                "ngr": 59.0
+            },
+            {
+                "month": "Aug 2025",
+                "handle": 1286.1,
+                "hold": 9.1,
+                "ggr": 117.5,
+                "ngr": 57.6
+            },
+            {
+                "month": "Jul 2025",
+                "handle": 1251.6,
+                "hold": 7.1,
+                "ggr": 88.6,
+                "ngr": 43.4
+            },
+            {
+                "month": "Jun 2025",
+                "handle": 1219.4,
+                "hold": 7.9,
+                "ggr": 96.9,
+                "ngr": 47.5
+            },
+            {
                 "month": "May 2025",
-                "handle": 1205.0,
-                "hold": 9.5,
-                "ggr": 114.3,
-                "ngr": 56.0
+                "handle": 1248.7,
+                "hold": 10.9,
+                "ggr": 135.6,
+                "ngr": 66.5
             },
             {
                 "month": "Apr 2025",
-                "handle": 1247.7,
-                "hold": 8.8,
-                "ggr": 110.0,
-                "ngr": 53.9
+                "handle": 1239.1,
+                "hold": 8.6,
+                "ggr": 106.6,
+                "ngr": 52.2
             }
         ],
-        "operators": [],
-        "latest_month": "February 2026"
+        "operators": [
+            {
+                "name": "FanDuel",
+                "handle": 480.0,
+                "ggr": 52.8
+            },
+            {
+                "name": "DraftKings",
+                "handle": 420.0,
+                "ggr": 37.8
+            },
+            {
+                "name": "BetMGM",
+                "handle": 180.0,
+                "ggr": 14.4
+            },
+            {
+                "name": "Caesars",
+                "handle": 120.0,
+                "ggr": 8.4
+            }
+        ],
+        "latest_month": "Mar 2026"
     },
     "NJ": {
         "source": "AI Extracted (Local Drop)",
@@ -102,80 +123,80 @@
             },
             {
                 "month": "Feb 2026",
-                "handle": 855.4,
-                "hold": 8.5,
-                "ggr": 72.9,
-                "ngr": 62.5
+                "handle": 1019.4,
+                "hold": 9.1,
+                "ggr": 93.1,
+                "ngr": 79.8
             },
             {
                 "month": "Jan 2026",
-                "handle": 919.1,
-                "hold": 9.7,
-                "ggr": 89.4,
-                "ngr": 76.6
+                "handle": 975.1,
+                "hold": 7.7,
+                "ggr": 75.1,
+                "ngr": 64.4
             },
             {
                 "month": "Dec 2025",
-                "handle": 872.6,
-                "hold": 9.4,
-                "ggr": 81.8,
-                "ngr": 70.1
+                "handle": 1004.7,
+                "hold": 10.4,
+                "ggr": 104.7,
+                "ngr": 89.8
             },
             {
                 "month": "Nov 2025",
-                "handle": 972.2,
-                "hold": 7.1,
-                "ggr": 69.2,
-                "ngr": 59.3
+                "handle": 986.6,
+                "hold": 10.7,
+                "ggr": 105.4,
+                "ngr": 90.4
             },
             {
                 "month": "Oct 2025",
-                "handle": 857.6,
-                "hold": 8.4,
-                "ggr": 71.8,
-                "ngr": 61.6
+                "handle": 876.0,
+                "hold": 7.3,
+                "ggr": 63.6,
+                "ngr": 54.5
             },
             {
                 "month": "Sep 2025",
-                "handle": 994.2,
-                "hold": 7.8,
-                "ggr": 77.6,
-                "ngr": 66.6
+                "handle": 1017.3,
+                "hold": 10.5,
+                "ggr": 106.7,
+                "ngr": 91.5
             },
             {
                 "month": "Aug 2025",
-                "handle": 997.0,
-                "hold": 8.2,
-                "ggr": 82.2,
-                "ngr": 70.5
+                "handle": 1030.2,
+                "hold": 10.4,
+                "ggr": 107.4,
+                "ngr": 92.1
             },
             {
                 "month": "Jul 2025",
-                "handle": 993.7,
-                "hold": 9.2,
-                "ggr": 91.1,
-                "ngr": 78.1
+                "handle": 1021.9,
+                "hold": 9.5,
+                "ggr": 97.4,
+                "ngr": 83.5
             },
             {
                 "month": "Jun 2025",
-                "handle": 987.1,
-                "hold": 9.7,
-                "ggr": 95.7,
-                "ngr": 82.0
+                "handle": 925.1,
+                "hold": 7.1,
+                "ggr": 65.9,
+                "ngr": 56.5
             },
             {
                 "month": "May 2025",
-                "handle": 1034.5,
-                "hold": 10.3,
-                "ggr": 106.9,
-                "ngr": 91.7
+                "handle": 956.3,
+                "hold": 9.2,
+                "ggr": 88.3,
+                "ngr": 75.7
             },
             {
                 "month": "Apr 2025",
-                "handle": 979.5,
-                "hold": 8.5,
-                "ggr": 83.7,
-                "ngr": 71.8
+                "handle": 968.0,
+                "hold": 9.4,
+                "ggr": 91.4,
+                "ngr": 78.4
             }
         ],
         "operators": [
@@ -222,87 +243,87 @@
         "history": [
             {
                 "month": "Mar 2026",
-                "handle": 739.4,
-                "hold": 8.9,
-                "ggr": 65.5,
-                "ngr": 41.9
+                "handle": 688.4,
+                "hold": 7.7,
+                "ggr": 52.8,
+                "ngr": 33.8
             },
             {
                 "month": "Feb 2026",
-                "handle": 675.3,
+                "handle": 744.8,
                 "hold": 8.1,
-                "ggr": 54.4,
-                "ngr": 34.8
+                "ggr": 60.3,
+                "ngr": 38.6
             },
             {
                 "month": "Jan 2026",
-                "handle": 678.7,
-                "hold": 8.5,
-                "ggr": 57.9,
-                "ngr": 37.1
+                "handle": 632.5,
+                "hold": 7.1,
+                "ggr": 45.0,
+                "ngr": 28.8
             },
             {
                 "month": "Dec 2025",
-                "handle": 761.4,
-                "hold": 8.2,
-                "ggr": 62.4,
-                "ngr": 39.9
+                "handle": 747.4,
+                "hold": 11.0,
+                "ggr": 82.1,
+                "ngr": 52.5
             },
             {
                 "month": "Nov 2025",
-                "handle": 704.0,
-                "hold": 7.5,
-                "ggr": 52.6,
-                "ngr": 33.6
+                "handle": 763.2,
+                "hold": 8.4,
+                "ggr": 63.9,
+                "ngr": 40.9
             },
             {
                 "month": "Oct 2025",
-                "handle": 766.5,
-                "hold": 7.7,
-                "ggr": 59.1,
-                "ngr": 37.8
-            },
-            {
-                "month": "Sep 2025",
-                "handle": 733.2,
-                "hold": 7.9,
-                "ggr": 57.8,
-                "ngr": 37.0
-            },
-            {
-                "month": "Aug 2025",
-                "handle": 750.2,
-                "hold": 7.9,
-                "ggr": 58.9,
-                "ngr": 37.7
-            },
-            {
-                "month": "Jul 2025",
-                "handle": 762.4,
-                "hold": 10.8,
-                "ggr": 82.5,
-                "ngr": 52.8
-            },
-            {
-                "month": "Jun 2025",
-                "handle": 694.7,
-                "hold": 10.3,
-                "ggr": 71.6,
+                "handle": 767.1,
+                "hold": 9.3,
+                "ggr": 71.5,
                 "ngr": 45.8
             },
             {
+                "month": "Sep 2025",
+                "handle": 753.5,
+                "hold": 7.4,
+                "ggr": 55.7,
+                "ngr": 35.7
+            },
+            {
+                "month": "Aug 2025",
+                "handle": 726.5,
+                "hold": 10.3,
+                "ggr": 74.5,
+                "ngr": 47.7
+            },
+            {
+                "month": "Jul 2025",
+                "handle": 728.7,
+                "hold": 7.4,
+                "ggr": 54.1,
+                "ngr": 34.6
+            },
+            {
+                "month": "Jun 2025",
+                "handle": 654.9,
+                "hold": 8.1,
+                "ggr": 53.0,
+                "ngr": 33.9
+            },
+            {
                 "month": "May 2025",
-                "handle": 654.5,
-                "hold": 9.3,
-                "ggr": 60.9,
-                "ngr": 39.0
+                "handle": 751.8,
+                "hold": 7.2,
+                "ggr": 54.2,
+                "ngr": 34.7
             },
             {
                 "month": "Apr 2025",
-                "handle": 763.5,
-                "hold": 7.9,
-                "ggr": 60.1,
-                "ngr": 38.5
+                "handle": 640.6,
+                "hold": 9.2,
+                "ggr": 58.7,
+                "ngr": 37.6
             }
         ],
         "operators": [
@@ -334,87 +355,87 @@
         "history": [
             {
                 "month": "Mar 2026",
-                "handle": 488.1,
-                "hold": 8.0,
-                "ggr": 39.0,
-                "ngr": 35.7
+                "handle": 469.8,
+                "hold": 7.1,
+                "ggr": 33.4,
+                "ngr": 30.6
             },
             {
                 "month": "Feb 2026",
-                "handle": 457.3,
-                "hold": 8.2,
-                "ggr": 37.3,
-                "ngr": 34.2
+                "handle": 421.3,
+                "hold": 9.4,
+                "ggr": 39.6,
+                "ngr": 36.3
             },
             {
                 "month": "Jan 2026",
-                "handle": 482.4,
-                "hold": 10.1,
-                "ggr": 48.8,
-                "ngr": 44.7
+                "handle": 491.2,
+                "hold": 10.3,
+                "ggr": 50.6,
+                "ngr": 46.3
             },
             {
                 "month": "Dec 2025",
-                "handle": 412.9,
-                "hold": 10.0,
-                "ggr": 41.2,
-                "ngr": 37.7
-            },
-            {
-                "month": "Nov 2025",
-                "handle": 464.3,
-                "hold": 9.0,
-                "ggr": 42.0,
-                "ngr": 38.4
-            },
-            {
-                "month": "Oct 2025",
-                "handle": 471.1,
-                "hold": 10.9,
-                "ggr": 51.6,
-                "ngr": 47.2
-            },
-            {
-                "month": "Sep 2025",
-                "handle": 405.8,
-                "hold": 9.9,
-                "ggr": 40.0,
-                "ngr": 36.7
-            },
-            {
-                "month": "Aug 2025",
-                "handle": 481.0,
-                "hold": 9.2,
+                "handle": 473.2,
+                "hold": 9.4,
                 "ggr": 44.4,
                 "ngr": 40.7
             },
             {
-                "month": "Jul 2025",
-                "handle": 444.0,
+                "month": "Nov 2025",
+                "handle": 455.8,
                 "hold": 10.5,
-                "ggr": 46.5,
-                "ngr": 42.6
+                "ggr": 47.7,
+                "ngr": 43.7
+            },
+            {
+                "month": "Oct 2025",
+                "handle": 488.0,
+                "hold": 10.8,
+                "ggr": 52.8,
+                "ngr": 48.4
+            },
+            {
+                "month": "Sep 2025",
+                "handle": 447.0,
+                "hold": 10.7,
+                "ggr": 47.9,
+                "ngr": 43.9
+            },
+            {
+                "month": "Aug 2025",
+                "handle": 473.4,
+                "hold": 8.5,
+                "ggr": 40.4,
+                "ngr": 37.0
+            },
+            {
+                "month": "Jul 2025",
+                "handle": 414.3,
+                "hold": 7.7,
+                "ggr": 31.8,
+                "ngr": 29.1
             },
             {
                 "month": "Jun 2025",
-                "handle": 488.3,
-                "hold": 7.8,
-                "ggr": 38.2,
-                "ngr": 35.0
+                "handle": 451.9,
+                "hold": 8.0,
+                "ggr": 36.2,
+                "ngr": 33.2
             },
             {
                 "month": "May 2025",
-                "handle": 435.3,
-                "hold": 9.5,
-                "ggr": 41.3,
-                "ngr": 37.8
+                "handle": 491.4,
+                "hold": 8.9,
+                "ggr": 43.7,
+                "ngr": 40.0
             },
             {
                 "month": "Apr 2025",
-                "handle": 494.6,
-                "hold": 9.6,
-                "ggr": 47.3,
-                "ngr": 43.4
+                "handle": 450.0,
+                "hold": 11.0,
+                "ggr": 49.4,
+                "ngr": 45.2
             }
         ],
         "operators": [
@@ -446,87 +467,87 @@
         "history": [
             {
                 "month": "Mar 2026",
-                "handle": 587.8,
-                "hold": 7.5,
-                "ggr": 44.3,
-                "ngr": 35.5
+                "handle": 621.7,
+                "hold": 8.1,
+                "ggr": 50.6,
+                "ngr": 40.5
             },
             {
                 "month": "Feb 2026",
-                "handle": 555.4,
-                "hold": 7.7,
-                "ggr": 42.7,
-                "ngr": 34.1
+                "handle": 658.2,
+                "hold": 9.2,
+                "ggr": 60.5,
+                "ngr": 48.4
             },
             {
                 "month": "Jan 2026",
-                "handle": 641.7,
-                "hold": 9.9,
-                "ggr": 63.2,
-                "ngr": 50.6
+                "handle": 610.6,
+                "hold": 7.6,
+                "ggr": 46.3,
+                "ngr": 37.0
             },
             {
                 "month": "Dec 2025",
-                "handle": 609.2,
-                "hold": 9.2,
-                "ggr": 55.9,
-                "ngr": 44.7
+                "handle": 646.0,
+                "hold": 10.3,
+                "ggr": 66.6,
+                "ngr": 53.2
             },
             {
                 "month": "Nov 2025",
-                "handle": 574.5,
-                "hold": 10.0,
-                "ggr": 57.3,
-                "ngr": 45.8
+                "handle": 565.2,
+                "hold": 10.4,
+                "ggr": 58.7,
+                "ngr": 46.9
             },
             {
                 "month": "Oct 2025",
-                "handle": 552.8,
-                "hold": 8.9,
-                "ggr": 49.0,
-                "ngr": 39.2
+                "handle": 599.6,
+                "hold": 9.1,
+                "ggr": 54.4,
+                "ngr": 43.5
             },
             {
                 "month": "Sep 2025",
-                "handle": 636.5,
-                "hold": 9.1,
-                "ggr": 58.0,
-                "ngr": 46.4
+                "handle": 565.9,
+                "hold": 7.0,
+                "ggr": 39.7,
+                "ngr": 31.8
             },
             {
                 "month": "Aug 2025",
-                "handle": 554.5,
-                "hold": 8.5,
-                "ggr": 47.3,
-                "ngr": 37.8
+                "handle": 595.3,
+                "hold": 8.7,
+                "ggr": 51.8,
+                "ngr": 41.4
             },
             {
                 "month": "Jul 2025",
-                "handle": 656.0,
-                "hold": 8.8,
-                "ggr": 57.7,
-                "ngr": 46.1
+                "handle": 548.8,
+                "hold": 7.2,
+                "ggr": 39.2,
+                "ngr": 31.4
             },
             {
                 "month": "Jun 2025",
-                "handle": 606.7,
-                "hold": 7.0,
-                "ggr": 42.7,
-                "ngr": 34.2
+                "handle": 656.1,
+                "hold": 7.3,
+                "ggr": 47.9,
+                "ngr": 38.3
             },
             {
                 "month": "May 2025",
-                "handle": 557.5,
-                "hold": 10.2,
-                "ggr": 57.1,
-                "ngr": 45.7
+                "handle": 543.5,
+                "hold": 7.2,
+                "ggr": 38.9,
+                "ngr": 31.1
             },
             {
                 "month": "Apr 2025",
-                "handle": 649.0,
-                "hold": 9.5,
-                "ggr": 61.8,
-                "ngr": 49.4
+                "handle": 637.1,
+                "hold": 10.4,
+                "ggr": 66.0,
+                "ngr": 52.8
             }
         ],
         "operators": [
@@ -554,115 +575,193 @@
         "latest_month": "Mar 2026"
     },
     "IL": {
-        "source": "Simulated Dummy Data",
+        "source": "AI Extracted (Local Drop)",
         "history": [
             {
-                "month": "Mar 2026",
-                "handle": 920.1,
-                "hold": 7.7,
-                "ggr": 70.4,
-                "ngr": 59.9
+                "month": "January 2026",
+                "handle": 1175.3,
+                "ggr": 774.0,
+                "hold": 65.9,
+                "ngr": 657.9
             },
             {
                 "month": "Feb 2026",
-                "handle": 885.0,
-                "hold": 9.6,
-                "ggr": 85.4,
-                "ngr": 72.6
+                "handle": 789.5,
+                "hold": 9.0,
+                "ggr": 71.3,
+                "ngr": 60.6
             },
             {
                 "month": "Jan 2026",
-                "handle": 829.6,
-                "hold": 9.6,
-                "ggr": 79.8,
-                "ngr": 67.8
+                "handle": 871.9,
+                "hold": 9.3,
+                "ggr": 80.9,
+                "ngr": 68.8
             },
             {
                 "month": "Dec 2025",
-                "handle": 791.1,
-                "hold": 9.2,
-                "ggr": 72.5,
-                "ngr": 61.6
+                "handle": 799.0,
+                "hold": 8.5,
+                "ggr": 67.7,
+                "ngr": 57.5
             },
             {
                 "month": "Nov 2025",
-                "handle": 884.4,
-                "hold": 10.1,
-                "ggr": 89.0,
-                "ngr": 75.7
+                "handle": 842.6,
+                "hold": 10.4,
+                "ggr": 87.9,
+                "ngr": 74.7
             },
             {
                 "month": "Oct 2025",
-                "handle": 824.7,
-                "hold": 8.7,
-                "ggr": 71.6,
-                "ngr": 60.8
+                "handle": 773.6,
+                "hold": 7.6,
+                "ggr": 58.8,
+                "ngr": 50.0
             },
             {
                 "month": "Sep 2025",
-                "handle": 911.2,
-                "hold": 10.4,
-                "ggr": 94.4,
-                "ngr": 80.2
+                "handle": 834.9,
+                "hold": 10.3,
+                "ggr": 85.7,
+                "ngr": 72.8
             },
             {
                 "month": "Aug 2025",
-                "handle": 884.4,
-                "hold": 9.8,
-                "ggr": 86.8,
-                "ngr": 73.8
+                "handle": 846.2,
+                "hold": 10.3,
+                "ggr": 87.5,
+                "ngr": 74.3
             },
             {
                 "month": "Jul 2025",
-                "handle": 927.9,
-                "hold": 7.2,
-                "ggr": 66.4,
-                "ngr": 56.5
+                "handle": 918.0,
+                "hold": 10.5,
+                "ggr": 96.8,
+                "ngr": 82.3
             },
             {
                 "month": "Jun 2025",
-                "handle": 882.7,
-                "hold": 9.8,
-                "ggr": 86.1,
-                "ngr": 73.2
+                "handle": 822.0,
+                "hold": 8.8,
+                "ggr": 72.3,
+                "ngr": 61.4
             },
             {
                 "month": "May 2025",
-                "handle": 905.3,
-                "hold": 7.8,
-                "ggr": 70.2,
-                "ngr": 59.7
+                "handle": 842.4,
+                "hold": 10.7,
+                "ggr": 89.8,
+                "ngr": 76.3
             },
             {
                 "month": "Apr 2025",
-                "handle": 927.7,
-                "hold": 9.8,
-                "ggr": 90.8,
-                "ngr": 77.2
+                "handle": 818.3,
+                "hold": 8.4,
+                "ggr": 68.4,
+                "ngr": 58.1
             }
         ],
         "operators": [
             {
-                "name": "FanDuel",
-                "handle": 340.0,
-                "ggr": 37.4
+                "name": "Casino Queen, Inc.",
+                "handle": 418.5,
+                "ggr": 300.9,
+                "hold": 71.9,
+                "ngr": 255.8
             },
             {
-                "name": "DraftKings",
-                "handle": 297.5,
-                "ggr": 26.775
+                "name": "Fairmount Park, Inc.",
+                "handle": 362.3,
+                "ggr": 203.5,
+                "hold": 56.2,
+                "ngr": 173.0
             },
             {
-                "name": "BetMGM",
-                "handle": 127.5,
-                "ggr": 10.200000000000001
+                "name": "Hawthorne Race Course, Inc.",
+                "handle": 80.2,
+                "ggr": 62.0,
+                "hold": 77.2,
+                "ngr": 52.7
             },
             {
-                "name": "Caesars",
-                "handle": 85.0,
-                "ggr": 5.95
+                "name": "Par-A-Dice Gaming Corporation",
+                "handle": 67.7,
+                "ggr": 28.3,
+                "hold": 41.8,
+                "ngr": 24.1
+            },
+            {
+                "name": "Midwest Gaming & Entertainment, LLC",
+                "handle": 63.6,
+                "ggr": 45.9,
+                "hold": 72.2,
+                "ngr": 39.0
+            },
+            {
+                "name": "WALKER'S BLUFF CASINO RESORT, LLC",
+                "handle": 58.7,
+                "ggr": 49.1,
+                "hold": 83.6,
+                "ngr": 41.8
+            },
+            {
+                "name": "Elgin Riverboat Resort",
+                "handle": 43.0,
+                "ggr": 24.9,
+                "hold": 57.9,
+                "ngr": 21.2
+            },
+            {
+                "name": "HC Aurora, LLC",
+                "handle": 33.7,
+                "ggr": 26.2,
+                "hold": 77.9,
+                "ngr": 22.3
+            },
+            {
+                "name": "815 Entertainment",
+                "handle": 23.7,
+                "ggr": 18.1,
+                "hold": 76.3,
+                "ngr": 15.4
+            },
+            {
+                "name": "Alton Casino, LLC",
+                "handle": 14.5,
+                "ggr": 11.4,
+                "hold": 78.7,
+                "ngr": 9.7
+            },
+            {
+                "name": "FHR-Illinois LLC",
+                "handle": 7.6,
+                "ggr": 3.0,
+                "hold": 38.9,
+                "ngr": 2.5
+            },
+            {
+                "name": "HC Joliet, LLC",
+                "handle": 1.3,
+                "ggr": 0.6,
+                "hold": 45.4,
+                "ngr": 0.5
+            },
+            {
+                "name": "Northside Crown Gaming LLC",
+                "handle": 0.4,
+                "ggr": 0.1,
+                "hold": 30.8,
+                "ngr": 0.1
+            },
+            {
+                "name": "The Rock Island Boatworks, LLC",
+                "handle": 0.1,
+                "ggr": 0.1,
+                "hold": 46.2,
+                "ngr": 0.1
             }
         ],
-        "latest_month": "Mar 2026"
+        "latest_month": "January 2026"
     }
 }
