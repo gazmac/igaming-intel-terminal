@@ -8,11 +8,11 @@ from google import genai
 import warnings
 warnings.filterwarnings('ignore')
 
-# Added WYNN, LVS, and other missing targets
+# Comprehensive list of all targeted public gaming tickers
 TARGET_TICKERS = [
     "FLUT", "DKNG", "ENT.L", "MGM", "CZR", "PENN", "RSI", "BALY", 
     "SGHC", "EVOK.L", "BETS-B.ST", "CHDN", "BYD", "RRR", "GDEN", "MCRI",
-    "WYNN", "LVS", "BRSL", "GENI", "INSE"
+    "WYNN", "LVS", "FLL", "CNTY", "INSE", "GENI"
 ]
 
 def get_gemini_client():
@@ -20,28 +20,33 @@ def get_gemini_client():
     if not api_key: return None
     return genai.Client(api_key=api_key)
 
-def get_ai_brand_mapping(brands):
+def get_ai_brand_mapping(entity_brand_pairs):
     client = get_gemini_client()
-    if not client or not brands:
+    if not client or not entity_brand_pairs:
         return {}
     
     prompt = f"""You are an expert in the US iGaming and Casino industry. 
-    Map the following list of brands to their ultimate publicly traded parent company ticker.
-    Use ONLY these tickers: {TARGET_TICKERS}. If a brand is private or not owned by these, map it to "PRIVATE".
+    I am providing a list of "Entity | Brand" pairs extracted from state regulatory data. 
+    'Entity' is the local license holder/casino, and 'Brand' is the consumer sportsbook/iCasino.
     
-    CRITICAL GOLD-STANDARD MAPPINGS:
+    Map each exact "Entity | Brand" string to its ultimate publicly traded parent company ticker.
+    Use ONLY these tickers: {TARGET_TICKERS}. If the operator is private, tribal, or not owned by these, map it to "PRIVATE".
+    
+    CRITICAL MAPPINGS:
     - 'WSOP' or 'World Series of Poker' -> 'CZR'
     - 'WynnBet' or 'Wynn' -> 'WYNN'
     - 'FanDuel', 'Betfair', 'Paddy Power' -> 'FLUT'
     - 'DraftKings', 'Golden Nugget' -> 'DKNG'
     - 'BetMGM', 'Borgata', 'PartyPoker' -> 'MGM'
     - 'Caesars', 'Tropicana', 'Harrahs', 'William Hill' -> 'CZR'
-    - 'Barstool', 'ESPN Bet', 'theScore' -> 'PENN'
+    - 'Barstool', 'ESPN Bet', 'theScore', 'Hollywood' -> 'PENN'
     - 'BetRivers', 'Rush Street', 'PlaySugarHouse' -> 'RSI'
+    - 'Bally' -> 'BALY'
+    - 'Boyd' -> 'BYD'
     
-    Brands to map: {brands}
+    Pairs to map: {entity_brand_pairs}
     
-    Return STRICTLY a valid JSON dictionary where keys are the exact brand names and values are the tickers. Do NOT wrap in markdown blockquotes."""
+    Return STRICTLY a valid JSON dictionary where keys are the exact "Entity | Brand" strings provided, and values are the corresponding tickers. Do NOT wrap in markdown blockquotes."""
     
     try:
         response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
@@ -69,22 +74,22 @@ def process_excel_file(file_path):
         
     df = pd.concat(dfs, ignore_index=True)
     
-    # THE FIX: Explicit renaming to prevent duplicate 'Brand' columns
+    # THE FIX: Explicit renaming. No fuzzy searching to prevent duplicate columns!
     df.rename(columns={
         'Period': 'Date',
         'Revenue - Taxable': 'Taxable_Rev',
         'Tax - State': 'State_Tax'
     }, inplace=True)
     
-    # Safety fallback: If standard 'Brand' column doesn't exist, use Operator/Licensee
-    if 'Brand' not in df.columns:
-        if 'Operator' in df.columns:
-            df.rename(columns={'Operator': 'Brand'}, inplace=True)
-        elif 'Licensee' in df.columns:
-            df.rename(columns={'Licensee': 'Brand'}, inplace=True)
-            
+    # Ensure required columns are present
+    required_cols = ['State', 'Date', 'Entity', 'Brand', 'Vertical', 'Handle', 'Revenue']
+    missing = [col for col in required_cols if col not in df.columns]
+    if missing:
+        print(f"⚠️ Missing columns in Excel. Missing: {missing}")
+        return None
+        
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df = df.dropna(subset=['Date', 'Brand'])
+    df = df.dropna(subset=['Date', 'Brand', 'Entity'])
     
     max_date = df['Date'].max()
     cutoff_date = max_date - pd.DateOffset(months=12)
@@ -97,13 +102,16 @@ def process_excel_file(file_path):
 
     df['Net_Rev'] = df['Taxable_Rev'] - df['State_Tax']
     df['Vertical'] = df['Vertical'].astype(str).str.strip().str.title()
-
-    # Safely get unique brands now that we guarantee only one 'Brand' column exists
-    unique_brands = df['Brand'].unique().tolist()
-    print(f"🧠 Asking AI to map {len(unique_brands)} unique brands...")
-    brand_to_ticker = get_ai_brand_mapping(unique_brands)
     
-    df['Ticker'] = df['Brand'].map(lambda x: brand_to_ticker.get(x, 'PRIVATE'))
+    # CREATING THE PROXY CONTEXT: Combine Entity and Brand
+    df['Entity_Brand'] = df['Entity'].astype(str) + " | " + df['Brand'].astype(str)
+
+    unique_pairs = df['Entity_Brand'].unique().tolist()
+    print(f"🧠 Asking AI to map {len(unique_pairs)} unique Entity | Brand pairs...")
+    
+    brand_to_ticker = get_ai_brand_mapping(unique_pairs)
+    
+    df['Ticker'] = df['Entity_Brand'].map(lambda x: brand_to_ticker.get(x, 'PRIVATE'))
     df = df[df['Ticker'].isin(TARGET_TICKERS)]
 
     master_db = {}
@@ -116,6 +124,7 @@ def process_excel_file(file_path):
             "Sports": {}
         }
         
+        # Aggregate National Totals
         for vert in ["Casino", "Sports"]:
             v_data = t_df[t_df['Vertical'] == vert]
             if not v_data.empty:
@@ -128,10 +137,12 @@ def process_excel_file(file_path):
                     master_db[ticker]["summary"]["sports_gross"] = round(gross, 2)
                     master_db[ticker]["summary"]["sports_net"] = round(net, 2)
 
+        # Break out by State
         for vertical, v_df in t_df.groupby('Vertical'):
             for state, s_df in v_df.groupby('State'):
                 
                 brand_totals = []
+                # Group by consumer Brand for the UI table
                 for brand, b_df in s_df.groupby('Brand'):
                     brand_totals.append({
                         "brand": brand,
