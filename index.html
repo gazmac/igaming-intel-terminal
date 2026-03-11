@@ -46,7 +46,7 @@
         }
         .animate-swipe { animation: swipe-hint 2s infinite ease-in-out; }
 
-        /* New Toggle Buttons for Brand Intelligence */
+        /* New Brand Toggle Buttons */
         .tab-btn { padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .tab-btn-active { background-color: #1e293b; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .tab-btn-inactive { background-color: #f1f5f9; color: #64748b; }
@@ -249,7 +249,7 @@
 
                 <div id="modal-regulatory-room" class="hidden bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-inner" style="min-height: 500px;">
                     
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-100 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-slate-100 pb-6">
                         <div>
                             <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
                                 <span class="bg-purple-100 text-purple-700 p-1.5 rounded-lg">
@@ -270,6 +270,8 @@
                         </div>
                     </div>
 
+                    <div id="national-aggregates-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"></div>
+
                     <div class="flex justify-between items-center mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div class="flex items-center gap-3">
                             <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Select Market:</span>
@@ -279,31 +281,33 @@
                         <span class="px-3 py-1 bg-purple-100 text-purple-700 text-[10px] font-black uppercase tracking-widest rounded shadow-sm border border-purple-200">T12M Data Pipeline</span>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Total Handle Trend ($M)</h4>
-                            <div id="chart-brand-handle" class="w-full" style="height: 220px;"></div>
+                    <div id="regulatory-active-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Total Handle Trend ($M)</h4>
+                                <div id="chart-brand-handle" class="w-full" style="height: 220px;"></div>
+                            </div>
+                            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Taxable vs Net Revenue ($M)</h4>
+                                <div id="chart-brand-revenue" class="w-full" style="height: 220px;"></div>
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Taxable vs Net Revenue ($M)</h4>
-                            <div id="chart-brand-revenue" class="w-full" style="height: 220px;"></div>
-                        </div>
-                    </div>
 
-                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider border-b border-slate-800">
-                                    <th class="p-4 font-bold rounded-tl-xl">Owned Brand</th>
-                                    <th class="p-4 font-bold text-right">12M Handle</th>
-                                    <th class="p-4 font-bold text-right">12M Gross Rev</th>
-                                    <th class="p-4 font-bold text-right">12M Taxable</th>
-                                    <th class="p-4 font-bold text-purple-300 text-right rounded-tr-xl">12M Net Rev (Post-Tax)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="brand-table-body" class="bg-white divide-y divide-slate-100 text-sm">
-                                </tbody>
-                        </table>
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider border-b border-slate-800">
+                                        <th class="p-4 font-bold rounded-tl-xl">Owned Brand</th>
+                                        <th class="p-4 font-bold text-right">12M Handle</th>
+                                        <th class="p-4 font-bold text-right">12M Gross Rev</th>
+                                        <th class="p-4 font-bold text-right">12M Taxable</th>
+                                        <th class="p-4 font-bold text-purple-300 text-right rounded-tr-xl">12M Net Rev (Post-Tax)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="brand-table-body" class="bg-white divide-y divide-slate-100 text-sm">
+                                    </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div id="brand-empty-state" class="hidden text-center py-12 bg-slate-50 rounded-xl border border-slate-200 mt-6">
@@ -336,7 +340,7 @@
         let currentSort = 'earnings';
         let currentSpeech = null;
 
-        // New Variables for Brand Intelligence
+        // Variables for Brand Intelligence
         let currentVertical = 'Casino'; 
         let brandHandleChart = null;
         let brandRevChart = null;
@@ -360,7 +364,7 @@
                         regDb = await regResponse.json();
                     }
                 } catch (err) {
-                    console.warn("Regulatory JSON missing. Using local UI generation.");
+                    console.warn("Regulatory JSON missing.");
                 }
 
                 updateDashboardView(); 
@@ -576,7 +580,6 @@
                 readingRoom.classList.remove('hidden');
             } else if (viewName === 'regulatory-room') {
                 regRoom.classList.remove('hidden');
-                // INIT THE BRAND INTELLIGENCE TAB
                 populateStateDropdown(); 
             } else {
                 mainContent.classList.remove('hidden');
@@ -624,7 +627,7 @@
                 
                 toggleView('main');
 
-                // NEW LOGIC: Only show "View Company Brand Data" button if AI mapped this ticker
+                // SHOW BRAND INTELLIGENCE BUTTON IF WE HAVE DATA IN EXCEL
                 const regBtn = document.getElementById('btn-regulatory');
                 if (regBtn) {
                     if (regDb && regDb[ticker] && Object.keys(regDb[ticker]).length > 0) {
@@ -836,12 +839,11 @@
             }
         }
 
-        // --- NEW JAVASCRIPT FOR BRAND INTELLIGENCE ---
+        // --- NEW JAVASCRIPT: BRAND INTELLIGENCE LOGIC ---
 
         function switchVertical(vertical) {
             currentVertical = vertical;
             
-            // Update UI Toggle Buttons
             const btnCas = document.getElementById('btn-vert-casino');
             const btnSpo = document.getElementById('btn-vert-sports');
             
@@ -861,12 +863,39 @@
             stateSelect.innerHTML = '';
             
             const companyData = regDb[activeTicker];
-            if (!companyData || !companyData[currentVertical]) {
+            
+            // --- NATIONAL AGGREGATES SUMMARY ---
+            const summaryDiv = document.getElementById('national-aggregates-summary');
+            if (companyData && companyData.summary) {
+                summaryDiv.innerHTML = `
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Casino (Gross)</p>
+                        <p class="text-xl font-black text-slate-800 font-mono">$${(companyData.summary.casino_gross).toLocaleString()}M</p>
+                    </div>
+                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm">
+                        <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Total Casino (Net)</p>
+                        <p class="text-xl font-black text-purple-700 font-mono">$${(companyData.summary.casino_net).toLocaleString()}M</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Sports (Gross)</p>
+                        <p class="text-xl font-black text-slate-800 font-mono">$${(companyData.summary.sports_gross).toLocaleString()}M</p>
+                    </div>
+                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm">
+                        <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Total Sports (Net)</p>
+                        <p class="text-xl font-black text-purple-700 font-mono">$${(companyData.summary.sports_net).toLocaleString()}M</p>
+                    </div>
+                `;
+                summaryDiv.style.display = 'grid';
+            } else {
+                if(summaryDiv) summaryDiv.style.display = 'none';
+            }
+
+            // Check if Vertical data exists
+            if (!companyData || !companyData[currentVertical] || Object.keys(companyData[currentVertical]).length === 0) {
                 handleEmptyState(true);
                 return;
             }
 
-            // Get all states where this company has brands in the selected vertical
             const availableStates = Object.keys(companyData[currentVertical]);
             
             if (availableStates.length === 0) {
@@ -884,16 +913,16 @@
 
         function handleEmptyState(isEmpty) {
             const emptyDiv = document.getElementById('brand-empty-state');
-            const tableDiv = document.getElementById('brand-table-body').parentElement.parentElement;
+            const activeContent = document.getElementById('regulatory-active-content');
             
             if (isEmpty) {
                 emptyDiv.classList.remove('hidden');
-                tableDiv.classList.add('hidden');
+                activeContent.classList.add('hidden');
                 if (brandHandleChart) brandHandleChart.destroy();
                 if (brandRevChart) brandRevChart.destroy();
             } else {
                 emptyDiv.classList.add('hidden');
-                tableDiv.classList.remove('hidden');
+                activeContent.classList.remove('hidden');
             }
         }
 
@@ -902,7 +931,7 @@
             const data = regDb[activeTicker][currentVertical][selectedState];
             if (!data) return;
 
-            // 1. UPDATE TABLE
+            // 1. UPDATE BRAND TABLE
             const tbody = document.getElementById('brand-table-body');
             tbody.innerHTML = data.brands.map(b => `
                 <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
@@ -914,7 +943,7 @@
                 </tr>
             `).join('');
 
-            // 2. UPDATE CHARTS
+            // 2. UPDATE APEX CHARTS FOR BRAND TREND
             const trend = data.trend; 
             const labels = trend.map(t => t.month);
             const handles = trend.map(t => t.handle);
@@ -926,7 +955,7 @@
 
             brandHandleChart = new ApexCharts(document.querySelector("#chart-brand-handle"), {
                 series: [{ name: 'Total Handle ($M)', data: handles }],
-                chart: { type: 'area', height: 220, toolbar: { show: false } },
+                chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'inherit', zoom: { enabled: false } },
                 colors: ['#8b5cf6'],
                 dataLabels: { enabled: false },
                 stroke: { curve: 'smooth', width: 3 },
@@ -941,7 +970,7 @@
                     { name: 'Gross Rev', data: taxables },
                     { name: 'Net Rev (Post-Tax)', data: nets }
                 ],
-                chart: { type: 'bar', height: 220, toolbar: { show: false } },
+                chart: { type: 'bar', height: 220, toolbar: { show: false }, fontFamily: 'inherit' },
                 colors: ['#cbd5e1', '#8b5cf6'],
                 dataLabels: { enabled: false },
                 plotOptions: { bar: { borderRadius: 2, columnWidth: '60%' } },
