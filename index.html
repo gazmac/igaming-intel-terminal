@@ -868,26 +868,27 @@
             const summaryDiv = document.getElementById('national-aggregates-summary');
             if (companyData && companyData.summary) {
                 summaryDiv.innerHTML = `
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm w-full">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Casino (Gross)</p>
                         <p class="text-xl font-black text-slate-800 font-mono">$${(companyData.summary.casino_gross).toLocaleString()}M</p>
                     </div>
-                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm">
+                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm w-full">
                         <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Total Casino (Net)</p>
                         <p class="text-xl font-black text-purple-700 font-mono">$${(companyData.summary.casino_net).toLocaleString()}M</p>
                     </div>
-                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm w-full">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Sports (Gross)</p>
                         <p class="text-xl font-black text-slate-800 font-mono">$${(companyData.summary.sports_gross).toLocaleString()}M</p>
                     </div>
-                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm">
+                    <div class="bg-purple-50/50 rounded-xl p-4 border border-purple-100 shadow-sm w-full">
                         <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1">Total Sports (Net)</p>
                         <p class="text-xl font-black text-purple-700 font-mono">$${(companyData.summary.sports_net).toLocaleString()}M</p>
                     </div>
                 `;
-                summaryDiv.style.display = 'grid';
+                // THE FIX: Use classList to safely reveal the grid without breaking desktop CSS
+                summaryDiv.classList.remove('hidden');
             } else {
-                if(summaryDiv) summaryDiv.style.display = 'none';
+                if(summaryDiv) summaryDiv.classList.add('hidden');
             }
 
             // Check if Vertical data exists
