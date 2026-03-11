@@ -1,200 +1,210 @@
 import json
-import requests
 import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import random
 import os
-import io
 import re
-from bs4 import BeautifulSoup
-import PyPDF2
 from google import genai
+import warnings
+warnings.filterwarnings('ignore')
 
-# --- 1. CONFIGURATION ---
-STATES = {
-    "NY": {"name": "New York", "base_handle": 1200, "tax_rate": 0.51},
-    "NJ": {"name": "New Jersey", "base_handle": 950, "tax_rate": 0.1425},
-    "PA": {"name": "Pennsylvania", "base_handle": 700, "tax_rate": 0.36},
-    "MI": {"name": "Michigan", "base_handle": 450, "tax_rate": 0.084},
-    "OH": {"name": "Ohio", "base_handle": 600, "tax_rate": 0.20},
-    "IL": {"name": "Illinois", "base_handle": 850, "tax_rate": 0.15}
-}
-
-os.makedirs("data_drops", exist_ok=True)
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
-}
+# The known tickers we want Gemini to map brands to
+TARGET_TICKERS = [
+    "FLUT", "DKNG", "ENT.L", "MGM", "CZR", "PENN", "RSI", "BALY", 
+    "SGHC", "EVOK.L", "BETS-B.ST", "CHDN", "BYD", "RRR", "GDEN", "MCRI"
+]
 
 def get_gemini_client():
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key: return None
     return genai.Client(api_key=api_key)
 
-def process_ai_extraction(text_data, state_name):
+def get_ai_brand_mapping(brands):
+    """Asks Gemini to map a list of casino/sportsbook brands to their parent stock tickers."""
     client = get_gemini_client()
-    if not client: return None
+    if not client or not brands:
+        return {}
     
-    prompt = f"""You are a forensic financial analyst. Review this raw regulatory gaming data for {state_name}.
-    Extract the total Statewide Handle and Gross Gaming Revenue (GGR) for the MOST RECENT month available.
-    Also, extract the Handle and GGR for EACH SPECIFIC OPERATOR (e.g., FanDuel, DraftKings, BetMGM, Caesars, Rush Street, etc.) for that SAME month.
-    Convert all monetary values to Millions (e.g., 1,500,000,000 becomes 1500.0).
-
-    Return STRICTLY a JSON object in this exact format (no markdown blocks, no conversational text):
-    {{
-        "month": "Month Year",
-        "statewide": {{"handle": 1500.0, "ggr": 150.0}},
-        "operators": [
-            {{"name": "FanDuel", "handle": 600.0, "ggr": 75.0}},
-            {{"name": "DraftKings", "handle": 500.0, "ggr": 50.0}}
-        ]
-    }}
-    Data: {text_data[:35000]}"""
+    prompt = f"""You are an expert in the US iGaming and Casino industry. 
+    Map the following list of brands to their ultimate publicly traded parent company ticker.
+    Use ONLY these tickers: {TARGET_TICKERS}. If a brand is private or not owned by these, map it to "PRIVATE".
+    (e.g., 'FanDuel' -> 'FLUT', 'DraftKings' -> 'DKNG', 'BetMGM' -> 'MGM', 'Borgata' -> 'MGM', 'Caesars' -> 'CZR', 'Tropicana' -> 'CZR', 'Barstool' -> 'PENN', 'ESPN Bet' -> 'PENN', 'BetRivers' -> 'RSI').
+    
+    Brands to map: {brands}
+    
+    Return STRICTLY a valid JSON dictionary where keys are the exact brand names and values are the tickers. Do NOT wrap in markdown blockquotes."""
     
     try:
         response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
-        raw_output = response.text.strip()
-        print(f"\n--- AI RAW OUTPUT FOR {state_name} ---")
-        print(raw_output[:500] + "... [truncated]") 
-        
-        clean_json = re.sub(r'^```json\s*', '', raw_output)
-        clean_json = re.sub(r'^```\s*', '', clean_json)
+        clean_json = re.sub(r'^```json\s*', '', response.text.strip())
         clean_json = re.sub(r'```$', '', clean_json).strip()
-        
         return json.loads(clean_json)
     except Exception as e:
-        print(f"❌ AI Extraction Error for {state_name}: {e}")
-        return None
+        print(f"⚠️ AI Mapping Error: {e}")
+        return {}
 
-# --- 2. NY AGENT (LIVE WEB EXCEL) ---
-def scrape_ny():
-    print("\nChecking New York (Live API)...")
-    try:
-        url = "[https://gaming.ny.gov/revenue-reports](https://gaming.ny.gov/revenue-reports)"
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status()
-        soup = BeautifulSoup(res.text, 'html.parser')
-        
-        link = None
-        for a in soup.find_all('a', href=True):
-            href = a['href'].lower()
-            text = a.text.lower()
-            # Look for "statewide" and either "excel" OR the actual .xlsx file extension
-            if 'statewide' in text and ('excel' in text or href.endswith('.xlsx') or href.endswith('.xls')):
-                link = a['href'] if a['href'].startswith('http') else "[https://gaming.ny.gov](https://gaming.ny.gov)" + a['href']
-                break
-        
-        if not link:
-            print("  -> Could not find the NY Excel link on the webpage. Structure may have changed.")
-            return None
-
-        print(f"  -> Found NY link: {link}")
-        xl_res = requests.get(link, headers=HEADERS)
-        df = pd.read_excel(io.BytesIO(xl_res.content))
-        raw_text = df.head(150).to_csv(index=False) 
-        
-        return process_ai_extraction(raw_text, "New York")
-    except Exception as e:
-        print(f"❌ NY Error: {e}")
-        return None
-
-# --- 3. DROP ZONE AGENT (LOCAL FILES) ---
-def process_local_drop(state_code):
-    print(f"\nChecking Data Drops for {state_code}...")
-    base_path = f"data_drops/{state_code}_revenue"
-    raw_text = ""
-    
-    try:
-        if os.path.exists(base_path + ".pdf"):
-            print(f"  -> Found PDF for {state_code}. Reading...")
-            reader = PyPDF2.PdfReader(base_path + ".pdf")
-            for page in reader.pages[:4]: raw_text += page.extract_text()
-        elif os.path.exists(base_path + ".xlsx"):
-            print(f"  -> Found Excel for {state_code}. Reading...")
-            df = pd.read_excel(base_path + ".xlsx")
-            raw_text = df.head(200).to_csv(index=False)
-        elif os.path.exists(base_path + ".csv"):
-            print(f"  -> Found CSV for {state_code}. Reading...")
-            df = pd.read_csv(base_path + ".csv")
-            raw_text = df.head(200).to_csv(index=False)
-        else:
-            print(f"  -> No local file found for {state_code} in data_drops/")
-            return None
-            
-        return process_ai_extraction(raw_text, STATES[state_code]["name"])
-    except Exception as e:
-        print(f"❌ Error reading local file for {state_code}: {e}")
-        return None
-
-# --- 4. FALLBACK GENERATOR (CHARTS & DUMMY DATA) ---
-def generate_dummy_history(config):
-    data = []
+def generate_dummy_data_for_ui():
+    """Generates structural dummy data so the UI doesn't crash before the user uploads the Excel file."""
+    print("⚠️ Excel file not found. Generating structural dummy data for UI testing...")
+    dummy_db = {}
     curr = datetime.now()
-    for i in range(12): 
-        m = (curr - relativedelta(months=i)).strftime("%b %Y")
-        h = config['base_handle'] * random.uniform(0.9, 1.1)
-        g = h * random.uniform(0.07, 0.11)
-        data.append({"month": m, "handle": round(h,1), "hold": round((g/h)*100,1), "ggr": round(g,1), "ngr": round(g*(1-config['tax_rate']),1)})
-    return data
-
-def generate_dummy_operators(config):
-    return [
-        {"name": "FanDuel", "handle": config['base_handle']*0.4, "ggr": config['base_handle']*0.4*0.11},
-        {"name": "DraftKings", "handle": config['base_handle']*0.35, "ggr": config['base_handle']*0.35*0.09},
-        {"name": "BetMGM", "handle": config['base_handle']*0.15, "ggr": config['base_handle']*0.15*0.08},
-        {"name": "Caesars", "handle": config['base_handle']*0.10, "ggr": config['base_handle']*0.10*0.07}
-    ]
-
-# --- 5. PIPELINE EXECUTION ---
-def run():
-    results = {}
+    months = [(curr - relativedelta(months=i)).strftime("%b %Y") for i in range(12)][::-1]
     
-    for code, config in STATES.items():
-        ai_data = scrape_ny() if code == "NY" else process_local_drop(code)
+    for ticker in ["DKNG", "FLUT", "MGM", "CZR", "PENN", "RSI"]:
+        dummy_db[ticker] = {"Casino": {}, "Sports": {}}
         
-        hist = generate_dummy_history(config) 
-        
-        if ai_data and isinstance(ai_data, dict) and "operators" in ai_data:
-            print(f"  ✅ AI Data verified and integrated for {code}")
-            hist[0] = {
-                "month": ai_data.get("month", "Recent"),
-                "handle": round(ai_data["statewide"]["handle"], 1),
-                "ggr": round(ai_data["statewide"]["ggr"], 1),
-                "hold": round((ai_data["statewide"]["ggr"] / ai_data["statewide"]["handle"]) * 100, 1) if ai_data["statewide"]["handle"] > 0 else 0,
-                "ngr": round(ai_data["statewide"]["ggr"] * (1 - config["tax_rate"]), 1)
-            }
-            
-            operators = []
-            for op in ai_data["operators"]:
-                h, g = op.get("handle", 0), op.get("ggr", 0)
-                operators.append({
-                    "name": op.get("name", "Unknown"),
-                    "handle": round(h, 1),
-                    "ggr": round(g, 1),
-                    "hold": round((g / h) * 100, 1) if h > 0 else 0,
-                    "ngr": round(g * (1 - config["tax_rate"]), 1)
-                })
-            
-            operators = sorted(operators, key=lambda x: x["handle"], reverse=True)
-            
-            results[code] = {
-                "source": "AI Extracted Data" if code == "NY" else "AI Extracted (Local Drop)", 
-                "history": hist, 
-                "operators": operators,
-                "latest_month": ai_data.get("month", "Recent")
-            }
-        else:
-            print(f"  ⚠️ Falling back to Dummy Data for {code}")
-            results[code] = {
-                "source": "Simulated Dummy Data", 
-                "history": hist, 
-                "operators": generate_dummy_operators(config),
-                "latest_month": hist[0]["month"]
-            }
+        for vertical in ["Casino", "Sports"]:
+            for state in ["NJ", "PA", "MI"]:
+                brand_name = f"{ticker} {vertical} Brand"
+                history = []
+                for m in months:
+                    h = random.uniform(50, 200)
+                    rev = h * random.uniform(0.07, 0.12)
+                    taxable = rev * 0.9
+                    tax = taxable * 0.15
+                    history.append({
+                        "month": m, "brand": brand_name,
+                        "handle": round(h, 2), "revenue": round(rev, 2),
+                        "taxable_rev": round(taxable, 2), "state_tax": round(tax, 2),
+                        "net_rev": round(taxable - tax, 2)
+                    })
+                
+                # Brand 12M Aggregates
+                brand_totals = [{
+                    "brand": brand_name,
+                    "handle_12m": round(sum(x['handle'] for x in history), 2),
+                    "revenue_12m": round(sum(x['revenue'] for x in history), 2),
+                    "net_rev_12m": round(sum(x['net_rev'] for x in history), 2)
+                }]
+                
+                # State 12M Time Series (Aggregated across all brands for the chart)
+                state_trend = []
+                for m in months:
+                    m_data = [x for x in history if x['month'] == m]
+                    state_trend.append({
+                        "month": m,
+                        "handle": round(sum(x['handle'] for x in m_data), 2),
+                        "revenue": round(sum(x['revenue'] for x in m_data), 2),
+                        "net_rev": round(sum(x['net_rev'] for x in m_data), 2)
+                    })
+                    
+                dummy_db[ticker][vertical][state] = {
+                    "brands": brand_totals,
+                    "trend": state_trend
+                }
+    return dummy_db
 
+def process_excel_file(file_path):
+    print(f"📊 Processing local file: {file_path}")
+    xls = pd.ExcelFile(file_path)
+    
+    # 1. Read Sheets
+    df_casino = pd.read_excel(xls, 'CASINO') if 'CASINO' in xls.sheet_names else pd.DataFrame()
+    df_sports = pd.read_excel(xls, 'SPORTS') if 'SPORTS' in xls.sheet_names else pd.DataFrame()
+    
+    df_casino['Vertical'] = 'Casino'
+    df_sports['Vertical'] = 'Sports'
+    
+    df = pd.concat([df_casino, df_sports], ignore_index=True)
+    
+    # Clean column names (assuming variations of standard names)
+    col_map = {}
+    for col in df.columns:
+        c = str(col).strip().lower()
+        if 'state' in c and 'tax' not in c: col_map[col] = 'State'
+        elif 'brand' in c or 'operator' in c: col_map[col] = 'Brand'
+        elif 'date' in c or 'month' in c: col_map[col] = 'Date'
+        elif 'handle' in c: col_map[col] = 'Handle'
+        elif 'revenue- taxable' in c or 'taxable rev' in c: col_map[col] = 'Taxable_Rev'
+        elif 'revenue' in c and 'tax' not in c: col_map[col] = 'Revenue'
+        elif 'tax -state' in c or 'state tax' in c: col_map[col] = 'State_Tax'
+    df.rename(columns=col_map, inplace=True)
+    
+    # Ensure required columns exist
+    required = ['State', 'Brand', 'Date', 'Revenue']
+    if not all(r in df.columns for r in required):
+        print(f"⚠️ Missing columns in Excel. Found: {df.columns.tolist()}")
+        return None
+
+    # Standardize data
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df = df.dropna(subset=['Date', 'Brand'])
+    
+    # Filter Last 12 Months
+    max_date = df['Date'].max()
+    cutoff_date = max_date - pd.DateOffset(months=12)
+    df = df[df['Date'] > cutoff_date]
+    df['Month_Str'] = df['Date'].dt.strftime('%b %Y')
+    
+    # Fill missing numeric cols with 0
+    for col in ['Handle', 'Revenue', 'Taxable_Rev', 'State_Tax']:
+        if col not in df.columns: df[col] = 0.0
+        df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.0)
+
+    # Calculate Net Revenue (Taxable - State Tax)
+    df['Net_Rev'] = df['Taxable_Rev'] - df['State_Tax']
+
+    # 2. Ask Gemini to map brands
+    unique_brands = df['Brand'].unique().tolist()
+    print(f"🧠 Asking AI to map {len(unique_brands)} brands to parent tickers...")
+    brand_to_ticker = get_ai_brand_mapping(unique_brands)
+    
+    df['Ticker'] = df['Brand'].map(lambda x: brand_to_ticker.get(x, 'PRIVATE'))
+    df = df[df['Ticker'].isin(TARGET_TICKERS)] # Drop private/unmapped
+
+    # 3. Structure the JSON Database
+    master_db = {}
+    
+    for ticker, t_df in df.groupby('Ticker'):
+        master_db[ticker] = {"Casino": {}, "Sports": {}}
+        
+        for vertical, v_df in t_df.groupby('Vertical'):
+            for state, s_df in v_df.groupby('State'):
+                
+                # Brand 12M Totals
+                brand_totals = []
+                for brand, b_df in s_df.groupby('Brand'):
+                    brand_totals.append({
+                        "brand": brand,
+                        "handle_12m": round(b_df['Handle'].sum() / 1e6, 2), # Convert to Millions
+                        "revenue_12m": round(b_df['Revenue'].sum() / 1e6, 2),
+                        "taxable_12m": round(b_df['Taxable_Rev'].sum() / 1e6, 2),
+                        "net_rev_12m": round(b_df['Net_Rev'].sum() / 1e6, 2)
+                    })
+                
+                # State 12M Trend (Aggregated across all owned brands in that state)
+                trend_df = s_df.groupby(['Date', 'Month_Str']).sum(numeric_only=True).reset_index().sort_values('Date')
+                state_trend = []
+                for _, row in trend_df.iterrows():
+                    state_trend.append({
+                        "month": row['Month_Str'],
+                        "handle": round(row['Handle'] / 1e6, 2),
+                        "revenue": round(row['Revenue'] / 1e6, 2),
+                        "net_rev": round(row['Net_Rev'] / 1e6, 2)
+                    })
+                
+                master_db[ticker][vertical][state] = {
+                    "brands": sorted(brand_totals, key=lambda x: x['revenue_12m'], reverse=True),
+                    "trend": state_trend
+                }
+                
+    return master_db
+
+def run():
+    print("🛡️ Starting AI Data Pipeline...")
+    file_path = "data_drops/Sports_Casino_Data_ByBrand_US_States.xlsx"
+    
+    if os.path.exists(file_path):
+        db = process_excel_file(file_path)
+        if not db: db = generate_dummy_data_for_ui()
+    else:
+        db = generate_dummy_data_for_ui()
+        
     with open('regulatory_data.json', 'w') as f:
-        json.dump(results, f, indent=4)
+        json.dump(db, f, indent=4)
+        
+    print(f"✅ Regulatory Pipeline Complete.")
 
 if __name__ == "__main__":
     run()
