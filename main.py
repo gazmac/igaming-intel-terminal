@@ -398,9 +398,11 @@ def ai_process_intelligence(company_name, ticker):
         raw_text = re.sub(r'\s*```$', '', raw_text)
         
         try:
-            match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+            # Stricter regex to catch trailing garbage characters
+            match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
             if match:
-                return json.loads(match.group(0))
+                clean = match.group(1)
+                return json.loads(clean)
             return json.loads(raw_text)
         except json.JSONDecodeError:
             return {"summary": ["Data temporarily unavailable while AI processes news."], "sentiment": 50, "reading_room": "<p>AI output could not be parsed.</p>", "quotes": []}
