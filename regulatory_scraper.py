@@ -8,7 +8,6 @@ from google import genai
 import warnings
 warnings.filterwarnings('ignore')
 
-# Comprehensive list of all targeted public gaming tickers
 TARGET_TICKERS = [
     "FLUT", "DKNG", "ENT.L", "MGM", "CZR", "PENN", "RSI", "BALY", 
     "SGHC", "EVOK.L", "BETS-B.ST", "CHDN", "BYD", "RRR", "GDEN", "MCRI",
@@ -26,27 +25,25 @@ def get_ai_brand_mapping(entity_brand_pairs):
         return {}
     
     prompt = f"""You are an expert in the US iGaming and Casino industry. 
-    I am providing a list of "Entity | Brand" pairs extracted from state regulatory data. 
-    'Entity' is the local license holder/casino, and 'Brand' is the consumer sportsbook/iCasino.
-    
     Map each exact "Entity | Brand" string to its ultimate publicly traded parent company ticker.
-    Use ONLY these tickers: {TARGET_TICKERS}. If the operator is private, tribal, or not owned by these, map it to "PRIVATE".
+    Use ONLY these tickers: {TARGET_TICKERS}. If the operator is private, map it to "PRIVATE".
     
-    CRITICAL MAPPINGS:
+    CRITICAL GOLD-STANDARD MAPPINGS:
     - 'WSOP' or 'World Series of Poker' -> 'CZR'
-    - 'WynnBet' or 'Wynn' -> 'WYNN'
-    - 'FanDuel', 'Betfair', 'Paddy Power' -> 'FLUT'
+    - 'WynnBet', 'Wynn', 'Encore' -> 'WYNN'
+    - 'FanDuel', 'Betfair', 'Paddy Power', 'MotorCity' -> 'FLUT'
     - 'DraftKings', 'Golden Nugget' -> 'DKNG'
     - 'BetMGM', 'Borgata', 'PartyPoker' -> 'MGM'
     - 'Caesars', 'Tropicana', 'Harrahs', 'William Hill' -> 'CZR'
-    - 'Barstool', 'ESPN Bet', 'theScore', 'Hollywood' -> 'PENN'
-    - 'BetRivers', 'Rush Street', 'PlaySugarHouse' -> 'RSI'
+    - 'Barstool', 'ESPN Bet', 'theScore', 'Hollywood', 'Ameristar' -> 'PENN'
+    - 'BetRivers', 'Rush Street', 'PlaySugarHouse', 'Rivers' -> 'RSI'
+    - 'TwinSpires', 'Derby City', 'Turfway', 'Ellis Park', 'Oak Grove', 'Terre Haute', 'Oxford', 'Fair Grounds', 'Rosie's', 'The Rose' -> 'CHDN'
     - 'Bally' -> 'BALY'
-    - 'Boyd' -> 'BYD'
+    - 'Boyd', 'Treasure Chest', 'Delta Downs' -> 'BYD'
     
     Pairs to map: {entity_brand_pairs}
     
-    Return STRICTLY a valid JSON dictionary where keys are the exact "Entity | Brand" strings provided, and values are the corresponding tickers. Do NOT wrap in markdown blockquotes."""
+    Return STRICTLY a valid JSON dictionary where keys are the exact "Entity | Brand" strings provided, and values are the corresponding tickers. Do NOT wrap in markdown."""
     
     try:
         response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
@@ -68,26 +65,20 @@ def process_excel_file(file_path):
             temp_df['Vertical'] = sheet.upper()
             dfs.append(temp_df)
             
-    if not dfs:
-        print("⚠️ Neither CASINO nor SPORTS sheets found.")
-        return None
+    if not dfs: return None
         
     df = pd.concat(dfs, ignore_index=True)
     
-    # THE FIX: Explicit renaming. No fuzzy searching to prevent duplicate columns!
     df.rename(columns={
         'Period': 'Date',
         'Revenue - Taxable': 'Taxable_Rev',
         'Tax - State': 'State_Tax'
     }, inplace=True)
     
-    # Ensure required columns are present
-    required_cols = ['State', 'Date', 'Entity', 'Brand', 'Vertical', 'Handle', 'Revenue']
-    missing = [col for col in required_cols if col not in df.columns]
-    if missing:
-        print(f"⚠️ Missing columns in Excel. Missing: {missing}")
-        return None
-        
+    if 'Brand' not in df.columns:
+        if 'Operator' in df.columns: df.rename(columns={'Operator': 'Brand'}, inplace=True)
+        elif 'Licensee' in df.columns: df.rename(columns={'Licensee': 'Brand'}, inplace=True)
+            
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df = df.dropna(subset=['Date', 'Brand', 'Entity'])
     
@@ -103,12 +94,10 @@ def process_excel_file(file_path):
     df['Net_Rev'] = df['Taxable_Rev'] - df['State_Tax']
     df['Vertical'] = df['Vertical'].astype(str).str.strip().str.title()
     
-    # CREATING THE PROXY CONTEXT: Combine Entity and Brand
     df['Entity_Brand'] = df['Entity'].astype(str) + " | " + df['Brand'].astype(str)
-
     unique_pairs = df['Entity_Brand'].unique().tolist()
-    print(f"🧠 Asking AI to map {len(unique_pairs)} unique Entity | Brand pairs...")
     
+    print(f"🧠 Asking AI to map {len(unique_pairs)} unique Entity | Brand pairs...")
     brand_to_ticker = get_ai_brand_mapping(unique_pairs)
     
     df['Ticker'] = df['Entity_Brand'].map(lambda x: brand_to_ticker.get(x, 'PRIVATE'))
@@ -124,7 +113,6 @@ def process_excel_file(file_path):
             "Sports": {}
         }
         
-        # Aggregate National Totals
         for vert in ["Casino", "Sports"]:
             v_data = t_df[t_df['Vertical'] == vert]
             if not v_data.empty:
@@ -137,12 +125,10 @@ def process_excel_file(file_path):
                     master_db[ticker]["summary"]["sports_gross"] = round(gross, 2)
                     master_db[ticker]["summary"]["sports_net"] = round(net, 2)
 
-        # Break out by State
         for vertical, v_df in t_df.groupby('Vertical'):
             for state, s_df in v_df.groupby('State'):
                 
                 brand_totals = []
-                # Group by consumer Brand for the UI table
                 for brand, b_df in s_df.groupby('Brand'):
                     brand_totals.append({
                         "brand": brand,
@@ -153,10 +139,13 @@ def process_excel_file(file_path):
                     })
                 
                 trend_df = s_df.groupby(['Date', 'Month_Str']).sum(numeric_only=True).reset_index()
+                state_max_date = trend_df['Date'].max()
                 
                 state_trend = []
                 for m in all_months:
                     row = trend_df[trend_df['Month_Str'] == m]
+                    m_date = datetime.strptime(m, '%b %Y')
+                    
                     if not row.empty:
                         state_trend.append({
                             "month": m,
@@ -165,7 +154,11 @@ def process_excel_file(file_path):
                             "net_rev": round(row['Net_Rev'].iloc[0] / 1e6, 2)
                         })
                     else:
-                        state_trend.append({"month": m, "handle": 0.0, "revenue": 0.0, "net_rev": 0.0})
+                        # FIX: If the month hasn't been reported for this state yet, use None (null) so the chart breaks instead of dropping to 0
+                        if pd.notna(state_max_date) and m_date > state_max_date:
+                            state_trend.append({"month": m, "handle": None, "revenue": None, "net_rev": None})
+                        else:
+                            state_trend.append({"month": m, "handle": 0.0, "revenue": 0.0, "net_rev": 0.0})
                 
                 master_db[ticker][vertical][state] = {
                     "brands": sorted(brand_totals, key=lambda x: x['revenue_12m'], reverse=True),
