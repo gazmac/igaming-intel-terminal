@@ -69,20 +69,20 @@ def process_excel_file(file_path):
         
     df = pd.concat(dfs, ignore_index=True)
     
-    # Map columns dynamically based on the exact headers you provided
-    col_map = {}
-    for col in df.columns:
-        c = str(col).strip().lower()
-        if 'state' in c and 'tax' not in c: col_map[col] = 'State'
-        elif 'brand' in c or 'operator' in c or 'licensee' in c: col_map[col] = 'Brand'
-        elif c == 'period' or c == 'date' or c == 'month': col_map[col] = 'Date'
-        elif 'handle' in c: col_map[col] = 'Handle'
-        elif c == 'revenue - taxable' or 'taxable rev' in c: col_map[col] = 'Taxable_Rev'
-        elif 'revenue' in c and 'tax' not in c: col_map[col] = 'Revenue'
-        elif c == 'tax - state' or 'state tax' in c: col_map[col] = 'State_Tax'
-        
-    df.rename(columns=col_map, inplace=True)
+    # THE FIX: Explicit renaming to prevent duplicate 'Brand' columns
+    df.rename(columns={
+        'Period': 'Date',
+        'Revenue - Taxable': 'Taxable_Rev',
+        'Tax - State': 'State_Tax'
+    }, inplace=True)
     
+    # Safety fallback: If standard 'Brand' column doesn't exist, use Operator/Licensee
+    if 'Brand' not in df.columns:
+        if 'Operator' in df.columns:
+            df.rename(columns={'Operator': 'Brand'}, inplace=True)
+        elif 'Licensee' in df.columns:
+            df.rename(columns={'Licensee': 'Brand'}, inplace=True)
+            
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df = df.dropna(subset=['Date', 'Brand'])
     
@@ -98,6 +98,7 @@ def process_excel_file(file_path):
     df['Net_Rev'] = df['Taxable_Rev'] - df['State_Tax']
     df['Vertical'] = df['Vertical'].astype(str).str.strip().str.title()
 
+    # Safely get unique brands now that we guarantee only one 'Brand' column exists
     unique_brands = df['Brand'].unique().tolist()
     print(f"🧠 Asking AI to map {len(unique_brands)} unique brands...")
     brand_to_ticker = get_ai_brand_mapping(unique_brands)
@@ -109,14 +110,12 @@ def process_excel_file(file_path):
     all_months = sorted(df['Month_Str'].unique(), key=lambda x: datetime.strptime(x, '%b %Y'))
 
     for ticker, t_df in df.groupby('Ticker'):
-        # Initialize structure with the new Summary aggregates
         master_db[ticker] = {
             "summary": {"casino_gross": 0, "casino_net": 0, "sports_gross": 0, "sports_net": 0},
             "Casino": {}, 
             "Sports": {}
         }
         
-        # Calculate National Aggregates
         for vert in ["Casino", "Sports"]:
             v_data = t_df[t_df['Vertical'] == vert]
             if not v_data.empty:
@@ -129,7 +128,6 @@ def process_excel_file(file_path):
                     master_db[ticker]["summary"]["sports_gross"] = round(gross, 2)
                     master_db[ticker]["summary"]["sports_net"] = round(net, 2)
 
-        # Build State and Brand Breakdowns
         for vertical, v_df in t_df.groupby('Vertical'):
             for state, s_df in v_df.groupby('State'):
                 
@@ -145,7 +143,6 @@ def process_excel_file(file_path):
                 
                 trend_df = s_df.groupby(['Date', 'Month_Str']).sum(numeric_only=True).reset_index()
                 
-                # Ensure all 12 months are present to fix chart 0.00 glitches
                 state_trend = []
                 for m in all_months:
                     row = trend_df[trend_df['Month_Str'] == m]
