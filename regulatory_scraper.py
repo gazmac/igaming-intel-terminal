@@ -46,14 +46,12 @@ def get_ai_brand_mapping(brands):
 
 def generate_dummy_data_for_ui():
     """Generates structural dummy data so the UI doesn't crash before the user uploads the Excel file."""
-    print("⚠️ Excel file not found. Generating structural dummy data for UI testing...")
     dummy_db = {}
     curr = datetime.now()
     months = [(curr - relativedelta(months=i)).strftime("%b %Y") for i in range(12)][::-1]
     
     for ticker in ["DKNG", "FLUT", "MGM", "CZR", "PENN", "RSI"]:
         dummy_db[ticker] = {"Casino": {}, "Sports": {}}
-        
         for vertical in ["Casino", "Sports"]:
             for state in ["NJ", "PA", "MI"]:
                 brand_name = f"{ticker} {vertical} Brand"
@@ -70,15 +68,14 @@ def generate_dummy_data_for_ui():
                         "net_rev": round(taxable - tax, 2)
                     })
                 
-                # Brand 12M Aggregates
                 brand_totals = [{
                     "brand": brand_name,
                     "handle_12m": round(sum(x['handle'] for x in history), 2),
                     "revenue_12m": round(sum(x['revenue'] for x in history), 2),
+                    "taxable_12m": round(sum(x['taxable_rev'] for x in history), 2),
                     "net_rev_12m": round(sum(x['net_rev'] for x in history), 2)
                 }]
                 
-                # State 12M Time Series (Aggregated across all brands for the chart)
                 state_trend = []
                 for m in months:
                     m_data = [x for x in history if x['month'] == m]
@@ -99,39 +96,37 @@ def process_excel_file(file_path):
     print(f"📊 Processing local file: {file_path}")
     xls = pd.ExcelFile(file_path)
     
-    # 1. Read Sheets
-    df_casino = pd.read_excel(xls, 'CASINO') if 'CASINO' in xls.sheet_names else pd.DataFrame()
-    df_sports = pd.read_excel(xls, 'SPORTS') if 'SPORTS' in xls.sheet_names else pd.DataFrame()
+    dfs = []
+    # Read the specific tabs we want
+    for sheet in xls.sheet_names:
+        if sheet.upper() in ['CASINO', 'SPORTS']:
+            print(f"  -> Loading sheet: {sheet}")
+            dfs.append(pd.read_excel(xls, sheet))
+            
+    if not dfs:
+        print("⚠️ Neither CASINO nor SPORTS sheets found. Falling back to dummy data.")
+        return None
+        
+    df = pd.concat(dfs, ignore_index=True)
     
-    df_casino['Vertical'] = 'Casino'
-    df_sports['Vertical'] = 'Sports'
+    # Map the user's exact columns to the engine's internal names
+    df.rename(columns={
+        'Period': 'Date',
+        'Revenue - Taxable': 'Taxable_Rev',
+        'Tax - State': 'State_Tax'
+    }, inplace=True)
     
-    df = pd.concat([df_casino, df_sports], ignore_index=True)
-    
-    # Clean column names (assuming variations of standard names)
-    col_map = {}
-    for col in df.columns:
-        c = str(col).strip().lower()
-        if 'state' in c and 'tax' not in c: col_map[col] = 'State'
-        elif 'brand' in c or 'operator' in c: col_map[col] = 'Brand'
-        elif 'date' in c or 'month' in c: col_map[col] = 'Date'
-        elif 'handle' in c: col_map[col] = 'Handle'
-        elif 'revenue- taxable' in c or 'taxable rev' in c: col_map[col] = 'Taxable_Rev'
-        elif 'revenue' in c and 'tax' not in c: col_map[col] = 'Revenue'
-        elif 'tax -state' in c or 'state tax' in c: col_map[col] = 'State_Tax'
-    df.rename(columns=col_map, inplace=True)
-    
-    # Ensure required columns exist
-    required = ['State', 'Brand', 'Date', 'Revenue']
-    if not all(r in df.columns for r in required):
-        print(f"⚠️ Missing columns in Excel. Found: {df.columns.tolist()}")
+    required = ['State', 'Brand', 'Date', 'Revenue', 'Vertical']
+    missing = [r for r in required if r not in df.columns]
+    if missing:
+        print(f"⚠️ Missing columns in Excel. Missing: {missing}")
         return None
 
-    # Standardize data
+    # Standardize Data Types
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df = df.dropna(subset=['Date', 'Brand'])
     
-    # Filter Last 12 Months
+    # Filter for the Last 12 Months
     max_date = df['Date'].max()
     cutoff_date = max_date - pd.DateOffset(months=12)
     df = df[df['Date'] > cutoff_date]
@@ -142,27 +137,31 @@ def process_excel_file(file_path):
         if col not in df.columns: df[col] = 0.0
         df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.0)
 
-    # Calculate Net Revenue (Taxable - State Tax)
+    # Calculate Net Revenue
     df['Net_Rev'] = df['Taxable_Rev'] - df['State_Tax']
+    
+    # Clean up the Vertical column text (e.g. "Casino", "Sports")
+    df['Vertical'] = df['Vertical'].astype(str).str.strip().str.title()
 
-    # 2. Ask Gemini to map brands
+    # Ask Gemini to map brands
     unique_brands = df['Brand'].unique().tolist()
-    print(f"🧠 Asking AI to map {len(unique_brands)} brands to parent tickers...")
+    print(f"🧠 Asking AI to map {len(unique_brands)} unique brands to parent tickers...")
     brand_to_ticker = get_ai_brand_mapping(unique_brands)
     
     df['Ticker'] = df['Brand'].map(lambda x: brand_to_ticker.get(x, 'PRIVATE'))
     df = df[df['Ticker'].isin(TARGET_TICKERS)] # Drop private/unmapped
 
-    # 3. Structure the JSON Database
     master_db = {}
-    
     for ticker, t_df in df.groupby('Ticker'):
         master_db[ticker] = {"Casino": {}, "Sports": {}}
         
         for vertical, v_df in t_df.groupby('Vertical'):
+            # Ensure the vertical key exists in our db structure
+            if vertical not in master_db[ticker]:
+                master_db[ticker][vertical] = {}
+                
             for state, s_df in v_df.groupby('State'):
                 
-                # Brand 12M Totals
                 brand_totals = []
                 for brand, b_df in s_df.groupby('Brand'):
                     brand_totals.append({
@@ -173,7 +172,6 @@ def process_excel_file(file_path):
                         "net_rev_12m": round(b_df['Net_Rev'].sum() / 1e6, 2)
                     })
                 
-                # State 12M Trend (Aggregated across all owned brands in that state)
                 trend_df = s_df.groupby(['Date', 'Month_Str']).sum(numeric_only=True).reset_index().sort_values('Date')
                 state_trend = []
                 for _, row in trend_df.iterrows():
@@ -197,8 +195,11 @@ def run():
     
     if os.path.exists(file_path):
         db = process_excel_file(file_path)
-        if not db: db = generate_dummy_data_for_ui()
+        if not db: 
+            print("⚠️ Data processing failed. Generating UI placeholder data...")
+            db = generate_dummy_data_for_ui()
     else:
+        print(f"⚠️ Excel file not found at {file_path}")
         db = generate_dummy_data_for_ui()
         
     with open('regulatory_data.json', 'w') as f:
