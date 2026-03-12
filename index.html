@@ -7,7 +7,7 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/jquery-jvectormap.min.js"></script>
@@ -19,55 +19,40 @@
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
         .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
         #methodology-overlay { transition: opacity 0.3s ease; }
-        
         .reading-room-prose p { margin-bottom: 1.2em; font-size: 0.95rem; line-height: 1.6; color: #334155; }
         .reading-room-prose strong { color: #0f172a; font-weight: 700; }
         .reading-room-prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
         .reading-room-prose li { margin-bottom: 0.5em; font-size: 0.95rem; color: #334155; }
-
-        .info-tooltip { position: relative; display: inline-block; cursor: help; margin-left: 4px; color: #94a3b8; }
-        .info-tooltip .tooltiptext {
-            visibility: hidden; width: 220px; background-color: #1e293b; color: #fff; text-align: center; 
-            border-radius: 8px; padding: 12px; position: absolute; z-index: 50; top: 150%; 
-            left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.2s; font-size: 0.75rem; 
-            font-weight: 400; font-family: 'Inter', sans-serif; line-height: 1.5; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            white-space: normal;
-        }
-        .info-tooltip .tooltiptext::after {
-            content: ""; position: absolute; bottom: 100%; left: 50%; margin-left: -6px;
-            border-width: 6px; border-style: solid; border-color: transparent transparent #1e293b transparent;
-        }
-        .info-tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-        .info-tooltip:hover { color: #3b82f6; }
-        
-        @keyframes swipe-hint {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(5px); }
-        }
-        .animate-swipe { animation: swipe-hint 2s infinite ease-in-out; }
-
-        /* Brand Toggle Buttons */
         .tab-btn { padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .tab-btn-active { background-color: #1e293b; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .tab-btn-inactive { background-color: #f1f5f9; color: #64748b; }
         .tab-btn-inactive:hover { background-color: #e2e8f0; color: #334155; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hub-tab { border-bottom: 2px solid transparent; cursor: pointer; padding-bottom: 8px; font-weight: bold; color: #64748b; }
+        .hub-tab-active { border-bottom: 2px solid #3b82f6; color: #1e293b; }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-7xl mx-auto">
         
-        <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
+        <header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
             <div>
                 <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Gaming Stocks Terminal</h1>
                 <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
             </div>
             <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
-                <div id="last-update" class="text-xs text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded" style="font-size: 10px;">Loading Data...</div>
+                <div class="flex justify-between w-full md:w-auto gap-4 items-center">
+                    <div id="last-update" class="text-xs text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded" style="font-size: 10px;">Loading Data...</div>
+                    <button onclick="openHubModal()" class="bg-gray-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-chart-pie"></i> Portfolio Hub
+                    </button>
+                </div>
                 
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
                     <div class="relative w-full md:w-64">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg width="16" height="16" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <i class="fas fa-search text-slate-400"></i>
                         </div>
                         <input type="text" id="search-input" oninput="updateDashboardView()" placeholder="Search companies..." class="w-full bg-white border border-slate-200 text-sm rounded-lg pl-10 pr-4 py-2 font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm placeholder-slate-400">
                     </div>
@@ -87,7 +72,37 @@
             </div>
         </header>
 
+        <div class="mb-6">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Daily Top Movers</h3>
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2" id="top-movers-container">
+                </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid"></div>
+    </div>
+
+    <div id="hub-modal" class="fixed inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-5xl h-[85vh] shadow-2xl flex flex-col relative">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Personal Hub</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Local Storage Sandbox</p>
+                </div>
+                <button type="button" onclick="closeHubModal()" class="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="flex px-6 pt-4 border-b border-slate-100 gap-6">
+                <div id="ht-watchlist" class="hub-tab hub-tab-active" onclick="switchHubTab('watchlist')">Watchlist</div>
+                <div id="ht-portfolio" class="hub-tab" onclick="switchHubTab('portfolio')">Portfolio & PnL</div>
+                <div id="ht-indices" class="hub-tab" onclick="switchHubTab('indices')">Sector Indices</div>
+                <div id="ht-alerts" class="hub-tab" onclick="switchHubTab('alerts')">Active Alerts</div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 bg-white" id="hub-content">
+                </div>
+        </div>
     </div>
 
     <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm hidden z-40 flex items-center justify-center p-4">
@@ -98,34 +113,19 @@
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-2xl font-bold text-slate-900">Our Sentiment Methodology</h2>
                         <button type="button" onclick="toggleMethodology()" class="text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 transition-colors shrink-0">
-                            <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <i class="fas fa-times text-xl"></i>
                         </button>
                     </div>
                     <div class="space-y-8">
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
-                        </section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3><p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p></section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3><p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p></section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3><p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p></section>
                         <section class="bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-green-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="w-3 h-3 rounded-full bg-red-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
-                                </div>
+                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-green-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span></div>
+                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span></div>
+                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-red-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span></div>
                             </div>
                         </section>
                     </div>
@@ -136,12 +136,15 @@
                 <div class="flex items-center gap-4 pr-4">
                     <img id="modal-logo" src="" alt="" class="w-12 h-12 rounded-full border border-slate-200 bg-white object-contain p-1 hidden" width="48" height="48">
                     <div>
-                        <h2 id="modal-title" class="text-2xl font-bold text-slate-900"></h2>
+                        <div class="flex items-center gap-2">
+                            <h2 id="modal-title" class="text-2xl font-bold text-slate-900"></h2>
+                            <button id="modal-star-btn" class="text-slate-300 hover:text-yellow-400 text-xl transition-colors"><i class="far fa-star"></i></button>
+                        </div>
                         <div id="modal-ticker" class="mt-1"></div>
                     </div>
                 </div>
                 <button type="button" onclick="closeModal()" class="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 shrink-0 self-end md:self-auto">
-                    <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             
@@ -179,26 +182,27 @@
                         <div class="space-y-4">
                             <div>
                                 <div class="flex justify-between items-center mb-3">
-                                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment</h3>
-                                    <button type="button" onclick="toggleMethodology()" class="text-xs font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider" style="font-size: 10px;">
-                                        <svg width="12" height="12" class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                                        How it works
-                                    </button>
+                                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">AI Sentiment & Rating</h3>
+                                    <button type="button" onclick="toggleMethodology()" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 flex items-center gap-1 uppercase tracking-wider">How it works</button>
                                 </div>
+                                
                                 <div class="flex justify-between items-end mb-2">
                                     <span id="sentiment-label" class="text-2xl font-bold"></span>
-                                    <span class="text-xs text-slate-400 pb-1 uppercase font-bold tracking-tighter">Sentiment Index</span>
+                                    <span id="modal-rating-badge" class="px-2 py-1 rounded text-xs font-black uppercase tracking-wider border">HOLD</span>
                                 </div>
-                                <div class="sentiment-bar mb-4"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
+                                <div class="sentiment-bar mb-2"><div id="modal-sentiment-fill" class="sentiment-fill"></div></div>
                                 
-                                <button type="button" onclick="toggleView('reading-room')" class="w-full bg-gray-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
-                                    <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                    Enter Earnings Reading Room
+                                <div class="mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100 hidden" id="sentiment-history-container">
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">30-Day Sentiment Tracking</p>
+                                    <div id="sentiment-history-chart" class="w-full h-10"></div>
+                                </div>
+                                
+                                <button type="button" onclick="toggleView('reading-room')" class="w-full bg-gray-900 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md mt-2">
+                                    <i class="fas fa-file-alt"></i> Enter Earnings Reading Room
                                 </button>
                                 
                                 <button type="button" id="btn-regulatory" onclick="toggleView('regulatory-room')" class="w-full mt-3 bg-white border border-purple-200 hover:border-purple-500 hover:bg-purple-50 text-purple-700 font-bold py-3 px-4 rounded-xl transition-all hidden items-center justify-center gap-2 shadow-sm">
-                                    <svg width="20" height="20" class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                                    View Company Brand Data (AI)
+                                    <i class="fas fa-chart-pie"></i> View Company Brand Data (AI)
                                 </button>
                             </div>
                             <div class="pt-2">
@@ -213,18 +217,16 @@
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-4 gap-4">
                         <div>
                             <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                                <svg width="24" height="24" class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                Executive Analyst Briefing
+                                <i class="fas fa-file-invoice text-blue-600"></i> Executive Analyst Briefing
                             </h3>
                             <p class="text-sm text-slate-400 mt-1">AI-Synthesized Strategic Outline</p>
                         </div>
                         <div class="flex gap-2 w-full md:w-auto items-center">
                             <button type="button" onclick="playReadingRoomAudio()" class="w-full md:w-auto text-sm font-bold text-slate-700 hover:text-slate-900 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors border border-slate-200 shadow-sm">
-                                <svg width="16" height="16" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.4 4.038a1 1 0 00-1.077.092l-3.8 2.87H4a2 2 0 00-2 2v2a2 2 0 002 2h1.523l3.8 2.87A1 1 0 0011 15V5a1 1 0 00-.6-.962zM14.5 10a4.5 4.5 0 00-1.84-3.61 1 1 0 111.18-1.61A6.5 6.5 0 0116.5 10a6.5 6.5 0 01-2.66 5.22 1 1 0 01-1.18-1.61A4.5 4.5 0 0014.5 10z"></path></svg>
-                                <span id="tts-btn-text">Listen</span>
+                                <i class="fas fa-volume-up"></i> <span id="tts-btn-text">Listen</span>
                             </button>
                             <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0">
-                                <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <i class="fas fa-times"></i>
                             </button>
                         </div>
                     </div>
@@ -232,39 +234,24 @@
                     <div class="max-w-3xl mx-auto">
                         <div id="management-quotes-container" class="mb-8 p-6 bg-slate-50 border-l-4 border-blue-500 rounded-r-xl">
                             <h4 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4 flex items-center gap-2">
-                                <svg width="24" height="24" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                                From the Desk of Management
+                                <i class="fas fa-comment-dots"></i> From the Desk of Management
                             </h4>
                             <div id="management-quotes" class="space-y-4"></div>
                         </div>
-
                         <div id="reading-room-content" class="reading-room-prose mb-8"></div>
-                        
                         <div class="border-t border-slate-100 pt-6 flex justify-center">
-                            <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200">
-                                <svg width="24" height="24" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
+                            <button type="button" onclick="toggleView('main')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors shadow-sm border border-slate-200"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div id="modal-regulatory-room" class="hidden bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-inner" style="min-height: 500px;">
-                    
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-slate-100 pb-6">
                         <div>
                             <div class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-600 mb-2">
-                                <span class="relative flex h-2 w-2 mr-1.5">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-                                </span>
-                                T12 DATA PIPELINE
+                                <span class="relative flex h-2 w-2 mr-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span></span> T12 DATA PIPELINE
                             </div>
-                            <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                                <span class="bg-purple-100 text-purple-700 p-1.5 rounded-lg">
-                                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                                </span>
-                                AI Brand Intelligence
-                            </h3>
+                            <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2"><span class="bg-purple-100 text-purple-700 p-1.5 rounded-lg"><i class="fas fa-chart-bar"></i></span> AI Brand Intelligence</h3>
                             <p class="text-sm text-slate-500 mt-1">Company-owned brand performance aggregated from state filings.</p>
                         </div>
                         <div class="flex items-center gap-4 w-full md:w-auto">
@@ -272,9 +259,7 @@
                                 <button id="btn-vert-casino" onclick="switchVertical('Casino')" class="tab-btn tab-btn-active flex-1 md:flex-none text-center">🎰 Casino</button>
                                 <button id="btn-vert-sports" onclick="switchVertical('Sports')" class="tab-btn tab-btn-inactive flex-1 md:flex-none text-center">🏈 Sports</button>
                             </div>
-                            <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0 hidden md:block">
-                                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
+                            <button type="button" onclick="toggleView('main')" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0 hidden md:block"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
 
@@ -300,8 +285,7 @@
                         </div>
 
                         <p class="md:hidden text-[10px] text-slate-400 italic mb-2 flex items-center">
-                            <svg class="w-3 h-3 mr-1 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-                            Swipe table to see more data
+                            <i class="fas fa-arrow-right mr-1 animate-pulse"></i> Swipe table to see more data
                         </p>
                         
                         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
@@ -320,14 +304,12 @@
                         </div>
                         
                         <div class="mt-6 flex justify-center md:hidden">
-                            <button type="button" onclick="toggleView('main')" class="w-full p-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-colors shadow-sm">
-                                Back to Main Dashboard
-                            </button>
+                            <button type="button" onclick="toggleView('main')" class="w-full p-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-colors shadow-sm">Back to Main Dashboard</button>
                         </div>
                     </div>
 
                     <div id="brand-empty-state" class="hidden text-center py-12 bg-slate-50 rounded-xl border border-slate-200 mt-6">
-                        <svg class="mx-auto h-12 w-12 text-slate-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                        <i class="fas fa-database mx-auto text-4xl text-slate-300 mb-3"></i>
                         <h3 class="text-sm font-medium text-slate-900">No Data Available</h3>
                         <p class="mt-1 text-xs text-slate-500">The AI could not locate localized data for this vertical in the selected state.</p>
                         <button type="button" onclick="toggleView('main')" class="mt-6 px-4 py-2 bg-white border border-slate-200 text-sm font-bold rounded-lg text-slate-600 hover:bg-slate-50">Go Back</button>
@@ -340,6 +322,23 @@
     </div>
 
     <script>
+        // GLOBAL DATA
+        let db = [];
+        let regDb = {}; 
+        let activeTicker = null;
+        let chartInstance = null;
+        let sentHistChart = null;
+        let currentSort = 'earnings';
+        let currentSpeech = null;
+        let currentVertical = 'Casino'; 
+        let brandHandleChart = null;
+        let brandRevChart = null;
+
+        // LOCAL STORAGE ARRAYS
+        let watchlist = JSON.parse(localStorage.getItem('igaming_watchlist')) || [];
+        let portfolio = JSON.parse(localStorage.getItem('igaming_portfolio')) || [];
+        let alerts = JSON.parse(localStorage.getItem('igaming_alerts')) || [];
+
         // CLEAN 2-STEP FALLBACK
         function handleImageFallback(img, domain, compName) {
             if (!img.dataset.triedIconHorse && domain) {
@@ -350,17 +349,6 @@
                 img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(compName)}&background=f3f4f6&color=374151&rounded=true&bold=true`;
             }
         }
-
-        let db = [];
-        let regDb = {}; 
-        let activeTicker = null;
-        let chartInstance = null;
-        let currentSort = 'earnings';
-        let currentSpeech = null;
-
-        let currentVertical = 'Casino'; 
-        let brandHandleChart = null;
-        let brandRevChart = null;
 
         async function init() {
             try {
@@ -377,18 +365,74 @@
                 
                 try {
                     const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
-                    if (regResponse.ok) {
-                        regDb = await regResponse.json();
-                    }
-                } catch (err) {
-                    console.warn("Regulatory JSON missing.");
-                }
+                    if (regResponse.ok) regDb = await regResponse.json();
+                } catch (err) { console.warn("Regulatory JSON missing."); }
 
+                renderTopMovers();
+                checkAlerts();
                 updateDashboardView(); 
             } catch (e) { 
                 console.error("Initialization Crash: ", e);
                 document.getElementById('last-update').innerText = 'Data Fetch Failed';
             }
+        }
+
+        function renderTopMovers() {
+            const container = document.getElementById('top-movers-container');
+            if(!container) return;
+            
+            let valid = db.filter(s => s.daily_change_pct !== "N/A");
+            let sorted = valid.sort((a,b) => parseFloat(b.daily_change_pct) - parseFloat(a.daily_change_pct));
+            
+            let gainers = sorted.slice(0, 5);
+            let losers = sorted.slice().reverse().slice(0, 5);
+            
+            let html = '';
+            gainers.forEach(s => {
+                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-green-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-green-50 transition-colors">
+                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                            <div class="text-xs font-black text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+${s.daily_change_pct}%</div>
+                         </div>`;
+            });
+            losers.forEach(s => {
+                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-red-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-red-50 transition-colors">
+                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                            <div class="text-xs font-black text-red-600 bg-red-100 px-1.5 py-0.5 rounded">${s.daily_change_pct}%</div>
+                         </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function checkAlerts() {
+            alerts.forEach(a => {
+                let stock = db.find(s => s.ticker === a.ticker);
+                if(stock && stock.raw_price) {
+                    if(a.type === 'price_above' && stock.raw_price >= a.target) {
+                        alert(`📈 ALERT: ${stock.ticker} has broken ABOVE ${stock.last_price.charAt(0)}${a.target}`);
+                    } else if(a.type === 'price_below' && stock.raw_price <= a.target) {
+                        alert(`📉 ALERT: ${stock.ticker} has dropped BELOW ${stock.last_price.charAt(0)}${a.target}`);
+                    }
+                }
+            });
+        }
+
+        function toggleWatchlist(ticker) {
+            const idx = watchlist.indexOf(ticker);
+            if(idx > -1) watchlist.splice(idx, 1);
+            else watchlist.push(ticker);
+            localStorage.setItem('igaming_watchlist', JSON.stringify(watchlist));
+            
+            const starIcon = document.getElementById(`star-${ticker}`);
+            if(starIcon) {
+                starIcon.className = watchlist.includes(ticker) ? 'fas fa-star text-yellow-400 text-lg hover:text-yellow-500 transition-colors' : 'far fa-star text-slate-300 hover:text-yellow-400 text-lg transition-colors';
+            }
+            
+            if(activeTicker === ticker) {
+                const mStar = document.getElementById('modal-star-btn');
+                if(mStar) mStar.innerHTML = `<i class="${watchlist.includes(ticker) ? 'fas text-yellow-400' : 'far text-slate-300'} fa-star"></i>`;
+            }
+            
+            if(event) event.stopPropagation();
         }
 
         function updateDashboardView() {
@@ -416,7 +460,7 @@
                     return timeA - timeB;
                 } 
                 else if (currentSort === 'sentiment') {
-                    return (b.sentiment || 0) - (a.sentiment || 0); // SORT BY SENTIMENT LOGIC
+                    return (b.sentiment || 0) - (a.sentiment || 0); 
                 }
                 else if (currentSort === 'marketcap') {
                     return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
@@ -463,6 +507,15 @@
             if (['TLC.AX', 'JIN.AX'].includes(ticker)) return { name: 'Lottery Operator', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
             return { name: 'Diversified', color: 'bg-gray-50 text-gray-700 border-gray-200' };
         }
+        
+        function getRatingBadge(rating) {
+            const r = rating || 'Hold';
+            if(r.includes('Strong Buy')) return 'bg-green-600 text-white';
+            if(r.includes('Buy')) return 'bg-green-100 text-green-700';
+            if(r.includes('Strong Sell')) return 'bg-red-600 text-white';
+            if(r.includes('Sell')) return 'bg-red-100 text-red-700';
+            return 'bg-slate-100 text-slate-600'; 
+        }
 
         function renderGrid(dataToRender, currentSort) {
             const grid = document.getElementById('stock-grid');
@@ -478,6 +531,8 @@
                 const domain = s.domain || '';
                 const badge = getExchangeBadge(s.ticker);
                 const catBadge = getIndustryCategory(s.ticker);
+                const isStarred = watchlist.includes(s.ticker);
+                const ratingBadge = getRatingBadge(s.rating);
 
                 let nextEarningsDate = s.calendar?.date || 'TBD';
                 if (nextEarningsDate !== 'TBD') {
@@ -495,7 +550,6 @@
                     changePctHtml = `<div class="font-black ${changeColor} tracking-tighter" style="font-size: 11px;">${sign}${pct.toFixed(2)}%</div>`;
                 }
 
-                // MATHEMATICAL SVG SPARKLINE LOGIC
                 let sparklineSvg = '<div class="w-20 h-6"></div>'; 
                 if (s.history && s.history['1m'] && s.history['1m'].length > 1) {
                     const pts = s.history['1m'].map(p => p[1]);
@@ -529,8 +583,12 @@
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between h-full" style="min-height: 240px;">
                         <div>
-                            <div class="flex justify-between items-start mb-2 gap-2">
-                                <div class="flex gap-3 items-start min-w-0">
+                            <div class="flex justify-between items-start mb-2 gap-2 relative">
+                                <button onclick="toggleWatchlist('${s.ticker}')" class="absolute -top-2 -left-2 p-2 z-10">
+                                    <i id="star-${s.ticker}" class="${isStarred ? 'fas text-yellow-400' : 'far text-slate-300'} fa-star text-lg hover:text-yellow-400 transition-colors"></i>
+                                </button>
+                                
+                                <div class="flex gap-3 items-start min-w-0 pl-6">
                                     <img src="${s.logo}" alt="${safeName} Logo" width="40" height="40" class="rounded-full border border-gray-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}')">
                                     <div class="min-w-0 flex-1">
                                         <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors pr-2" style="line-height: 1.25;" title="${s.company}">${s.company}</h3>
@@ -541,9 +599,11 @@
                                     </div>
                                 </div>
                                 <div class="text-right shrink-0 pl-2 flex flex-col items-end">
+                                    <span class="text-[7px] text-slate-400 uppercase tracking-widest font-bold mb-0.5 bg-slate-50 px-1 rounded">Delayed</span>
                                     <div class="text-lg font-bold text-gray-900 leading-none">${s.last_price || 'N/A'}</div>
                                     ${changePctHtml}
                                     ${sparklineSvg}
+                                    <span class="text-[7px] text-slate-400 font-bold mt-0.5 uppercase tracking-widest">1M Trend</span>
                                 </div>
                             </div>
                             
@@ -552,15 +612,14 @@
                                     <span class="font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}" style="font-size: 9px;">${catBadge.name}</span>
                                     <span class="text-gray-400 font-medium bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 10px;">${s.base_country}</span>
                                 </div>
-                                <p class="text-gray-500 pr-2" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
                             </div>
                             
-                            <div class="flex justify-between items-center mb-2 border-b border-gray-50 pb-2" style="font-size: 10px;">
-                                <span class="text-gray-400 font-bold uppercase tracking-wider">Mkt Cap:</span>
-                                <span class="font-bold text-gray-700">${s.market_cap_str || 'N/A'}</span>
+                            <div class="flex justify-between items-center mb-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-100">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">AI Analyst Rating</span>
+                                <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${ratingBadge}">${s.rating || 'HOLD'}</span>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-2 mb-3 bg-gray-50 p-2 rounded-lg border border-gray-100" style="font-size: 10px;">
+                            <div class="grid grid-cols-2 gap-2 mb-3 bg-white p-2 rounded-lg border border-gray-100" style="font-size: 10px;">
                                 <div><span class="text-gray-400 font-bold uppercase">${revLabel}</span><br><span class="font-bold text-gray-800 text-xs">${s.actuals?.revenue_interim || 'N/A'}</span></div>
                                 <div class="text-right"><span class="text-gray-400 font-bold uppercase">EPS BEAT/MISS</span><br><span class="font-bold text-xs ${s.eps_beat_miss_pct > 0 ? 'text-green-600':'text-red-500'}">${s.eps_beat_miss_pct || 0}%</span></div>
                             </div>
@@ -572,9 +631,8 @@
                             </div>
                             <div class="sentiment-bar mb-2"><div class="sentiment-fill ${color}" style="width: ${s.sentiment || 50}%"></div></div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold text-gray-400 uppercase" style="font-size: 10px;">Sentiment</span>
+                                <span class="font-bold text-gray-400 uppercase" style="font-size: 10px;">News Sentiment</span>
                                 <div class="flex items-center gap-2">
-                                     <span class="text-gray-400 uppercase tracking-widest px-1.5 rounded bg-gray-50 border border-gray-100" style="font-size: 8px;">Delayed Pricing</span>
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                 </div>
                             </div>
@@ -584,6 +642,240 @@
             }).join('');
         }
 
+        // --- PORTFOLIO HUB LOGIC ---
+        function openHubModal() {
+            document.getElementById('hub-modal').classList.remove('hidden');
+            switchHubTab('portfolio');
+        }
+        function closeHubModal() {
+            document.getElementById('hub-modal').classList.add('hidden');
+        }
+        function switchHubTab(tabName) {
+            ['watchlist', 'portfolio', 'indices', 'alerts'].forEach(t => {
+                document.getElementById(`ht-${t}`).classList.remove('hub-tab-active');
+            });
+            document.getElementById(`ht-${tabName}`).classList.add('hub-tab-active');
+            
+            const content = document.getElementById('hub-content');
+            
+            if(tabName === 'watchlist') renderHubWatchlist(content);
+            if(tabName === 'portfolio') renderHubPortfolio(content);
+            if(tabName === 'indices') renderHubIndices(content);
+            if(tabName === 'alerts') renderHubAlerts(content);
+        }
+
+        function renderHubWatchlist(container) {
+            if(watchlist.length === 0) {
+                container.innerHTML = `<div class="text-center py-12"><p class="text-slate-400">Your watchlist is empty.</p><p class="text-xs text-slate-400 mt-2">Click the star icon on any card to add it here.</p></div>`;
+                return;
+            }
+            
+            let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
+            watchlist.forEach(ticker => {
+                let s = db.find(x => x.ticker === ticker);
+                if(s) {
+                    html += `
+                        <div class="border border-slate-200 p-4 rounded-xl flex justify-between items-center bg-white shadow-sm cursor-pointer hover:border-blue-400 transition-colors" onclick="closeHubModal(); openModal('${s.ticker}')">
+                            <div class="flex items-center gap-3">
+                                <img src="${s.logo}" class="w-8 h-8 rounded-full border p-0.5">
+                                <div>
+                                    <p class="font-bold text-sm text-slate-800">${s.ticker}</p>
+                                    <p class="text-[10px] text-slate-400 font-bold">${s.last_price}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">AI Rating</p>
+                                <span class="text-[9px] font-black px-2 py-0.5 rounded ${getRatingBadge(s.rating)}">${s.rating || 'HOLD'}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderHubPortfolio(container) {
+            let totalInvested = 0;
+            let currentValue = 0;
+            
+            let tableRows = portfolio.map((item, index) => {
+                let s = db.find(x => x.ticker === item.ticker);
+                let currentPrice = s && s.raw_price ? s.raw_price : item.avg_price;
+                let value = currentPrice * item.shares;
+                let cost = item.avg_price * item.shares;
+                let pnl = value - cost;
+                let pnlPct = cost > 0 ? (pnl / cost) * 100 : 0;
+                
+                totalInvested += cost;
+                currentValue += value;
+                
+                let sym = s && s.last_price ? s.last_price.charAt(0) : '$'; 
+                
+                return `
+                    <tr class="border-b border-slate-50 hover:bg-slate-50">
+                        <td class="p-3 font-bold text-slate-800">${item.ticker}</td>
+                        <td class="p-3 text-sm">${item.shares}</td>
+                        <td class="p-3 text-sm">${sym}${item.avg_price.toFixed(2)}</td>
+                        <td class="p-3 text-sm font-bold">${sym}${currentPrice.toFixed(2)}</td>
+                        <td class="p-3 text-sm font-black ${pnl >= 0 ? 'text-green-600' : 'text-red-600'}">
+                            ${pnl >= 0 ? '+' : ''}${sym}${pnl.toFixed(2)} <span class="text-[10px] font-bold">(${pnlPct.toFixed(2)}%)</span>
+                        </td>
+                        <td class="p-3 text-right">
+                            <button onclick="removePortfolioItem(${index})" class="text-red-400 hover:text-red-600 text-xs font-bold uppercase"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            let totalPnl = currentValue - totalInvested;
+            let totalPnlPct = totalInvested > 0 ? (totalPnl / totalInvested) * 100 : 0;
+
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Value</p>
+                        <p class="text-2xl font-black text-slate-800">Local Currency Basis</p>
+                    </div>
+                    <div class="bg-${totalPnl >= 0 ? 'green' : 'red'}-50 p-4 rounded-xl border border-${totalPnl >= 0 ? 'green' : 'red'}-100">
+                        <p class="text-[10px] font-bold text-${totalPnl >= 0 ? 'green' : 'red'}-600 uppercase tracking-widest">Total Return</p>
+                        <p class="text-2xl font-black text-${totalPnl >= 0 ? 'green' : 'red'}-700">${totalPnl >= 0 ? '+' : ''}${totalPnlPct.toFixed(2)}%</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <select id="port-ticker" class="text-sm rounded border-slate-200 px-3 py-1.5 outline-none">
+                        <option value="">Select Ticker...</option>
+                        ${db.map(s => `<option value="${s.ticker}">${s.ticker} - ${s.company}</option>`).join('')}
+                    </select>
+                    <input type="number" id="port-shares" placeholder="Shares" class="text-sm rounded border border-slate-200 px-3 py-1.5 w-24 outline-none">
+                    <input type="number" id="port-price" placeholder="Avg Price" class="text-sm rounded border border-slate-200 px-3 py-1.5 w-24 outline-none">
+                    <button onclick="addPortfolioItem()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-1.5 rounded uppercase tracking-wider">Add Position</button>
+                </div>
+
+                <table class="w-full text-left">
+                    <thead class="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-200">
+                        <tr>
+                            <th class="p-3">Ticker</th>
+                            <th class="p-3">Shares</th>
+                            <th class="p-3">Avg Cost</th>
+                            <th class="p-3">Current</th>
+                            <th class="p-3">Total PnL</th>
+                            <th class="p-3 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tableRows || '<tr><td colspan="6" class="text-center py-8 text-slate-400">No positions open.</td></tr>'}</tbody>
+                </table>
+            `;
+        }
+
+        function addPortfolioItem() {
+            let t = document.getElementById('port-ticker').value;
+            let s = parseFloat(document.getElementById('port-shares').value);
+            let p = parseFloat(document.getElementById('port-price').value);
+            if(t && s > 0 && p > 0) {
+                portfolio.push({ticker: t, shares: s, avg_price: p});
+                localStorage.setItem('igaming_portfolio', JSON.stringify(portfolio));
+                switchHubTab('portfolio');
+            }
+        }
+        function removePortfolioItem(idx) {
+            portfolio.splice(idx, 1);
+            localStorage.setItem('igaming_portfolio', JSON.stringify(portfolio));
+            switchHubTab('portfolio');
+        }
+
+        function renderHubIndices(container) {
+            let sectors = {};
+            db.forEach(s => {
+                let cat = getIndustryCategory(s.ticker).name;
+                if(!sectors[cat]) sectors[cat] = { count: 0, pe_sum: 0, pe_count: 0, beat_sum: 0, beat_count: 0, de_sum: 0, de_count: 0 };
+                
+                sectors[cat].count++;
+                
+                if(s.pe_raw && !isNaN(s.pe_raw) && s.pe_raw > 0) { sectors[cat].pe_sum += s.pe_raw; sectors[cat].pe_count++; }
+                if(s.de_raw && !isNaN(s.de_raw)) { sectors[cat].de_sum += s.de_raw; sectors[cat].de_count++; }
+                if(s.eps_beat_miss_pct && !isNaN(s.eps_beat_miss_pct)) { sectors[cat].beat_sum += s.eps_beat_miss_pct; sectors[cat].beat_count++; }
+            });
+
+            let html = `<p class="text-xs text-slate-500 mb-6">Real-time unweighted fundamental averages across the global gaming universe, calculated instantly on load.</p><div class="space-y-4">`;
+            
+            for(const [cat, data] of Object.entries(sectors)) {
+                let avgPe = data.pe_count > 0 ? (data.pe_sum / data.pe_count).toFixed(1) : 'N/A';
+                let avgDe = data.de_count > 0 ? (data.de_sum / data.de_count).toFixed(1) + '%' : 'N/A';
+                let avgBeat = data.beat_count > 0 ? (data.beat_sum / data.beat_count).toFixed(1) + '%' : 'N/A';
+                
+                html += `
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
+                        <div>
+                            <h4 class="font-bold text-slate-800">${cat}</h4>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-widest">${data.count} Constituents</p>
+                        </div>
+                        <div class="flex gap-6">
+                            <div><p class="text-[10px] font-bold text-slate-400 uppercase">Avg P/E</p><p class="font-mono text-sm font-bold text-blue-600">${avgPe}</p></div>
+                            <div><p class="text-[10px] font-bold text-slate-400 uppercase">Avg Debt/Eq</p><p class="font-mono text-sm font-bold">${avgDe}</p></div>
+                            <div><p class="text-[10px] font-bold text-slate-400 uppercase">Avg EPS Beat</p><p class="font-mono text-sm font-bold text-green-600">${avgBeat}</p></div>
+                        </div>
+                    </div>
+                `;
+            }
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function renderHubAlerts(container) {
+            let tableRows = alerts.map((item, index) => {
+                return `
+                    <tr class="border-b border-slate-50">
+                        <td class="p-3 font-bold text-slate-800">${item.ticker}</td>
+                        <td class="p-3 text-sm">${item.type === 'price_above' ? 'Price Break Above' : 'Price Drop Below'}</td>
+                        <td class="p-3 text-sm font-mono font-bold">${item.target}</td>
+                        <td class="p-3 text-right">
+                            <button onclick="removeAlert(${index})" class="text-red-400 hover:text-red-600 text-xs font-bold uppercase"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="flex gap-2 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <select id="al-ticker" class="text-sm rounded border-slate-200 px-3 py-1.5 outline-none">
+                        <option value="">Select Ticker...</option>
+                        ${db.map(s => `<option value="${s.ticker}">${s.ticker}</option>`).join('')}
+                    </select>
+                    <select id="al-type" class="text-sm rounded border-slate-200 px-3 py-1.5 outline-none">
+                        <option value="price_above">Price Breaks Above</option>
+                        <option value="price_below">Price Drops Below</option>
+                    </select>
+                    <input type="number" id="al-target" placeholder="Target Value" class="text-sm rounded border border-slate-200 px-3 py-1.5 w-32 outline-none">
+                    <button onclick="addAlert()" class="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold px-4 py-1.5 rounded uppercase tracking-wider">Set Alert</button>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-200">
+                        <tr><th class="p-3">Ticker</th><th class="p-3">Condition</th><th class="p-3">Target</th><th class="p-3 text-right">Action</th></tr>
+                    </thead>
+                    <tbody>${tableRows || '<tr><td colspan="4" class="text-center py-8 text-slate-400">No active alerts.</td></tr>'}</tbody>
+                </table>
+            `;
+        }
+
+        function addAlert() {
+            let t = document.getElementById('al-ticker').value;
+            let ty = document.getElementById('al-type').value;
+            let tg = parseFloat(document.getElementById('al-target').value);
+            if(t && ty && tg) {
+                alerts.push({ticker: t, type: ty, target: tg});
+                localStorage.setItem('igaming_alerts', JSON.stringify(alerts));
+                switchHubTab('alerts');
+            }
+        }
+        function removeAlert(idx) {
+            alerts.splice(idx, 1);
+            localStorage.setItem('igaming_alerts', JSON.stringify(alerts));
+            switchHubTab('alerts');
+        }
+
+        // --- MAIN MODAL LOGIC ---
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
             if (el) {
@@ -657,12 +949,13 @@
                 compSelect.value = "";
             }
             
-            if (chartInstance) {
-                chartInstance.destroy();
-                chartInstance = null;
-            }
+            if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+            if (sentHistChart) { sentHistChart.destroy(); sentHistChart = null; }
+            
             const chartEl = document.getElementById('main-chart');
             if (chartEl) chartEl.innerHTML = '';
+            const histChartEl = document.getElementById('sentiment-history-chart');
+            if (histChartEl) histChartEl.innerHTML = '';
             
             if (window.speechSynthesis) window.speechSynthesis.cancel();
             document.getElementById('tts-btn-text').innerText = "Listen";
@@ -692,6 +985,12 @@
                     } else {
                         regBtn.style.display = 'none';
                     }
+                }
+
+                const mStar = document.getElementById('modal-star-btn');
+                if(mStar) {
+                    mStar.innerHTML = `<i class="${watchlist.includes(ticker) ? 'fas text-yellow-400' : 'far text-slate-300'} fa-star"></i>`;
+                    mStar.onclick = () => toggleWatchlist(ticker);
                 }
 
                 const compareHtml = '<option value="">Compare...</option>' + db.filter(x => x.ticker !== ticker).sort((a,b)=>a.company.localeCompare(b.company)).map(x=>`<option value="${x.ticker}">${x.company}</option>`).join('');
@@ -730,7 +1029,7 @@
                     <div class="mt-2 md:mt-1 flex flex-wrap items-center gap-2">
                         <span class="text-lg font-bold text-gray-900">${s.last_price || 'N/A'}</span>
                         ${modalChangeHtml}
-                        <span class="text-gray-400 uppercase tracking-widest ml-1 md:ml-2 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 9px;" title="Updated: ${syncTimeString}">Pricing As Of Last Sync</span>
+                        <span class="text-gray-400 uppercase tracking-widest ml-1 md:ml-2 bg-slate-100 px-1.5 py-0.5 rounded font-bold" style="font-size: 9px;" title="Updated: ${syncTimeString}">Delayed Pricing</span>
                     </div>
                 `);
                 
@@ -786,18 +1085,10 @@
                 if (Array.isArray(s.quotes) && s.quotes.length > 0) {
                     quotesHtml = s.quotes.map(q => {
                         const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
-                        return `
-                        <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
-                            <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${safeStr}</p>
-                        </blockquote>`;
+                        return `<blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm"><div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div><p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${safeStr}</p></blockquote>`;
                     }).join('');
                 } else if (typeof s.quotes === 'string' && s.quotes.trim() !== '') {
-                    quotesHtml = `
-                        <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
-                            <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p>
-                        </blockquote>`;
+                    quotesHtml = `<blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm"><div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div><p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p></blockquote>`;
                 }
                 safeSetHTML('management-quotes', quotesHtml);
 
@@ -812,6 +1103,30 @@
                 if (sFil) {
                     sFil.style.width = sent + '%';
                     sFil.className = 'sentiment-fill ' + (sent > 60 ? 'bg-green-500' : (sent < 40 ? 'bg-red-500' : 'bg-yellow-500'));
+                }
+
+                const rBadge = document.getElementById('modal-rating-badge');
+                if(rBadge) {
+                    rBadge.innerText = s.rating || 'HOLD';
+                    rBadge.className = `px-2 py-1 rounded text-xs font-black uppercase tracking-wider border ${getRatingBadge(s.rating)}`;
+                }
+
+                // SENTIMENT HISTORY CHART
+                const sentCont = document.getElementById('sentiment-history-container');
+                if(s.sentiment_history && s.sentiment_history.length > 1) {
+                    sentCont.classList.remove('hidden');
+                    if(sentHistChart) sentHistChart.destroy();
+                    sentHistChart = new ApexCharts(document.querySelector("#sentiment-history-chart"), {
+                        series: [{ name: 'Sentiment', data: s.sentiment_history.map(x => x.score) }],
+                        chart: { type: 'area', height: 40, sparkline: { enabled: true } },
+                        stroke: { curve: 'smooth', width: 2 },
+                        fill: { opacity: 0.3 },
+                        colors: ['#3b82f6'],
+                        tooltip: { fixed: { enabled: false }, x: { show: false }, y: { title: { formatter: function (seriesName) { return '' } } }, marker: { show: false } }
+                    });
+                    sentHistChart.render();
+                } else {
+                    sentCont.classList.add('hidden');
                 }
                 
                 const jurisdictions = Array.isArray(s.jurisdictions) ? s.jurisdictions.slice(0, 4).join(' • ') : '';
@@ -895,8 +1210,6 @@
                 console.warn("Chart rendering failed", e);
             }
         }
-
-        // --- BRAND INTELLIGENCE LOGIC ---
 
         function switchVertical(vertical) {
             currentVertical = vertical;
