@@ -72,19 +72,21 @@ TARGET_COMPANIES = [
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
-    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"},
-    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg"},
+    
+    # THE OVERRIDE FIX: Direct injection of Icon.Horse links for the stubborn domains
+    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://icon.horse/icon/accelentertainment.com"},
+    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://icon.horse/icon/codere.com"},
     {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.co.kr", "base_country": "South Korea"},
-    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan"},
+    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.co.kr", "base_country": "South Korea", "logo_override": "https://icon.horse/icon/kangwonland.co.kr"},
+    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://icon.horse/icon/tsuburaya-fields.co.jp"},
     {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
     {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan"},
     {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia"},
     {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia"},
-    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India"},
+    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://icon.horse/icon/deltacorp.in"},
     {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal"},
-    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta"}
+    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://icon.horse/icon/estoril-solsgps.com"},
+    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://icon.horse/icon/esportsentertainmentgroup.com"}
 ]
 
 OTC_MAP = {
@@ -1262,7 +1264,6 @@ def ai_process_intelligence(company_name, ticker):
         
         raw_text = ai_resp.text.strip()
         try:
-            # THE FIX: Fortified regex to handle weird JSON returns from Wynn and others
             match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
             if match:
                 return json.loads(match.group(1))
@@ -1345,6 +1346,9 @@ def run_pipeline():
 
             history = fetch_stock_history(ticker, price_raw)
             
+            # THE FIX: If logo_override exists in TARGET_COMPANIES, use it! Otherwise, use Google.
+            final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
+            
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {
@@ -1356,11 +1360,13 @@ def run_pipeline():
             history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
             last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = "N/A", "N/A", 0, "N/A", "N/A"
             beat_miss, daily_change_pct = 0, "N/A"
+            final_logo = f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128"
 
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "logo": f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128",
+            "domain": co["domain"], # Passed safely to JS
+            "logo": final_logo,
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
             "map_codes": fin.get("map_codes", []),           
