@@ -20,7 +20,18 @@ except FileNotFoundError:
     print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
     VERIFIED_CALENDAR = {}
 
-# TARGET COMPANIES: Overrides updated to pull directly from your GitHub Raw CDN
+# --- HISTORICAL SENTIMENT TRACKER ---
+# Load previous data to preserve Sentiment History
+PREV_DATA = {}
+try:
+    if os.path.exists('gambling_stocks_live.json'):
+        with open('gambling_stocks_live.json', 'r') as f:
+            prev_list = json.load(f)
+            for item in prev_list:
+                PREV_DATA[item['ticker']] = item
+except Exception as e:
+    print(f"No previous data found or error loading: {e}")
+
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
@@ -51,6 +62,7 @@ TARGET_COMPANIES = [
     {"name": "Lottomatica Group", "ticker": "LTMC.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
+    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"}, 
     {"name": "Bally's Corporation", "ticker": "BALY", "domain": "ballys.com", "base_country": "USA"},
     {"name": "Boyd Gaming", "ticker": "BYD", "domain": "boydgaming.com", "base_country": "USA"},
     {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"}, 
@@ -69,27 +81,24 @@ TARGET_COMPANIES = [
     {"name": "Gaming Realms", "ticker": "GMR.L", "domain": "gamingrealms.com", "base_country": "UK"},
     {"name": "Groupe Partouche", "ticker": "PARP.PA", "domain": "groupepartouche.com", "base_country": "France"},
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
+    {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
     
-    # EXISTING CLEARBIT OVERRIDES (Kept intact)
-    {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey", "logo_override": "https://logo.clearbit.com/gambling.com"},
+    # GITHUB RAW CDN LOGO OVERRIDES
     {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"},
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/accelentertainment.com"},
-    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
-
-    # YOUR CUSTOM GITHUB LOGO OVERRIDES
-    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"},
-    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"},
-    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"},
     {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"},
-    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"},
-    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"},
-    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"},
-    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"},
     {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/the_lottery_corp.png"},
-    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"}
+    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"},
+    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"},
+    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
+    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"},
+    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"},
+    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"},
+    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"},
+    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"},
+    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"},
+    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"}
 ]
 
 OTC_MAP = {
@@ -930,6 +939,19 @@ VERIFIED_DATA = {
         "fcf": "$12.6M",
         "jurisdictions": ["US", "Balkans", "LatAm"]
     },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": ["US"],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "jurisdictions": ["US"]
+    },
     "ESON.LS": {
         "rev_label": "REV",
         "revenue_fy": "€255M (FY '25)",
@@ -959,49 +981,28 @@ VERIFIED_DATA = {
 }
 
 def get_live_fx_rates():
-    print("🌍 Fetching live Forex rates...")
     rates = {'USD': 1.0, '$': 1.0}
     pairs = {
-        'GBP': 'GBPUSD=X',
-        'GBp': 'GBPUSD=X',
-        'EUR': 'EURUSD=X', 
-        'SEK': 'SEKUSD=X',
-        'AUD': 'AUDUSD=X',
-        'CAD': 'CADUSD=X',
-        'HKD': 'HKDUSD=X',
-        'SGD': 'SGDUSD=X',
-        'MYR': 'MYRUSD=X',
-        'KRW': 'KRWUSD=X',
-        'JPY': 'JPYUSD=X',
-        'NZD': 'NZDUSD=X',
-        'INR': 'INRUSD=X'
+        'GBP': 'GBPUSD=X', 'GBp': 'GBPUSD=X', 'EUR': 'EURUSD=X', 'SEK': 'SEKUSD=X',
+        'AUD': 'AUDUSD=X', 'CAD': 'CADUSD=X', 'HKD': 'HKDUSD=X', 'SGD': 'SGDUSD=X',
+        'MYR': 'MYRUSD=X', 'KRW': 'KRWUSD=X', 'JPY': 'JPYUSD=X', 'NZD': 'NZDUSD=X', 'INR': 'INRUSD=X'
     }
-    
     for currency, ticker in pairs.items():
         try:
             val = yf.Ticker(ticker).fast_info['lastPrice']
-            if currency == 'GBp': 
-                val = val / 100.0 
+            if currency == 'GBp': val = val / 100.0 
             rates[currency] = val
         except Exception:
             rates[currency] = 1.0 
-            
     return rates
 
 def format_money(raw_val, sym):
-    if pd.isna(raw_val): 
-        return "N/A"
-        
+    if pd.isna(raw_val): return "N/A"
     is_neg = raw_val < 0
     abs_val = abs(raw_val)
-    
-    if abs_val >= 1e9: 
-        res = f"{sym}{round(abs_val/1e9, 2)}B"
-    elif abs_val >= 1e6: 
-        res = f"{sym}{round(abs_val/1e6, 2)}M"
-    else: 
-        res = f"{sym}{abs_val}"
-        
+    if abs_val >= 1e9: res = f"{sym}{round(abs_val/1e9, 2)}B"
+    elif abs_val >= 1e6: res = f"{sym}{round(abs_val/1e6, 2)}M"
+    else: res = f"{sym}{abs_val}"
     return f"-{res}" if is_neg else res
 
 def get_stock_fundamentals(ticker, fx_rates):
@@ -1011,29 +1012,23 @@ def get_stock_fundamentals(ticker, fx_rates):
     dyn_net_inc, dyn_ebitda, dyn_fcf = "N/A", "N/A", "N/A"
     dyn_eps_act, dyn_eps_est, dyn_date = None, None, None
     daily_change_pct = "N/A"
+    pe_raw, de_raw = None, None
     sym, currency = "$", "USD"
     
     try:
         ytk = yf.Ticker(ticker)
-        
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
-            
-            # STANDARD APPROACH: Use fast_info previous close
             prev_close = ytk.fast_info.get('previousClose')
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-            
-            # BULLETPROOF FALLBACK: If fast_info is blank, force historical fetch
             if daily_change_pct == "N/A" and price > 0:
                 hist = ytk.history(period="5d")
                 if len(hist) >= 2:
                     fallback_prev = hist['Close'].iloc[-2]
                     daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
-                    
-        except Exception: 
-            pass 
+        except Exception: pass 
             
         if currency == "GBp": sym = "GBp "
         elif currency == "GBP": sym = "£"
@@ -1050,8 +1045,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         elif currency == "INR": sym = "₹"  
         else: sym = "$"
         
-        if price > 0: 
-            price_str = f"{sym}{round(price, 2)}"
+        if price > 0: price_str = f"{sym}{round(price, 2)}"
             
         try:
             mc_raw = ytk.fast_info['marketCap']
@@ -1059,53 +1053,49 @@ def get_stock_fundamentals(ticker, fx_rates):
                 mc_native = format_money(mc_raw, sym)
                 fx_rate = fx_rates.get(currency, 1.0)
                 mc_usd_val = mc_raw * fx_rate
-                
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
                     mc_display = f"{mc_native} ({mc_usd_str})"
-                else:
-                    mc_display = mc_native
-        except Exception: 
-            pass
+                else: mc_display = mc_native
+        except Exception: pass
 
         try:
             info = ytk.info
-            pe_raw = info.get('trailingPE') or info.get('forwardPE')
-            if pe_raw: 
+            pe_r = info.get('trailingPE') or info.get('forwardPE')
+            if pe_r: 
+                pe_raw = pe_r
                 pe_str = f"{round(pe_raw, 2)}"
             else:
                 eps = info.get('trailingEps')
                 if eps is not None:
-                    if eps <= 0: 
-                        pe_str = "Neg EPS"
-                    elif price > 0: 
-                        pe_str = f"{round(price / eps, 2)}" 
+                    if eps <= 0: pe_str = "Neg EPS"
+                    elif price > 0:
+                        pe_raw = price / eps
+                        pe_str = f"{round(pe_raw, 2)}" 
 
-            de_raw = info.get('debtToEquity')
-            if de_raw is not None: 
+            de_r = info.get('debtToEquity')
+            if de_r is not None: 
+                de_raw = de_r
                 de_str = f"{round(de_raw, 2)}%"
             else:
                 total_debt = info.get('totalDebt')
                 total_equity = info.get('totalStockholderEquity') 
                 if total_debt is not None and total_equity is not None:
-                    if total_equity <= 0: 
-                        de_str = "Neg Equity" 
-                    else: 
-                        de_str = f"{round((total_debt / total_equity) * 100, 2)}%" 
-                elif total_debt == 0: 
+                    if total_equity <= 0: de_str = "Neg Equity" 
+                    else:
+                        de_raw = (total_debt / total_equity) * 100
+                        de_str = f"{round(de_raw, 2)}%" 
+                elif total_debt == 0:
+                    de_raw = 0
                     de_str = "0.00%"
-        except Exception: 
-            pass 
+        except Exception: pass 
 
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
                 raw_rev_fy = None
-                if 'Total Revenue' in income_annual.index: 
-                    raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
-                elif 'Operating Revenue' in income_annual.index: 
-                    raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
-                    
+                if 'Total Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
+                elif 'Operating Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
                 if pd.notna(raw_rev_fy):
                     fy_year = pd.to_datetime(income_annual.columns[0]).year
                     fy_rev_str = f"{format_money(raw_rev_fy, sym)} (FY '{str(fy_year)[-2:]})"
@@ -1115,23 +1105,18 @@ def get_stock_fundamentals(ticker, fx_rates):
                     if key in income_annual.index:
                         raw_ebitda = income_annual.loc[key].iloc[0]
                         break
-                if pd.notna(raw_ebitda): 
-                    dyn_ebitda = format_money(raw_ebitda, sym)
-        except Exception: 
-            pass
+                if pd.notna(raw_ebitda): dyn_ebitda = format_money(raw_ebitda, sym)
+        except Exception: pass
 
         try:
             cf = ytk.cashflow
             if not cf.empty:
                 raw_fcf = None
-                if 'Free Cash Flow' in cf.index:
-                    raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
+                if 'Free Cash Flow' in cf.index: raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
                 elif 'Operating Cash Flow' in cf.index and 'Capital Expenditure' in cf.index:
                     raw_fcf = cf.loc['Operating Cash Flow'].iloc[0] + cf.loc['Capital Expenditure'].iloc[0]
-                if pd.notna(raw_fcf): 
-                    dyn_fcf = format_money(raw_fcf, sym)
-        except Exception: 
-            pass
+                if pd.notna(raw_fcf): dyn_fcf = format_money(raw_fcf, sym)
+        except Exception: pass
         
         try:
             ed = ytk.earnings_dates
@@ -1140,8 +1125,7 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if not past_ed.empty:
                     dyn_eps_act = past_ed['Reported EPS'].iloc[0]
                     dyn_eps_est = past_ed['Estimate EPS'].iloc[0]
-        except Exception: 
-            pass
+        except Exception: pass
         
         try:
             cal_data = ytk.calendar
@@ -1149,17 +1133,14 @@ def get_stock_fundamentals(ticker, fx_rates):
                 dates = cal_data['Earnings Date']
                 if isinstance(dates, list) and len(dates) > 0:
                     first_date = dates[0]
-                    if hasattr(first_date, 'strftime'): 
-                        dyn_date = first_date.strftime('%b %d, %Y')
-                    else: 
-                        dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
-        except Exception: 
-            pass
+                    if hasattr(first_date, 'strftime'): dyn_date = first_date.strftime('%b %d, %Y')
+                    else: dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
+        except Exception: pass
             
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw
         
     except Exception:
-        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None, "N/A"
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None, "N/A", None, None
 
 def fetch_stock_history(ticker, native_price_raw):
     is_otc = ticker in OTC_MAP
@@ -1175,7 +1156,6 @@ def fetch_stock_history(ticker, native_price_raw):
         df_5y = ytk.history(period="5y", interval="1d")
         if not df_5y.empty:
             df_5y.index = df_5y.index.tz_localize(None)
-            
             def slice_data(days):
                 cutoff = df_5y.index[-1] - pd.Timedelta(days=days)
                 sliced = df_5y[df_5y.index >= cutoff]
@@ -1196,21 +1176,14 @@ def fetch_stock_history(ticker, native_price_raw):
                 ratio = native_price_raw / latest_otc
                 for period in history:
                     history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
-                    
     except Exception:
         pass
-        
     return history
 
 def ai_process_intelligence(company_name, ticker):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
-        return {
-            "summary": ["System Error: API key missing."], 
-            "sentiment": 50, 
-            "reading_room": "<p>API Key required.</p>", 
-            "quotes": []
-        }
+        return {"summary": ["System Error: API key missing."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>API Key required.</p>", "quotes": []}
         
     try:
         feed_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}"
@@ -1220,31 +1193,25 @@ def ai_process_intelligence(company_name, ticker):
         except Exception:
             headlines = []
             
-        # THE FIX: If Yahoo RSS is empty (common for Indian/Asian stocks like DELTACORP.NS), query the company name directly
         if not headlines:
             fallback_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={company_name.split()[0]}"
             try:
                 feed = feedparser.parse(fallback_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
-            except Exception: 
-                pass
+            except Exception: pass
             
         if not headlines:
-            return {
-                "summary": [f"No recent specific financial news found for {company_name}."], 
-                "sentiment": 50, 
-                "reading_room": "<p>Awaiting fresh press releases or earnings reports to generate strategic briefing.</p>", 
-                "quotes": []
-            }
+            return {"summary": [f"No recent news found for {company_name}."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Awaiting fresh press releases.</p>", "quotes": []}
 
         client = genai.Client(api_key=api_key)
         prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
         Generate a strictly valid JSON response. 
-        Format exactly with these four keys:
+        Format exactly with these five keys:
         1. "summary": A list of 3 string bullet points summarizing the news.
         2. "sentiment": An integer from 0 to 100 representing market sentiment.
-        3. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news.
-        4. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
+        3. "rating": A stock rating based strictly on these headlines (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell").
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news.
+        5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
             model='gemini-2.5-flash', 
@@ -1255,31 +1222,21 @@ def ai_process_intelligence(company_name, ticker):
         raw_text = ai_resp.text.strip()
         try:
             match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
-            if match:
-                return json.loads(match.group(1))
+            if match: return json.loads(match.group(1))
             return json.loads(raw_text)
         except json.JSONDecodeError:
-            return {
-                "summary": ["Data temporarily unavailable while AI processes news."], 
-                "sentiment": 50, 
-                "reading_room": "<p>AI output could not be parsed.</p>", 
-                "quotes": []
-            }
+            return {"summary": ["Data temporarily unavailable."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>AI parse error.</p>", "quotes": []}
             
     except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
-        return {
-            "summary": [f"News Error: Gathering delayed."], 
-            "sentiment": 50, 
-            "reading_room": f"<p>Briefing currently unavailable due to data feed latency.</p>", 
-            "quotes": []
-        }
+        return {"summary": [f"News Error: Gathering delayed."], "sentiment": 50, "rating": "Hold", "reading_room": f"<p>Latency issue.</p>", "quotes": []}
 
 def run_pipeline():
     master_db = []
     print(f"🚀 Starting Pipeline processing {len(TARGET_COMPANIES)} companies...")
     
     run_time_utc = datetime.utcnow().isoformat() + "Z"
+    today_str = datetime.utcnow().strftime('%Y-%m-%d')
     fx_rates = get_live_fx_rates()
     
     for co in TARGET_COMPANIES:
@@ -1287,29 +1244,16 @@ def run_pipeline():
         print(f"\nProcessing {co['name']} ({ticker})...")
         
         fin = VERIFIED_DATA.get(ticker, {
-            "eps_actual": 0, 
-            "eps_forecast": 0, 
-            "net_income": "N/A", 
-            "ebitda": "N/A", 
-            "fcf": "N/A", 
-            "jurisdictions": [],
-            "focus": "Diversified Gaming", 
-            "map_codes": [], 
-            "rev_label": "REV", 
-            "revenue_fy": "N/A", 
-            "revenue_interim": "N/A"
+            "eps_actual": 0, "eps_forecast": 0, "net_income": "N/A", "ebitda": "N/A", "fcf": "N/A", "jurisdictions": [],
+            "focus": "Diversified Gaming", "map_codes": [], "rev_label": "REV", "revenue_fy": "N/A", "revenue_interim": "N/A"
         })
         
-        cal = VERIFIED_CALENDAR.get(ticker, {
-            "date": "TBD", 
-            "report_time": "TBD", 
-            "call_time": "TBD"
-        })
+        cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
             
         try:
             intel = ai_process_intelligence(co['name'], ticker)
             
-            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct = get_stock_fundamentals(ticker, fx_rates)
+            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
             mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
@@ -1325,7 +1269,6 @@ def run_pipeline():
             if cal.get("date", "TBD") == "TBD" and dyn_date and dyn_date != "N/A":
                 cal["date"] = dyn_date
             
-            # The EPS Absolute Value Math
             beat_miss = 0
             if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
                 fin["eps_actual"] = round(dyn_eps_act, 2)
@@ -1336,22 +1279,23 @@ def run_pipeline():
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
             history = fetch_stock_history(ticker, price_raw)
-            
-            # THE LOGO OVERRIDE INJECTION
             final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {
-                "summary": [f"System Error: {str(e)[:50]}"], 
-                "sentiment": 50, 
-                "reading_room": "<p>Error</p>", 
-                "quotes": []
-            }
+            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Error</p>", "quotes": []}
             history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
             last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = "N/A", "N/A", 0, "N/A", "N/A"
-            beat_miss, daily_change_pct = 0, "N/A"
+            beat_miss, daily_change_pct, pe_raw, de_raw = 0, "N/A", None, None
             final_logo = f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128"
+
+        # HISTORICAL SENTIMENT TRACKER
+        curr_sentiment = intel.get("sentiment", 50)
+        sent_history = PREV_DATA.get(ticker, {}).get("sentiment_history", [])
+        if not sent_history or sent_history[-1]['date'] != today_str:
+            sent_history.append({"date": today_str, "score": curr_sentiment})
+        else:
+            sent_history[-1]['score'] = curr_sentiment
 
         master_db.append({
             "ticker": ticker,
@@ -1363,15 +1307,20 @@ def run_pipeline():
             "map_codes": fin.get("map_codes", []),           
             "calendar": cal, 
             "last_price": last_price_str,
+            "raw_price": price_raw,
             "daily_change_pct": daily_change_pct,
             "market_cap_str": mc_str,
             "market_cap_usd": mc_usd,
             "pe_ratio": pe_ratio,
+            "pe_raw": pe_raw,
             "debt_to_equity": debt_equity,
+            "de_raw": de_raw,
             "actuals": fin,
             "eps_beat_miss_pct": beat_miss,
             "news_summary": intel.get("summary", ["Data parsing failed."]),
-            "sentiment": intel.get("sentiment", 50),
+            "sentiment": curr_sentiment,
+            "sentiment_history": sent_history[-30:],
+            "rating": intel.get("rating", "Hold"),
             "reading_room": intel.get("reading_room", "<p>Data unavailable.</p>"),
             "quotes": intel.get("quotes", []),
             "jurisdictions": fin.get("jurisdictions", []),
@@ -1389,7 +1338,5 @@ def run_pipeline():
         sys.exit(1)
 
 if __name__ == "__main__":
-    try: 
-        run_pipeline()
-    except Exception: 
-        sys.exit(1)
+    try: run_pipeline()
+    except Exception: sys.exit(1)
