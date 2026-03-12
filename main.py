@@ -20,7 +20,6 @@ except FileNotFoundError:
     print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
     VERIFIED_CALENDAR = {}
 
-# Fully expanded TARGET_COMPANIES dictionary
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
@@ -73,12 +72,10 @@ TARGET_COMPANIES = [
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
-    
-    # NEW GLOBAL ADDITIONS
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA"},
-    {"name": "Codere Online", "ticker": "CDRO", "domain": "codereonline.com", "base_country": "Luxembourg"},
+    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg"},
     {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea"},
+    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.co.kr", "base_country": "South Korea"},
     {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan"},
     {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
     {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan"},
@@ -86,7 +83,7 @@ TARGET_COMPANIES = [
     {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia"},
     {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India"},
     {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estorilsoldigital.com", "base_country": "Portugal"},
+    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal"},
     {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta"}
 ]
 
@@ -114,7 +111,6 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# The Fully Expanded, Uncompressed Verified Data Dictionary
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -278,15 +274,15 @@ VERIFIED_DATA = {
     },
     "PTEC.L": {
         "rev_label": "REV",
-        "revenue_fy": "€1.79B (FY '25)",
-        "revenue_interim": "€940M (H2 '25)",
+        "revenue_fy": "£1.52B (FY '25)",
+        "revenue_interim": "£800M (H2 '25)",
         "focus": "B2B iGaming & Sportsbook Tech",
         "map_codes": ["GB", "IT", "BG", "UA", "EE"],
         "eps_actual": 0.71,
         "eps_forecast": 0.62,
-        "net_income": "€195M",
-        "ebitda": "€480.4M",
-        "fcf": "€95M",
+        "net_income": "£165M",
+        "ebitda": "£400.4M",
+        "fcf": "£85M",
         "jurisdictions": ["UK", "Italy", "LatAm"]
     },
     "CHDN": {
@@ -330,21 +326,21 @@ VERIFIED_DATA = {
     },
     "SGHC": {
         "rev_label": "NGR",
-        "revenue_fy": "€1.4B (FY '25)",
-        "revenue_interim": "€360M (Q4 '25)",
+        "revenue_fy": "$1.4B (FY '25)",
+        "revenue_interim": "$360M (Q3 '25)",
         "focus": "B2C Sportsbook & iGaming",
         "map_codes": ["ZA", "CA", "GB", "MT", "FR"],
         "eps_actual": 0.08,
         "eps_forecast": 0.10,
-        "net_income": "€35M",
-        "ebitda": "€75M",
-        "fcf": "€45M",
+        "net_income": "$35M",
+        "ebitda": "$75M",
+        "fcf": "$45M",
         "jurisdictions": ["Canada", "Africa", "Europe"]
     },
     "RSI": {
         "rev_label": "REV",
         "revenue_fy": "$950M (FY '25)",
-        "revenue_interim": "$250M (Q4 '25)",
+        "revenue_interim": "$250M (Q3 '25)",
         "focus": "B2C Casino-First iGaming",
         "map_codes": ["US", "CO", "MX", "CA", "PE"],
         "eps_actual": 0.12,
@@ -356,15 +352,15 @@ VERIFIED_DATA = {
     },
     "BRAG": {
         "rev_label": "REV",
-        "revenue_fy": "€105M (FY '25)",
-        "revenue_interim": "€28M (Q4 '25)",
+        "revenue_fy": "$105M (FY '25)",
+        "revenue_interim": "$28M (Q3 '25)",
         "focus": "B2B iGaming Content & PAM",
         "map_codes": ["CA", "US", "NL", "BR", "FI"],
         "eps_actual": -0.02,
         "eps_forecast": 0.01,
-        "net_income": "-€1M",
-        "ebitda": "€4M",
-        "fcf": "€1M",
+        "net_income": "-$1M",
+        "ebitda": "$4M",
+        "fcf": "$1M",
         "jurisdictions": ["US", "Europe", "Canada"]
     },
     "KAMBI.ST": {
@@ -625,12 +621,12 @@ VERIFIED_DATA = {
     "INSE": {
         "rev_label": "REV",
         "revenue_fy": "$320M (FY '25)",
-        "revenue_interim": "$80M (Q4 '25)",
+        "revenue_interim": "$80M (Q3 '25)",
         "focus": "VLTs & Virtual Sports",
         "map_codes": ["US", "GB", "GR"],
-        "eps_actual": 0.35,
-        "eps_forecast": 0.30,
-        "net_income": "$25M",
+        "eps_actual": -0.18,
+        "eps_forecast": 0.24,
+        "net_income": "-$4.5M",
         "ebitda": "$100M",
         "fcf": "$35M",
         "jurisdictions": ["UK", "North America"]
@@ -772,7 +768,7 @@ VERIFIED_DATA = {
     "GAMB": {
         "rev_label": "REV",
         "revenue_fy": "$115M (FY '25)",
-        "revenue_interim": "$32M (Q4 '25)",
+        "revenue_interim": "$32.1M (Q3 '25)",
         "focus": "iGaming Performance Marketing",
         "map_codes": ["US", "GB", "IE"],
         "eps_actual": 0.35,
@@ -806,12 +802,16 @@ VERIFIED_DATA = {
         "net_income": "$51.3M",
         "ebitda": "$210.1M",
         "fcf": "$150.9M",
-        "jurisdictions": ["US"]
+        "jurisdictions": ["US"],
+        "fallback_price": "$11.07",
+        "fallback_mcap": "$950M",
+        "fallback_pe": "21.1x",
+        "fallback_debt": "150%"
     },
     "CDRO": {
         "rev_label": "REV",
-        "revenue_fy": "€151M (FY '25)",
-        "revenue_interim": "€43M (Q4 '25)",
+        "revenue_fy": "$160M (FY '25)",
+        "revenue_interim": "$43M (Q3 '25)",
         "focus": "LatAm & Euro Sportsbook",
         "map_codes": ["ES", "MX", "CO", "PA", "AR"],
         "eps_actual": -0.05,
@@ -954,7 +954,7 @@ VERIFIED_DATA = {
     "GMBL": {
         "rev_label": "REV",
         "revenue_fy": "$15M (FY '25)",
-        "revenue_interim": "$3M (Q4 '25)",
+        "revenue_interim": "$3M (Q3 '25)",
         "focus": "Esports Betting & Events",
         "map_codes": ["US", "MT"],
         "eps_actual": -1.50,
