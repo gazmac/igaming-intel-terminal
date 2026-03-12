@@ -20,8 +20,7 @@ except FileNotFoundError:
     print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
     VERIFIED_CALENDAR = {}
 
-# TARGET COMPANIES: Overrides updated to use Clearbit. 
-# TLC and SKC reverted to standard processing.
+# TARGET COMPANIES: Overrides updated to pull directly from your GitHub Raw CDN
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
@@ -52,7 +51,6 @@ TARGET_COMPANIES = [
     {"name": "Lottomatica Group", "ticker": "LTMC.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
     {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
     {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
-    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta"}, 
     {"name": "Bally's Corporation", "ticker": "BALY", "domain": "ballys.com", "base_country": "USA"},
     {"name": "Boyd Gaming", "ticker": "BYD", "domain": "boydgaming.com", "base_country": "USA"},
     {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"}, 
@@ -73,24 +71,25 @@ TARGET_COMPANIES = [
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
     
-    # REVERTED TO STANDARD GOOGLE PROCESSING:
-    {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia"},
-    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
-    
-    # NEW CLEARBIT OVERRIDES (Fixes the Globes & enables proper Initials fallback)
+    # EXISTING CLEARBIT OVERRIDES (Kept intact)
     {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey", "logo_override": "https://logo.clearbit.com/gambling.com"},
     {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"},
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/accelentertainment.com"},
-    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://logo.clearbit.com/codere.com"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://logo.clearbit.com/kangwonland.com"},
-    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://logo.clearbit.com/tsuburaya-fields.co.jp"},
-    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://logo.clearbit.com/universal-777.com"},
-    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://logo.clearbit.com/jumbointeractive.com"},
-    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://logo.clearbit.com/agtslots.com"},
-    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://logo.clearbit.com/deltacorp.in"},
-    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/goldenmatrix.com"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://logo.clearbit.com/estoril-solsgps.com"},
-    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://logo.clearbit.com/esportsentertainmentgroup.com"}
+    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
+
+    # YOUR CUSTOM GITHUB LOGO OVERRIDES
+    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"},
+    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"},
+    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"},
+    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"},
+    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"},
+    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"},
+    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"},
+    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"},
+    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"},
+    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"},
+    {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/the_lottery_corp.png"},
+    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"}
 ]
 
 OTC_MAP = {
@@ -931,19 +930,6 @@ VERIFIED_DATA = {
         "fcf": "$12.6M",
         "jurisdictions": ["US", "Balkans", "LatAm"]
     },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": ["US"],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": ["US"]
-    },
     "ESON.LS": {
         "rev_label": "REV",
         "revenue_fy": "€255M (FY '25)",
@@ -1339,7 +1325,7 @@ def run_pipeline():
             if cal.get("date", "TBD") == "TBD" and dyn_date and dyn_date != "N/A":
                 cal["date"] = dyn_date
             
-            # The EPS Absolute Value Math (Correctly handles negative cross-overs like INSE)
+            # The EPS Absolute Value Math
             beat_miss = 0
             if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
                 fin["eps_actual"] = round(dyn_eps_act, 2)
@@ -1351,7 +1337,7 @@ def run_pipeline():
 
             history = fetch_stock_history(ticker, price_raw)
             
-            # THE CRITICAL LOGO OVERRIDE LOGIC
+            # THE LOGO OVERRIDE INJECTION
             final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
             
         except Exception as e:
