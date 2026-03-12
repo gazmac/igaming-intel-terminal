@@ -46,7 +46,7 @@
         }
         .animate-swipe { animation: swipe-hint 2s infinite ease-in-out; }
 
-        /* New Brand Toggle Buttons */
+        /* Brand Toggle Buttons */
         .tab-btn { padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .tab-btn-active { background-color: #1e293b; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .tab-btn-inactive { background-color: #f1f5f9; color: #64748b; }
@@ -301,7 +301,7 @@
 
                         <p class="md:hidden text-[10px] text-slate-400 italic mb-2 flex items-center">
                             <svg class="w-3 h-3 mr-1 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-                            Swipe to see more data
+                            Swipe table to see more data
                         </p>
                         
                         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
@@ -341,10 +341,17 @@
     </div>
 
     <script>
-        function handleImageFallback(img, domain, compName) {
-            if (!img.dataset.triedIconHorse && domain) {
+        // THE ULTIMATE 5-STEP IMAGE FALLBACK CASCADE
+        function handleImageFallback(img, domain, compName, googleUrl) {
+            if (!img.dataset.triedDuck && domain) {
+                img.dataset.triedDuck = 'true';
+                img.src = `https://external-content.duckduckgo.com/ip3/${domain}.ico`;
+            } else if (!img.dataset.triedGoogle && googleUrl) {
+                img.dataset.triedGoogle = 'true';
+                img.src = googleUrl; // Triggers if DuckDuckGo fails
+            } else if (!img.dataset.triedIconHorse && domain) {
                 img.dataset.triedIconHorse = 'true';
-                img.src = `https://icon.horse/icon/${domain}`;
+                img.src = `https://icon.horse/icon/${domain}`; // Triggers if Google fails
             } else {
                 img.onerror = null; 
                 img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(compName)}&background=f3f4f6&color=374151&rounded=true&bold=true`;
@@ -443,6 +450,14 @@
             if (ticker.endsWith('.KL')) return { name: 'KLSE', color: 'bg-pink-100 text-pink-700 border-pink-200' };
             if (ticker.endsWith('.AT')) return { name: 'ATH', color: 'bg-blue-100 text-blue-700 border-blue-200' };
             if (ticker.endsWith('.F') || ticker.endsWith('.DE')) return { name: 'FRA', color: 'bg-gray-200 text-gray-700 border-gray-300' };
+            
+            // NEW INTERNATIONAL BADGES
+            if (ticker.endsWith('.KS')) return { name: 'KRX', color: 'bg-purple-100 text-purple-700 border-purple-200' };
+            if (ticker.endsWith('.T')) return { name: 'TYO', color: 'bg-red-50 text-red-700 border-red-200' };
+            if (ticker.endsWith('.NZ')) return { name: 'NZX', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' };
+            if (ticker.endsWith('.NS')) return { name: 'NSE', color: 'bg-orange-50 text-orange-700 border-orange-200' };
+            if (ticker.endsWith('.LS')) return { name: 'LIS', color: 'bg-blue-50 text-blue-700 border-blue-200' };
+            
             if (ticker === 'BETMGM') return { name: 'PRIVATE JV', color: 'bg-gray-800 text-white border-gray-700' };
             return { name: 'US MKT', color: 'bg-blue-100 text-blue-700 border-blue-200' };
         }
@@ -450,9 +465,10 @@
         function getIndustryCategory(ticker) {
             if (['VICI', 'GLPI'].includes(ticker)) return { name: 'Gaming REIT', color: 'bg-green-50 text-green-700 border-green-200' };
             if (['BETCO.ST', 'CTM.ST', 'GAMB'].includes(ticker)) return { name: 'Affiliate & Media', color: 'bg-pink-50 text-pink-700 border-pink-200' };
-            if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'BRSL', 'INSE', 'ACEL', 'GMR.L', 'TIMA.F'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
-            if (['MGM', 'CZR', 'PENN', 'LVS', 'WYNN', '0027.HK', 'MLCO', '1980.HK', '1128.HK', 'G13.SI', 'BALY', 'BYD', 'RRR', 'GDEN', 'MCRI', 'CNTY', 'SGR.AX', 'GENM.KL', 'FLL', 'PARP.PA', 'RNK.L', 'CHDN'].includes(ticker)) return { name: 'Land-Based Casino', color: 'bg-yellow-50 text-yellow-700 border-yellow-200' };
-            if (['FLUT', 'DKNG', 'ENT.L', 'EVOK.L', 'BETS-B.ST', 'SGHC', 'RSI', 'FDJ.PA', 'LOTO.MI', 'ACX.DE', 'BETMGM', 'OPAP.AT'].includes(ticker)) return { name: 'Digital Operator', color: 'bg-red-50 text-red-700 border-red-200' };
+            if (['EVO.ST', 'SRAD', 'PTEC.L', 'LNW', 'ALL.AX', 'BRAG', 'KAMBI.ST', 'GENI', 'BRSL', 'INSE', 'ACEL', 'GMR.L', 'TIMA.F', 'AGI.AX', 'GMGI'].includes(ticker)) return { name: 'B2B Tech & Supplier', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' };
+            if (['MGM', 'CZR', 'PENN', 'LVS', 'WYNN', '0027.HK', 'MLCO', '1980.HK', '1128.HK', 'G13.SI', 'BALY', 'BYD', 'RRR', 'GDEN', 'MCRI', 'CNTY', 'SGR.AX', 'GENM.KL', 'FLL', 'PARP.PA', 'RNK.L', 'CHDN', '035250.KS', 'SKC.NZ', 'DELTACORP.NS', 'ESON.LS'].includes(ticker)) return { name: 'Land-Based Casino', color: 'bg-yellow-50 text-yellow-700 border-yellow-200' };
+            if (['FLUT', 'DKNG', 'ENT.L', 'EVOK.L', 'BETS-B.ST', 'SGHC', 'RSI', 'FDJ.PA', 'LOTO.MI', 'ACX.DE', 'BETMGM', 'OPAP.AT', 'CDRO', 'GMBL'].includes(ticker)) return { name: 'Digital Operator', color: 'bg-red-50 text-red-700 border-red-200' };
+            if (['TLC.AX', 'JIN.AX'].includes(ticker)) return { name: 'Lottery Operator', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
             return { name: 'Diversified', color: 'bg-gray-50 text-gray-700 border-gray-200' };
         }
 
@@ -467,7 +483,15 @@
                 const color = s.sentiment > 60 ? 'bg-green-500' : (s.sentiment < 40 ? 'bg-red-500' : 'bg-yellow-500');
                 const revLabel = s.actuals?.rev_label || 'REV';
                 const safeName = s.company.replace(/['"]/g, '');
-                const domain = s.logo ? s.logo.split('domain=').pop().split('&')[0] : '';
+                
+                // Extract clean domain to power the new Image Cascade
+                let domain = "";
+                if (s.logo && s.logo.includes('domain=')) {
+                    domain = s.logo.split('domain=')[1].split('&')[0];
+                }
+                // Try Clearbit first to force the cascade if missing
+                const initialLogo = domain ? `https://logo.clearbit.com/${domain}` : s.logo;
+                
                 const badge = getExchangeBadge(s.ticker);
                 const catBadge = getIndustryCategory(s.ticker);
 
@@ -492,7 +516,7 @@
                         <div>
                             <div class="flex justify-between items-start mb-2 gap-2">
                                 <div class="flex gap-3 items-start min-w-0">
-                                    <img src="${s.logo}" alt="${s.company} Logo" width="40" height="40" class="rounded-full border border-gray-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}')">
+                                    <img src="${initialLogo}" alt="${safeName} Logo" width="40" height="40" class="rounded-full border border-gray-200 bg-white object-contain p-0.5 shrink-0" onerror="handleImageFallback(this, '${domain}', '${safeName}', '${s.logo}')">
                                     <div class="min-w-0 flex-1">
                                         <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors pr-2" style="line-height: 1.25;" title="${s.company}">${s.company}</h3>
                                         <div class="flex flex-wrap items-center gap-1.5 mt-1">
@@ -645,7 +669,6 @@
                 
                 toggleView('main');
 
-                // SHOW BRAND INTELLIGENCE BUTTON IF WE HAVE DATA IN EXCEL
                 const regBtn = document.getElementById('btn-regulatory');
                 if (regBtn) {
                     if (regDb && regDb[ticker] && Object.keys(regDb[ticker]).length > 0) {
@@ -659,13 +682,19 @@
                 safeSetHTML('compare-select', compareHtml);
                 
                 const safeName = (s.company || 'Unknown').replace(/['"]/g, '');
-                const domain = s.logo ? s.logo.split('domain=').pop().split('&')[0] : '';
+                let domain = "";
+                if (s.logo && s.logo.includes('domain=')) {
+                    domain = s.logo.split('domain=')[1].split('&')[0];
+                }
+                const initialLogo = domain ? `https://logo.clearbit.com/${domain}` : s.logo;
+                
                 const modalLogo = document.getElementById('modal-logo');
                 if (modalLogo) {
+                    delete modalLogo.dataset.triedDuck; 
                     delete modalLogo.dataset.triedGoogle; 
                     delete modalLogo.dataset.triedIconHorse;
-                    modalLogo.src = s.logo;
-                    modalLogo.onerror = function() { handleImageFallback(this, domain, safeName); };
+                    modalLogo.src = initialLogo;
+                    modalLogo.onerror = function() { handleImageFallback(this, domain, safeName, s.logo); };
                     modalLogo.classList.remove('hidden');
                 }
 
@@ -857,7 +886,7 @@
             }
         }
 
-        // --- NEW JAVASCRIPT: BRAND INTELLIGENCE LOGIC ---
+        // --- BRAND INTELLIGENCE LOGIC ---
 
         function switchVertical(vertical) {
             currentVertical = vertical;
@@ -882,7 +911,6 @@
             
             const companyData = regDb[activeTicker];
             
-            // --- FIX: NATIONAL AGGREGATES SUMMARY (DESKTOP & MOBILE COMPATIBLE) ---
             const summaryDiv = document.getElementById('national-aggregates-summary');
             if (companyData && companyData.summary) {
                 summaryDiv.innerHTML = `
@@ -912,7 +940,6 @@
                 }
             }
 
-            // Check if Vertical data exists
             if (!companyData || !companyData[currentVertical] || Object.keys(companyData[currentVertical]).length === 0) {
                 handleEmptyState(true);
                 return;
@@ -953,7 +980,6 @@
             const data = regDb[activeTicker][currentVertical][selectedState];
             if (!data) return;
 
-            // 1. UPDATE BRAND TABLE
             const tbody = document.getElementById('brand-table-body');
             tbody.innerHTML = data.brands.map(b => `
                 <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
@@ -965,7 +991,6 @@
                 </tr>
             `).join('');
 
-            // 2. UPDATE APEX CHARTS FOR BRAND TREND
             const trend = data.trend; 
             const labels = trend.map(t => t.month);
             const handles = trend.map(t => t.handle);
@@ -975,7 +1000,7 @@
             if (brandHandleChart) brandHandleChart.destroy();
             if (brandRevChart) brandRevChart.destroy();
 
-            // FIX: ApexCharts automatically handles 'null' values gracefully, preventing drops to zero.
+            // SpanGaps: false ensures line drops correctly when null data is passed for future months
             brandHandleChart = new ApexCharts(document.querySelector("#chart-brand-handle"), {
                 series: [{ name: 'Total Handle ($M)', data: handles }],
                 chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'inherit', zoom: { enabled: false } },
