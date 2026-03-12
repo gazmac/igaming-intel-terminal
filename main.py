@@ -20,6 +20,8 @@ except FileNotFoundError:
     print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
     VERIFIED_CALENDAR = {}
 
+# TARGET COMPANIES: Overrides updated to use Clearbit. 
+# TLC and SKC reverted to standard processing.
 TARGET_COMPANIES = [
     {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
     {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
@@ -71,22 +73,24 @@ TARGET_COMPANIES = [
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
     
-    # THE PROXY FIX: Using Icon.Horse directly to bypass hotlink blocks and Google Globes
-    {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey", "logo_override": "https://icon.horse/icon/gambling.com"},
-    {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://icon.horse/icon/fullhouseresorts.com"},
-    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://icon.horse/icon/accelentertainment.com"},
-    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://icon.horse/icon/codere.com"},
-    {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia", "logo_override": "https://icon.horse/icon/thelotterycorporation.com.au"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.co.kr", "base_country": "South Korea", "logo_override": "https://icon.horse/icon/kangwonland.co.kr"},
-    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://icon.horse/icon/tsuburaya-fields.co.jp"},
-    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand", "logo_override": "https://icon.horse/icon/skycityentertainmentgroup.com"},
-    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://icon.horse/icon/universal-777.com"},
-    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://icon.horse/icon/jumbointeractive.com"},
-    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://icon.horse/icon/agtslots.com"},
-    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://icon.horse/icon/deltacorp.in"},
-    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://icon.horse/icon/goldenmatrix.com"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://icon.horse/icon/estoril-solsgps.com"},
-    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://icon.horse/icon/esportsentertainmentgroup.com"}
+    # REVERTED TO STANDARD GOOGLE PROCESSING:
+    {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia"},
+    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
+    
+    # NEW CLEARBIT OVERRIDES (Fixes the Globes & enables proper Initials fallback)
+    {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey", "logo_override": "https://logo.clearbit.com/gambling.com"},
+    {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"},
+    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/accelentertainment.com"},
+    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://logo.clearbit.com/codere.com"},
+    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://logo.clearbit.com/kangwonland.com"},
+    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://logo.clearbit.com/tsuburaya-fields.co.jp"},
+    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://logo.clearbit.com/universal-777.com"},
+    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://logo.clearbit.com/jumbointeractive.com"},
+    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://logo.clearbit.com/agtslots.com"},
+    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://logo.clearbit.com/deltacorp.in"},
+    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/goldenmatrix.com"},
+    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://logo.clearbit.com/estoril-solsgps.com"},
+    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://logo.clearbit.com/esportsentertainmentgroup.com"}
 ]
 
 OTC_MAP = {
@@ -689,19 +693,6 @@ VERIFIED_DATA = {
         "fcf": "$800M",
         "jurisdictions": ["US"]
     },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": ["US"],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": ["US"]
-    },
     "OPAP.AT": {
         "rev_label": "NGR",
         "revenue_fy": "€2.2B (FY '25)",
@@ -767,8 +758,6 @@ VERIFIED_DATA = {
         "fcf": "-€1M",
         "jurisdictions": ["DACH Region"]
     },
-    
-    # THE GAMBLING.COM Q4 2025 UPDATE
     "GAMB": {
         "rev_label": "REV",
         "revenue_fy": "$165.4M (FY '25)",
@@ -782,7 +771,6 @@ VERIFIED_DATA = {
         "fcf": "$36.3M",
         "jurisdictions": ["US", "UK"]
     },
-    
     "BETMGM": {
         "rev_label": "REV",
         "revenue_fy": "$2.8B (FY '25)",
@@ -942,6 +930,19 @@ VERIFIED_DATA = {
         "ebitda": "$15.7M",
         "fcf": "$12.6M",
         "jurisdictions": ["US", "Balkans", "LatAm"]
+    },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": ["US"],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "jurisdictions": ["US"]
     },
     "ESON.LS": {
         "rev_label": "REV",
@@ -1233,6 +1234,7 @@ def ai_process_intelligence(company_name, ticker):
         except Exception:
             headlines = []
             
+        # THE FIX: If Yahoo RSS is empty (common for Indian/Asian stocks like DELTACORP.NS), query the company name directly
         if not headlines:
             fallback_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={company_name.split()[0]}"
             try:
@@ -1349,7 +1351,7 @@ def run_pipeline():
 
             history = fetch_stock_history(ticker, price_raw)
             
-            # THE PROXY OVERRIDE INJECTION
+            # THE CRITICAL LOGO OVERRIDE LOGIC
             final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
             
         except Exception as e:
