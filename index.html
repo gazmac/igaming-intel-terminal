@@ -76,6 +76,7 @@
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider hidden lg:inline">Sort:</span>
                         <select id="sort-select" onchange="updateDashboardView()" class="bg-white border border-slate-200 text-sm rounded-lg px-4 py-2 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm w-full md:w-auto cursor-pointer">
                             <option value="earnings">Upcoming Earnings</option>
+                            <option value="sentiment">AI Sentiment (High to Low)</option>
                             <option value="marketcap">Market Cap (High to Low)</option>
                             <option value="beat">Highest EPS Beat</option>
                             <option value="exchange">Stock Exchange Group</option>
@@ -339,7 +340,7 @@
     </div>
 
     <script>
-        // THE ROLLED-BACK, STABLE 2-STEP IMAGE FALLBACK
+        // CLEAN 2-STEP FALLBACK
         function handleImageFallback(img, domain, compName) {
             if (!img.dataset.triedIconHorse && domain) {
                 img.dataset.triedIconHorse = 'true';
@@ -414,6 +415,9 @@
                     if (timeA === timeB) return a.company.localeCompare(b.company);
                     return timeA - timeB;
                 } 
+                else if (currentSort === 'sentiment') {
+                    return (b.sentiment || 0) - (a.sentiment || 0); // SORT BY SENTIMENT LOGIC
+                }
                 else if (currentSort === 'marketcap') {
                     return (b.market_cap_usd || 0) - (a.market_cap_usd || 0);
                 }
@@ -441,14 +445,11 @@
             if (ticker.endsWith('.KL')) return { name: 'KLSE', color: 'bg-pink-100 text-pink-700 border-pink-200' };
             if (ticker.endsWith('.AT')) return { name: 'ATH', color: 'bg-blue-100 text-blue-700 border-blue-200' };
             if (ticker.endsWith('.F') || ticker.endsWith('.DE')) return { name: 'FRA', color: 'bg-gray-200 text-gray-700 border-gray-300' };
-            
-            // NEW INTERNATIONAL BADGES
             if (ticker.endsWith('.KS')) return { name: 'KRX', color: 'bg-purple-100 text-purple-700 border-purple-200' };
             if (ticker.endsWith('.T')) return { name: 'TYO', color: 'bg-red-50 text-red-700 border-red-200' };
             if (ticker.endsWith('.NZ')) return { name: 'NZX', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' };
             if (ticker.endsWith('.NS')) return { name: 'NSE', color: 'bg-orange-50 text-orange-700 border-orange-200' };
             if (ticker.endsWith('.LS')) return { name: 'LIS', color: 'bg-blue-50 text-blue-700 border-blue-200' };
-            
             if (ticker === 'BETMGM') return { name: 'PRIVATE JV', color: 'bg-gray-800 text-white border-gray-700' };
             return { name: 'US MKT', color: 'bg-blue-100 text-blue-700 border-blue-200' };
         }
@@ -474,8 +475,6 @@
                 const color = s.sentiment > 60 ? 'bg-green-500' : (s.sentiment < 40 ? 'bg-red-500' : 'bg-yellow-500');
                 const revLabel = s.actuals?.rev_label || 'REV';
                 const safeName = s.company.replace(/['"]/g, '');
-                
-                // NEW: Use the clean domain passed directly from backend
                 const domain = s.domain || '';
                 const badge = getExchangeBadge(s.ticker);
                 const catBadge = getIndustryCategory(s.ticker);
@@ -496,6 +495,37 @@
                     changePctHtml = `<div class="font-black ${changeColor} tracking-tighter" style="font-size: 11px;">${sign}${pct.toFixed(2)}%</div>`;
                 }
 
+                // MATHEMATICAL SVG SPARKLINE LOGIC
+                let sparklineSvg = '<div class="w-20 h-6"></div>'; 
+                if (s.history && s.history['1m'] && s.history['1m'].length > 1) {
+                    const pts = s.history['1m'].map(p => p[1]);
+                    const minP = Math.min(...pts);
+                    const maxP = Math.max(...pts);
+                    const range = (maxP - minP) || 1; 
+                    
+                    const width = 80;
+                    const height = 24;
+                    
+                    const coords = pts.map((p, i) => {
+                        const x = (i / (pts.length - 1)) * width;
+                        const y = height - (((p - minP) / range) * height * 0.8) - (height * 0.1); 
+                        return `${x},${y}`;
+                    }).join(' ');
+                    
+                    const isPositive = pts[pts.length - 1] >= pts[0];
+                    const strokeColor = isPositive ? '#22c55e' : '#ef4444'; 
+                    const fillColor = isPositive ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+                    
+                    const areaCoords = `0,${height} ${coords} ${width},${height}`;
+
+                    sparklineSvg = `
+                        <svg viewBox="0 0 ${width} ${height}" class="w-20 h-6 mt-1 ml-auto drop-shadow-sm">
+                            <polyline points="${areaCoords}" fill="${fillColor}" stroke="none" />
+                            <polyline points="${coords}" fill="none" stroke="${strokeColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    `;
+                }
+
                 return `
                     <div onclick="openModal('${s.ticker}')" class="bg-white p-5 rounded-2xl border border-gray-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between h-full" style="min-height: 240px;">
                         <div>
@@ -510,9 +540,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right shrink-0 pl-2">
+                                <div class="text-right shrink-0 pl-2 flex flex-col items-end">
                                     <div class="text-lg font-bold text-gray-900 leading-none">${s.last_price || 'N/A'}</div>
                                     ${changePctHtml}
+                                    ${sparklineSvg}
                                 </div>
                             </div>
                             
