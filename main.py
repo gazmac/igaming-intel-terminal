@@ -6,6 +6,7 @@ import yfinance as yf
 import re
 import sys
 import feedparser
+import urllib.parse
 from google import genai
 from datetime import datetime
 
@@ -17,8 +18,24 @@ try:
     with open('verified_calendar.json', 'r') as f:
         VERIFIED_CALENDAR = json.load(f)
 except FileNotFoundError:
-    print("⚠️ WARNING: verified_calendar.json not found! Defaulting to TBD.")
     VERIFIED_CALENDAR = {}
+
+# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks ignored by YF
+DEFAULT_CALENDAR = {
+    "6425.T": {"date": "May 14, 2026", "report_time": "After Market", "call_time": "TBD"},
+    "2767.T": {"date": "May 12, 2026", "report_time": "After Market", "call_time": "TBD"},
+    "TLC.AX": {"date": "Aug 20, 2026", "report_time": "Pre Market", "call_time": "10:00 AM AEST"},
+    "SKC.NZ": {"date": "Aug 21, 2026", "report_time": "Pre Market", "call_time": "TBD"},
+    "JIN.AX": {"date": "Aug 25, 2026", "report_time": "Pre Market", "call_time": "TBD"},
+    "ESON.LS": {"date": "May 25, 2026", "report_time": "After Market", "call_time": "TBD"},
+    "GMBL": {"date": "May 15, 2026", "report_time": "TBD", "call_time": "TBD"},
+    "DELTACORP.NS": {"date": "Apr 28, 2026", "report_time": "After Market", "call_time": "TBD"},
+    "AGI.AX": {"date": "Aug 26, 2026", "report_time": "Pre Market", "call_time": "TBD"}
+}
+
+for k, v in DEFAULT_CALENDAR.items():
+    if k not in VERIFIED_CALENDAR or VERIFIED_CALENDAR[k].get('date') == 'TBD':
+        VERIFIED_CALENDAR[k] = v
 
 # --- HISTORICAL SENTIMENT TRACKER ---
 PREV_DATA = {}
@@ -29,74 +46,412 @@ try:
             for item in prev_list:
                 PREV_DATA[item['ticker']] = item
 except Exception as e:
-    print(f"No previous data found or error loading: {e}")
+    pass
 
+# --- UNCOMPRESSED TARGET COMPANIES ---
 TARGET_COMPANIES = [
-    {"name": "Flutter Entertainment", "ticker": "FLUT", "domain": "flutter.com", "base_country": "Ireland"},
-    {"name": "DraftKings", "ticker": "DKNG", "domain": "draftkings.com", "base_country": "USA"},
-    {"name": "Entain PLC", "ticker": "ENT.L", "domain": "entaingroup.com", "base_country": "UK"},
-    {"name": "Evolution AB", "ticker": "EVO.ST", "domain": "evolution.com", "base_country": "Sweden"},
-    {"name": "MGM Resorts", "ticker": "MGM", "domain": "mgmresorts.com", "base_country": "USA"},
-    {"name": "Caesars Entertainment", "ticker": "CZR", "domain": "caesars.com", "base_country": "USA"},
-    {"name": "Penn Entertainment", "ticker": "PENN", "domain": "pennentertainment.com", "base_country": "USA"},
-    {"name": "Las Vegas Sands", "ticker": "LVS", "domain": "sands.com", "base_country": "USA"},
-    {"name": "Wynn Resorts", "ticker": "WYNN", "domain": "wynnresorts.com", "base_country": "USA"},
-    {"name": "Evoke plc", "ticker": "EVOK.L", "domain": "evokeplc.com", "base_country": "UK"},
-    {"name": "Sportradar", "ticker": "SRAD", "domain": "sportradar.com", "base_country": "Switzerland"},
-    {"name": "Betsson AB", "ticker": "BETS-B.ST", "domain": "betssongroup.com", "base_country": "Sweden"},
-    {"name": "Playtech", "ticker": "PTEC.L", "domain": "playtech.com", "base_country": "UK"},
-    {"name": "Churchill Downs", "ticker": "CHDN", "domain": "churchilldownsincorporated.com", "base_country": "USA"},
-    {"name": "Light & Wonder", "ticker": "LNW", "domain": "lnw.com", "base_country": "USA"},
-    {"name": "Aristocrat Leisure", "ticker": "ALL.AX", "domain": "aristocrat.com", "base_country": "Australia"},
-    {"name": "Super Group", "ticker": "SGHC", "domain": "supergroup.com", "base_country": "Guernsey"},
-    {"name": "Rush Street Interactive", "ticker": "RSI", "domain": "rushstreetinteractive.com", "base_country": "USA"},
-    {"name": "Bragg Gaming Group", "ticker": "BRAG", "domain": "bragg.group", "base_country": "Canada"},
-    {"name": "Kambi Group", "ticker": "KAMBI.ST", "domain": "kambi.com", "base_country": "Malta"},
-    {"name": "Galaxy Entertainment", "ticker": "0027.HK", "domain": "galaxyentertainment.com", "base_country": "Hong Kong"},
-    {"name": "Melco Resorts", "ticker": "MLCO", "domain": "cityofdreamsmacau.com", "base_country": "Hong Kong"}, 
-    {"name": "SJM Holdings", "ticker": "1980.HK", "domain": "sjmresorts.com", "base_country": "Hong Kong"}, 
-    {"name": "Wynn Macau", "ticker": "1128.HK", "domain": "wynnresorts.com", "base_country": "Macau"}, 
-    {"name": "Genting Singapore", "ticker": "G13.SI", "domain": "gentingsingapore.com", "base_country": "Singapore"},
-    {"name": "La Française des Jeux", "ticker": "FDJ.PA", "domain": "groupefdj.com", "base_country": "France"},
-    {"name": "Lottomatica Group", "ticker": "LTMC.MI", "domain": "lottomaticagroup.com", "base_country": "Italy"},
-    {"name": "Rank Group", "ticker": "RNK.L", "domain": "rank.com", "base_country": "UK"},
-    {"name": "Better Collective", "ticker": "BETCO.ST", "domain": "bettercollective.com", "base_country": "Denmark"},
-    {"name": "Catena Media", "ticker": "CTM.ST", "domain": "catenamedia.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"}, 
-    {"name": "Bally's Corporation", "ticker": "BALY", "domain": "ballys.com", "base_country": "USA"},
-    {"name": "Boyd Gaming", "ticker": "BYD", "domain": "boydgaming.com", "base_country": "USA"},
-    {"name": "Red Rock Resorts", "ticker": "RRR", "domain": "stationcasinos.com", "base_country": "USA"}, 
-    {"name": "Golden Entertainment", "ticker": "GDEN", "domain": "goldenent.com", "base_country": "USA"},
-    {"name": "Monarch Casino", "ticker": "MCRI", "domain": "monarchcasino.com", "base_country": "USA"},
-    {"name": "Century Casinos", "ticker": "CNTY", "domain": "cnty.com", "base_country": "USA"},
-    {"name": "Genius Sports", "ticker": "GENI", "domain": "geniussports.com", "base_country": "UK"},
-    {"name": "Brightstar Lottery (fka IGT)", "ticker": "BRSL", "domain": "brightstarlottery.com", "base_country": "UK"},
-    {"name": "Inspired Entertainment", "ticker": "INSE", "domain": "inseinc.com", "base_country": "USA"},
-    {"name": "Star Entertainment", "ticker": "SGR.AX", "domain": "starentertainmentgroup.com.au", "base_country": "Australia"},
-    {"name": "Genting Malaysia", "ticker": "GENM.KL", "domain": "gentingmalaysia.com", "base_country": "Malaysia"},
-    {"name": "VICI Properties", "ticker": "VICI", "domain": "viciproperties.com", "base_country": "USA"},
-    {"name": "Gaming & Leisure Prop", "ticker": "GLPI", "domain": "glpropinc.com", "base_country": "USA"},
-    {"name": "OPAP S.A.", "ticker": "OPAP.AT", "domain": "opap.gr", "base_country": "Greece"},
-    {"name": "Zeal Network", "ticker": "TIMA.F", "domain": "zealnetwork.de", "base_country": "Germany"},
-    {"name": "Gaming Realms", "ticker": "GMR.L", "domain": "gamingrealms.com", "base_country": "UK"},
-    {"name": "Groupe Partouche", "ticker": "PARP.PA", "domain": "groupepartouche.com", "base_country": "France"},
-    {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
-    {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
-    {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"},
-    {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/accelentertainment.com"},
-    {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"},
-    {"name": "The Lottery Corporation", "ticker": "TLC.AX", "domain": "thelotterycorporation.com.au", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/the_lottery_corp.png"},
-    {"name": "Kangwon Land", "ticker": "035250.KS", "domain": "kangwonland.com", "base_country": "South Korea", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"},
-    {"name": "Tsuburaya Fields", "ticker": "2767.T", "domain": "tsuburaya-fields.co.jp", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"},
-    {"name": "SkyCity Entertainment", "ticker": "SKC.NZ", "domain": "skycityentertainmentgroup.com", "base_country": "New Zealand"},
-    {"name": "Universal Entertainment", "ticker": "6425.T", "domain": "universal-777.com", "base_country": "Japan", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"},
-    {"name": "Jumbo Interactive", "ticker": "JIN.AX", "domain": "jumbointeractive.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"},
-    {"name": "Ainsworth Game Tech", "ticker": "AGI.AX", "domain": "agtslots.com", "base_country": "Australia", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"},
-    {"name": "Delta Corp", "ticker": "DELTACORP.NS", "domain": "deltacorp.in", "base_country": "India", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"},
-    {"name": "Golden Matrix Group", "ticker": "GMGI", "domain": "goldenmatrix.com", "base_country": "USA", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"},
-    {"name": "Estoril Sol", "ticker": "ESON.LS", "domain": "estoril-solsgps.com", "base_country": "Portugal", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"},
-    {"name": "Esports Entertainment", "ticker": "GMBL", "domain": "esportsentertainmentgroup.com", "base_country": "Malta", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"}
+    {
+        "name": "Flutter Entertainment", 
+        "ticker": "FLUT", 
+        "domain": "flutter.com", 
+        "base_country": "Ireland"
+    },
+    {
+        "name": "DraftKings", 
+        "ticker": "DKNG", 
+        "domain": "draftkings.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Entain PLC", 
+        "ticker": "ENT.L", 
+        "domain": "entaingroup.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Evolution AB", 
+        "ticker": "EVO.ST", 
+        "domain": "evolution.com", 
+        "base_country": "Sweden"
+    },
+    {
+        "name": "MGM Resorts", 
+        "ticker": "MGM", 
+        "domain": "mgmresorts.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Caesars Entertainment", 
+        "ticker": "CZR", 
+        "domain": "caesars.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Penn Entertainment", 
+        "ticker": "PENN", 
+        "domain": "pennentertainment.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Las Vegas Sands", 
+        "ticker": "LVS", 
+        "domain": "sands.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Wynn Resorts", 
+        "ticker": "WYNN", 
+        "domain": "wynnresorts.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Evoke plc", 
+        "ticker": "EVOK.L", 
+        "domain": "evokeplc.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Sportradar", 
+        "ticker": "SRAD", 
+        "domain": "sportradar.com", 
+        "base_country": "Switzerland"
+    },
+    {
+        "name": "Betsson AB", 
+        "ticker": "BETS-B.ST", 
+        "domain": "betssongroup.com", 
+        "base_country": "Sweden"
+    },
+    {
+        "name": "Playtech", 
+        "ticker": "PTEC.L", 
+        "domain": "playtech.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Churchill Downs", 
+        "ticker": "CHDN", 
+        "domain": "churchilldownsincorporated.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Light & Wonder", 
+        "ticker": "LNW", 
+        "domain": "lnw.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Aristocrat Leisure", 
+        "ticker": "ALL.AX", 
+        "domain": "aristocrat.com", 
+        "base_country": "Australia"
+    },
+    {
+        "name": "Super Group", 
+        "ticker": "SGHC", 
+        "domain": "supergroup.com", 
+        "base_country": "Guernsey"
+    },
+    {
+        "name": "Rush Street Interactive", 
+        "ticker": "RSI", 
+        "domain": "rushstreetinteractive.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Bragg Gaming Group", 
+        "ticker": "BRAG", 
+        "domain": "bragg.group", 
+        "base_country": "Canada"
+    },
+    {
+        "name": "Kambi Group", 
+        "ticker": "KAMBI.ST", 
+        "domain": "kambi.com", 
+        "base_country": "Malta"
+    },
+    {
+        "name": "Galaxy Entertainment", 
+        "ticker": "0027.HK", 
+        "domain": "galaxyentertainment.com", 
+        "base_country": "Hong Kong"
+    },
+    {
+        "name": "Melco Resorts", 
+        "ticker": "MLCO", 
+        "domain": "cityofdreamsmacau.com", 
+        "base_country": "Hong Kong"
+    }, 
+    {
+        "name": "SJM Holdings", 
+        "ticker": "1980.HK", 
+        "domain": "sjmresorts.com", 
+        "base_country": "Hong Kong"
+    }, 
+    {
+        "name": "Wynn Macau", 
+        "ticker": "1128.HK", 
+        "domain": "wynnresorts.com", 
+        "base_country": "Macau"
+    }, 
+    {
+        "name": "Genting Singapore", 
+        "ticker": "G13.SI", 
+        "domain": "gentingsingapore.com", 
+        "base_country": "Singapore"
+    },
+    {
+        "name": "La Française des Jeux", 
+        "ticker": "FDJ.PA", 
+        "domain": "groupefdj.com", 
+        "base_country": "France"
+    },
+    {
+        "name": "Lottomatica Group", 
+        "ticker": "LTMC.MI", 
+        "domain": "lottomaticagroup.com", 
+        "base_country": "Italy"
+    },
+    {
+        "name": "Rank Group", 
+        "ticker": "RNK.L", 
+        "domain": "rank.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Better Collective", 
+        "ticker": "BETCO.ST", 
+        "domain": "bettercollective.com", 
+        "base_country": "Denmark"
+    },
+    {
+        "name": "Catena Media", 
+        "ticker": "CTM.ST", 
+        "domain": "catenamedia.com", 
+        "base_country": "Malta", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"
+    }, 
+    {
+        "name": "Bally's Corporation", 
+        "ticker": "BALY", 
+        "domain": "ballys.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Boyd Gaming", 
+        "ticker": "BYD", 
+        "domain": "boydgaming.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Red Rock Resorts", 
+        "ticker": "RRR", 
+        "domain": "stationcasinos.com", 
+        "base_country": "USA"
+    }, 
+    {
+        "name": "Golden Entertainment", 
+        "ticker": "GDEN", 
+        "domain": "goldenent.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Monarch Casino", 
+        "ticker": "MCRI", 
+        "domain": "monarchcasino.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Century Casinos", 
+        "ticker": "CNTY", 
+        "domain": "cnty.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Genius Sports", 
+        "ticker": "GENI", 
+        "domain": "geniussports.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Brightstar Lottery (fka IGT)", 
+        "ticker": "BRSL", 
+        "domain": "brightstarlottery.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Inspired Entertainment", 
+        "ticker": "INSE", 
+        "domain": "inseinc.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Star Entertainment", 
+        "ticker": "SGR.AX", 
+        "domain": "starentertainmentgroup.com.au", 
+        "base_country": "Australia"
+    },
+    {
+        "name": "Genting Malaysia", 
+        "ticker": "GENM.KL", 
+        "domain": "gentingmalaysia.com", 
+        "base_country": "Malaysia"
+    },
+    {
+        "name": "VICI Properties", 
+        "ticker": "VICI", 
+        "domain": "viciproperties.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Gaming & Leisure Prop", 
+        "ticker": "GLPI", 
+        "domain": "glpropinc.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "OPAP S.A.", 
+        "ticker": "OPAP.AT", 
+        "domain": "opap.gr", 
+        "base_country": "Greece"
+    },
+    {
+        "name": "Zeal Network", 
+        "ticker": "TIMA.F", 
+        "domain": "zealnetwork.de", 
+        "base_country": "Germany"
+    },
+    {
+        "name": "Gaming Realms", 
+        "ticker": "GMR.L", 
+        "domain": "gamingrealms.com", 
+        "base_country": "UK"
+    },
+    {
+        "name": "Groupe Partouche", 
+        "ticker": "PARP.PA", 
+        "domain": "groupepartouche.com", 
+        "base_country": "France"
+    },
+    {
+        "name": "Bet-at-home", 
+        "ticker": "ACX.DE", 
+        "domain": "bet-at-home.ag", 
+        "base_country": "Germany"
+    },
+    {
+        "name": "Gambling.com Group", 
+        "ticker": "GAMB", 
+        "domain": "gambling.com", 
+        "base_country": "Jersey",
+        "logo_override": "https://logo.clearbit.com/gambling.com"
+    },
+    {
+        "name": "BetMGM (MGM/Entain JV)", 
+        "ticker": "BETMGM", 
+        "domain": "betmgm.com", 
+        "base_country": "USA"
+    },
+    {
+        "name": "Full House Resorts", 
+        "ticker": "FLL", 
+        "domain": "fullhouseresorts.com", 
+        "base_country": "USA", 
+        "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"
+    },
+    {
+        "name": "Accel Entertainment", 
+        "ticker": "ACEL", 
+        "domain": "accelentertainment.com", 
+        "base_country": "USA", 
+        "logo_override": "https://logo.clearbit.com/accelentertainment.com"
+    },
+    {
+        "name": "Codere Online", 
+        "ticker": "CDRO", 
+        "domain": "codere.com", 
+        "base_country": "Luxembourg", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"
+    },
+    {
+        "name": "The Lottery Corporation", 
+        "ticker": "TLC.AX", 
+        "domain": "thelotterycorporation.com.au", 
+        "base_country": "Australia", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/the_lottery_corp.png"
+    },
+    {
+        "name": "Kangwon Land", 
+        "ticker": "035250.KS", 
+        "domain": "kangwonland.com", 
+        "base_country": "South Korea", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"
+    },
+    {
+        "name": "Tsuburaya Fields", 
+        "ticker": "2767.T", 
+        "domain": "tsuburaya-fields.co.jp", 
+        "base_country": "Japan", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"
+    },
+    {
+        "name": "SkyCity Entertainment", 
+        "ticker": "SKC.NZ", 
+        "domain": "skycityentertainmentgroup.com", 
+        "base_country": "New Zealand"
+    },
+    {
+        "name": "Universal Entertainment", 
+        "ticker": "6425.T", 
+        "domain": "universal-777.com", 
+        "base_country": "Japan", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"
+    },
+    {
+        "name": "Jumbo Interactive", 
+        "ticker": "JIN.AX", 
+        "domain": "jumbointeractive.com", 
+        "base_country": "Australia", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"
+    },
+    {
+        "name": "Ainsworth Game Tech", 
+        "ticker": "AGI.AX", 
+        "domain": "agtslots.com", 
+        "base_country": "Australia", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"
+    },
+    {
+        "name": "Delta Corp", 
+        "ticker": "DELTACORP.NS", 
+        "domain": "deltacorp.in", 
+        "base_country": "India", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"
+    },
+    {
+        "name": "Golden Matrix Group", 
+        "ticker": "GMGI", 
+        "domain": "goldenmatrix.com", 
+        "base_country": "USA", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"
+    },
+    {
+        "name": "Estoril Sol", 
+        "ticker": "ESON.LS", 
+        "domain": "estoril-solsgps.com", 
+        "base_country": "Portugal", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"
+    },
+    {
+        "name": "Esports Entertainment", 
+        "ticker": "GMBL", 
+        "domain": "esportsentertainmentgroup.com", 
+        "base_country": "Malta", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"
+    }
 ]
 
+# --- UNCOMPRESSED OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -121,6 +476,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -697,6 +1053,19 @@ VERIFIED_DATA = {
         "fcf": "$800M",
         "jurisdictions": ["US"]
     },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": ["US"],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "jurisdictions": ["US"]
+    },
     "OPAP.AT": {
         "rev_label": "NGR",
         "revenue_fy": "€2.2B (FY '25)",
@@ -935,19 +1304,6 @@ VERIFIED_DATA = {
         "fcf": "$12.6M",
         "jurisdictions": ["US", "Balkans", "LatAm"]
     },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": ["US"],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": ["US"]
-    },
     "ESON.LS": {
         "rev_label": "REV",
         "revenue_fy": "€255M (FY '25)",
@@ -998,7 +1354,7 @@ def format_money(raw_val, sym):
     abs_val = abs(raw_val)
     if abs_val >= 1e9: res = f"{sym}{round(abs_val/1e9, 2)}B"
     elif abs_val >= 1e6: res = f"{sym}{round(abs_val/1e6, 2)}M"
-    else: res = f"{sym}{abs_val}"
+    else: res = f"{sym}{round(abs_val, 2)}" # FIX: Safely display micro-cap sizes without 11 decimals
     return f"-{res}" if is_neg else res
 
 def get_stock_fundamentals(ticker, fx_rates):
@@ -1058,7 +1414,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         try:
             info = ytk.info
             pe_r = info.get('trailingPE') or info.get('forwardPE')
-            if pe_r: 
+            if pe_r is not None and pe_r > 0: 
                 pe_raw = pe_r
                 pe_str = f"{round(pe_raw, 2)}"
             else:
@@ -1145,7 +1501,18 @@ def fetch_stock_history(ticker, native_price_raw):
     
     try:
         ytk = yf.Ticker(fetch_ticker)
+        
+        # FIX: Check if OTC ticker is dead by testing 1mo data
+        df_test = ytk.history(period="1mo")
+        if df_test.empty and is_otc:
+            fetch_ticker = ticker
+            ytk = yf.Ticker(fetch_ticker)
+            is_otc = False
+
         df_1d = ytk.history(period="1d", interval="15m")
+        if df_1d.empty:
+            df_1d = ytk.history(period="5d", interval="1d") # FIX: Fallback for low-volume 1D
+
         if not df_1d.empty:
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_1d.iterrows()]
 
@@ -1195,13 +1562,20 @@ def ai_process_intelligence(company_name, ticker, fundamentals):
                 feed = feedparser.parse(fallback_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
             except Exception: pass
+
+        # FIX: Ultimate Fallback using Google News RSS for heavily blocked tickers
+        if not headlines:
+            safe_name = urllib.parse.quote(f"{company_name} stock")
+            google_url = f"https://news.google.com/rss/search?q={safe_name}&hl=en-US&gl=US&ceid=US:en"
+            try:
+                feed = feedparser.parse(google_url)
+                headlines = [entry.title for entry in feed.entries[:5]]
+            except Exception: pass
             
         if not headlines:
             return {"summary": [f"No recent news found for {company_name}."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Awaiting fresh press releases.</p>", "quotes": []}
 
         client = genai.Client(api_key=api_key)
-        
-        # THE NEW HOLISTIC PROMPT: Revenue, FCF, Value, and Sentiment
         prompt = f"""Act as an expert iGaming financial analyst. 
         Company: {company_name} ({ticker})
         Recent Headlines: {' | '.join(headlines)}
@@ -1278,7 +1652,6 @@ def run_pipeline():
                 if fin.get("eps_forecast", 0) != 0:
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
-            # --- THE NEW AI INJECTION ---
             fund_data_for_ai = {
                 "pe_ratio": pe_ratio,
                 "debt_to_equity": debt_equity,
