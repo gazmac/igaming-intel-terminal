@@ -21,7 +21,6 @@ except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
 # --- HISTORICAL SENTIMENT TRACKER ---
-# Load previous data to preserve Sentiment History
 PREV_DATA = {}
 try:
     if os.path.exists('gambling_stocks_live.json'):
@@ -81,10 +80,7 @@ TARGET_COMPANIES = [
     {"name": "Gaming Realms", "ticker": "GMR.L", "domain": "gamingrealms.com", "base_country": "UK"},
     {"name": "Groupe Partouche", "ticker": "PARP.PA", "domain": "groupepartouche.com", "base_country": "France"},
     {"name": "Bet-at-home", "ticker": "ACX.DE", "domain": "bet-at-home.ag", "base_country": "Germany"},
-    {"name": "Gambling.com Group", "ticker": "GAMB", "domain": "gambling.com", "base_country": "Jersey"},
     {"name": "BetMGM (MGM/Entain JV)", "ticker": "BETMGM", "domain": "betmgm.com", "base_country": "USA"},
-    
-    # GITHUB RAW CDN LOGO OVERRIDES
     {"name": "Full House Resorts", "ticker": "FLL", "domain": "fullhouseresorts.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"},
     {"name": "Accel Entertainment", "ticker": "ACEL", "domain": "accelentertainment.com", "base_country": "USA", "logo_override": "https://logo.clearbit.com/accelentertainment.com"},
     {"name": "Codere Online", "ticker": "CDRO", "domain": "codere.com", "base_country": "Luxembourg", "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"},
@@ -1180,7 +1176,7 @@ def fetch_stock_history(ticker, native_price_raw):
         pass
     return history
 
-def ai_process_intelligence(company_name, ticker):
+def ai_process_intelligence(company_name, ticker, fundamentals):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {"summary": ["System Error: API key missing."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>API Key required.</p>", "quotes": []}
@@ -1204,13 +1200,19 @@ def ai_process_intelligence(company_name, ticker):
             return {"summary": [f"No recent news found for {company_name}."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Awaiting fresh press releases.</p>", "quotes": []}
 
         client = genai.Client(api_key=api_key)
-        prompt = f"""Act as an expert iGaming financial analyst. Review these recent financial headlines for {company_name}: {' | '.join(headlines)}. 
+        
+        # THE NEW HOLISTIC PROMPT: Revenue, FCF, Value, and Sentiment
+        prompt = f"""Act as an expert iGaming financial analyst. 
+        Company: {company_name} ({ticker})
+        Recent Headlines: {' | '.join(headlines)}
+        Fundamentals: P/E Ratio: {fundamentals.get('pe_ratio')}, Debt-to-Equity: {fundamentals.get('debt_to_equity')}, EPS Beat/Miss: {fundamentals.get('eps_beat_miss_pct')}%, Revenue/NGR: {fundamentals.get('revenue')}, Free Cash Flow (FCF): {fundamentals.get('fcf')}
+        
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
         1. "summary": A list of 3 string bullet points summarizing the news.
-        2. "sentiment": An integer from 0 to 100 representing market sentiment.
-        3. "rating": A stock rating based strictly on these headlines (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell").
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing' based on the news.
+        2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
+        3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'.
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -1251,8 +1253,6 @@ def run_pipeline():
         cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
             
         try:
-            intel = ai_process_intelligence(co['name'], ticker)
-            
             last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
@@ -1278,6 +1278,16 @@ def run_pipeline():
                 if fin.get("eps_forecast", 0) != 0:
                     beat_miss = round(((fin["eps_actual"] - fin["eps_forecast"]) / abs(fin["eps_forecast"])) * 100, 2)
 
+            # --- THE NEW AI INJECTION ---
+            fund_data_for_ai = {
+                "pe_ratio": pe_ratio,
+                "debt_to_equity": debt_equity,
+                "eps_beat_miss_pct": beat_miss,
+                "revenue": fin["revenue_fy"],
+                "fcf": fin["fcf"]
+            }
+            intel = ai_process_intelligence(co['name'], ticker, fund_data_for_ai)
+
             history = fetch_stock_history(ticker, price_raw)
             final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
             
@@ -1289,7 +1299,6 @@ def run_pipeline():
             beat_miss, daily_change_pct, pe_raw, de_raw = 0, "N/A", None, None
             final_logo = f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128"
 
-        # HISTORICAL SENTIMENT TRACKER
         curr_sentiment = intel.get("sentiment", 50)
         sent_history = PREV_DATA.get(ticker, {}).get("sentiment_history", [])
         if not sent_history or sent_history[-1]['date'] != today_str:
