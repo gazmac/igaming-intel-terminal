@@ -20,7 +20,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks ignored by YF
+# DEFAULT CALENDAR OVERRIDES
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -84,7 +84,7 @@ try:
 except Exception as e:
     pass
 
-# --- TARGET COMPANIES ---
+# --- UNCOMPRESSED TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
         "name": "Flutter Entertainment", 
@@ -487,7 +487,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- OTC MAP ---
+# --- UNCOMPRESSED OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -512,7 +512,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- VERIFIED DATA DICTIONARY ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -1407,6 +1407,23 @@ VERIFIED_DATA = {
             "US"
         ]
     },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": [
+            "US"
+        ],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "jurisdictions": [
+            "US"
+        ]
+    },
     "OPAP.AT": {
         "rev_label": "NGR",
         "revenue_fy": "€2.2B (FY '25)",
@@ -1754,23 +1771,6 @@ VERIFIED_DATA = {
             "US", 
             "Balkans", 
             "LatAm"
-        ]
-    },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": [
-            "US"
-        ],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": [
-            "US"
         ]
     },
     "ESON.LS": {
