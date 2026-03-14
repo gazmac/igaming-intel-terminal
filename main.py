@@ -22,15 +22,51 @@ except FileNotFoundError:
 
 # DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks ignored by YF
 DEFAULT_CALENDAR = {
-    "6425.T": {"date": "May 14, 2026", "report_time": "After Market", "call_time": "TBD"},
-    "2767.T": {"date": "May 12, 2026", "report_time": "After Market", "call_time": "TBD"},
-    "TLC.AX": {"date": "Aug 20, 2026", "report_time": "Pre Market", "call_time": "10:00 AM AEST"},
-    "SKC.NZ": {"date": "Aug 21, 2026", "report_time": "Pre Market", "call_time": "TBD"},
-    "JIN.AX": {"date": "Aug 25, 2026", "report_time": "Pre Market", "call_time": "TBD"},
-    "ESON.LS": {"date": "May 25, 2026", "report_time": "After Market", "call_time": "TBD"},
-    "GMBL": {"date": "May 15, 2026", "report_time": "TBD", "call_time": "TBD"},
-    "DELTACORP.NS": {"date": "Apr 28, 2026", "report_time": "After Market", "call_time": "TBD"},
-    "AGI.AX": {"date": "Aug 26, 2026", "report_time": "Pre Market", "call_time": "TBD"}
+    "6425.T": {
+        "date": "May 14, 2026", 
+        "report_time": "After Market", 
+        "call_time": "TBD"
+    },
+    "2767.T": {
+        "date": "May 12, 2026", 
+        "report_time": "After Market", 
+        "call_time": "TBD"
+    },
+    "TLC.AX": {
+        "date": "Aug 20, 2026", 
+        "report_time": "Pre Market", 
+        "call_time": "10:00 AM AEST"
+    },
+    "SKC.NZ": {
+        "date": "Aug 21, 2026", 
+        "report_time": "Pre Market", 
+        "call_time": "TBD"
+    },
+    "JIN.AX": {
+        "date": "Aug 25, 2026", 
+        "report_time": "Pre Market", 
+        "call_time": "TBD"
+    },
+    "ESON.LS": {
+        "date": "May 25, 2026", 
+        "report_time": "After Market", 
+        "call_time": "TBD"
+    },
+    "GMBL": {
+        "date": "May 15, 2026", 
+        "report_time": "TBD", 
+        "call_time": "TBD"
+    },
+    "DELTACORP.NS": {
+        "date": "Apr 28, 2026", 
+        "report_time": "After Market", 
+        "call_time": "TBD"
+    },
+    "AGI.AX": {
+        "date": "Aug 26, 2026", 
+        "report_time": "Pre Market", 
+        "call_time": "TBD"
+    }
 }
 
 for k, v in DEFAULT_CALENDAR.items():
@@ -48,7 +84,7 @@ try:
 except Exception as e:
     pass
 
-# --- UNCOMPRESSED TARGET COMPANIES ---
+# --- TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
         "name": "Flutter Entertainment", 
@@ -451,7 +487,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- UNCOMPRESSED OTC MAP ---
+# --- OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -476,124 +512,207 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
+# --- VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
         "revenue_fy": "$14.05B (FY '25)",
         "revenue_interim": "$3.79B (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
-        "map_codes": ["US", "GB", "IE", "AU", "IT", "BR"],
+        "map_codes": [
+            "US", 
+            "GB", 
+            "IE", 
+            "AU", 
+            "IT", 
+            "BR"
+        ],
         "eps_actual": 1.74,
         "eps_forecast": 1.91,
         "net_income": "$162M",
         "ebitda": "$2.36B",
         "fcf": "$941M",
-        "jurisdictions": ["US", "UK", "Ireland", "Australia", "Italy"]
+        "jurisdictions": [
+            "US", 
+            "UK", 
+            "Ireland", 
+            "Australia", 
+            "Italy"
+        ]
     },
     "DKNG": {
         "rev_label": "REV",
         "revenue_fy": "$4.77B (FY '25)",
         "revenue_interim": "$1.39B (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
-        "map_codes": ["US", "CA", "PR"],
+        "map_codes": [
+            "US", 
+            "CA", 
+            "PR"
+        ],
         "eps_actual": 0.25,
         "eps_forecast": 0.18,
         "net_income": "-$507M",
         "ebitda": "$181M",
         "fcf": "$270M",
-        "jurisdictions": ["US", "Ontario", "Puerto Rico"]
+        "jurisdictions": [
+            "US", 
+            "Ontario", 
+            "Puerto Rico"
+        ]
     },
     "ENT.L": {
         "rev_label": "NGR",
         "revenue_fy": "£5.33B (FY '25)",
         "revenue_interim": "£2.70B (H2 '25)",
         "focus": "B2C Sportsbook, iGaming & Retail",
-        "map_codes": ["GB", "IT", "BR", "AU", "ES"],
+        "map_codes": [
+            "GB", 
+            "IT", 
+            "BR", 
+            "AU", 
+            "ES"
+        ],
         "eps_actual": 0.62,
         "eps_forecast": 0.55,
         "net_income": "-£681M",
         "ebitda": "£1.16B",
         "fcf": "£151M",
-        "jurisdictions": ["UK", "Italy", "Brazil", "Australia"]
+        "jurisdictions": [
+            "UK", 
+            "Italy", 
+            "Brazil", 
+            "Australia"
+        ]
     },
     "EVO.ST": {
         "rev_label": "REV",
         "revenue_fy": "€2.21B (FY '25)",
         "revenue_interim": "€625M (Q4 '25)",
         "focus": "B2B Live Casino Technology",
-        "map_codes": ["SE", "US", "CA", "MT", "LV", "GE", "RO"],
+        "map_codes": [
+            "SE", 
+            "US", 
+            "CA", 
+            "MT", 
+            "LV", 
+            "GE", 
+            "RO"
+        ],
         "eps_actual": 1.54,
         "eps_forecast": 1.46,
         "net_income": "€1.24B",
         "ebitda": "€1.56B",
         "fcf": "€250M",
-        "jurisdictions": ["Europe", "North America", "LatAm", "Asia"]
+        "jurisdictions": [
+            "Europe", 
+            "North America", 
+            "LatAm", 
+            "Asia"
+        ]
     },
     "MGM": {
         "rev_label": "REV",
         "revenue_fy": "$17.2B (FY '25)",
         "revenue_interim": "$4.3B (Q4 '25)",
         "focus": "Land-based Resorts & B2C Digital",
-        "map_codes": ["US", "CN", "JP"],
+        "map_codes": [
+            "US", 
+            "CN", 
+            "JP"
+        ],
         "eps_actual": -1.10,
         "eps_forecast": 0.56,
         "net_income": "$157M",
         "ebitda": "$528M",
         "fcf": "$300M",
-        "jurisdictions": ["US", "Macau", "Japan"]
+        "jurisdictions": [
+            "US", 
+            "Macau", 
+            "Japan"
+        ]
     },
     "CZR": {
         "rev_label": "REV",
         "revenue_fy": "$11.4B (FY '25)",
         "revenue_interim": "$2.8B (Q4 '25)",
         "focus": "Land-based Resorts & B2C Digital",
-        "map_codes": ["US", "CA", "GB", "AE"],
+        "map_codes": [
+            "US", 
+            "CA", 
+            "GB", 
+            "AE"
+        ],
         "eps_actual": -0.34,
         "eps_forecast": 0.10,
         "net_income": "-$72M",
         "ebitda": "$900M",
         "fcf": "$150M",
-        "jurisdictions": ["US", "Canada", "UK", "UAE"]
+        "jurisdictions": [
+            "US", 
+            "Canada", 
+            "UK", 
+            "UAE"
+        ]
     },
     "PENN": {
         "rev_label": "REV",
         "revenue_fy": "$6.3B (FY '25)",
         "revenue_interim": "$1.6B (Q4 '25)",
         "focus": "Land-based Casinos & B2C Digital",
-        "map_codes": ["US", "CA"],
+        "map_codes": [
+            "US", 
+            "CA"
+        ],
         "eps_actual": 0.07,
         "eps_forecast": 0.02,
         "net_income": "$15M",
         "ebitda": "$350M",
         "fcf": "$80M",
-        "jurisdictions": ["US", "Canada"]
+        "jurisdictions": [
+            "US", 
+            "Canada"
+        ]
     },
     "LVS": {
         "rev_label": "REV",
         "revenue_fy": "$11.5B (FY '25)",
         "revenue_interim": "$2.9B (Q4 '25)",
         "focus": "Land-based Casino Resorts",
-        "map_codes": ["CN", "SG"],
+        "map_codes": [
+            "CN", 
+            "SG"
+        ],
         "eps_actual": 0.65,
         "eps_forecast": 0.55,
         "net_income": "$450M",
         "ebitda": "$1.2B",
         "fcf": "$600M",
-        "jurisdictions": ["Macau", "Singapore"]
+        "jurisdictions": [
+            "Macau", 
+            "Singapore"
+        ]
     },
     "WYNN": {
         "rev_label": "REV",
         "revenue_fy": "$7.14B (FY '25)",
         "revenue_interim": "$1.87B (Q4 '25)",
         "focus": "Luxury Land-based Resorts",
-        "map_codes": ["US", "CN", "AE"],
+        "map_codes": [
+            "US", 
+            "CN", 
+            "AE"
+        ],
         "eps_actual": 0.82,
         "eps_forecast": 2.29,
         "net_income": "$327.3M",
         "ebitda": "$2.22B",
         "fcf": "$800M",
-        "jurisdictions": ["US", "Macau", "UAE"],
+        "jurisdictions": [
+            "US", 
+            "Macau", 
+            "UAE"
+        ],
         "fallback_price": "$105.40",
         "fallback_mcap": "$11.8B",
         "fallback_pe": "25.2x",
@@ -604,221 +723,357 @@ VERIFIED_DATA = {
         "revenue_fy": "£1.75B (FY '25)",
         "revenue_interim": "£850M (H2 '25)",
         "focus": "B2C Sportsbook, iGaming & Retail",
-        "map_codes": ["GB", "IT", "ES", "RO"],
+        "map_codes": [
+            "GB", 
+            "IT", 
+            "ES", 
+            "RO"
+        ],
         "eps_actual": -0.05,
         "eps_forecast": 0.01,
         "net_income": "-£191M",
         "ebitda": "£312M",
         "fcf": "£20M",
-        "jurisdictions": ["UK", "Italy", "Spain"]
+        "jurisdictions": [
+            "UK", 
+            "Italy", 
+            "Spain"
+        ]
     },
     "SRAD": {
         "rev_label": "REV",
         "revenue_fy": "$980M (FY '25)",
         "revenue_interim": "$280M (Q4 '25)",
         "focus": "B2B Sports Data & Technology",
-        "map_codes": ["CH", "US", "GB", "DE", "AT"],
+        "map_codes": [
+            "CH", 
+            "US", 
+            "GB", 
+            "DE", 
+            "AT"
+        ],
         "eps_actual": 0.14,
         "eps_forecast": 0.10,
         "net_income": "$35M",
         "ebitda": "$55M",
         "fcf": "$40M",
-        "jurisdictions": ["Global B2B", "US", "Europe"]
+        "jurisdictions": [
+            "Global B2B", 
+            "US", 
+            "Europe"
+        ]
     },
     "BETS-B.ST": {
         "rev_label": "REV",
         "revenue_fy": "€1.0B (FY '25)",
         "revenue_interim": "€260M (Q4 '25)",
         "focus": "B2C & B2B iGaming/Sportsbook",
-        "map_codes": ["SE", "MT", "IT", "AR", "CO", "PE"],
+        "map_codes": [
+            "SE", 
+            "MT", 
+            "IT", 
+            "AR", 
+            "CO", 
+            "PE"
+        ],
         "eps_actual": 0.35,
         "eps_forecast": 0.32,
         "net_income": "€45M",
         "ebitda": "€75M",
         "fcf": "€50M",
-        "jurisdictions": ["Nordics", "LatAm", "CEECA"]
+        "jurisdictions": [
+            "Nordics", 
+            "LatAm", 
+            "CEECA"
+        ]
     },
     "PTEC.L": {
         "rev_label": "REV",
         "revenue_fy": "£1.52B (FY '25)",
         "revenue_interim": "£800M (H2 '25)",
         "focus": "B2B iGaming & Sportsbook Tech",
-        "map_codes": ["GB", "IT", "BG", "UA", "EE"],
+        "map_codes": [
+            "GB", 
+            "IT", 
+            "BG", 
+            "UA", 
+            "EE"
+        ],
         "eps_actual": 0.71,
         "eps_forecast": 0.62,
         "net_income": "£165M",
         "ebitda": "£400.4M",
         "fcf": "£85M",
-        "jurisdictions": ["UK", "Italy", "LatAm"]
+        "jurisdictions": [
+            "UK", 
+            "Italy", 
+            "LatAm"
+        ]
     },
     "CHDN": {
         "rev_label": "REV",
         "revenue_fy": "$2.8B (FY '25)",
         "revenue_interim": "$750M (Q4 '25)",
         "focus": "Racing, Casinos & Online Wagering",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 1.35,
         "eps_forecast": 1.20,
         "net_income": "$90M",
         "ebitda": "$300M",
         "fcf": "$120M",
-        "jurisdictions": ["US"]
+        "jurisdictions": [
+            "US"
+        ]
     },
     "LNW": {
         "rev_label": "REV",
         "revenue_fy": "$3.1B (FY '25)",
         "revenue_interim": "$800M (Q4 '25)",
         "focus": "B2B Gaming Machines & iGaming",
-        "map_codes": ["US", "AU", "GB", "SE"],
+        "map_codes": [
+            "US", 
+            "AU", 
+            "GB", 
+            "SE"
+        ],
         "eps_actual": 0.45,
         "eps_forecast": 0.50,
         "net_income": "$45M",
         "ebitda": "$280M",
         "fcf": "$100M",
-        "jurisdictions": ["US", "Australia", "UK"]
+        "jurisdictions": [
+            "US", 
+            "Australia", 
+            "UK"
+        ]
     },
     "ALL.AX": {
         "rev_label": "REV",
         "revenue_fy": "A$6.4B (FY '25)",
         "revenue_interim": "A$3.2B (H2 '25)",
         "focus": "B2B Slots, Social Casino & iGaming",
-        "map_codes": ["AU", "US", "GB", "IL"],
+        "map_codes": [
+            "AU", 
+            "US", 
+            "GB", 
+            "IL"
+        ],
         "eps_actual": 0.95,
         "eps_forecast": 0.90,
         "net_income": "A$600M",
         "ebitda": "A$1.1B",
         "fcf": "A$750M",
-        "jurisdictions": ["US", "Australia", "Global"]
+        "jurisdictions": [
+            "US", 
+            "Australia", 
+            "Global"
+        ]
     },
     "SGHC": {
         "rev_label": "NGR",
         "revenue_fy": "$1.4B (FY '25)",
         "revenue_interim": "$360M (Q3 '25)",
         "focus": "B2C Sportsbook & iGaming",
-        "map_codes": ["ZA", "CA", "GB", "MT", "FR"],
+        "map_codes": [
+            "ZA", 
+            "CA", 
+            "GB", 
+            "MT", 
+            "FR"
+        ],
         "eps_actual": 0.08,
         "eps_forecast": 0.10,
         "net_income": "$35M",
         "ebitda": "$75M",
         "fcf": "$45M",
-        "jurisdictions": ["Canada", "Africa", "Europe"]
+        "jurisdictions": [
+            "Canada", 
+            "Africa", 
+            "Europe"
+        ]
     },
     "RSI": {
         "rev_label": "REV",
         "revenue_fy": "$950M (FY '25)",
         "revenue_interim": "$250M (Q3 '25)",
         "focus": "B2C Casino-First iGaming",
-        "map_codes": ["US", "CO", "MX", "CA", "PE"],
+        "map_codes": [
+            "US", 
+            "CO", 
+            "MX", 
+            "CA", 
+            "PE"
+        ],
         "eps_actual": 0.12,
         "eps_forecast": 0.08,
         "net_income": "$15M",
         "ebitda": "$40M",
         "fcf": "$20M",
-        "jurisdictions": ["US", "Colombia", "Mexico"]
+        "jurisdictions": [
+            "US", 
+            "Colombia", 
+            "Mexico"
+        ]
     },
     "BRAG": {
         "rev_label": "REV",
         "revenue_fy": "$105M (FY '25)",
         "revenue_interim": "$28M (Q3 '25)",
         "focus": "B2B iGaming Content & PAM",
-        "map_codes": ["CA", "US", "NL", "BR", "FI"],
+        "map_codes": [
+            "CA", 
+            "US", 
+            "NL", 
+            "BR", 
+            "FI"
+        ],
         "eps_actual": -0.02,
         "eps_forecast": 0.01,
         "net_income": "-$1M",
         "ebitda": "$4M",
         "fcf": "$1M",
-        "jurisdictions": ["US", "Europe", "Canada"]
+        "jurisdictions": [
+            "US", 
+            "Europe", 
+            "Canada"
+        ]
     },
     "KAMBI.ST": {
         "rev_label": "REV",
         "revenue_fy": "€180M (FY '25)",
         "revenue_interim": "€45M (Q4 '25)",
         "focus": "B2B Sportsbook Technology",
-        "map_codes": ["MT", "SE", "GB", "US", "RO", "CO"],
+        "map_codes": [
+            "MT", 
+            "SE", 
+            "GB", 
+            "US", 
+            "RO", 
+            "CO"
+        ],
         "eps_actual": 0.18,
         "eps_forecast": 0.15,
         "net_income": "€5M",
         "ebitda": "€15M",
         "fcf": "€8M",
-        "jurisdictions": ["Global B2B", "US", "LatAm"]
+        "jurisdictions": [
+            "Global B2B", 
+            "US", 
+            "LatAm"
+        ]
     },
     "0027.HK": {
         "rev_label": "REV",
         "revenue_fy": "HK$31.5B (FY '25)",
         "revenue_interim": "HK$8.5B (Q4 '25)",
         "focus": "Macau Casino Resorts",
-        "map_codes": ["CN", "HK"],
+        "map_codes": [
+            "CN", 
+            "HK"
+        ],
         "eps_actual": 1.20,
         "eps_forecast": 1.15,
         "net_income": "HK$5.2B",
         "ebitda": "HK$8.1B",
         "fcf": "HK$3.5B",
-        "jurisdictions": ["Macau"]
+        "jurisdictions": [
+            "Macau"
+        ]
     },
     "MLCO": {
         "rev_label": "REV",
         "revenue_fy": "$5.16B (FY '25)",
         "revenue_interim": "$1.29B (Q4 '25)",
         "focus": "Macau & Asia Resorts",
-        "map_codes": ["CN", "PH", "CY"],
+        "map_codes": [
+            "CN", 
+            "PH", 
+            "CY"
+        ],
         "eps_actual": 0.16,
         "eps_forecast": -0.05,
         "net_income": "$185M",
         "ebitda": "$1.43B",
         "fcf": "$250M",
-        "jurisdictions": ["Macau", "Philippines", "Cyprus"]
+        "jurisdictions": [
+            "Macau", 
+            "Philippines", 
+            "Cyprus"
+        ]
     },
     "1980.HK": {
         "rev_label": "REV",
         "revenue_fy": "HK$28.17B (FY '25)",
         "revenue_interim": "HK$7.2B (Q4 '25)",
         "focus": "Macau Casino Resorts",
-        "map_codes": ["CN", "HK"],
+        "map_codes": [
+            "CN", 
+            "HK"
+        ],
         "eps_actual": -0.15,
         "eps_forecast": -0.10,
         "net_income": "-HK$429M",
         "ebitda": "HK$3.2B",
         "fcf": "-HK$200M",
-        "jurisdictions": ["Macau"]
+        "jurisdictions": [
+            "Macau"
+        ]
     },
     "1128.HK": {
         "rev_label": "REV",
         "revenue_fy": "$3.1B (FY '25)",
         "revenue_interim": "$800M (Q4 '25)",
         "focus": "Macau Luxury Resorts",
-        "map_codes": ["CN", "HK"],
+        "map_codes": [
+            "CN", 
+            "HK"
+        ],
         "eps_actual": 0.35,
         "eps_forecast": 0.30,
         "net_income": "$320M",
         "ebitda": "$900M",
         "fcf": "$450M",
-        "jurisdictions": ["Macau"]
+        "jurisdictions": [
+            "Macau"
+        ]
     },
     "G13.SI": {
         "rev_label": "REV",
         "revenue_fy": "S$2.45B (FY '25)",
         "revenue_interim": "S$1.2B (H2 '25)",
         "focus": "Singapore Integrated Resorts",
-        "map_codes": ["SG"],
+        "map_codes": [
+            "SG"
+        ],
         "eps_actual": 0.03,
         "eps_forecast": 0.04,
         "net_income": "S$390.3M",
         "ebitda": "S$815.8M",
         "fcf": "S$450M",
-        "jurisdictions": ["Singapore"]
+        "jurisdictions": [
+            "Singapore"
+        ]
     },
     "FDJ.PA": {
         "rev_label": "NGR",
         "revenue_fy": "€2.82B (FY '25)",
         "revenue_interim": "€1.86B (H1 '25)",
         "focus": "European Lottery & iGaming",
-        "map_codes": ["FR", "IE"],
+        "map_codes": [
+            "FR", 
+            "IE"
+        ],
         "eps_actual": 1.35,
         "eps_forecast": 1.25,
         "net_income": "€425M",
         "ebitda": "€670M",
         "fcf": "€380M",
-        "jurisdictions": ["France", "Ireland"],
+        "jurisdictions": [
+            "France", 
+            "Ireland"
+        ],
         "fallback_price": "€25.84",
         "fallback_mcap": "€4.77B",
         "fallback_pe": "18.5x",
@@ -829,156 +1084,225 @@ VERIFIED_DATA = {
         "revenue_fy": "€1.75B (FY '25)",
         "revenue_interim": "€950M (H1 '25)",
         "focus": "Italian Sportsbook & Gaming",
-        "map_codes": ["IT"],
+        "map_codes": [
+            "IT"
+        ],
         "eps_actual": 0.45,
         "eps_forecast": 0.40,
         "net_income": "€180M",
         "ebitda": "€580M",
         "fcf": "€250M",
-        "jurisdictions": ["Italy"]
+        "jurisdictions": [
+            "Italy"
+        ]
     },
     "RNK.L": {
         "rev_label": "NGR",
         "revenue_fy": "£734M (FY '25)",
         "revenue_interim": "£382M (H1 '25)",
         "focus": "UK Retail Casinos & Digital",
-        "map_codes": ["GB", "ES"],
+        "map_codes": [
+            "GB", 
+            "ES"
+        ],
         "eps_actual": 0.05,
         "eps_forecast": 0.04,
         "net_income": "£25M",
         "ebitda": "£120M",
         "fcf": "£45M",
-        "jurisdictions": ["UK", "Spain"]
+        "jurisdictions": [
+            "UK", 
+            "Spain"
+        ]
     },
     "BETCO.ST": {
         "rev_label": "REV",
         "revenue_fy": "€350M (FY '25)",
         "revenue_interim": "€180M (H1 '25)",
         "focus": "Global Sports Media Affiliate",
-        "map_codes": ["DK", "US", "GB", "SE"],
+        "map_codes": [
+            "DK", 
+            "US", 
+            "GB", 
+            "SE"
+        ],
         "eps_actual": 0.40,
         "eps_forecast": 0.35,
         "net_income": "€50M",
         "ebitda": "€110M",
         "fcf": "€65M",
-        "jurisdictions": ["Europe", "US"]
+        "jurisdictions": [
+            "Europe", 
+            "US"
+        ]
     },
     "CTM.ST": {
         "rev_label": "REV",
         "revenue_fy": "€46.6M (FY '25)",
         "revenue_interim": "€15.6M (Q4 '25)",
         "focus": "iGaming Lead Generation",
-        "map_codes": ["MT", "US", "SE"],
+        "map_codes": [
+            "MT", 
+            "US", 
+            "SE"
+        ],
         "eps_actual": -0.15,
         "eps_forecast": -0.05,
         "net_income": "-€16.5M",
         "ebitda": "€10.6M",
         "fcf": "€4M",
-        "jurisdictions": ["US", "Europe"]
+        "jurisdictions": [
+            "US", 
+            "Europe"
+        ]
     },
     "BALY": {
         "rev_label": "REV",
         "revenue_fy": "$2.4B (FY '25)",
         "revenue_interim": "$620M (Q4 '25)",
         "focus": "US Regional Casinos & iGaming",
-        "map_codes": ["US", "GB"],
+        "map_codes": [
+            "US", 
+            "GB"
+        ],
         "eps_actual": -0.55,
         "eps_forecast": -0.40,
         "net_income": "-$180M",
         "ebitda": "$510M",
         "fcf": "-$50M",
-        "jurisdictions": ["US", "UK"]
+        "jurisdictions": [
+            "US", 
+            "UK"
+        ]
     },
     "BYD": {
         "rev_label": "REV",
         "revenue_fy": "$3.8B (FY '25)",
         "revenue_interim": "$950M (Q4 '25)",
         "focus": "US Regional & Locals Casinos",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 1.45,
         "eps_forecast": 1.35,
         "net_income": "$520M",
         "ebitda": "$1.3B",
         "fcf": "$600M",
-        "jurisdictions": ["US"]
+        "jurisdictions": [
+            "US"
+        ]
     },
     "RRR": {
         "rev_label": "REV",
         "revenue_fy": "$1.8B (FY '25)",
         "revenue_interim": "$460M (Q4 '25)",
         "focus": "Las Vegas Locals Casinos",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 0.85,
         "eps_forecast": 0.80,
         "net_income": "$250M",
         "ebitda": "$750M",
         "fcf": "$320M",
-        "jurisdictions": ["Nevada (US)"]
+        "jurisdictions": [
+            "Nevada (US)"
+        ]
     },
     "GDEN": {
         "rev_label": "REV",
         "revenue_fy": "$1.1B (FY '25)",
         "revenue_interim": "$270M (Q4 '25)",
         "focus": "Taverns & Regional Casinos",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 0.50,
         "eps_forecast": 0.45,
         "net_income": "$80M",
         "ebitda": "$260M",
         "fcf": "$110M",
-        "jurisdictions": ["US"]
+        "jurisdictions": [
+            "US"
+        ]
     },
     "MCRI": {
         "rev_label": "REV",
         "revenue_fy": "$520M (FY '25)",
         "revenue_interim": "$130M (Q4 '25)",
         "focus": "Regional US Casinos",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 1.15,
         "eps_forecast": 1.10,
         "net_income": "$90M",
         "ebitda": "$170M",
         "fcf": "$80M",
-        "jurisdictions": ["US"]
+        "jurisdictions": [
+            "US"
+        ]
     },
     "CNTY": {
         "rev_label": "REV",
         "revenue_fy": "$550M (FY '25)",
         "revenue_interim": "$140M (Q4 '25)",
         "focus": "International Regional Casinos",
-        "map_codes": ["US", "CA", "PL"],
+        "map_codes": [
+            "US", 
+            "CA", 
+            "PL"
+        ],
         "eps_actual": -0.20,
         "eps_forecast": -0.15,
         "net_income": "-$35M",
         "ebitda": "$110M",
         "fcf": "$25M",
-        "jurisdictions": ["US", "Canada", "Poland"]
+        "jurisdictions": [
+            "US", 
+            "Canada", 
+            "Poland"
+        ]
     },
     "GENI": {
         "rev_label": "REV",
         "revenue_fy": "$410M (FY '25)",
         "revenue_interim": "$120M (Q4 '25)",
         "focus": "B2B Sports Data Rights",
-        "map_codes": ["GB", "US", "CO"],
+        "map_codes": [
+            "GB", 
+            "US", 
+            "CO"
+        ],
         "eps_actual": 0.05,
         "eps_forecast": 0.02,
         "net_income": "$15M",
         "ebitda": "$55M",
         "fcf": "$20M",
-        "jurisdictions": ["Global B2B"]
+        "jurisdictions": [
+            "Global B2B"
+        ]
     },
     "BRSL": {
         "rev_label": "REV",
         "revenue_fy": "$2.65B (FY '25)",
         "revenue_interim": "$668M (Q4 '25)",
         "focus": "Pure-Play Global Lottery",
-        "map_codes": ["US", "IT", "GB"],
+        "map_codes": [
+            "US", 
+            "IT", 
+            "GB"
+        ],
         "eps_actual": 0.45,
         "eps_forecast": 0.40,
         "net_income": "$220M",
         "ebitda": "$1.2B",
         "fcf": "$600M",
-        "jurisdictions": ["US", "Italy", "Global"],
+        "jurisdictions": [
+            "US", 
+            "Italy", 
+            "Global"
+        ],
         "fallback_price": "$16.47",
         "fallback_mcap": "$3.34B",
         "fallback_pe": "15.2x",
@@ -989,39 +1313,59 @@ VERIFIED_DATA = {
         "revenue_fy": "$320M (FY '25)",
         "revenue_interim": "$80M (Q3 '25)",
         "focus": "VLTs & Virtual Sports",
-        "map_codes": ["US", "GB", "GR"],
+        "map_codes": [
+            "US", 
+            "GB", 
+            "GR"
+        ],
         "eps_actual": -0.18,
         "eps_forecast": 0.24,
         "net_income": "-$4.5M",
         "ebitda": "$100M",
         "fcf": "$35M",
-        "jurisdictions": ["UK", "North America"]
+        "jurisdictions": [
+            "UK", 
+            "North America"
+        ]
     },
     "SGR.AX": {
         "rev_label": "REV",
         "revenue_fy": "A$1.8B (FY '25)",
         "revenue_interim": "A$850M (H2 '25)",
         "focus": "Australian Casino Resorts",
-        "map_codes": ["AU"],
+        "map_codes": [
+            "AU"
+        ],
         "eps_actual": -0.85,
         "eps_forecast": -0.50,
         "net_income": "-A$1.2B",
         "ebitda": "A$280M",
         "fcf": "-A$150M",
-        "jurisdictions": ["Australia"]
+        "jurisdictions": [
+            "Australia"
+        ]
     },
     "GENM.KL": {
         "rev_label": "REV",
         "revenue_fy": "RM 10.2B (FY '25)",
         "revenue_interim": "RM 2.6B (Q4 '25)",
         "focus": "Asian Integrated Resorts",
-        "map_codes": ["MY", "US", "GB", "BS"],
+        "map_codes": [
+            "MY", 
+            "US", 
+            "GB", 
+            "BS"
+        ],
         "eps_actual": 0.15,
         "eps_forecast": 0.12,
         "net_income": "RM 600M",
         "ebitda": "RM 3.1B",
         "fcf": "RM 1.2B",
-        "jurisdictions": ["Malaysia", "UK", "US"],
+        "jurisdictions": [
+            "Malaysia", 
+            "UK", 
+            "US"
+        ],
         "fallback_price": "RM 2.65",
         "fallback_mcap": "RM 15.8B",
         "fallback_pe": "15.3x",
@@ -1032,143 +1376,188 @@ VERIFIED_DATA = {
         "revenue_fy": "$3.6B (FY '25)",
         "revenue_interim": "$950M (Q4 '25)",
         "focus": "Gaming & Hospitality REIT",
-        "map_codes": ["US", "CA"],
+        "map_codes": [
+            "US", 
+            "CA"
+        ],
         "eps_actual": 0.65,
         "eps_forecast": 0.60,
         "net_income": "$1.8B",
         "ebitda": "$2.9B",
         "fcf": "$2.1B",
-        "jurisdictions": ["US", "Canada"]
+        "jurisdictions": [
+            "US", 
+            "Canada"
+        ]
     },
     "GLPI": {
         "rev_label": "REV",
         "revenue_fy": "$1.4B (FY '25)",
         "revenue_interim": "$360M (Q4 '25)",
         "focus": "Gaming & Leisure REIT",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 0.75,
         "eps_forecast": 0.70,
         "net_income": "$650M",
         "ebitda": "$1.2B",
         "fcf": "$800M",
-        "jurisdictions": ["US"]
-    },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": ["US"],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": ["US"]
+        "jurisdictions": [
+            "US"
+        ]
     },
     "OPAP.AT": {
         "rev_label": "NGR",
         "revenue_fy": "€2.2B (FY '25)",
         "revenue_interim": "€1.1B (H1 '25)",
         "focus": "Greek Lottery & Betting Monopoly",
-        "map_codes": ["GR", "CY"],
+        "map_codes": [
+            "GR", 
+            "CY"
+        ],
         "eps_actual": 1.15,
         "eps_forecast": 1.05,
         "net_income": "€420M",
         "ebitda": "€750M",
         "fcf": "€500M",
-        "jurisdictions": ["Greece", "Cyprus"]
+        "jurisdictions": [
+            "Greece", 
+            "Cyprus"
+        ]
     },
     "TIMA.F": {
         "rev_label": "REV",
         "revenue_fy": "€140M (FY '25)",
         "revenue_interim": "€75M (H1 '25)",
         "focus": "Online Lottery Broker",
-        "map_codes": ["DE", "GB"],
+        "map_codes": [
+            "DE", 
+            "GB"
+        ],
         "eps_actual": 0.85,
         "eps_forecast": 0.80,
         "net_income": "€30M",
         "ebitda": "€45M",
         "fcf": "€35M",
-        "jurisdictions": ["Germany"]
+        "jurisdictions": [
+            "Germany"
+        ]
     },
     "GMR.L": {
         "rev_label": "REV",
         "revenue_fy": "£28M (FY '25)",
         "revenue_interim": "£15M (H1 '25)",
         "focus": "Mobile Slingo & iGaming Content",
-        "map_codes": ["GB", "US", "CA"],
+        "map_codes": [
+            "GB", 
+            "US", 
+            "CA"
+        ],
         "eps_actual": 0.03,
         "eps_forecast": 0.02,
         "net_income": "£5M",
         "ebitda": "£10M",
         "fcf": "£7M",
-        "jurisdictions": ["US", "UK"]
+        "jurisdictions": [
+            "US", 
+            "UK"
+        ]
     },
     "PARP.PA": {
         "rev_label": "REV",
         "revenue_fy": "€445M (FY '25)",
         "revenue_interim": "€225M (H1 '25)",
         "focus": "French Casino Operator",
-        "map_codes": ["FR", "CH"],
+        "map_codes": [
+            "FR", 
+            "CH"
+        ],
         "eps_actual": 0.45,
         "eps_forecast": 0.40,
         "net_income": "€25M",
         "ebitda": "€85M",
         "fcf": "€40M",
-        "jurisdictions": ["France", "Switzerland"]
+        "jurisdictions": [
+            "France", 
+            "Switzerland"
+        ]
     },
     "ACX.DE": {
         "rev_label": "REV",
         "revenue_fy": "€60M (FY '25)",
         "revenue_interim": "€30M (H1 '25)",
         "focus": "European Sportsbook",
-        "map_codes": ["DE", "AT"],
+        "map_codes": [
+            "DE", 
+            "AT"
+        ],
         "eps_actual": -0.15,
         "eps_forecast": -0.10,
         "net_income": "-€5M",
         "ebitda": "€2M",
         "fcf": "-€1M",
-        "jurisdictions": ["DACH Region"]
+        "jurisdictions": [
+            "DACH Region"
+        ]
     },
     "GAMB": {
         "rev_label": "REV",
         "revenue_fy": "$165.4M (FY '25)",
         "revenue_interim": "$46.2M (Q4 '25)",
         "focus": "iGaming Performance Marketing",
-        "map_codes": ["US", "GB", "IE"],
+        "map_codes": [
+            "US", 
+            "GB", 
+            "IE"
+        ],
         "eps_actual": 0.30,
         "eps_forecast": 0.21,
         "net_income": "-$26.9M",
         "ebitda": "$15.5M",
         "fcf": "$36.3M",
-        "jurisdictions": ["US", "UK"]
+        "jurisdictions": [
+            "US", 
+            "UK"
+        ]
     },
     "BETMGM": {
         "rev_label": "REV",
         "revenue_fy": "$2.8B (FY '25)",
         "revenue_interim": "$780M (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
-        "map_codes": ["US", "CA", "PR"],
+        "map_codes": [
+            "US", 
+            "CA", 
+            "PR"
+        ],
         "eps_actual": 0,
         "eps_forecast": 0,
         "net_income": "$175M",
         "ebitda": "$220M",
         "fcf": "N/A",
-        "jurisdictions": ["US", "Ontario", "Puerto Rico"]
+        "jurisdictions": [
+            "US", 
+            "Ontario", 
+            "Puerto Rico"
+        ]
     },
     "ACEL": {
         "rev_label": "REV",
         "revenue_fy": "$1.33B (FY '25)",
         "revenue_interim": "$341.4M (Q4 '25)",
         "focus": "Distributed Gaming & Slot Routes",
-        "map_codes": ["US"],
+        "map_codes": [
+            "US"
+        ],
         "eps_actual": 0.60,
         "eps_forecast": 0.41,
         "net_income": "$51.3M",
         "ebitda": "$210.1M",
         "fcf": "$150.9M",
-        "jurisdictions": ["US"],
+        "jurisdictions": [
+            "US"
+        ],
         "fallback_price": "$11.07",
         "fallback_mcap": "$950M",
         "fallback_pe": "21.1x",
@@ -1179,182 +1568,287 @@ VERIFIED_DATA = {
         "revenue_fy": "€151M (FY '25)",
         "revenue_interim": "€43M (Q4 '25)",
         "focus": "LatAm & Euro Sportsbook",
-        "map_codes": ["ES", "MX", "CO", "PA", "AR"],
+        "map_codes": [
+            "ES", 
+            "MX", 
+            "CO", 
+            "PA", 
+            "AR"
+        ],
         "eps_actual": -0.05,
         "eps_forecast": 0.02,
         "net_income": "€1M",
         "ebitda": "€15M",
         "fcf": "€5M",
-        "jurisdictions": ["Spain", "LatAm"]
+        "jurisdictions": [
+            "Spain", 
+            "LatAm"
+        ]
     },
     "TLC.AX": {
         "rev_label": "REV",
         "revenue_fy": "A$3.5B (FY '25)",
         "revenue_interim": "A$1.7B (H1 '25)",
         "focus": "Australian Lotteries & Keno",
-        "map_codes": ["AU"],
+        "map_codes": [
+            "AU"
+        ],
         "eps_actual": 0.15,
         "eps_forecast": 0.14,
         "net_income": "A$280M",
         "ebitda": "A$700M",
         "fcf": "A$500M",
-        "jurisdictions": ["Australia"]
+        "jurisdictions": [
+            "Australia"
+        ]
     },
     "035250.KS": {
         "rev_label": "REV",
         "revenue_fy": "₩1.46T (FY '25)",
         "revenue_interim": "₩365B (Q4 '25)",
         "focus": "Korean Domestic Casino",
-        "map_codes": ["KR"],
+        "map_codes": [
+            "KR"
+        ],
         "eps_actual": 1807.0,
         "eps_forecast": 1750.0,
         "net_income": "₩328B",
         "ebitda": "₩400B",
         "fcf": "₩250B",
-        "jurisdictions": ["South Korea"]
+        "jurisdictions": [
+            "South Korea"
+        ]
     },
     "2767.T": {
         "rev_label": "REV",
         "revenue_fy": "¥115B (FY '25)",
         "revenue_interim": "¥28B (Q4 '25)",
         "focus": "Pachinko & Amusement Media",
-        "map_codes": ["JP"],
+        "map_codes": [
+            "JP"
+        ],
         "eps_actual": 180.0,
         "eps_forecast": 175.0,
         "net_income": "¥10B",
         "ebitda": "¥18B",
         "fcf": "¥12B",
-        "jurisdictions": ["Japan"]
+        "jurisdictions": [
+            "Japan"
+        ]
     },
     "SKC.NZ": {
         "rev_label": "REV",
         "revenue_fy": "NZ$926M (FY '25)",
         "revenue_interim": "NZ$450M (H1 '25)",
         "focus": "NZ & Aussie Casino Resorts",
-        "map_codes": ["NZ", "AU"],
+        "map_codes": [
+            "NZ", 
+            "AU"
+        ],
         "eps_actual": 0.12,
         "eps_forecast": 0.10,
         "net_income": "NZ$45M",
         "ebitda": "NZ$280M",
         "fcf": "NZ$150M",
-        "jurisdictions": ["New Zealand", "Australia"]
+        "jurisdictions": [
+            "New Zealand", 
+            "Australia"
+        ]
     },
     "6425.T": {
         "rev_label": "REV",
         "revenue_fy": "¥148B (FY '25)",
         "revenue_interim": "¥35B (Q4 '25)",
         "focus": "Pachinko & Philippine Resort",
-        "map_codes": ["JP", "PH"],
+        "map_codes": [
+            "JP", 
+            "PH"
+        ],
         "eps_actual": 225.0,
         "eps_forecast": 210.0,
         "net_income": "¥25B",
         "ebitda": "¥40B",
         "fcf": "¥20B",
-        "jurisdictions": ["Japan", "Philippines"]
+        "jurisdictions": [
+            "Japan", 
+            "Philippines"
+        ]
     },
     "JIN.AX": {
         "rev_label": "REV",
         "revenue_fy": "A$148M (FY '25)",
         "revenue_interim": "A$72M (H1 '25)",
         "focus": "Digital Lottery Retailing",
-        "map_codes": ["AU", "GB", "CA"],
+        "map_codes": [
+            "AU", 
+            "GB", 
+            "CA"
+        ],
         "eps_actual": 0.65,
         "eps_forecast": 0.60,
         "net_income": "A$45M",
         "ebitda": "A$65M",
         "fcf": "A$50M",
-        "jurisdictions": ["Australia", "UK", "Canada"]
+        "jurisdictions": [
+            "Australia", 
+            "UK", 
+            "Canada"
+        ]
     },
     "AGI.AX": {
         "rev_label": "REV",
         "revenue_fy": "A$284M (FY '25)",
         "revenue_interim": "A$140M (H1 '25)",
         "focus": "B2B Slot Machines",
-        "map_codes": ["AU", "US", "AR"],
+        "map_codes": [
+            "AU", 
+            "US", 
+            "AR"
+        ],
         "eps_actual": 0.05,
         "eps_forecast": 0.04,
         "net_income": "A$15M",
         "ebitda": "A$40M",
         "fcf": "A$20M",
-        "jurisdictions": ["Australia", "US", "LatAm"]
+        "jurisdictions": [
+            "Australia", 
+            "US", 
+            "LatAm"
+        ]
     },
     "DELTACORP.NS": {
         "rev_label": "REV",
         "revenue_fy": "₹709 Cr (FY '25)",
         "revenue_interim": "₹151 Cr (Q4 '25)",
         "focus": "Indian Offshore Casinos",
-        "map_codes": ["IN", "NP"],
+        "map_codes": [
+            "IN", 
+            "NP"
+        ],
         "eps_actual": 5.57,
         "eps_forecast": 5.00,
         "net_income": "₹120 Cr",
         "ebitda": "₹180 Cr",
         "fcf": "₹100 Cr",
-        "jurisdictions": ["India", "Nepal"]
+        "jurisdictions": [
+            "India", 
+            "Nepal"
+        ]
     },
     "GMGI": {
         "rev_label": "REV",
         "revenue_fy": "$179M (FY '25)",
         "revenue_interim": "$43M (Q4 '25)",
         "focus": "B2B iGaming & Sports",
-        "map_codes": ["US", "RS", "MX"],
+        "map_codes": [
+            "US", 
+            "RS", 
+            "MX"
+        ],
         "eps_actual": -0.05,
         "eps_forecast": 0.03,
         "net_income": "-$1.4M",
         "ebitda": "$15.7M",
         "fcf": "$12.6M",
-        "jurisdictions": ["US", "Balkans", "LatAm"]
+        "jurisdictions": [
+            "US", 
+            "Balkans", 
+            "LatAm"
+        ]
+    },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": [
+            "US"
+        ],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "jurisdictions": [
+            "US"
+        ]
     },
     "ESON.LS": {
         "rev_label": "REV",
         "revenue_fy": "€255M (FY '25)",
         "revenue_interim": "€65M (Q4 '25)",
         "focus": "Portuguese Casinos & iGaming",
-        "map_codes": ["PT"],
+        "map_codes": [
+            "PT"
+        ],
         "eps_actual": 0.30,
         "eps_forecast": 0.25,
         "net_income": "€18M",
         "ebitda": "€45M",
         "fcf": "€25M",
-        "jurisdictions": ["Portugal"]
+        "jurisdictions": [
+            "Portugal"
+        ]
     },
     "GMBL": {
         "rev_label": "REV",
         "revenue_fy": "$15M (FY '25)",
         "revenue_interim": "$3M (Q3 '25)",
         "focus": "Esports Betting & Events",
-        "map_codes": ["US", "MT"],
+        "map_codes": [
+            "US", 
+            "MT"
+        ],
         "eps_actual": -1.50,
         "eps_forecast": -1.00,
         "net_income": "-$25M",
         "ebitda": "-$10M",
         "fcf": "-$5M",
-        "jurisdictions": ["Malta", "US"]
+        "jurisdictions": [
+            "Malta", 
+            "US"
+        ]
     }
 }
 
 def get_live_fx_rates():
     rates = {'USD': 1.0, '$': 1.0}
     pairs = {
-        'GBP': 'GBPUSD=X', 'GBp': 'GBPUSD=X', 'EUR': 'EURUSD=X', 'SEK': 'SEKUSD=X',
-        'AUD': 'AUDUSD=X', 'CAD': 'CADUSD=X', 'HKD': 'HKDUSD=X', 'SGD': 'SGDUSD=X',
-        'MYR': 'MYRUSD=X', 'KRW': 'KRWUSD=X', 'JPY': 'JPYUSD=X', 'NZD': 'NZDUSD=X', 'INR': 'INRUSD=X'
+        'GBP': 'GBPUSD=X', 
+        'GBp': 'GBPUSD=X', 
+        'EUR': 'EURUSD=X', 
+        'SEK': 'SEKUSD=X',
+        'AUD': 'AUDUSD=X', 
+        'CAD': 'CADUSD=X', 
+        'HKD': 'HKDUSD=X', 
+        'SGD': 'SGDUSD=X',
+        'MYR': 'MYRUSD=X', 
+        'KRW': 'KRWUSD=X', 
+        'JPY': 'JPYUSD=X', 
+        'NZD': 'NZDUSD=X', 
+        'INR': 'INRUSD=X'
     }
     for currency, ticker in pairs.items():
         try:
             val = yf.Ticker(ticker).fast_info['lastPrice']
-            if currency == 'GBp': val = val / 100.0 
+            if currency == 'GBp': 
+                val = val / 100.0 
             rates[currency] = val
         except Exception:
             rates[currency] = 1.0 
     return rates
 
 def format_money(raw_val, sym):
-    if pd.isna(raw_val): return "N/A"
+    if pd.isna(raw_val): 
+        return "N/A"
     is_neg = raw_val < 0
     abs_val = abs(raw_val)
-    if abs_val >= 1e9: res = f"{sym}{round(abs_val/1e9, 2)}B"
-    elif abs_val >= 1e6: res = f"{sym}{round(abs_val/1e6, 2)}M"
-    else: res = f"{sym}{round(abs_val, 2)}" # FIX: Safely display micro-cap sizes without 11 decimals
+    if abs_val >= 1e9: 
+        res = f"{sym}{round(abs_val/1e9, 2)}B"
+    elif abs_val >= 1e6: 
+        res = f"{sym}{round(abs_val/1e6, 2)}M"
+    else: 
+        res = f"{sym}{round(abs_val, 2)}"
     return f"-{res}" if is_neg else res
 
 def get_stock_fundamentals(ticker, fx_rates):
@@ -1365,10 +1859,18 @@ def get_stock_fundamentals(ticker, fx_rates):
     dyn_eps_act, dyn_eps_est, dyn_date = None, None, None
     daily_change_pct = "N/A"
     pe_raw, de_raw = None, None
+    description = "Company description unavailable."
     sym, currency = "$", "USD"
     
     try:
         ytk = yf.Ticker(ticker)
+        
+        try:
+            info = ytk.info
+            description = info.get('longBusinessSummary', description)
+        except Exception: 
+            pass
+        
         try:
             price = ytk.fast_info['lastPrice']
             currency = ytk.fast_info['currency']
@@ -1380,24 +1882,40 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if len(hist) >= 2:
                     fallback_prev = hist['Close'].iloc[-2]
                     daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
-        except Exception: pass 
+        except Exception: 
+            pass 
             
-        if currency == "GBp": sym = "GBp "
-        elif currency == "GBP": sym = "£"
-        elif currency == "SEK": sym = "SEK "
-        elif currency == "EUR": sym = "€"
-        elif currency == "AUD": sym = "A$"
-        elif currency == "CAD": sym = "C$"
-        elif currency == "HKD": sym = "HK$"
-        elif currency == "SGD": sym = "S$"
-        elif currency == "MYR": sym = "RM "
-        elif currency == "KRW": sym = "₩" 
-        elif currency == "JPY": sym = "¥"  
-        elif currency == "NZD": sym = "NZ$" 
-        elif currency == "INR": sym = "₹"  
-        else: sym = "$"
+        if currency == "GBp": 
+            sym = "GBp "
+        elif currency == "GBP": 
+            sym = "£"
+        elif currency == "SEK": 
+            sym = "SEK "
+        elif currency == "EUR": 
+            sym = "€"
+        elif currency == "AUD": 
+            sym = "A$"
+        elif currency == "CAD": 
+            sym = "C$"
+        elif currency == "HKD": 
+            sym = "HK$"
+        elif currency == "SGD": 
+            sym = "S$"
+        elif currency == "MYR": 
+            sym = "RM "
+        elif currency == "KRW": 
+            sym = "₩" 
+        elif currency == "JPY": 
+            sym = "¥"  
+        elif currency == "NZD": 
+            sym = "NZ$" 
+        elif currency == "INR": 
+            sym = "₹"  
+        else: 
+            sym = "$"
         
-        if price > 0: price_str = f"{sym}{round(price, 2)}"
+        if price > 0: 
+            price_str = f"{sym}{round(price, 2)}"
             
         try:
             mc_raw = ytk.fast_info['marketCap']
@@ -1408,11 +1926,12 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
                     mc_display = f"{mc_native} ({mc_usd_str})"
-                else: mc_display = mc_native
-        except Exception: pass
+                else: 
+                    mc_display = mc_native
+        except Exception: 
+            pass
 
         try:
-            info = ytk.info
             pe_r = info.get('trailingPE') or info.get('forwardPE')
             if pe_r is not None and pe_r > 0: 
                 pe_raw = pe_r
@@ -1420,7 +1939,8 @@ def get_stock_fundamentals(ticker, fx_rates):
             else:
                 eps = info.get('trailingEps')
                 if eps is not None:
-                    if eps <= 0: pe_str = "Neg EPS"
+                    if eps <= 0: 
+                        pe_str = "Neg EPS"
                     elif price > 0:
                         pe_raw = price / eps
                         pe_str = f"{round(pe_raw, 2)}" 
@@ -1433,21 +1953,25 @@ def get_stock_fundamentals(ticker, fx_rates):
                 total_debt = info.get('totalDebt')
                 total_equity = info.get('totalStockholderEquity') 
                 if total_debt is not None and total_equity is not None:
-                    if total_equity <= 0: de_str = "Neg Equity" 
+                    if total_equity <= 0: 
+                        de_str = "Neg Equity" 
                     else:
                         de_raw = (total_debt / total_equity) * 100
                         de_str = f"{round(de_raw, 2)}%" 
                 elif total_debt == 0:
                     de_raw = 0
                     de_str = "0.00%"
-        except Exception: pass 
+        except Exception: 
+            pass 
 
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
                 raw_rev_fy = None
-                if 'Total Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
-                elif 'Operating Revenue' in income_annual.index: raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
+                if 'Total Revenue' in income_annual.index: 
+                    raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
+                elif 'Operating Revenue' in income_annual.index: 
+                    raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
                 if pd.notna(raw_rev_fy):
                     fy_year = pd.to_datetime(income_annual.columns[0]).year
                     fy_rev_str = f"{format_money(raw_rev_fy, sym)} (FY '{str(fy_year)[-2:]})"
@@ -1457,18 +1981,23 @@ def get_stock_fundamentals(ticker, fx_rates):
                     if key in income_annual.index:
                         raw_ebitda = income_annual.loc[key].iloc[0]
                         break
-                if pd.notna(raw_ebitda): dyn_ebitda = format_money(raw_ebitda, sym)
-        except Exception: pass
+                if pd.notna(raw_ebitda): 
+                    dyn_ebitda = format_money(raw_ebitda, sym)
+        except Exception: 
+            pass
 
         try:
             cf = ytk.cashflow
             if not cf.empty:
                 raw_fcf = None
-                if 'Free Cash Flow' in cf.index: raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
+                if 'Free Cash Flow' in cf.index: 
+                    raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
                 elif 'Operating Cash Flow' in cf.index and 'Capital Expenditure' in cf.index:
                     raw_fcf = cf.loc['Operating Cash Flow'].iloc[0] + cf.loc['Capital Expenditure'].iloc[0]
-                if pd.notna(raw_fcf): dyn_fcf = format_money(raw_fcf, sym)
-        except Exception: pass
+                if pd.notna(raw_fcf): 
+                    dyn_fcf = format_money(raw_fcf, sym)
+        except Exception: 
+            pass
         
         try:
             ed = ytk.earnings_dates
@@ -1477,7 +2006,8 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if not past_ed.empty:
                     dyn_eps_act = past_ed['Reported EPS'].iloc[0]
                     dyn_eps_est = past_ed['Estimate EPS'].iloc[0]
-        except Exception: pass
+        except Exception: 
+            pass
         
         try:
             cal_data = ytk.calendar
@@ -1485,14 +2015,17 @@ def get_stock_fundamentals(ticker, fx_rates):
                 dates = cal_data['Earnings Date']
                 if isinstance(dates, list) and len(dates) > 0:
                     first_date = dates[0]
-                    if hasattr(first_date, 'strftime'): dyn_date = first_date.strftime('%b %d, %Y')
-                    else: dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
-        except Exception: pass
+                    if hasattr(first_date, 'strftime'): 
+                        dyn_date = first_date.strftime('%b %d, %Y')
+                    else: 
+                        dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
+        except Exception: 
+            pass
             
-        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw
+        return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw, description
         
     except Exception:
-        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None, "N/A", None, None
+        return "N/A", 0, "N/A", 0, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", None, None, None, "N/A", None, None, "Company description unavailable."
 
 def fetch_stock_history(ticker, native_price_raw):
     is_otc = ticker in OTC_MAP
@@ -1502,7 +2035,6 @@ def fetch_stock_history(ticker, native_price_raw):
     try:
         ytk = yf.Ticker(fetch_ticker)
         
-        # FIX: Check if OTC ticker is dead by testing 1mo data
         df_test = ytk.history(period="1mo")
         if df_test.empty and is_otc:
             fetch_ticker = ticker
@@ -1511,7 +2043,7 @@ def fetch_stock_history(ticker, native_price_raw):
 
         df_1d = ytk.history(period="1d", interval="15m")
         if df_1d.empty:
-            df_1d = ytk.history(period="5d", interval="1d") # FIX: Fallback for low-volume 1D
+            df_1d = ytk.history(period="5d", interval="1d") 
 
         if not df_1d.empty:
             history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_1d.iterrows()]
@@ -1541,12 +2073,19 @@ def fetch_stock_history(ticker, native_price_raw):
                     history[period] = [[pt[0], round(pt[1] * ratio, 2)] for pt in history[period]]
     except Exception:
         pass
+    
     return history
 
-def ai_process_intelligence(company_name, ticker, fundamentals):
+def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
-        return {"summary": ["System Error: API key missing."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>API Key required.</p>", "quotes": []}
+        return {
+            "summary": ["System Error: API key missing."], 
+            "sentiment": 50, 
+            "rating": "Hold", 
+            "reading_room": "<p>API Key required.</p>", 
+            "quotes": []
+        }
         
     try:
         feed_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}"
@@ -1561,29 +2100,38 @@ def ai_process_intelligence(company_name, ticker, fundamentals):
             try:
                 feed = feedparser.parse(fallback_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
-            except Exception: pass
+            except Exception: 
+                pass
 
-        # FIX: Ultimate Fallback using Google News RSS for heavily blocked tickers
         if not headlines:
             safe_name = urllib.parse.quote(f"{company_name} stock")
             google_url = f"https://news.google.com/rss/search?q={safe_name}&hl=en-US&gl=US&ceid=US:en"
             try:
                 feed = feedparser.parse(google_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
-            except Exception: pass
+            except Exception: 
+                pass
             
         if not headlines:
-            return {"summary": [f"No recent news found for {company_name}."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Awaiting fresh press releases.</p>", "quotes": []}
+            return {
+                "summary": [f"No recent news found for {company_name}."], 
+                "sentiment": 50, 
+                "rating": "Hold", 
+                "reading_room": "<p>Awaiting fresh press releases.</p>", 
+                "quotes": []
+            }
 
         client = genai.Client(api_key=api_key)
+        
         prompt = f"""Act as an expert iGaming financial analyst. 
         Company: {company_name} ({ticker})
         Recent Headlines: {' | '.join(headlines)}
+        Previous Sentiment Score: {prev_sent}/100
         Fundamentals: P/E Ratio: {fundamentals.get('pe_ratio')}, Debt-to-Equity: {fundamentals.get('debt_to_equity')}, EPS Beat/Miss: {fundamentals.get('eps_beat_miss_pct')}%, Revenue/NGR: {fundamentals.get('revenue')}, Free Cash Flow (FCF): {fundamentals.get('fcf')}
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news.
+        1. "summary": A list of 3 string bullet points summarizing the news. **CRITICAL:** If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by more than 10 points (a spike or drop), you MUST explicitly explain the rationale for this momentum shift in one of the bullet points.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
         4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'.
@@ -1598,14 +2146,27 @@ def ai_process_intelligence(company_name, ticker, fundamentals):
         raw_text = ai_resp.text.strip()
         try:
             match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
-            if match: return json.loads(match.group(1))
+            if match: 
+                return json.loads(match.group(1))
             return json.loads(raw_text)
         except json.JSONDecodeError:
-            return {"summary": ["Data temporarily unavailable."], "sentiment": 50, "rating": "Hold", "reading_room": "<p>AI parse error.</p>", "quotes": []}
+            return {
+                "summary": ["Data temporarily unavailable."], 
+                "sentiment": 50, 
+                "rating": "Hold", 
+                "reading_room": "<p>AI parse error.</p>", 
+                "quotes": []
+            }
             
     except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
-        return {"summary": [f"News Error: Gathering delayed."], "sentiment": 50, "rating": "Hold", "reading_room": f"<p>Latency issue.</p>", "quotes": []}
+        return {
+            "summary": [f"News Error: Gathering delayed."], 
+            "sentiment": 50, 
+            "rating": "Hold", 
+            "reading_room": f"<p>Latency issue.</p>", 
+            "quotes": []
+        }
 
 def run_pipeline():
     master_db = []
@@ -1620,14 +2181,27 @@ def run_pipeline():
         print(f"\nProcessing {co['name']} ({ticker})...")
         
         fin = VERIFIED_DATA.get(ticker, {
-            "eps_actual": 0, "eps_forecast": 0, "net_income": "N/A", "ebitda": "N/A", "fcf": "N/A", "jurisdictions": [],
-            "focus": "Diversified Gaming", "map_codes": [], "rev_label": "REV", "revenue_fy": "N/A", "revenue_interim": "N/A"
+            "eps_actual": 0, 
+            "eps_forecast": 0, 
+            "net_income": "N/A", 
+            "ebitda": "N/A", 
+            "fcf": "N/A", 
+            "jurisdictions": [],
+            "focus": "Diversified Gaming", 
+            "map_codes": [], 
+            "rev_label": "REV", 
+            "revenue_fy": "N/A", 
+            "revenue_interim": "N/A"
         })
         
-        cal = VERIFIED_CALENDAR.get(ticker, {"date": "TBD", "report_time": "TBD", "call_time": "TBD"})
+        cal = VERIFIED_CALENDAR.get(ticker, {
+            "date": "TBD", 
+            "report_time": "TBD", 
+            "call_time": "TBD"
+        })
             
         try:
-            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw = get_stock_fundamentals(ticker, fx_rates)
+            last_price_str, price_raw, mc_str, mc_usd, pe_ratio, debt_equity, dyn_fy_rev, dyn_int_rev, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw, description = get_stock_fundamentals(ticker, fx_rates)
             
             last_price_str = last_price_str if last_price_str != "N/A" else fin.get("fallback_price", "N/A")
             mc_str = mc_str if mc_str != "N/A" else fin.get("fallback_mcap", "N/A")
@@ -1659,17 +2233,25 @@ def run_pipeline():
                 "revenue": fin["revenue_fy"],
                 "fcf": fin["fcf"]
             }
-            intel = ai_process_intelligence(co['name'], ticker, fund_data_for_ai)
+            
+            prev_sent = PREV_DATA.get(ticker, {}).get("sentiment", 50)
+            intel = ai_process_intelligence(co['name'], ticker, fund_data_for_ai, prev_sent)
 
             history = fetch_stock_history(ticker, price_raw)
             final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
-            intel = {"summary": [f"System Error: {str(e)[:50]}"], "sentiment": 50, "rating": "Hold", "reading_room": "<p>Error</p>", "quotes": []}
+            intel = {
+                "summary": [f"System Error: {str(e)[:50]}"], 
+                "sentiment": 50, 
+                "rating": "Hold", 
+                "reading_room": "<p>Error</p>", 
+                "quotes": []
+            }
             history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
             last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = "N/A", "N/A", 0, "N/A", "N/A"
-            beat_miss, daily_change_pct, pe_raw, de_raw = 0, "N/A", None, None
+            beat_miss, daily_change_pct, pe_raw, de_raw, description = 0, "N/A", None, None, "Description unavailable."
             final_logo = f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128"
 
         curr_sentiment = intel.get("sentiment", 50)
@@ -1686,6 +2268,7 @@ def run_pipeline():
             "logo": final_logo,
             "base_country": co["base_country"],
             "focus": fin.get("focus", "Diversified Gaming"), 
+            "description": description,
             "map_codes": fin.get("map_codes", []),           
             "calendar": cal, 
             "last_price": last_price_str,
@@ -1720,5 +2303,7 @@ def run_pipeline():
         sys.exit(1)
 
 if __name__ == "__main__":
-    try: run_pipeline()
-    except Exception: sys.exit(1)
+    try: 
+        run_pipeline()
+    except Exception: 
+        sys.exit(1)
