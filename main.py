@@ -84,7 +84,31 @@ try:
 except Exception as e:
     pass
 
-# --- UNCOMPRESSED TARGET COMPANIES ---
+# --- TARGET ETFS ---
+TARGET_ETFS = [
+    {
+        "name": "Roundhill Sports Betting & iGaming ETF",
+        "ticker": "BETZ",
+        "logo": "https://logo.clearbit.com/roundhillinvestments.com"
+    },
+    {
+        "name": "VanEck Gaming ETF",
+        "ticker": "BJK",
+        "logo": "https://logo.clearbit.com/vaneck.com"
+    },
+    {
+        "name": "Pacer BlueStar Digital Entertainment ETF",
+        "ticker": "ODDS",
+        "logo": "https://logo.clearbit.com/paceretfs.com"
+    },
+    {
+        "name": "HANetf Sports Betting & iGaming UCITS ETF",
+        "ticker": "BETZ.L",
+        "logo": "https://logo.clearbit.com/hanetf.com"
+    }
+]
+
+# --- TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
         "name": "Flutter Entertainment", 
@@ -487,7 +511,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- UNCOMPRESSED OTC MAP ---
+# --- OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -512,7 +536,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
+# --- VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2158,7 +2182,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
                 "quotes": []
             }
             
-    except Exception as e:
+    except Exception e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
         return {
             "summary": [f"News Error: Gathering delayed."], 
@@ -2168,9 +2192,82 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             "quotes": []
         }
 
+def get_etf_fundamentals(ticker, fx_rates):
+    price, nav_val, aum_val = 0, 0, 0
+    price_str, mc_display, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A", "N/A"
+    daily_change_pct = "N/A"
+    sym, currency = "$", "USD"
+    holdings = []
+    
+    try:
+        ytk = yf.Ticker(ticker)
+        
+        try:
+            price = ytk.fast_info['lastPrice']
+            currency = ytk.fast_info['currency']
+            prev_close = ytk.fast_info.get('previousClose')
+            if price and prev_close and prev_close > 0:
+                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+        except Exception: 
+            pass
+        
+        if currency == "GBp": 
+            sym = "GBp "
+        elif currency == "GBP": 
+            sym = "£"
+        elif currency == "EUR": 
+            sym = "€"
+        else: 
+            sym = "$"
+        
+        if price > 0: 
+            price_str = f"{sym}{round(price, 2)}"
+        
+        info = ytk.info
+        try:
+            nav = info.get('navPrice')
+            if nav: 
+                nav_str = f"{sym}{round(nav, 2)}"
+            
+            aum = info.get('totalAssets') or info.get('netAssets')
+            if aum: 
+                aum_str = format_money(aum, sym)
+            
+            exp = info.get('expenseRatio')
+            if exp: 
+                exp_ratio_str = f"{round(exp * 100, 2)}%"
+        except Exception: 
+            pass
+        
+        try:
+            fd = ytk.funds_data
+            if fd and hasattr(fd, 'top_holdings'):
+                th = fd.top_holdings
+                if th is not None and not th.empty:
+                    for idx, row in th.head(10).iterrows():
+                        w = row.get('Weight', 0)
+                        if pd.isna(w): 
+                            w = 0
+                        else: 
+                            w = float(w) * 100
+                        holdings.append({
+                            "ticker": str(idx),
+                            "name": str(row.get('Name', idx)),
+                            "weight": round(w, 2)
+                        })
+        except Exception: 
+            pass
+        
+        history = fetch_stock_history(ticker, price)
+        
+        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, holdings, history
+    except Exception:
+        return "N/A", 0, "N/A", "N/A", "N/A", "N/A", [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+
 def run_pipeline():
     master_db = []
-    print(f"🚀 Starting Pipeline processing {len(TARGET_COMPANIES)} companies...")
+    etf_db = []
+    print(f"🚀 Starting Pipeline processing {len(TARGET_COMPANIES)} companies and {len(TARGET_ETFS)} ETFs...")
     
     run_time_utc = datetime.utcnow().isoformat() + "Z"
     today_str = datetime.utcnow().strftime('%Y-%m-%d')
@@ -2295,12 +2392,35 @@ def run_pipeline():
         
         time.sleep(10)
 
+    print(f"\n🚀 Processing ETFs...")
+    for e in TARGET_ETFS:
+        ticker = e['ticker']
+        print(f"  Fetching {ticker}...")
+        p_str, p_raw, d_change, exp, aum, nav, holds, hist = get_etf_fundamentals(ticker, fx_rates)
+        etf_db.append({
+            "name": e['name'],
+            "ticker": ticker,
+            "logo": e['logo'],
+            "last_price": p_str,
+            "raw_price": p_raw,
+            "daily_change_pct": d_change,
+            "expense_ratio": exp,
+            "aum": aum,
+            "nav": nav,
+            "holdings": holds,
+            "history": hist,
+            "last_updated": run_time_utc
+        })
+
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
             json.dump(master_db, f, indent=4)
         print(f"\n✅ Pipeline Complete. Saved {len(master_db)} companies.")
-    else:
-        sys.exit(1)
+        
+    if etf_db:
+        with open('etf_data_live.json', 'w') as f:
+            json.dump(etf_db, f, indent=4)
+        print(f"✅ ETF Pipeline Complete. Saved {len(etf_db)} ETFs.")
 
 if __name__ == "__main__":
     try: 
