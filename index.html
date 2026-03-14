@@ -47,8 +47,7 @@
                 <i class="fas fa-bolt mr-2 animate-pulse"></i> Trending
             </div>
             <div class="marquee-container h-full ml-2">
-                <div class="marquee-content" id="marquee-content">
-                    </div>
+                <div class="marquee-content" id="marquee-content"></div>
             </div>
         </div>
 
@@ -60,9 +59,14 @@
             <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
                 <div class="flex justify-between w-full md:w-auto gap-4 items-center">
                     <div id="last-update" class="text-xs text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded" style="font-size: 10px;">Loading Data...</div>
-                    <button onclick="openHubModal()" class="bg-gray-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-chart-pie"></i> Portfolio Hub
-                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="openEtfModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                            <i class="fas fa-layer-group"></i> ETFs
+                        </button>
+                        <button onclick="openHubModal()" class="bg-gray-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                            <i class="fas fa-chart-pie"></i> Portfolio
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
@@ -89,7 +93,30 @@
             </div>
         </header>
 
+        <div class="mb-6">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Daily Top Movers</h3>
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2" id="top-movers-container"></div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid"></div>
+    </div>
+
+    <div id="etf-modal" class="fixed inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-6xl h-[90vh] shadow-2xl flex flex-col relative">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2"><i class="fas fa-layer-group text-indigo-600"></i> Global ETF Hub</h2>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Aggregated Gaming Funds</p>
+                </div>
+                <button type="button" onclick="closeEtfModal()" class="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="flex px-6 pt-4 border-b border-slate-100 gap-6 overflow-x-auto no-scrollbar" id="etf-tabs-container"></div>
+
+            <div class="flex-1 overflow-y-auto p-6 bg-white" id="etf-content-area"></div>
+        </div>
     </div>
 
     <div id="hub-modal" class="fixed inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
@@ -337,10 +364,16 @@
     <script>
         // GLOBAL DATA
         let db = [];
+        let etfDb = [];
         let regDb = {}; 
         let activeTicker = null;
+        let activeEtfTicker = null;
+        
+        // CHARTS
         let chartInstance = null;
         let sentHistChart = null;
+        let etfMainChart = null;
+        let etfPieChart = null;
         let hubCharts = []; 
         
         let currentSort = 'earnings';
@@ -367,15 +400,22 @@
 
         async function init() {
             try {
+                // Fetch Main Stocks
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 if (!response.ok) throw new Error('Stocks JSON not found');
                 db = await response.json();
                 
+                // Fetch ETFs
+                try {
+                    const etfResp = await fetch('etf_data_live.json?v=' + Date.now());
+                    if (etfResp.ok) etfDb = await etfResp.json();
+                } catch(e) { console.warn("ETF JSON missing."); }
+                
                 if (db && db.length > 0 && db[0].last_updated) {
                     const localTime = new Date(db[0].last_updated).toLocaleString();
-                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
+                    document.getElementById('last-update').innerText = 'Last Sync: ' + localTime;
                 } else {
-                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + new Date().toLocaleTimeString();
+                    document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
                 }
                 
                 try {
@@ -384,6 +424,7 @@
                 } catch (err) { console.warn("Regulatory JSON missing."); }
 
                 populateMarquee();
+                renderTopMovers();
                 checkAlerts();
                 updateDashboardView(); 
             } catch (e) { 
@@ -404,20 +445,13 @@
             const container = document.getElementById('marquee-content');
             if(!container) return;
             
-            // Get Price Movers
-            let valid = db.filter(s => s.daily_change_pct !== "N/A");
-            let sorted = valid.sort((a,b) => parseFloat(b.daily_change_pct) - parseFloat(a.daily_change_pct));
-            let topGainer = sorted[0];
-            let topLoser = sorted[sorted.length - 1];
-
             // Get Sentiment Spikes
-            let spikeSorted = db.map(s => ({...s, spike: getSpikeValue(s)})).sort((a,b) => Math.abs(b.spike) - Math.abs(a.spike));
-            let topSpikes = spikeSorted.filter(s => Math.abs(s.spike) >= 10).slice(0, 3);
+            let spikeSorted = db.map(s => ({...s, spike: getSpikeValue(s)})).filter(s => Math.abs(s.spike) >= 20);
+            let upSpikes = spikeSorted.filter(s => s.spike > 0).sort((a,b) => b.spike - a.spike).slice(0, 5);
+            let downSpikes = spikeSorted.filter(s => s.spike < 0).sort((a,b) => a.spike - b.spike).slice(0, 5);
+            let topSpikes = [...upSpikes, ...downSpikes];
 
             let items = [];
-            
-            if(topGainer) items.push(`<span class="text-slate-400">🔥 Top Gainer:</span> <span class="font-bold text-white cursor-pointer hover:text-blue-400 transition" onclick="openModal('${topGainer.ticker}')">${topGainer.ticker.split('.')[0]} <span class="text-green-400">+${topGainer.daily_change_pct}%</span></span>`);
-            if(topLoser) items.push(`<span class="text-slate-400">🔻 Top Loser:</span> <span class="font-bold text-white cursor-pointer hover:text-blue-400 transition" onclick="openModal('${topLoser.ticker}')">${topLoser.ticker.split('.')[0]} <span class="text-red-400">${topLoser.daily_change_pct}%</span></span>`);
             
             topSpikes.forEach(s => {
                 let sign = s.spike > 0 ? '+' : '';
@@ -425,9 +459,38 @@
                 items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white cursor-pointer hover:text-blue-400 transition" onclick="openModal('${s.ticker}')">${s.ticker.split('.')[0]} <span class="${color}">Sentiment ${sign}${s.spike}</span></span>`);
             });
 
-            // Duplicate items to ensure smooth marquee loop
+            if (items.length === 0) {
+                items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white">No sentiment spikes >= 20 detected today.</span>`);
+            }
+
             const htmlString = items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ') + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' + items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ');
             container.innerHTML = htmlString;
+        }
+
+        function renderTopMovers() {
+            const container = document.getElementById('top-movers-container');
+            if(!container) return;
+            
+            let valid = db.filter(s => s.daily_change_pct !== "N/A");
+            let sorted = valid.sort((a,b) => parseFloat(b.daily_change_pct) - parseFloat(a.daily_change_pct));
+            
+            let gainers = sorted.slice(0, 5);
+            let losers = sorted.slice().reverse().slice(0, 5);
+            
+            let html = '';
+            gainers.forEach(s => {
+                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-green-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-green-50 transition-colors">
+                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                            <div class="text-xs font-black text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+${s.daily_change_pct}%</div>
+                         </div>`;
+            });
+            losers.forEach(s => {
+                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-red-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-red-50 transition-colors">
+                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                            <div class="text-xs font-black text-red-600 bg-red-100 px-1.5 py-0.5 rounded">${s.daily_change_pct}%</div>
+                         </div>`;
+            });
+            container.innerHTML = html;
         }
 
         function checkAlerts() {
@@ -635,7 +698,7 @@
                 if (s.sentiment_history && s.sentiment_history.length > 1) {
                     const diff = getSpikeValue(s);
 
-                    if (Math.abs(diff) >= 15) {
+                    if (Math.abs(diff) >= 20) {
                         const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                         const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                         const sign = diff > 0 ? '+' : '';
@@ -696,7 +759,7 @@
                                     <span class="font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}" style="font-size: 9px;">${catBadge.name}</span>
                                     <span class="text-gray-400 font-medium bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 10px;">${s.base_country}</span>
                                 </div>
-                                <p class="text-slate-500 pr-2 mt-1.5" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
+                                <p class="text-slate-500 pr-2 mt-1.5" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${s.description || ''}">${s.description || 'Company description unavailable.'}</p>
                             </div>
                             
                             <div class="flex justify-between items-center mb-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-100">
@@ -732,6 +795,192 @@
             }).join('');
         }
 
+        // --- NEW ETF HUB LOGIC ---
+        function openEtfModal() {
+            document.getElementById('etf-modal').classList.remove('hidden');
+            if (etfDb.length === 0) {
+                document.getElementById('etf-content-area').innerHTML = '<div class="text-center py-12"><p class="text-slate-400 font-bold">ETF Data not available yet. Please wait for next sync.</p></div>';
+                return;
+            }
+            
+            let tabsHtml = etfDb.map((e, i) => `
+                <div class="hub-tab ${i===0 ? 'hub-tab-active' : ''} whitespace-nowrap" id="etf-tab-${i}" onclick="switchEtfTab(${i})">
+                    ${e.ticker}
+                </div>
+            `).join('');
+            document.getElementById('etf-tabs-container').innerHTML = tabsHtml;
+            
+            switchEtfTab(0);
+        }
+
+        function closeEtfModal() {
+            document.getElementById('etf-modal').classList.add('hidden');
+            if (etfMainChart) { etfMainChart.destroy(); etfMainChart = null; }
+            if (etfPieChart) { etfPieChart.destroy(); etfPieChart = null; }
+        }
+
+        function switchEtfTab(index) {
+            etfDb.forEach((_, i) => {
+                const tab = document.getElementById(`etf-tab-${i}`);
+                if(tab) {
+                    if (i === index) tab.classList.add('hub-tab-active');
+                    else tab.classList.remove('hub-tab-active');
+                }
+            });
+            activeEtfTicker = etfDb[index].ticker;
+            renderEtfContent(index);
+        }
+
+        function renderEtfContent(index) {
+            const etf = etfDb[index];
+            const container = document.getElementById('etf-content-area');
+            
+            if (etfMainChart) { etfMainChart.destroy(); etfMainChart = null; }
+            if (etfPieChart) { etfPieChart.destroy(); etfPieChart = null; }
+
+            const pct = parseFloat(etf.daily_change_pct) || 0;
+            const sign = pct > 0 ? '+' : '';
+            const color = pct >= 0 ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100';
+            
+            // Build Holdings Table
+            let holdingsHtml = '';
+            let categoryWeights = {};
+            
+            if (etf.holdings && etf.holdings.length > 0) {
+                holdingsHtml = etf.holdings.map((h, i) => {
+                    const cat = getIndustryCategory(h.ticker).name;
+                    categoryWeights[cat] = (categoryWeights[cat] || 0) + h.weight;
+                    
+                    return `
+                    <tr class="border-b border-slate-50 hover:bg-slate-50">
+                        <td class="p-3 font-bold text-slate-800">${i+1}. ${h.ticker}</td>
+                        <td class="p-3 text-xs text-slate-600">${h.name}</td>
+                        <td class="p-3 text-sm font-bold text-right text-indigo-600">${h.weight.toFixed(2)}%</td>
+                    </tr>
+                    `;
+                }).join('');
+            } else {
+                holdingsHtml = `<tr><td colspan="3" class="text-center py-8 text-slate-400">Holdings data unavailable</td></tr>`;
+            }
+
+            container.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex items-center gap-4">
+                        <img src="${etf.logo}" class="w-12 h-12 rounded-full border p-1 object-contain" onerror="handleImageFallback(this, '${etf.ticker}.com', '${etf.ticker}')">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">${etf.name}</h3>
+                            <div class="flex items-center gap-3 mt-1">
+                                <span class="font-mono font-bold text-slate-600">${etf.ticker}</span>
+                                <span class="text-lg font-black text-slate-900">${etf.last_price}</span>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded ${color}">${sign}${pct}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Expense Ratio</p>
+                        <p class="text-lg font-black text-slate-800">${etf.expense_ratio}</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Assets Under Mgmt (AUM)</p>
+                        <p class="text-lg font-black text-slate-800 font-mono">${etf.aum}</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Net Asset Value (NAV)</p>
+                        <p class="text-lg font-black text-slate-800 font-mono">${etf.nav}</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Historical Performance</h4>
+                        <select id="etf-timeframe" onchange="updateEtfChart(${index})" class="text-xs font-bold bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none">
+                            <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
+                        </select>
+                    </div>
+                    <div id="etf-main-chart" class="w-full h-64"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="fas fa-list-ol text-indigo-500 mr-2"></i>Top 10 Constituents</h4>
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                            <table class="w-full text-left bg-white">
+                                <thead class="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-200 bg-slate-50">
+                                    <tr><th class="p-3">Ticker</th><th class="p-3">Company</th><th class="p-3 text-right">Weight</th></tr>
+                                </thead>
+                                <tbody>${holdingsHtml}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i>Sector Allocation (Top 10)</h4>
+                        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center justify-center h-full min-h-[300px]">
+                            <div id="etf-pie-chart" class="w-full"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render ETF Line Chart
+            setTimeout(() => updateEtfChart(index), 50);
+
+            // Render ETF Pie Chart
+            const pieLabels = Object.keys(categoryWeights);
+            const pieSeries = Object.values(categoryWeights);
+            
+            if(pieSeries.length > 0) {
+                setTimeout(() => {
+                    etfPieChart = new ApexCharts(document.querySelector("#etf-pie-chart"), {
+                        series: pieSeries,
+                        labels: pieLabels,
+                        chart: { type: 'donut', height: 320, fontFamily: 'inherit' },
+                        colors: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#64748b'],
+                        plotOptions: { donut: { size: '65%' } },
+                        dataLabels: { enabled: false },
+                        legend: { position: 'bottom', fontSize: '11px', fontWeight: 'bold' },
+                        tooltip: { y: { formatter: function(val) { return val.toFixed(2) + "%" } } }
+                    });
+                    etfPieChart.render();
+                }, 50);
+            } else {
+                document.querySelector("#etf-pie-chart").innerHTML = '<p class="text-sm text-slate-400 text-center">Chart unavailable.</p>';
+            }
+        }
+
+        function updateEtfChart(index) {
+            const etf = etfDb[index];
+            const timeframe = document.getElementById('etf-timeframe').value;
+            const data = (etf.history && etf.history[timeframe]) ? etf.history[timeframe] : [];
+
+            if (etfMainChart) {
+                etfMainChart.destroy();
+                etfMainChart = null;
+            }
+
+            if (!data || data.length < 2) {
+                document.getElementById('etf-main-chart').innerHTML = `<div class="flex items-center justify-center h-full text-sm text-gray-400 font-medium">Insufficient historical data.</div>`;
+                return;
+            }
+
+            etfMainChart = new ApexCharts(document.querySelector("#etf-main-chart"), {
+                series: [{ name: 'Price', data: data }],
+                chart: { type: 'area', height: 250, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 2.5 },
+                xaxis: { type: 'datetime', labels: { style: { colors: '#9ca3af', fontSize: '11px' } } },
+                yaxis: { labels: { style: { colors: '#9ca3af', fontSize: '11px' }, formatter: (v) => v.toFixed(2) } },
+                colors: ['#4f46e5'],
+                fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0 } },
+                grid: { borderColor: '#f3f4f6' },
+                tooltip: { x: { format: 'dd MMM yyyy' }, theme: 'light' }
+            });
+            etfMainChart.render();
+        }
+
+        // --- PORTFOLIO HUB LOGIC ---
         function openHubModal() {
             document.getElementById('hub-modal').classList.remove('hidden');
             switchHubTab('portfolio');
@@ -1044,6 +1293,7 @@
             switchHubTab('alerts');
         }
 
+        // --- MAIN MODAL LOGIC ---
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
             if (el) {
@@ -1284,7 +1534,7 @@
                     spikeBadgeContainer.innerHTML = '';
                     if (s.sentiment_history && s.sentiment_history.length > 1) {
                         const diff = getSpikeValue(s);
-                        if (Math.abs(diff) >= 15) {
+                        if (Math.abs(diff) >= 20) {
                             const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                             const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                             const sign = diff > 0 ? '+' : '';
@@ -1533,7 +1783,7 @@
             brandRevChart.render();
         }
 
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeHubModal(); closeEtfModal(); } });
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
