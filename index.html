@@ -850,7 +850,7 @@
                     
                     return `
                     <tr class="border-b border-slate-50 hover:bg-slate-50">
-                        <td class="p-3 font-bold text-slate-800">${i+1}. ${h.ticker}</td>
+                        <td class="p-3 font-bold text-slate-800">${h.ticker}</td>
                         <td class="p-3 text-xs text-slate-600">${h.name}</td>
                         <td class="p-3 text-sm font-bold text-right text-indigo-600">${h.weight.toFixed(2)}%</td>
                     </tr>
@@ -1556,6 +1556,9 @@
                 }
 
                 const spikeBadgeContainer = document.getElementById('modal-spike-badge');
+                const isRadarOn = radarActive.includes(s.ticker) || watchlist.includes(s.ticker) || portfolio.some(p => p.ticker === s.ticker);
+                const sentCont = document.getElementById('sentiment-history-container');
+
                 if(spikeBadgeContainer) {
                     spikeBadgeContainer.innerHTML = '';
                     if (s.sentiment_history && s.sentiment_history.length > 1) {
@@ -1564,16 +1567,17 @@
                             const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                             const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                             const sign = diff > 0 ? '+' : '';
-                            spikeBadgeContainer.innerHTML = `<span class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border animate-pulse"><i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}</span>`;
+                            spikeBadgeContainer.innerHTML = `<button onclick="document.getElementById('sentiment-history-container').classList.toggle('hidden'); if(sentHistChart){sentHistChart.render();}" class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border animate-pulse hover:bg-opacity-70 transition-all cursor-pointer shadow-sm"><i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}</button>`;
                         }
                     }
                 }
 
-                const isRadarOn = radarActive.includes(s.ticker) || watchlist.includes(s.ticker) || portfolio.some(p => p.ticker === s.ticker);
-                const sentCont = document.getElementById('sentiment-history-container');
-                
-                if(isRadarOn && s.sentiment_history && s.sentiment_history.length > 1) {
-                    sentCont.classList.remove('hidden');
+                if (s.sentiment_history && s.sentiment_history.length > 1) {
+                    if (isRadarOn) {
+                        sentCont.classList.remove('hidden');
+                    } else {
+                        sentCont.classList.add('hidden');
+                    }
                     if(sentHistChart) sentHistChart.destroy();
                     sentHistChart = new ApexCharts(document.querySelector("#sentiment-history-chart"), {
                         series: [{ name: 'Sentiment', data: s.sentiment_history.map(x => ({ x: new Date(x.date).getTime(), y: x.score })) }],
