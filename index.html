@@ -31,8 +31,6 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .hub-tab { border-bottom: 2px solid transparent; cursor: pointer; padding-bottom: 8px; font-weight: bold; color: #64748b; }
         .hub-tab-active { border-bottom: 2px solid #3b82f6; color: #1e293b; }
-
-        /* TRENDING MARQUEE ANIMATION */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; width: 100%; display: flex; align-items: center; }
         .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
@@ -187,7 +185,10 @@
             
             <div class="p-6">
                 <div id="modal-main-content">
-                    <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100 justify-between items-center shadow-sm"></div>
+                    
+                    <div id="modal-description" class="mt-2 mb-6 p-4 bg-slate-50 border border-slate-100 rounded-xl hidden"></div>
+                    
+                    <div id="modal-financials" class="flex flex-wrap gap-4 mb-6 p-4 bg-white border border-slate-200 rounded-xl justify-between items-center shadow-sm"></div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2 flex flex-col gap-6">
@@ -362,14 +363,12 @@
     </div>
 
     <script>
-        // GLOBAL DATA
         let db = [];
         let etfDb = [];
         let regDb = {}; 
         let activeTicker = null;
         let activeEtfTicker = null;
         
-        // CHARTS
         let chartInstance = null;
         let sentHistChart = null;
         let etfMainChart = null;
@@ -382,7 +381,6 @@
         let brandHandleChart = null;
         let brandRevChart = null;
 
-        // LOCAL STORAGE ARRAYS
         let watchlist = JSON.parse(localStorage.getItem('igaming_watchlist')) || [];
         let portfolio = JSON.parse(localStorage.getItem('igaming_portfolio')) || [];
         let alerts = JSON.parse(localStorage.getItem('igaming_alerts')) || [];
@@ -400,12 +398,10 @@
 
         async function init() {
             try {
-                // Fetch Main Stocks
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 if (!response.ok) throw new Error('Stocks JSON not found');
                 db = await response.json();
                 
-                // Fetch ETFs
                 try {
                     const etfResp = await fetch('etf_data_live.json?v=' + Date.now());
                     if (etfResp.ok) etfDb = await etfResp.json();
@@ -413,9 +409,9 @@
                 
                 if (db && db.length > 0 && db[0].last_updated) {
                     const localTime = new Date(db[0].last_updated).toLocaleString();
-                    document.getElementById('last-update').innerText = 'Last Sync: ' + localTime;
+                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
                 } else {
-                    document.getElementById('last-update').innerText = 'Last Sync: ' + new Date().toLocaleTimeString();
+                    document.getElementById('last-update').innerText = 'Last Price Sync: ' + new Date().toLocaleTimeString();
                 }
                 
                 try {
@@ -445,7 +441,6 @@
             const container = document.getElementById('marquee-content');
             if(!container) return;
             
-            // Get Sentiment Spikes
             let spikeSorted = db.map(s => ({...s, spike: getSpikeValue(s)})).filter(s => Math.abs(s.spike) >= 20);
             let upSpikes = spikeSorted.filter(s => s.spike > 0).sort((a,b) => b.spike - a.spike).slice(0, 5);
             let downSpikes = spikeSorted.filter(s => s.spike < 0).sort((a,b) => a.spike - b.spike).slice(0, 5);
@@ -460,7 +455,7 @@
             });
 
             if (items.length === 0) {
-                items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white">No sentiment spikes >= 20 detected today.</span>`);
+                items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white">No sentiment shifts &ge; 20 detected today.</span>`);
             }
 
             const htmlString = items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ') + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' + items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ');
@@ -759,7 +754,7 @@
                                     <span class="font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}" style="font-size: 9px;">${catBadge.name}</span>
                                     <span class="text-gray-400 font-medium bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 10px;">${s.base_country}</span>
                                 </div>
-                                <p class="text-slate-500 pr-2 mt-1.5" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" title="${s.description || ''}">${s.description || 'Company description unavailable.'}</p>
+                                <p class="text-slate-500 pr-2 mt-1.5" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
                             </div>
                             
                             <div class="flex justify-between items-center mb-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-100">
@@ -783,7 +778,7 @@
                                 <div class="flex items-center gap-1 z-10 relative">
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                      ${sentimentSpikeHtml}
-                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1 rounded-full transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100' : 'text-slate-300 hover:text-purple-400 hover:bg-purple-50'}">
+                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border border-slate-300 rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
                                          <i class="fas fa-satellite-dish text-xs ${isRadarOn ? 'animate-pulse' : ''}"></i>
                                      </button>
                                 </div>
@@ -795,7 +790,7 @@
             }).join('');
         }
 
-        // --- NEW ETF HUB LOGIC ---
+        // --- ETF HUB LOGIC ---
         function openEtfModal() {
             document.getElementById('etf-modal').classList.remove('hidden');
             if (etfDb.length === 0) {
@@ -842,7 +837,6 @@
             const sign = pct > 0 ? '+' : '';
             const color = pct >= 0 ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100';
             
-            // Build Holdings Table
             let holdingsHtml = '';
             let categoryWeights = {};
             
@@ -863,16 +857,19 @@
                 holdingsHtml = `<tr><td colspan="3" class="text-center py-8 text-slate-400">Holdings data unavailable</td></tr>`;
             }
 
+            const jurisdictionsHtml = etf.jurisdictions ? etf.jurisdictions.map(j => `<span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${j}</span>`).join(' ') : '';
+
             container.innerHTML = `
                 <div class="flex justify-between items-start mb-6">
                     <div class="flex items-center gap-4">
                         <img src="${etf.logo}" class="w-12 h-12 rounded-full border p-1 object-contain" onerror="handleImageFallback(this, '${etf.ticker}.com', '${etf.ticker}')">
                         <div>
                             <h3 class="text-xl font-bold text-slate-900">${etf.name}</h3>
-                            <div class="flex items-center gap-3 mt-1">
+                            <div class="flex items-center gap-3 mt-1 flex-wrap">
                                 <span class="font-mono font-bold text-slate-600">${etf.ticker}</span>
                                 <span class="text-lg font-black text-slate-900">${etf.last_price}</span>
                                 <span class="text-xs font-bold px-2 py-0.5 rounded ${color}">${sign}${pct}%</span>
+                                <div class="hidden sm:flex gap-1 ml-2 border-l border-slate-200 pl-3">${jurisdictionsHtml}</div>
                             </div>
                         </div>
                     </div>
@@ -924,10 +921,8 @@
                 </div>
             `;
 
-            // Render ETF Line Chart
             setTimeout(() => updateEtfChart(index), 50);
 
-            // Render ETF Pie Chart
             const pieLabels = Object.keys(categoryWeights);
             const pieSeries = Object.values(categoryWeights);
             
@@ -1435,11 +1430,6 @@
                     modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
                 }
 
-                let syncTimeString = "Unknown";
-                if (s.last_updated) {
-                    syncTimeString = new Date(s.last_updated).toLocaleString();
-                }
-
                 safeSetText('modal-title', s.company || 'Unknown Company');
                 safeSetHTML('modal-ticker', `
                     <span class="text-gray-800 font-bold font-mono text-sm">${ticker} | <span class="text-gray-500 font-medium">${s.base_country || 'Unknown'} Based</span></span>
@@ -1447,9 +1437,18 @@
                     <div class="mt-2 md:mt-1 flex flex-wrap items-center gap-2">
                         <span class="text-lg font-bold text-gray-900">${s.last_price || 'N/A'}</span>
                         ${modalChangeHtml}
-                        <span class="text-gray-400 uppercase tracking-widest ml-1 md:ml-2 bg-slate-100 px-1.5 py-0.5 rounded font-bold" style="font-size: 9px;" title="Updated: ${syncTimeString}">Delayed Pricing</span>
                     </div>
                 `);
+                
+                // Display FULL description in Modal
+                const descContainer = document.getElementById('modal-description');
+                if (descContainer) {
+                    descContainer.innerHTML = `
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Company Overview</h4>
+                        <p class="text-sm text-slate-700 leading-relaxed">${s.description || 'Company description unavailable.'}</p>
+                    `;
+                    descContainer.classList.remove('hidden');
+                }
                 
                 let nextEarningsDate = s.calendar?.date || 'TBD';
                 if (nextEarningsDate !== 'TBD') {
@@ -1543,8 +1542,10 @@
                     }
                 }
 
+                const isRadarOn = radarActive.includes(s.ticker) || watchlist.includes(s.ticker) || portfolio.some(p => p.ticker === s.ticker);
                 const sentCont = document.getElementById('sentiment-history-container');
-                if(s.sentiment_history && s.sentiment_history.length > 1) {
+                
+                if(isRadarOn && s.sentiment_history && s.sentiment_history.length > 1) {
                     sentCont.classList.remove('hidden');
                     if(sentHistChart) sentHistChart.destroy();
                     sentHistChart = new ApexCharts(document.querySelector("#sentiment-history-chart"), {
