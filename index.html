@@ -15,28 +15,105 @@
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
-        .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
-        .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
-        #methodology-overlay { transition: opacity 0.3s ease; }
-        .reading-room-prose p { margin-bottom: 1.2em; font-size: 0.95rem; line-height: 1.6; color: #334155; }
-        .reading-room-prose strong { color: #0f172a; font-weight: 700; }
-        .reading-room-prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.2em; }
-        .reading-room-prose li { margin-bottom: 0.5em; font-size: 0.95rem; color: #334155; }
-        .tab-btn { padding: 8px 16px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-        .tab-btn-active { background-color: #1e293b; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .tab-btn-inactive { background-color: #f1f5f9; color: #64748b; }
-        .tab-btn-inactive:hover { background-color: #e2e8f0; color: #334155; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hub-tab { border-bottom: 2px solid transparent; cursor: pointer; padding-bottom: 8px; font-weight: bold; color: #64748b; }
-        .hub-tab-active { border-bottom: 2px solid #3b82f6; color: #1e293b; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            overflow-x: hidden; 
+        }
+        .sentiment-bar { 
+            height: 6px; 
+            border-radius: 3px; 
+            background: #e2e8f0; 
+            position: relative; 
+        }
+        .sentiment-fill { 
+            height: 100%; 
+            border-radius: 3px; 
+            transition: width 1s ease-in-out; 
+        }
+        #methodology-overlay { 
+            transition: opacity 0.3s ease; 
+        }
+        .reading-room-prose p { 
+            margin-bottom: 1.2em; 
+            font-size: 0.95rem; 
+            line-height: 1.6; 
+            color: #334155; 
+        }
+        .reading-room-prose strong { 
+            color: #0f172a; 
+            font-weight: 700; 
+        }
+        .reading-room-prose ul { 
+            list-style-type: disc; 
+            padding-left: 1.5em; 
+            margin-bottom: 1.2em; 
+        }
+        .reading-room-prose li { 
+            margin-bottom: 0.5em; 
+            font-size: 0.95rem; 
+            color: #334155; 
+        }
+        .tab-btn { 
+            padding: 8px 16px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .tab-btn-active { 
+            background-color: #1e293b; 
+            color: white; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
+        }
+        .tab-btn-inactive { 
+            background-color: #f1f5f9; 
+            color: #64748b; 
+        }
+        .tab-btn-inactive:hover { 
+            background-color: #e2e8f0; 
+            color: #334155; 
+        }
+        .no-scrollbar::-webkit-scrollbar { 
+            display: none; 
+        }
+        .no-scrollbar { 
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+        .hub-tab { 
+            border-bottom: 2px solid transparent; 
+            cursor: pointer; 
+            padding-bottom: 8px; 
+            font-weight: bold; 
+            color: #64748b; 
+        }
+        .hub-tab-active { 
+            border-bottom: 2px solid #3b82f6; 
+            color: #1e293b; 
+        }
 
         /* TRENDING MARQUEE ANIMATION */
-        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; width: 100%; display: flex; align-items: center; }
-        .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
-        .marquee-container:hover .marquee-content { animation-play-state: paused; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-container { 
+            overflow: hidden; 
+            white-space: nowrap; 
+            position: relative; 
+            width: 100%; 
+            display: flex; 
+            align-items: center; 
+        }
+        .marquee-content { 
+            display: inline-flex; 
+            animation: marquee 35s linear infinite; 
+        }
+        .marquee-container:hover .marquee-content { 
+            animation-play-state: paused; 
+        }
+        @keyframes marquee { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
 
         /* SLIDE-IN NEWS HUB */
         #news-hub-container {
@@ -65,20 +142,13 @@
         #article-view-container.active {
             transform: translateX(0);
         }
-
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-        }
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
     <div class="max-w-7xl mx-auto" id="main-dashboard-view">
         
-        <div class="w-full bg-slate-900 text-white rounded-xl mb-6 shadow-sm flex items-center overflow-hidden border border-slate-800" style="height: 36px;">
-            <div class="bg-blue-600 text-white font-black uppercase tracking-widest px-4 py-2 text-[10px] z-10 flex-shrink-0 flex items-center h-full">
+        <div class="w-full bg-white text-slate-900 rounded-xl mb-6 shadow-sm flex items-center overflow-hidden border border-slate-200" style="height: 36px;">
+            <div class="bg-blue-600 text-white font-black uppercase tracking-widest px-4 py-2 text-[10px] z-10 flex-shrink-0 flex items-center h-full shadow-md">
                 <i class="fas fa-bolt mr-2 animate-pulse"></i> Trending
             </div>
             <div class="marquee-container h-full ml-2">
@@ -92,8 +162,9 @@
                 <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Gaming Stocks Terminal</h1>
                 <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
             </div>
-            <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
-                <div class="flex flex-col items-end w-full md:w-auto gap-2">
+            
+            <div class="flex flex-col items-start gap-4 w-full md:w-auto">
+                <div class="flex flex-col items-start w-full gap-2">
                     <div class="flex gap-2">
                         <button onclick="openNewsHub()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
                             <i class="far fa-newspaper"></i> News
@@ -105,7 +176,9 @@
                             <i class="fas fa-chart-pie"></i> Portfolio
                         </button>
                     </div>
-                    <div id="last-update" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-right w-full">Loading Data...</div>
+                    <div id="last-update" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-left w-full ml-1">
+                        Loading Data...
+                    </div>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
@@ -251,15 +324,33 @@
                         </button>
                     </div>
                     <div class="space-y-8">
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3><p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p></section>
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3><p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p></section>
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3><p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p></section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
+                        </section>
                         <section class="bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
-                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-green-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span></div>
-                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span></div>
-                                <div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-red-500 shrink-0"></div><span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span></div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-green-500 shrink-0"></div>
+                                    <span class="text-xs text-slate-600"><strong>60-100 (Bullish):</strong> Strong positive momentum, earnings beats, or favorable regulation.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></div>
+                                    <span class="text-xs text-slate-600"><strong>40-59 (Neutral):</strong> Mixed news cycle or purely administrative updates.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500 shrink-0"></div>
+                                    <span class="text-xs text-slate-600"><strong>0-39 (Bearish):</strong> Regulatory headwinds, missed targets, or analyst downgrades.</span>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -295,9 +386,16 @@
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 px-2 pt-2">
                                     <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Market Performance</h3>
                                     <div class="flex gap-2 w-full sm:w-auto">
-                                        <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer"><option value="">Compare...</option></select>
+                                        <select id="compare-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-purple-600 w-full sm:w-auto cursor-pointer">
+                                            <option value="">Compare...</option>
+                                        </select>
                                         <select id="timeframe-select" onchange="updateMainChart()" class="text-sm border-slate-200 rounded-md bg-slate-50 px-2 py-1 outline-none font-semibold text-slate-700 cursor-pointer">
-                                            <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
+                                            <option value="1d">1 Day</option>
+                                            <option value="1w">1 Week</option>
+                                            <option value="1m">1 Month</option>
+                                            <option value="6m" selected>6 Months</option>
+                                            <option value="1y">1 Year</option>
+                                            <option value="5y">5 Years</option>
                                         </select>
                                     </div>
                                 </div>
@@ -312,7 +410,9 @@
                                     <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Global Operational Footprint</h3>
                                     <div class="text-xs font-bold text-slate-400 uppercase tracking-widest" id="map-jurisdictions-text" style="font-size: 10px;"></div>
                                 </div>
-                                <div class="relative flex-grow rounded-lg overflow-hidden bg-slate-50 border border-slate-100"><div id="m-map" class="absolute inset-0"></div></div>
+                                <div class="relative flex-grow rounded-lg overflow-hidden bg-slate-50 border border-slate-100">
+                                    <div id="m-map" class="absolute inset-0"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -507,13 +607,17 @@
                 try {
                     const etfResp = await fetch('etf_data_live.json?v=' + Date.now());
                     if (etfResp.ok) etfDb = await etfResp.json();
-                } catch(e) { console.warn("ETF JSON missing."); }
+                } catch(e) { 
+                    console.warn("ETF JSON missing."); 
+                }
 
                 // Fetch News Feed
                 try {
                     const newsResp = await fetch('news_feed_live.json?v=' + Date.now());
                     if (newsResp.ok) newsDb = await newsResp.json();
-                } catch(e) { console.warn("News JSON missing."); }
+                } catch(e) { 
+                    console.warn("News JSON missing."); 
+                }
                 
                 // Set Global Date
                 if (db && db.length > 0 && db[0].last_updated) {
@@ -527,7 +631,9 @@
                 try {
                     const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
                     if (regResponse.ok) regDb = await regResponse.json();
-                } catch (err) { console.warn("Regulatory JSON missing."); }
+                } catch (err) { 
+                    console.warn("Regulatory JSON missing."); 
+                }
 
                 populateMarquee();
                 renderTopMovers();
@@ -682,12 +788,20 @@
             
             topSpikes.forEach(s => {
                 let sign = s.spike > 0 ? '+' : '';
-                let color = s.spike > 0 ? 'text-green-400' : 'text-red-400';
-                items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white cursor-pointer hover:text-blue-400 transition" onclick="openModal('${s.ticker}')">${s.ticker.split('.')[0]} <span class="${color}">Sentiment ${sign}${s.spike}</span></span>`);
+                let color = s.spike > 0 ? 'text-green-500' : 'text-red-500';
+                items.push(`
+                    <span class="text-slate-500">📡 AI Radar:</span> 
+                    <span class="font-bold text-slate-900 cursor-pointer hover:text-blue-600 transition" onclick="openModal('${s.ticker}')">
+                        ${s.ticker.split('.')[0]} <span class="${color}">Sentiment ${sign}${s.spike}</span>
+                    </span>
+                `);
             });
 
             if (items.length === 0) {
-                items.push(`<span class="text-slate-400">📡 AI Radar:</span> <span class="font-bold text-white">No sentiment shifts &ge; 20 detected today.</span>`);
+                items.push(`
+                    <span class="text-slate-500">📡 AI Radar:</span> 
+                    <span class="font-bold text-slate-900">No sentiment shifts &ge; 20 detected today.</span>
+                `);
             }
 
             const htmlString = items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ') + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' + items.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ');
@@ -706,16 +820,20 @@
             
             let html = '';
             gainers.forEach(s => {
-                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-green-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-green-50 transition-colors">
-                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
-                            <div class="text-xs font-black text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+${s.daily_change_pct}%</div>
-                         </div>`;
+                html += `
+                    <div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-green-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-green-50 transition-colors">
+                        <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                        <div class="text-xs font-black text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+${s.daily_change_pct}%</div>
+                    </div>
+                `;
             });
             losers.forEach(s => {
-                html += `<div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-red-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-red-50 transition-colors">
-                            <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
-                            <div class="text-xs font-black text-red-600 bg-red-100 px-1.5 py-0.5 rounded">${s.daily_change_pct}%</div>
-                         </div>`;
+                html += `
+                    <div onclick="openModal('${s.ticker}')" class="cursor-pointer flex-shrink-0 bg-white border border-red-200 shadow-sm rounded-lg px-3 py-2 flex items-center gap-3 min-w-[140px] hover:bg-red-50 transition-colors">
+                        <div class="font-bold text-xs text-slate-800">${s.ticker.split('.')[0]}</div>
+                        <div class="text-xs font-black text-red-600 bg-red-100 px-1.5 py-0.5 rounded">${s.daily_change_pct}%</div>
+                    </div>
+                `;
             });
             container.innerHTML = html;
         }
@@ -929,7 +1047,11 @@
                         const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                         const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                         const sign = diff > 0 ? '+' : '';
-                        sentimentSpikeHtml = `<span class="ml-2 text-[9px] font-black uppercase tracking-widest ${spikeColor} px-1.5 py-0.5 rounded border animate-pulse shadow-sm"><i class="fas ${spikeIcon} mr-0.5"></i> Spike ${sign}${diff}</span>`;
+                        sentimentSpikeHtml = `
+                            <span class="ml-2 text-[9px] font-black uppercase tracking-widest ${spikeColor} px-1.5 py-0.5 rounded border animate-pulse shadow-sm">
+                                <i class="fas ${spikeIcon} mr-0.5"></i> Spike ${sign}${diff}
+                            </span>
+                        `;
                     }
 
                     if (isRadarOn) {
@@ -1010,7 +1132,7 @@
                                 <div class="flex items-center gap-1 z-10 relative">
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                      ${sentimentSpikeHtml}
-                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border-2 rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-400' : 'text-slate-400 bg-slate-50 border-slate-300 hover:text-purple-500 hover:bg-purple-50'}">
+                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white border-slate-300 hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
                                          <i class="fas fa-satellite-dish text-sm ${isRadarOn ? 'animate-pulse' : ''}"></i>
                                      </button>
                                 </div>
@@ -1131,7 +1253,12 @@
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Historical Performance</h4>
                         <select id="etf-timeframe" onchange="updateEtfChart(${index})" class="text-xs font-bold bg-slate-50 border border-slate-200 rounded px-2 py-1 outline-none">
-                            <option value="1d">1 Day</option><option value="1w">1 Week</option><option value="1m">1 Month</option><option value="6m" selected>6 Months</option><option value="1y">1 Year</option><option value="5y">5 Years</option>
+                            <option value="1d">1 Day</option>
+                            <option value="1w">1 Week</option>
+                            <option value="1m">1 Month</option>
+                            <option value="6m" selected>6 Months</option>
+                            <option value="1y">1 Year</option>
+                            <option value="5y">5 Years</option>
                         </select>
                     </div>
                     <div id="etf-main-chart" class="w-full h-64"></div>
@@ -1143,7 +1270,11 @@
                         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                             <table class="w-full text-left bg-white">
                                 <thead class="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-200 bg-slate-50">
-                                    <tr><th class="p-3">Ticker</th><th class="p-3">Company</th><th class="p-3 text-right">Weight</th></tr>
+                                    <tr>
+                                        <th class="p-3">Ticker</th>
+                                        <th class="p-3">Company</th>
+                                        <th class="p-3 text-right">Weight</th>
+                                    </tr>
                                 </thead>
                                 <tbody>${holdingsHtml}</tbody>
                             </table>
@@ -1197,8 +1328,10 @@
                 return;
             }
 
+            let seriesData = data.map(p => ({ x: p[0], y: p[1] }));
+
             etfMainChart = new ApexCharts(document.querySelector("#etf-main-chart"), {
-                series: [{ name: 'Price', data: data }],
+                series: [{ name: 'Price', data: seriesData }],
                 chart: { type: 'area', height: 250, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
                 dataLabels: { enabled: false },
                 stroke: { curve: 'smooth', width: 2.5 },
@@ -1334,17 +1467,22 @@
 
             let radarHtml = '';
             if(portfolio.length > 0) {
-                radarHtml = `<div class="mb-6"><h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3"><i class="fas fa-satellite-dish mr-1"></i> Active Portfolio Radars</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+                radarHtml = `
+                    <div class="mb-6">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3"><i class="fas fa-satellite-dish mr-1"></i> Active Portfolio Radars</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                `;
                 portfolio.forEach((item, i) => {
                     radarHtml += `
-                    <div class="bg-white border border-purple-100 rounded-xl p-4 shadow-sm relative overflow-hidden cursor-pointer hover:border-purple-300" onclick="closeHubModal(); openModal('${item.ticker}')">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-                        <div class="flex justify-between items-center mb-2 pl-2">
-                            <span class="font-bold text-sm text-slate-800">${item.ticker}</span>
-                            <span class="text-[9px] uppercase font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded tracking-widest"><i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i>Live Tracking</span>
+                        <div class="bg-white border border-purple-100 rounded-xl p-4 shadow-sm relative overflow-hidden cursor-pointer hover:border-purple-300" onclick="closeHubModal(); openModal('${item.ticker}')">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                            <div class="flex justify-between items-center mb-2 pl-2">
+                                <span class="font-bold text-sm text-slate-800">${item.ticker}</span>
+                                <span class="text-[9px] uppercase font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded tracking-widest"><i class="fas fa-circle text-[6px] mr-1 animate-pulse"></i>Live Tracking</span>
+                            </div>
+                            <div id="port-chart-${i}" class="w-full h-16 ml-1"></div>
                         </div>
-                        <div id="port-chart-${i}" class="w-full h-16 ml-1"></div>
-                    </div>`;
+                    `;
                 });
                 radarHtml += `</div></div>`;
             }
@@ -1685,7 +1823,7 @@
                         let rest = words.slice(50).join(' ');
                         descHtml = `
                             <span id="desc-short">${first50}...</span>
-                            <span id="desc-full" class="hidden">${first50} ${rest}</span>
+                            <span id="desc-full" class="hidden"> ${rest}</span>
                             <button onclick="document.getElementById('desc-short').classList.toggle('hidden'); document.getElementById('desc-full').classList.toggle('hidden'); this.innerText = this.innerText === 'Read More' ? 'Close' : 'Read More';" class="text-blue-500 hover:text-blue-700 font-bold text-xs ml-1 focus:outline-none">Read More</button>
                         `;
                     }
@@ -1727,19 +1865,55 @@
                         <div class="font-mono text-xs font-bold text-gray-800">${nextEarningsDate === 'TBD' ? 'TBD' : (s.calendar?.call_time || 'TBD')}</div>
                     </div>
                     <div class="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div>
-                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Market Cap</div><div class="font-mono text-sm font-bold text-gray-800">${s.market_cap_str || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">P/E Ratio</div><div class="font-mono text-sm font-bold text-gray-800">${s.pe_ratio || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Debt/Eq</div><div class="font-mono text-sm font-bold text-gray-800">${s.debt_to_equity || 'N/A'}</div></div>
-                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EPS (Act/Est)</div><div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-gray-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div></div>
-                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (Interim)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div></div>
-                    <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+                    <div class="min-w-[100px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Market Cap</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.market_cap_str || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">P/E Ratio</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.pe_ratio || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">Debt/Eq</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.debt_to_equity || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[100px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EPS (Act/Est)</div>
+                        <div class="font-mono text-sm font-bold">${s.actuals?.eps_actual || 'N/A'} <span class="text-gray-400">/ ${s.actuals?.eps_forecast || 'N/A'}</span></div>
+                    </div>
+                    <div class="min-w-[100px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (Interim)</div>
+                        <div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_interim || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[100px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (FY)</div>
+                        <div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA</div>
+                        <div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">FCF</div>
+                        <div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div>
+                    </div>
                     <div class="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (Qtr)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_qtr || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (H2)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_h2 || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (FY)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_fy || 'N/A'}</div></div>
-                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA YoY</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_yoy || 'N/A'}</div></div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (Qtr)</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_qtr || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (H2)</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_h2 || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (FY)</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_fy || 'N/A'}</div>
+                    </div>
+                    <div class="min-w-[80px]">
+                        <div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA YoY</div>
+                        <div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_yoy || 'N/A'}</div>
+                    </div>
                 `);
 
                 let newsHtml = '<li class="text-gray-500 italic">No news available.</li>';
@@ -1754,10 +1928,20 @@
                 if (Array.isArray(s.quotes) && s.quotes.length > 0) {
                     quotesHtml = s.quotes.map(q => {
                         const safeStr = String(q).replace(/^["']|["']$/g, '').trim();
-                        return `<blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm"><div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div><p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${safeStr}</p></blockquote>`;
+                        return `
+                            <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                                <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                                <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${safeStr}</p>
+                            </blockquote>
+                        `;
                     }).join('');
                 } else if (typeof s.quotes === 'string' && s.quotes.trim() !== '') {
-                    quotesHtml = `<blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm"><div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div><p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p></blockquote>`;
+                    quotesHtml = `
+                        <blockquote class="relative p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-3xl text-blue-200 absolute top-1 left-2 font-serif">"</div>
+                            <p class="text-sm font-medium text-gray-700 italic relative z-10 pl-5">${String(s.quotes).replace(/^["']|["']$/g, '').trim()}</p>
+                        </blockquote>
+                    `;
                 }
                 safeSetHTML('management-quotes', quotesHtml);
 
@@ -1792,7 +1976,11 @@
                             const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                             const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                             const sign = diff > 0 ? '+' : '';
-                            spikeBadgeContainer.innerHTML = `<button onclick="document.getElementById('sentiment-history-container').classList.toggle('hidden'); if(sentHistChart){sentHistChart.render();}" class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border animate-pulse hover:bg-opacity-70 transition-all cursor-pointer shadow-sm"><i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}</button>`;
+                            spikeBadgeContainer.innerHTML = `
+                                <button onclick="document.getElementById('sentiment-history-container').classList.toggle('hidden'); if(sentHistChart){sentHistChart.render();}" class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border animate-pulse hover:bg-opacity-70 transition-all cursor-pointer shadow-sm">
+                                    <i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}
+                                </button>
+                            `;
                         }
                     }
                 }
