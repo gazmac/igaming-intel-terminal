@@ -9,6 +9,7 @@ import feedparser
 import urllib.parse
 from google import genai
 from datetime import datetime
+import email.utils
 
 # --- 1. CONFIGURATION ---
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
@@ -83,6 +84,19 @@ try:
                 PREV_DATA[item['ticker']] = item
 except Exception as e:
     pass
+
+# --- NEWS FEED SOURCES ---
+NEWS_SOURCES = [
+    {"url": "https://www.gamblinginsider.com/rss/", "domain": "gamblinginsider.com", "name": "Gambling Insider", "priority": 1},
+    {"url": "https://www.cardplayer.com/rss", "domain": "cardplayer.com", "name": "CardPlayer", "priority": 2},
+    {"url": "https://sportslens.com/feed/", "domain": "sportslens.com", "name": "SportsLens", "priority": 2},
+    {"url": "https://thesportsdaily.com/feed/", "domain": "thesportsdaily.com", "name": "The Sports Daily", "priority": 2},
+    {"url": "https://www.pokerstrategy.com/rss/", "domain": "pokerstrategy.com", "name": "PokerStrategy", "priority": 2},
+    {"url": "https://coincasino.com/feed/", "domain": "coincasino.com", "name": "CoinCasino", "priority": 3},
+    {"url": "https://wsmcasino.com/feed/", "domain": "wsmcasino.com", "name": "WSM Casino", "priority": 3},
+    {"url": "https://bitcoinsportsbooks.com/feed/", "domain": "bitcoinsportsbooks.com", "name": "Bitcoin Sportsbooks", "priority": 3},
+    {"url": "https://cardplayerpokertour.com/feed/", "domain": "cardplayerpokertour.com", "name": "CardPlayer Poker Tour", "priority": 3}
+]
 
 # --- TARGET ETFS ---
 TARGET_ETFS = [
@@ -2220,7 +2234,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         try:
             fast = ytk.fast_info
             if hasattr(fast, 'get'):
-                price = fast.get('lastPrice', 0)
+                price = fast.get('lastPrice')
                 currency = fast.get('currency', 'USD')
                 prev_close = fast.get('previousClose')
             else:
@@ -2228,13 +2242,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 currency = fast['currency']
                 prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
                 
+            if price is None or price == 0:
+                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
+                
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-            if daily_change_pct == "N/A" and price > 0:
-                hist = ytk.history(period="5d")
-                if len(hist) >= 2:
-                    fallback_prev = hist['Close'].iloc[-2]
-                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
         except Exception: 
             pass 
             
@@ -2430,6 +2442,104 @@ def fetch_stock_history(ticker, native_price_raw):
     
     return history
 
+def classify_news_article(title, summary, source_domain):
+    text = f"{title} {summary}".lower()
+    
+    if "gamblinginsider.com" in source_domain:
+        return "Finance & B2B"
+        
+    if any(k in text for k in ['nfl', 'football', 'super bowl', 'touchdown', 'quarterback']):
+        return "NFL"
+    if any(k in text for k in ['nba', 'basketball', 'hoops']):
+        return "NBA"
+    if any(k in text for k in ['mlb', 'baseball', 'homerun']):
+        return "MLB"
+    if any(k in text for k in ['nhl', 'hockey', 'puck']):
+        return "NHL"
+    if any(k in text for k in ['soccer', 'premier league', 'champions league', 'fifa', 'uefa']):
+        return "Soccer"
+        
+    if any(k in text for k in ['b2b', 'supplier', 'platform', 'api', 'integration', 'provider', 'aggregator', 'studio', 'developer']):
+        return "Suppliers & B2B"
+    if any(k in text for k in ['affiliate', 'acquisition', 'seo', 'traffic', 'performance marketing']):
+        return "Affiliates"
+    if any(k in text for k in ['sportsbook', 'betting', 'odds', 'wager', 'handle', 'parlay']):
+        return "Sportsbooks"
+    if any(k in text for k in ['casino', 'slots', 'jackpot', 'table games', 'live dealer']):
+        return "Casino"
+        
+    return "General News"
+
+def fetch_global_news_feed():
+    print(f"\n📰 Fetching Global News Feed from {len(NEWS_SOURCES)} sources...")
+    all_articles = []
+    
+    for source in NEWS_SOURCES:
+        try:
+            feed = feedparser.parse(source['url'])
+            # Limit to top 15 per feed to prevent bloat
+            for entry in feed.entries[:15]:
+                title = entry.title if hasattr(entry, 'title') else 'No Title'
+                link = entry.link if hasattr(entry, 'link') else '#'
+                
+                # Try to get author
+                author = getattr(entry, 'author', source['name'])
+                
+                # Parse date
+                pub_date = ""
+                if hasattr(entry, 'published'):
+                    try:
+                        parsed_date = email.utils.parsedate_to_datetime(entry.published)
+                        pub_date = parsed_date.strftime('%b %d, %Y')
+                    except:
+                        pub_date = entry.published
+                
+                # Try to get image
+                image_url = ""
+                if hasattr(entry, 'media_content') and len(entry.media_content) > 0:
+                    image_url = entry.media_content[0].get('url', '')
+                elif hasattr(entry, 'links'):
+                    for l in entry.links:
+                        if 'image' in l.get('type', ''):
+                            image_url = l.get('href', '')
+                            break
+                
+                summary = ""
+                if hasattr(entry, 'summary'):
+                    summary = re.sub('<[^<]+>', '', entry.summary) # strip html
+                    
+                # Regex fallback for image hidden in description
+                if not image_url and hasattr(entry, 'description'):
+                    img_match = re.search(r'<img[^>]+src="([^">]+)"', entry.description)
+                    if img_match:
+                        image_url = img_match.group(1)
+                        
+                category = classify_news_article(title, summary, source['domain'])
+                
+                all_articles.append({
+                    "title": title,
+                    "link": link,
+                    "author": author,
+                    "date": pub_date,
+                    "summary": summary,
+                    "image": image_url,
+                    "source_name": source['name'],
+                    "source_domain": source['domain'],
+                    "priority": source['priority'],
+                    "category": category,
+                    "timestamp": time.time() # for sorting
+                })
+        except Exception as e:
+            print(f"  ⚠️ Error fetching from {source['name']}: {e}")
+            
+    # Sort articles: Priority 1 first, then by recency (assuming order in feed is recent)
+    all_articles.sort(key=lambda x: (x['priority'], -x['timestamp']))
+    
+    # Save to JSON
+    with open('news_feed_live.json', 'w') as f:
+        json.dump(all_articles, f, indent=4)
+    print(f"✅ Generated News Feed with {len(all_articles)} articles.")
+
 def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
@@ -2488,7 +2598,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'.
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2766,7 +2876,16 @@ def run_pipeline():
             p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = get_etf_fundamentals(ticker, fx_rates)
         except Exception as ex:
             print(f"  ⚠️ Error calling fundamentals for ETF {ticker}: {ex}")
-            p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = "N/A", 0, "N/A", "N/A", "N/A", "N/A", ["Global"], [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+            fb = ETF_STATIC_FALLBACKS.get(ticker)
+            p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
+            p_raw = fb.get('price_fallback', 0) if fb else 0
+            d_change = "N/A"
+            exp = fb["expense_ratio"] if fb else "N/A"
+            aum = fb.get('aum_fallback', 'N/A') if fb else "N/A"
+            nav = fb.get('nav_fallback', 'N/A') if fb else "N/A"
+            juris = fb["jurisdictions"] if fb else ["Global"]
+            holds = fb["holdings"] if fb else []
+            hist = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
             
         etf_db.append({
             "name": e['name'],
@@ -2783,6 +2902,8 @@ def run_pipeline():
             "history": hist,
             "last_updated": run_time_utc
         })
+        
+    fetch_global_news_feed()
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
