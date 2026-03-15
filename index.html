@@ -93,8 +93,7 @@
                 <p class="text-slate-500">Live Financial Intelligence & Market Sentiment</p>
             </div>
             <div class="flex flex-col items-start md:items-end gap-3 w-full md:w-auto">
-                <div class="flex justify-between w-full md:w-auto gap-4 items-center">
-                    <div id="last-update" class="text-xs text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded" style="font-size: 10px;">Loading Data...</div>
+                <div class="flex flex-col items-end w-full md:w-auto gap-2">
                     <div class="flex gap-2">
                         <button onclick="openNewsHub()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
                             <i class="far fa-newspaper"></i> News
@@ -106,6 +105,7 @@
                             <i class="fas fa-chart-pie"></i> Portfolio
                         </button>
                     </div>
+                    <div id="last-update" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-right w-full">Loading Data...</div>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
@@ -149,9 +149,12 @@
                     <button onclick="closeNewsHub()" class="p-2 bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 rounded-full transition-colors shadow-sm">
                         <i class="fas fa-arrow-left"></i>
                     </button>
-                    <div>
-                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Global News Desk</h2>
-                        <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Aggregated iGaming Feeds</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://logo.clearbit.com/gamblinginsider.com" class="w-10 h-10 rounded shadow-sm border border-slate-200 object-contain p-0.5 bg-white" onerror="this.style.display='none'">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-900 tracking-tight leading-none">Global News Desk</h2>
+                            <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1">News hub powered by Gambling Insider</p>
+                        </div>
                     </div>
                 </div>
                 
@@ -163,18 +166,13 @@
                     <div id="burger-menu" class="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden">
                         <div class="px-4 py-3 bg-slate-900 text-white text-xs font-bold uppercase tracking-widest">Filter by Category</div>
                         <ul class="text-sm font-bold text-slate-700 divide-y divide-slate-100">
-                            <li><a href="#" onclick="filterNews('All'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">All Categories</a></li>
-                            <li><a href="#" onclick="filterNews('Finance & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Finance & B2B</a></li>
+                            <li><a href="#" onclick="filterNews('All'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">All News</a></li>
+                            <li><a href="#" onclick="filterNews('Finance & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Financial & M&A</a></li>
                             <li><a href="#" onclick="filterNews('Operators'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Operators</a></li>
-                            <li><a href="#" onclick="filterNews('Suppliers & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Suppliers & B2B</a></li>
-                            <li><a href="#" onclick="filterNews('Sportsbooks'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Sportsbooks</a></li>
-                            <li><a href="#" onclick="filterNews('Casino'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Casino & Slots</a></li>
+                            <li><a href="#" onclick="filterNews('Suppliers & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Suppliers & Technology</a></li>
+                            <li><a href="#" onclick="filterNews('Sportsbooks'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Sports Betting</a></li>
+                            <li><a href="#" onclick="filterNews('Casino & Slots'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Casino & Slots</a></li>
                             <li><a href="#" onclick="filterNews('Affiliates'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Affiliates</a></li>
-                            <li class="bg-slate-50 px-4 py-2 text-[10px] uppercase text-slate-400">Sports Desks</li>
-                            <li><a href="#" onclick="filterNews('NFL'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">NFL</a></li>
-                            <li><a href="#" onclick="filterNews('NBA'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">NBA</a></li>
-                            <li><a href="#" onclick="filterNews('MLB'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">MLB</a></li>
-                            <li><a href="#" onclick="filterNews('Soccer'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Soccer</a></li>
                         </ul>
                     </div>
                 </div>
@@ -186,7 +184,6 @@
             </div>
 
             <div id="featured-news-container" class="mt-8 hidden"></div>
-
             <div id="main-news-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
         </div>
     </div>
@@ -254,18 +251,9 @@
                         </button>
                     </div>
                     <div class="space-y-8">
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
-                        </section>
-                        <section>
-                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
-                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
-                        </section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3><p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p></section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3><p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p></section>
+                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3><p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p></section>
                         <section class="bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
@@ -491,8 +479,6 @@
         let currentSort = 'earnings';
         let currentSpeech = null;
         let currentVertical = 'Casino'; 
-        let brandHandleChart = null;
-        let brandRevChart = null;
 
         // LOCAL STORAGE ARRAYS
         let watchlist = JSON.parse(localStorage.getItem('igaming_watchlist')) || [];
@@ -601,18 +587,13 @@
 
             if(featured) {
                 const imgStr = featured.image ? `<div class="w-full md:w-1/2 h-64 md:h-auto overflow-hidden"><img src="${featured.image}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>` : '';
-                const logoStr = `https://logo.clearbit.com/${featured.source_domain}`;
                 
                 featContainer.innerHTML = `
                     <div class="bg-white rounded-2xl border border-emerald-200 shadow-xl overflow-hidden flex flex-col md:flex-row cursor-pointer hover:border-emerald-400 transition-colors" onclick='openArticleView(${JSON.stringify(featured).replace(/'/g, "&#39;")})'>
                         ${imgStr}
                         <div class="p-6 md:p-8 flex flex-col justify-center w-full md:w-1/2 relative">
                             <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-600 px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-emerald-100">Top Story</div>
-                            <div class="flex items-center gap-3 mb-4">
-                                <img src="${logoStr}" class="w-8 h-8 rounded-full border border-slate-200 p-0.5" onerror="this.style.display='none'">
-                                <span class="font-bold text-sm text-emerald-700">${featured.source_name}</span>
-                            </div>
-                            <h3 class="text-2xl font-black text-slate-900 leading-tight mb-3">${featured.title}</h3>
+                            <h3 class="text-2xl font-black text-slate-900 leading-tight mb-3 mt-4">${featured.title}</h3>
                             <p class="text-sm text-slate-500 line-clamp-3 mb-6 leading-relaxed">${featured.summary || 'Click to read full briefing.'}</p>
                             <div class="flex justify-between items-center text-xs text-slate-400 font-bold uppercase tracking-widest mt-auto">
                                 <span>${featured.author}</span>
@@ -627,17 +608,12 @@
             if(rest.length > 0) {
                 rest.forEach(item => {
                     const imgStr = item.image ? `<div class="w-full h-48 overflow-hidden border-b border-slate-100"><img src="${item.image}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'"></div>` : '<div class="w-full h-4 bg-slate-50"></div>';
-                    const logoStr = `https://logo.clearbit.com/${item.source_domain}`;
                     
                     grid.innerHTML += `
                         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col cursor-pointer hover:shadow-md hover:border-blue-300 transition-all" onclick='openArticleView(${JSON.stringify(item).replace(/'/g, "&#39;")})'>
                             ${imgStr}
                             <div class="p-5 flex flex-col flex-grow">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex items-center gap-2">
-                                        <img src="${logoStr}" class="w-6 h-6 rounded-full border border-slate-200 p-0.5" onerror="this.style.display='none'">
-                                        <span class="font-bold text-xs text-slate-700">${item.source_name}</span>
-                                    </div>
+                                <div class="flex justify-end items-start mb-3">
                                     <span class="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">${item.category}</span>
                                 </div>
                                 <h4 class="text-base font-bold text-slate-900 leading-snug mb-2">${item.title}</h4>
@@ -654,14 +630,13 @@
 
         function openArticleView(articleData) {
             const container = document.getElementById('article-content-area');
-            const logoStr = `https://logo.clearbit.com/${articleData.source_domain}`;
             const imgStr = articleData.image ? `<div class="w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-sm"><img src="${articleData.image}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>` : '';
             
             container.innerHTML = `
                 <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100">
-                    <img src="${logoStr}" class="w-12 h-12 rounded-full border border-slate-200 p-1 shadow-sm" onerror="this.style.display='none'">
+                    <img src="https://logo.clearbit.com/gamblinginsider.com" class="w-12 h-12 rounded-full border border-slate-200 p-1 shadow-sm bg-white object-contain" onerror="this.style.display='none'">
                     <div>
-                        <h4 class="font-black text-slate-900">${articleData.source_name}</h4>
+                        <h4 class="font-black text-slate-900">Gambling Insider</h4>
                         <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 flex gap-3">
                             <span><i class="fas fa-pen-nib mr-1"></i>${articleData.author}</span>
                             <span><i class="far fa-calendar mr-1"></i>${articleData.date}</span>
@@ -674,7 +649,7 @@
                     ${articleData.summary || 'Summary unavailable.'}
                 </div>
                 <a href="${articleData.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-sm">
-                    Read Full Story on ${articleData.source_name} <i class="fas fa-external-link-alt text-sm"></i>
+                    Read Full Story on Gambling Insider <i class="fas fa-external-link-alt text-sm"></i>
                 </a>
             `;
             
@@ -1035,7 +1010,7 @@
                                 <div class="flex items-center gap-1 z-10 relative">
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                      ${sentimentSpikeHtml}
-                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white border-slate-300 hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
+                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border-2 rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-400' : 'text-slate-400 bg-slate-50 border-slate-300 hover:text-purple-500 hover:bg-purple-50'}">
                                          <i class="fas fa-satellite-dish text-sm ${isRadarOn ? 'animate-pulse' : ''}"></i>
                                      </button>
                                 </div>
@@ -1688,11 +1663,6 @@
                     const sign = pct > 0 ? '+' : '';
                     const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
                     modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
-                }
-
-                let syncTimeString = "Unknown";
-                if (s.last_updated) {
-                    syncTimeString = new Date(s.last_updated).toLocaleString();
                 }
 
                 safeSetText('modal-title', s.company || 'Unknown Company');
