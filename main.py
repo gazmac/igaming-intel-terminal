@@ -85,17 +85,14 @@ try:
 except Exception as e:
     pass
 
-# --- NEWS FEED SOURCES ---
+# --- EXCLUSIVE NEWS FEED SOURCE ---
 NEWS_SOURCES = [
-    {"url": "https://www.gamblinginsider.com/rss/", "domain": "gamblinginsider.com", "name": "Gambling Insider", "priority": 1},
-    {"url": "https://www.cardplayer.com/rss", "domain": "cardplayer.com", "name": "CardPlayer", "priority": 2},
-    {"url": "https://sportslens.com/feed/", "domain": "sportslens.com", "name": "SportsLens", "priority": 2},
-    {"url": "https://thesportsdaily.com/feed/", "domain": "thesportsdaily.com", "name": "The Sports Daily", "priority": 2},
-    {"url": "https://www.pokerstrategy.com/rss/", "domain": "pokerstrategy.com", "name": "PokerStrategy", "priority": 2},
-    {"url": "https://coincasino.com/feed/", "domain": "coincasino.com", "name": "CoinCasino", "priority": 3},
-    {"url": "https://wsmcasino.com/feed/", "domain": "wsmcasino.com", "name": "WSM Casino", "priority": 3},
-    {"url": "https://bitcoinsportsbooks.com/feed/", "domain": "bitcoinsportsbooks.com", "name": "Bitcoin Sportsbooks", "priority": 3},
-    {"url": "https://cardplayerpokertour.com/feed/", "domain": "cardplayerpokertour.com", "name": "CardPlayer Poker Tour", "priority": 3}
+    {
+        "url": "https://www.gamblinginsider.com/rss/", 
+        "domain": "gamblinginsider.com", 
+        "name": "Gambling Insider", 
+        "priority": 1
+    }
 ]
 
 # --- TARGET ETFS ---
@@ -117,78 +114,78 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS
+# ETF STATIC FALLBACKS (Scraped from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
-        "price_fallback": 16.85,
+        "price_fallback": 18.11,
         "expense_ratio": "0.75%",
-        "aum_fallback": "$115.4M",
-        "nav_fallback": "$16.82",
+        "aum_fallback": "$52.01M",
+        "nav_fallback": "$18.25",
         "jurisdictions": [
             "Global", 
             "US Focus"
         ],
         "holdings": [
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.5},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 8.2},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.1},
-            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 5.4},
-            {"ticker": "LNW", "name": "Light & Wonder", "weight": 4.8},
-            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 4.5},
-            {"ticker": "PENN", "name": "PENN Entertainment", "weight": 4.2},
-            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 4.0},
-            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 3.9},
-            {"ticker": "MGM", "name": "MGM Resorts", "weight": 3.8}
+            {"ticker": "LTMC.MI", "name": "Lottomatica Group", "weight": 6.59},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 6.53},
+            {"ticker": "FDJ.PA", "name": "La Francaise Des Jeux", "weight": 6.23},
+            {"ticker": "TAH.AX", "name": "Tabcorp Holdings", "weight": 5.96},
+            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 5.93},
+            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 5.85},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.80},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 5.66},
+            {"ticker": "SGHC", "name": "Super Group", "weight": 5.15},
+            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 4.73}
         ]
     },
     "BJK": {
-        "price_fallback": 45.20,
-        "expense_ratio": "0.65%",
-        "aum_fallback": "$65.2M",
-        "nav_fallback": "$45.15",
+        "price_fallback": 35.50,
+        "expense_ratio": "0.51%",
+        "aum_fallback": "$17.75M",
+        "nav_fallback": "$35.50",
         "jurisdictions": [
             "Global", 
             "Macau", 
             "US"
         ],
         "holdings": [
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.9},
-            {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 7.8},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.2},
-            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 6.5},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 6.1},
-            {"ticker": "MGM", "name": "MGM Resorts", "weight": 5.4},
-            {"ticker": "0027.HK", "name": "Galaxy Entertainment", "weight": 4.8},
-            {"ticker": "LNW", "name": "Light & Wonder", "weight": 4.5},
-            {"ticker": "WYNN", "name": "Wynn Resorts", "weight": 4.2},
-            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.0}
+            {"ticker": "VICI", "name": "Vici Properties Inc", "weight": 8.24},
+            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 7.66},
+            {"ticker": "GLPI", "name": "Gaming And Leisure", "weight": 6.47},
+            {"ticker": "0027.HK", "name": "Galaxy Entertainment", "weight": 5.77},
+            {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 5.52},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.46},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 4.84},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.40},
+            {"ticker": "WYNN", "name": "Wynn Resorts", "weight": 4.10},
+            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 4.03}
         ]
     },
     "ODDS": {
-        "price_fallback": 28.50,
-        "expense_ratio": "0.60%",
-        "aum_fallback": "$12.8M",
-        "nav_fallback": "$28.45",
+        "price_fallback": 24.10,
+        "expense_ratio": "0.51%",
+        "aum_fallback": "$3.88M",
+        "nav_fallback": "$24.26",
         "jurisdictions": [
             "US", 
-            "Europe"
+            "Global Digital"
         ],
         "holdings": [
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 9.1},
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.5},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.4},
-            {"ticker": "LNW", "name": "Light & Wonder", "weight": 6.8},
-            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 5.2},
-            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.9},
-            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 4.5},
-            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 4.2},
-            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 3.8},
-            {"ticker": "BETS-B.ST", "name": "Betsson AB", "weight": 3.5}
+            {"ticker": "700.HK", "name": "Tencent Holdings", "weight": 8.32},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.88},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 7.06},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.99},
+            {"ticker": "7974.T", "name": "Nintendo Co Ltd", "weight": 4.55},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.09},
+            {"ticker": "NTES", "name": "NetEase Inc", "weight": 4.01},
+            {"ticker": "EA", "name": "Electronic Arts", "weight": 3.33},
+            {"ticker": "SGHC", "name": "Super Group", "weight": 3.06},
+            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 2.98}
         ]
     }
 }
 
-# --- UNCOMPRESSED TARGET COMPANIES ---
+# --- TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
         "name": "Flutter Entertainment", 
@@ -591,7 +588,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- UNCOMPRESSED OTC MAP ---
+# --- OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -616,7 +613,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
+# --- VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2247,6 +2244,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+            if daily_change_pct == "N/A" and price > 0:
+                hist = ytk.history(period="5d")
+                if len(hist) >= 2:
+                    fallback_prev = hist['Close'].iloc[-2]
+                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
         except Exception: 
             pass 
             
@@ -2291,7 +2293,7 @@ def get_stock_fundamentals(ticker, fx_rates):
                 mc_usd_val = mc_raw * fx_rate
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
-                    mc_display = f"{mc_native} <span class='text-gray-400 text-[10px] font-bold'>({mc_usd_str})</span>"
+                    mc_display = f"{mc_native} <span class='text-slate-400 text-[10px] font-bold'>(US{mc_usd_str})</span>"
                 else: 
                     mc_display = mc_native
         except Exception: 
@@ -2446,28 +2448,31 @@ def classify_news_article(title, summary, source_domain):
     text = f"{title} {summary}".lower()
     
     if "gamblinginsider.com" in source_domain:
-        return "Finance & B2B"
-        
-    if any(k in text for k in ['nfl', 'football', 'super bowl', 'touchdown', 'quarterback']):
-        return "NFL"
-    if any(k in text for k in ['nba', 'basketball', 'hoops']):
-        return "NBA"
-    if any(k in text for k in ['mlb', 'baseball', 'homerun']):
-        return "MLB"
-    if any(k in text for k in ['nhl', 'hockey', 'puck']):
-        return "NHL"
-    if any(k in text for k in ['soccer', 'premier league', 'champions league', 'fifa', 'uefa']):
-        return "Soccer"
-        
-    if any(k in text for k in ['b2b', 'supplier', 'platform', 'api', 'integration', 'provider', 'aggregator', 'studio', 'developer']):
-        return "Suppliers & B2B"
-    if any(k in text for k in ['affiliate', 'acquisition', 'seo', 'traffic', 'performance marketing']):
-        return "Affiliates"
-    if any(k in text for k in ['sportsbook', 'betting', 'odds', 'wager', 'handle', 'parlay']):
-        return "Sportsbooks"
-    if any(k in text for k in ['casino', 'slots', 'jackpot', 'table games', 'live dealer']):
-        return "Casino"
-        
+        # Prioritize categorization
+        if any(k in text for k in ['finance', 'stock', 'share', 'earnings', 'revenue', 'q1', 'q2', 'q3', 'q4', 'fy', 'merger', 'acquisition', 'm&a', 'b2b']):
+            return "Finance & B2B"
+        elif any(k in text for k in ['supplier', 'studio', 'b2b tech', 'provider', 'aggregator', 'platform']):
+            return "Suppliers & B2B"
+        elif any(k in text for k in ['operator', 'ceo', 'appoint', 'hire', 'launch']):
+            return "Operators"
+        elif any(k in text for k in ['sportsbook', 'betting', 'handle', 'parlay']):
+            return "Sportsbooks"
+        elif any(k in text for k in ['casino', 'slots', 'table games', 'dealer', 'jackpot']):
+            return "Casino & Slots"
+        elif any(k in text for k in ['affiliate', 'acquisition', 'marketing', 'seo']):
+            return "Affiliates"
+        elif any(k in text for k in ['nfl', 'football']):
+            return "NFL"
+        elif any(k in text for k in ['nba', 'basketball']):
+            return "NBA"
+        elif any(k in text for k in ['mlb', 'baseball']):
+            return "MLB"
+        elif any(k in text for k in ['nhl', 'hockey']):
+            return "NHL"
+        elif any(k in text for k in ['soccer', 'premier league', 'fifa']):
+            return "Soccer"
+        else:
+            return "General News"
     return "General News"
 
 def fetch_global_news_feed():
@@ -2477,24 +2482,19 @@ def fetch_global_news_feed():
     for source in NEWS_SOURCES:
         try:
             feed = feedparser.parse(source['url'])
-            # Limit to top 15 per feed to prevent bloat
-            for entry in feed.entries[:15]:
+            for entry in feed.entries[:30]:
                 title = entry.title if hasattr(entry, 'title') else 'No Title'
                 link = entry.link if hasattr(entry, 'link') else '#'
-                
-                # Try to get author
                 author = getattr(entry, 'author', source['name'])
                 
-                # Parse date
                 pub_date = ""
                 if hasattr(entry, 'published'):
                     try:
                         parsed_date = email.utils.parsedate_to_datetime(entry.published)
                         pub_date = parsed_date.strftime('%b %d, %Y')
-                    except:
+                    except Exception:
                         pub_date = entry.published
                 
-                # Try to get image
                 image_url = ""
                 if hasattr(entry, 'media_content') and len(entry.media_content) > 0:
                     image_url = entry.media_content[0].get('url', '')
@@ -2506,9 +2506,8 @@ def fetch_global_news_feed():
                 
                 summary = ""
                 if hasattr(entry, 'summary'):
-                    summary = re.sub('<[^<]+>', '', entry.summary) # strip html
+                    summary = re.sub('<[^<]+>', '', entry.summary)
                     
-                # Regex fallback for image hidden in description
                 if not image_url and hasattr(entry, 'description'):
                     img_match = re.search(r'<img[^>]+src="([^">]+)"', entry.description)
                     if img_match:
@@ -2527,15 +2526,13 @@ def fetch_global_news_feed():
                     "source_domain": source['domain'],
                     "priority": source['priority'],
                     "category": category,
-                    "timestamp": time.time() # for sorting
+                    "timestamp": time.time()
                 })
         except Exception as e:
             print(f"  ⚠️ Error fetching from {source['name']}: {e}")
             
-    # Sort articles: Priority 1 first, then by recency (assuming order in feed is recent)
     all_articles.sort(key=lambda x: (x['priority'], -x['timestamp']))
     
-    # Save to JSON
     with open('news_feed_live.json', 'w') as f:
         json.dump(all_articles, f, indent=4)
     print(f"✅ Generated News Feed with {len(all_articles)} articles.")
@@ -2595,10 +2592,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
+        1. "summary": A list of 3 string bullet points summarizing the news. 
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. CRITICAL INSTRUCTION: If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by 20 points or more (a spike or drop), you MUST include a distinct, separate section at the very top of your reading_room HTML output that looks EXACTLY like this: <div class='mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl shadow-sm'><h4 class='text-purple-700 font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2'><i class='fas fa-satellite-dish animate-pulse'></i> Sentiment Spike Rationale</h4><p class='text-sm text-purple-900 font-medium leading-relaxed'>[Insert your detailed explanation of the news driving the sudden 20+ point sentiment shift here]</p></div>
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2631,110 +2628,6 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             "reading_room": f"<p>Latency issue.</p>", 
             "quotes": []
         }
-
-def get_etf_fundamentals(ticker, fx_rates):
-    price, nav_val, aum_val = 0, 0, 0
-    price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
-    daily_change_pct = "N/A"
-    sym, currency = "$", "USD"
-    holdings = []
-    
-    try:
-        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
-        
-        ytk = yf.Ticker(ticker)
-        
-        try:
-            fast = ytk.fast_info
-            if hasattr(fast, 'get'):
-                price = fast.get('lastPrice')
-                currency = fast.get('currency', 'USD')
-                prev_close = fast.get('previousClose')
-            else:
-                price = fast['lastPrice']
-                currency = fast['currency']
-                prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
-                
-            if price is None or price == 0:
-                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
-                
-            if price and prev_close and prev_close > 0:
-                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-        except Exception: 
-            pass
-            
-        if (price is None or price == 0) and fallback_data:
-            price = fallback_data.get('price_fallback', 0)
-            
-        if currency == "GBp": 
-            sym = "GBp "
-        elif currency == "GBP": 
-            sym = "£"
-        elif currency == "EUR": 
-            sym = "€"
-        else: 
-            sym = "$"
-        
-        if price > 0: 
-            price_str = f"{sym}{round(price, 2)}"
-        
-        info = ytk.info
-        try:
-            nav = info.get('navPrice')
-            if nav: 
-                nav_str = f"{sym}{round(nav, 2)}"
-            elif fallback_data and fallback_data.get('nav_fallback'):
-                nav_str = fallback_data['nav_fallback']
-            
-            aum = info.get('totalAssets') or info.get('netAssets')
-            if aum: 
-                aum_str = format_money(aum, sym)
-            elif fallback_data and fallback_data.get('aum_fallback'):
-                aum_str = fallback_data['aum_fallback']
-            
-            exp = info.get('expenseRatio')
-            if exp: 
-                exp_ratio_str = f"{round(exp * 100, 2)}%"
-            elif fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-        except Exception: 
-            if fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-                aum_str = fallback_data.get("aum_fallback", "N/A")
-                nav_str = fallback_data.get("nav_fallback", "N/A")
-        
-        try:
-            fd = ytk.funds_data
-            if fd and hasattr(fd, 'top_holdings'):
-                th = fd.top_holdings
-                if th is not None and not th.empty:
-                    for idx, row in th.head(10).iterrows():
-                        w = row.get('Weight', 0)
-                        if pd.isna(w): 
-                            w = 0
-                        else: 
-                            w = float(w) * 100
-                        holdings.append({
-                            "ticker": str(idx),
-                            "name": str(row.get('Name', idx)),
-                            "weight": round(w, 2)
-                        })
-        except Exception: 
-            pass
-
-        if not holdings and fallback_data:
-            holdings = fallback_data["holdings"]
-            
-        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
-        history = fetch_stock_history(ticker, price)
-        
-        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
-        
-    except Exception as err:
-        print(f"  ⚠️ Error fetching ETF {ticker}: {err}")
-        fb = ETF_STATIC_FALLBACKS.get(ticker)
-        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
-        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
