@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jvectormap@2.0.4/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
         .sentiment-bar { height: 6px; border-radius: 3px; background: #e2e8f0; position: relative; }
         .sentiment-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
         #methodology-overlay { transition: opacity 0.3s ease; }
@@ -37,17 +37,53 @@
         .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* SLIDE-IN NEWS HUB */
+        #news-hub-container {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        #news-hub-container.active {
+            transform: translateX(0);
+        }
+        
+        /* BURGER MENU */
+        #burger-menu {
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.2s ease-out;
+        }
+        #burger-menu.active {
+            transform: scaleY(1);
+        }
+
+        /* ARTICLE VIEW */
+        #article-view-container {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #article-view-container.active {
+            transform: translateX(0);
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-7xl mx-auto">
+<body class="p-4 md:p-8 text-slate-800">
+    <div class="max-w-7xl mx-auto" id="main-dashboard-view">
         
         <div class="w-full bg-slate-900 text-white rounded-xl mb-6 shadow-sm flex items-center overflow-hidden border border-slate-800" style="height: 36px;">
             <div class="bg-blue-600 text-white font-black uppercase tracking-widest px-4 py-2 text-[10px] z-10 flex-shrink-0 flex items-center h-full">
                 <i class="fas fa-bolt mr-2 animate-pulse"></i> Trending
             </div>
             <div class="marquee-container h-full ml-2">
-                <div class="marquee-content" id="marquee-content"></div>
+                <div class="marquee-content" id="marquee-content">
+                    </div>
             </div>
         </div>
 
@@ -60,10 +96,13 @@
                 <div class="flex justify-between w-full md:w-auto gap-4 items-center">
                     <div id="last-update" class="text-xs text-slate-400 font-mono tracking-widest uppercase bg-slate-100 px-2 py-1 rounded" style="font-size: 10px;">Loading Data...</div>
                     <div class="flex gap-2">
-                        <button onclick="openEtfModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                        <button onclick="openNewsHub()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                            <i class="far fa-newspaper"></i> News
+                        </button>
+                        <button onclick="openEtfModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
                             <i class="fas fa-layer-group"></i> ETFs
                         </button>
-                        <button onclick="openHubModal()" class="bg-gray-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
+                        <button onclick="openHubModal()" class="bg-gray-900 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm">
                             <i class="fas fa-chart-pie"></i> Portfolio
                         </button>
                     </div>
@@ -95,12 +134,73 @@
 
         <div class="mb-6">
             <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Daily Top Movers</h3>
-            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2" id="top-movers-container"></div>
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2" id="top-movers-container">
+                </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="stock-grid"></div>
     </div>
 
+    <div id="news-hub-container" class="fixed inset-0 bg-slate-50 z-50 overflow-y-auto">
+        <div class="max-w-6xl mx-auto px-4 md:px-8 pb-12 relative min-h-screen">
+            
+            <header class="flex justify-between items-center py-6 border-b border-slate-200 sticky top-0 bg-slate-50 z-40">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeNewsHub()" class="p-2 bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 rounded-full transition-colors shadow-sm">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-2xl font-black text-slate-900 tracking-tight">Global News Desk</h2>
+                        <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Aggregated iGaming Feeds</p>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <button onclick="toggleBurgerMenu()" class="p-3 bg-white border border-slate-200 text-slate-800 hover:bg-slate-100 rounded-lg shadow-sm font-bold flex items-center gap-2">
+                        <i class="fas fa-bars"></i> <span class="hidden md:inline" id="current-category-label">All Categories</span>
+                    </button>
+                    
+                    <div id="burger-menu" class="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                        <div class="px-4 py-3 bg-slate-900 text-white text-xs font-bold uppercase tracking-widest">Filter by Category</div>
+                        <ul class="text-sm font-bold text-slate-700 divide-y divide-slate-100">
+                            <li><a href="#" onclick="filterNews('All'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">All Categories</a></li>
+                            <li><a href="#" onclick="filterNews('Finance & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Finance & B2B</a></li>
+                            <li><a href="#" onclick="filterNews('Operators'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Operators</a></li>
+                            <li><a href="#" onclick="filterNews('Suppliers & B2B'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Suppliers & B2B</a></li>
+                            <li><a href="#" onclick="filterNews('Sportsbooks'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Sportsbooks</a></li>
+                            <li><a href="#" onclick="filterNews('Casino'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Casino & Slots</a></li>
+                            <li><a href="#" onclick="filterNews('Affiliates'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Affiliates</a></li>
+                            <li class="bg-slate-50 px-4 py-2 text-[10px] uppercase text-slate-400">Sports Desks</li>
+                            <li><a href="#" onclick="filterNews('NFL'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">NFL</a></li>
+                            <li><a href="#" onclick="filterNews('NBA'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">NBA</a></li>
+                            <li><a href="#" onclick="filterNews('MLB'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">MLB</a></li>
+                            <li><a href="#" onclick="filterNews('Soccer'); return false;" class="block px-4 py-3 hover:bg-emerald-50 hover:text-emerald-700 transition">Soccer</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div id="news-loading" class="py-20 text-center">
+                <i class="fas fa-circle-notch fa-spin text-4xl text-emerald-500 mb-4"></i>
+                <p class="font-bold text-slate-400 uppercase tracking-widest text-sm">Parsing Global Feeds...</p>
+            </div>
+
+            <div id="featured-news-container" class="mt-8 hidden"></div>
+
+            <div id="main-news-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
+        </div>
+    </div>
+
+    <div id="article-view-container" class="fixed inset-0 bg-white z-[60] overflow-y-auto border-l shadow-2xl">
+        <div class="max-w-4xl mx-auto px-4 md:px-8 py-8">
+            <button onclick="closeArticleView()" class="mb-6 flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-emerald-600 transition-colors px-3 py-2 bg-slate-50 rounded-lg w-max border border-slate-200">
+                <i class="fas fa-arrow-left"></i> Back to News Desk
+            </button>
+            
+            <div id="article-content-area" class="prose max-w-none">
+                </div>
+        </div>
+    </div>
     <div id="etf-modal" class="fixed inset-0 bg-gray-900 bg-opacity-60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-6xl h-[90vh] shadow-2xl flex flex-col relative">
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
@@ -154,9 +254,18 @@
                         </button>
                     </div>
                     <div class="space-y-8">
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3><p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p></section>
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3><p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p></section>
-                        <section><h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3><p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p></section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2 text-balance">Step 1: Real-Time Intelligence</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Our engine continuously monitors the global news cycle, extracting high-impact headlines specifically related to corporate earnings, regulatory shifts, and expansion news.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 2: Expert Contextualization</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Unlike basic keyword scanners, our AI acts as a <strong>Specialized iGaming Analyst</strong>. It evaluates news through the lens of industry-specific metrics like Hold Percentage, Market Handle, and Gaming Tax Jurisdictions.</p>
+                        </section>
+                        <section>
+                            <h3 class="text-blue-600 font-bold uppercase text-xs tracking-widest mb-2">Step 3: Nuance Detection</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">The system detects subtle financial signals. For example, it recognizes that an "Earnings Beat" coupled with "Lowered Guidance" is actually a bearish signal, providing a more accurate score than traditional sentiment tools.</p>
+                        </section>
                         <section class="bg-slate-50 p-6 rounded-xl border border-slate-100 mb-8">
                             <h3 class="text-slate-900 font-bold text-sm mb-4">The Scoring Spectrum (0-100)</h3>
                             <div class="space-y-3">
@@ -365,9 +474,11 @@
     </div>
 
     <script>
+        // GLOBAL VARIABLES
         let db = [];
         let etfDb = [];
         let regDb = {}; 
+        let newsDb = []; 
         let activeTicker = null;
         let activeEtfTicker = null;
         
@@ -383,6 +494,7 @@
         let brandHandleChart = null;
         let brandRevChart = null;
 
+        // LOCAL STORAGE ARRAYS
         let watchlist = JSON.parse(localStorage.getItem('igaming_watchlist')) || [];
         let portfolio = JSON.parse(localStorage.getItem('igaming_portfolio')) || [];
         let alerts = JSON.parse(localStorage.getItem('igaming_alerts')) || [];
@@ -400,15 +512,24 @@
 
         async function init() {
             try {
+                // Fetch Main Stocks
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 if (!response.ok) throw new Error('Stocks JSON not found');
                 db = await response.json();
                 
+                // Fetch ETFs
                 try {
                     const etfResp = await fetch('etf_data_live.json?v=' + Date.now());
                     if (etfResp.ok) etfDb = await etfResp.json();
                 } catch(e) { console.warn("ETF JSON missing."); }
+
+                // Fetch News Feed
+                try {
+                    const newsResp = await fetch('news_feed_live.json?v=' + Date.now());
+                    if (newsResp.ok) newsDb = await newsResp.json();
+                } catch(e) { console.warn("News JSON missing."); }
                 
+                // Set Global Date
                 if (db && db.length > 0 && db[0].last_updated) {
                     const localTime = new Date(db[0].last_updated).toLocaleString();
                     document.getElementById('last-update').innerText = 'Last Price Sync: ' + localTime;
@@ -416,6 +537,7 @@
                     document.getElementById('last-update').innerText = 'Last Price Sync: ' + new Date().toLocaleTimeString();
                 }
                 
+                // Fetch Regulatory Data
                 try {
                     const regResponse = await fetch('regulatory_data.json?v=' + Date.now());
                     if (regResponse.ok) regDb = await regResponse.json();
@@ -431,6 +553,139 @@
             }
         }
 
+        // --- NEWS HUB LOGIC ---
+        function openNewsHub() {
+            const el = document.getElementById('news-hub-container');
+            el.classList.add('active');
+            filterNews('All');
+        }
+        
+        function closeNewsHub() {
+            const el = document.getElementById('news-hub-container');
+            el.classList.remove('active');
+            document.getElementById('burger-menu').classList.remove('active');
+        }
+        
+        function toggleBurgerMenu() {
+            const menu = document.getElementById('burger-menu');
+            menu.classList.toggle('active');
+        }
+        
+        function filterNews(category) {
+            document.getElementById('burger-menu').classList.remove('active');
+            document.getElementById('current-category-label').innerText = category;
+            
+            const grid = document.getElementById('main-news-grid');
+            const featContainer = document.getElementById('featured-news-container');
+            
+            if(newsDb.length === 0) {
+                document.getElementById('news-loading').innerHTML = '<p class="text-slate-400 font-bold">News feed currently unavailable.</p>';
+                return;
+            }
+            document.getElementById('news-loading').classList.add('hidden');
+            
+            let filtered = category === 'All' ? newsDb : newsDb.filter(n => n.category === category);
+            
+            grid.innerHTML = '';
+            featContainer.innerHTML = '';
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold">No recent articles found for this category.</div>`;
+                grid.classList.remove('hidden');
+                featContainer.classList.add('hidden');
+                return;
+            }
+
+            let featured = filtered[0];
+            let rest = filtered.slice(1);
+
+            if(featured) {
+                const imgStr = featured.image ? `<div class="w-full md:w-1/2 h-64 md:h-auto overflow-hidden"><img src="${featured.image}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>` : '';
+                const logoStr = `https://logo.clearbit.com/${featured.source_domain}`;
+                
+                featContainer.innerHTML = `
+                    <div class="bg-white rounded-2xl border border-emerald-200 shadow-xl overflow-hidden flex flex-col md:flex-row cursor-pointer hover:border-emerald-400 transition-colors" onclick='openArticleView(${JSON.stringify(featured).replace(/'/g, "&#39;")})'>
+                        ${imgStr}
+                        <div class="p-6 md:p-8 flex flex-col justify-center w-full md:w-1/2 relative">
+                            <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-600 px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest border border-emerald-100">Top Story</div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <img src="${logoStr}" class="w-8 h-8 rounded-full border border-slate-200 p-0.5" onerror="this.style.display='none'">
+                                <span class="font-bold text-sm text-emerald-700">${featured.source_name}</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 leading-tight mb-3">${featured.title}</h3>
+                            <p class="text-sm text-slate-500 line-clamp-3 mb-6 leading-relaxed">${featured.summary || 'Click to read full briefing.'}</p>
+                            <div class="flex justify-between items-center text-xs text-slate-400 font-bold uppercase tracking-widest mt-auto">
+                                <span>${featured.author}</span>
+                                <span>${featured.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                featContainer.classList.remove('hidden');
+            }
+
+            if(rest.length > 0) {
+                rest.forEach(item => {
+                    const imgStr = item.image ? `<div class="w-full h-48 overflow-hidden border-b border-slate-100"><img src="${item.image}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'"></div>` : '<div class="w-full h-4 bg-slate-50"></div>';
+                    const logoStr = `https://logo.clearbit.com/${item.source_domain}`;
+                    
+                    grid.innerHTML += `
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col cursor-pointer hover:shadow-md hover:border-blue-300 transition-all" onclick='openArticleView(${JSON.stringify(item).replace(/'/g, "&#39;")})'>
+                            ${imgStr}
+                            <div class="p-5 flex flex-col flex-grow">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <img src="${logoStr}" class="w-6 h-6 rounded-full border border-slate-200 p-0.5" onerror="this.style.display='none'">
+                                        <span class="font-bold text-xs text-slate-700">${item.source_name}</span>
+                                    </div>
+                                    <span class="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">${item.category}</span>
+                                </div>
+                                <h4 class="text-base font-bold text-slate-900 leading-snug mb-2">${item.title}</h4>
+                                <div class="mt-auto pt-4 flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                    <span>${item.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                grid.classList.remove('hidden');
+            }
+        }
+
+        function openArticleView(articleData) {
+            const container = document.getElementById('article-content-area');
+            const logoStr = `https://logo.clearbit.com/${articleData.source_domain}`;
+            const imgStr = articleData.image ? `<div class="w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-sm"><img src="${articleData.image}" class="w-full h-full object-cover" onerror="this.style.display='none'"></div>` : '';
+            
+            container.innerHTML = `
+                <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                    <img src="${logoStr}" class="w-12 h-12 rounded-full border border-slate-200 p-1 shadow-sm" onerror="this.style.display='none'">
+                    <div>
+                        <h4 class="font-black text-slate-900">${articleData.source_name}</h4>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1 flex gap-3">
+                            <span><i class="fas fa-pen-nib mr-1"></i>${articleData.author}</span>
+                            <span><i class="far fa-calendar mr-1"></i>${articleData.date}</span>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-black text-slate-900 leading-tight mb-8">${articleData.title}</h1>
+                ${imgStr}
+                <div class="text-lg text-slate-700 leading-relaxed mb-8 border-l-4 border-emerald-500 pl-4 italic">
+                    ${articleData.summary || 'Summary unavailable.'}
+                </div>
+                <a href="${articleData.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-sm">
+                    Read Full Story on ${articleData.source_name} <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
+            `;
+            
+            document.getElementById('article-view-container').classList.add('active');
+        }
+
+        function closeArticleView() {
+            document.getElementById('article-view-container').classList.remove('active');
+        }
+
+        // --- DASHBOARD LOGIC ---
         function getSpikeValue(stock) {
             if (stock.sentiment_history && stock.sentiment_history.length > 1) {
                 const hist = stock.sentiment_history;
@@ -1460,7 +1715,7 @@
                         let rest = words.slice(50).join(' ');
                         descHtml = `
                             <span id="desc-short">${first50}...</span>
-                            <span id="desc-full" class="hidden">${words.join(' ')}</span>
+                            <span id="desc-full" class="hidden">${first50} ${rest}</span>
                             <button onclick="document.getElementById('desc-short').classList.toggle('hidden'); document.getElementById('desc-full').classList.toggle('hidden'); this.innerText = this.innerText === 'Read More' ? 'Close' : 'Read More';" class="text-blue-500 hover:text-blue-700 font-bold text-xs ml-1 focus:outline-none">Read More</button>
                         `;
                     }
@@ -1815,7 +2070,15 @@
             brandRevChart.render();
         }
 
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeHubModal(); closeEtfModal(); } });
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') { 
+                closeModal(); 
+                closeHubModal(); 
+                closeEtfModal(); 
+                closeNewsHub();
+                closeArticleView();
+            } 
+        });
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
