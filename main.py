@@ -20,7 +20,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES
+# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -107,6 +107,74 @@ TARGET_ETFS = [
         "logo": "https://logo.clearbit.com/hanetf.com"
     }
 ]
+
+# ETF STATIC FALLBACKS (Sourced from Provider Sites for reliability)
+ETF_STATIC_FALLBACKS = {
+    "BETZ": {
+        "expense_ratio": "0.75%",
+        "jurisdictions": ["Global", "US Focus"],
+        "holdings": [
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.5},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 8.2},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.1},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 5.4},
+            {"ticker": "LNW", "name": "Light & Wonder", "weight": 4.8},
+            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 4.5},
+            {"ticker": "PENN", "name": "PENN Entertainment", "weight": 4.2},
+            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 4.0},
+            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 3.9},
+            {"ticker": "MGM", "name": "MGM Resorts", "weight": 3.8}
+        ]
+    },
+    "BJK": {
+        "expense_ratio": "0.65%",
+        "jurisdictions": ["Global", "Macau", "US"],
+        "holdings": [
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.9},
+            {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 7.8},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.2},
+            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 6.5},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 6.1},
+            {"ticker": "MGM", "name": "MGM Resorts", "weight": 5.4},
+            {"ticker": "0027.HK", "name": "Galaxy Entertainment", "weight": 4.8},
+            {"ticker": "LNW", "name": "Light & Wonder", "weight": 4.5},
+            {"ticker": "WYNN", "name": "Wynn Resorts", "weight": 4.2},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.0}
+        ]
+    },
+    "ODDS": {
+        "expense_ratio": "0.60%",
+        "jurisdictions": ["US", "Europe"],
+        "holdings": [
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 9.1},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.5},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.4},
+            {"ticker": "LNW", "name": "Light & Wonder", "weight": 6.8},
+            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 5.2},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.9},
+            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 4.5},
+            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 4.2},
+            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 3.8},
+            {"ticker": "BETS-B.ST", "name": "Betsson AB", "weight": 3.5}
+        ]
+    },
+    "BETZ.L": {
+        "expense_ratio": "0.69%",
+        "jurisdictions": ["Europe", "Global"],
+        "holdings": [
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.2},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 8.0},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.5},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 6.1},
+            {"ticker": "LNW", "name": "Light & Wonder", "weight": 5.2},
+            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 4.8},
+            {"ticker": "PTEC.L", "name": "Playtech PLC", "weight": 4.3},
+            {"ticker": "BETS-B.ST", "name": "Betsson AB", "weight": 4.0},
+            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 3.7},
+            {"ticker": "EVOK.L", "name": "Evoke PLC", "weight": 3.5}
+        ]
+    }
+}
 
 # --- TARGET COMPANIES ---
 TARGET_COMPANIES = [
@@ -1431,23 +1499,6 @@ VERIFIED_DATA = {
             "US"
         ]
     },
-    "FLL": {
-        "rev_label": "REV",
-        "revenue_fy": "$300M (FY '25)",
-        "revenue_interim": "$75.5M (Q4 '25)",
-        "focus": "US Regional Casinos",
-        "map_codes": [
-            "US"
-        ],
-        "eps_actual": -0.34,
-        "eps_forecast": -0.23,
-        "net_income": "-$10M",
-        "ebitda": "$48.1M",
-        "fcf": "$5M",
-        "jurisdictions": [
-            "US"
-        ]
-    },
     "OPAP.AT": {
         "rev_label": "NGR",
         "revenue_fy": "€2.2B (FY '25)",
@@ -2200,6 +2251,9 @@ def get_etf_fundamentals(ticker, fx_rates):
     holdings = []
     
     try:
+        # Check Fallbacks first for rock-solid ER/Holdings
+        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
+        
         ytk = yf.Ticker(ticker)
         
         try:
@@ -2236,8 +2290,11 @@ def get_etf_fundamentals(ticker, fx_rates):
             exp = info.get('expenseRatio')
             if exp: 
                 exp_ratio_str = f"{round(exp * 100, 2)}%"
+            elif fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
         except Exception: 
-            pass
+            if fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
         
         try:
             fd = ytk.funds_data
@@ -2257,12 +2314,19 @@ def get_etf_fundamentals(ticker, fx_rates):
                         })
         except Exception: 
             pass
+
+        # Apply fallback holdings if API failed
+        if not holdings and fallback_data:
+            holdings = fallback_data["holdings"]
+            
+        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
         
         history = fetch_stock_history(ticker, price)
         
-        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, holdings, history
+        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
     except Exception:
-        return "N/A", 0, "N/A", "N/A", "N/A", "N/A", [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+        fb = ETF_STATIC_FALLBACKS.get(ticker)
+        return "N/A", 0, "N/A", fb["expense_ratio"] if fb else "N/A", "N/A", "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
@@ -2396,7 +2460,7 @@ def run_pipeline():
     for e in TARGET_ETFS:
         ticker = e['ticker']
         print(f"  Fetching {ticker}...")
-        p_str, p_raw, d_change, exp, aum, nav, holds, hist = get_etf_fundamentals(ticker, fx_rates)
+        p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = get_etf_fundamentals(ticker, fx_rates)
         etf_db.append({
             "name": e['name'],
             "ticker": ticker,
@@ -2407,6 +2471,7 @@ def run_pipeline():
             "expense_ratio": exp,
             "aum": aum,
             "nav": nav,
+            "jurisdictions": juris,
             "holdings": holds,
             "history": hist,
             "last_updated": run_time_utc
