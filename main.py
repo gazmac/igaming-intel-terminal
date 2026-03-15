@@ -20,7 +20,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks
+# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks ignored by YF
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -108,10 +108,13 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS (Sourced from Provider Sites for reliability)
+# ETF STATIC FALLBACKS (Sourced from Provider Sites for reliability if YF fails)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
+        "price_fallback": 16.85,
         "expense_ratio": "0.75%",
+        "aum_fallback": "$115.4M",
+        "nav_fallback": "$16.82",
         "jurisdictions": ["Global", "US Focus"],
         "holdings": [
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.5},
@@ -127,7 +130,10 @@ ETF_STATIC_FALLBACKS = {
         ]
     },
     "BJK": {
+        "price_fallback": 45.20,
         "expense_ratio": "0.65%",
+        "aum_fallback": "$65.2M",
+        "nav_fallback": "$45.15",
         "jurisdictions": ["Global", "Macau", "US"],
         "holdings": [
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.9},
@@ -143,7 +149,10 @@ ETF_STATIC_FALLBACKS = {
         ]
     },
     "ODDS": {
+        "price_fallback": 28.50,
         "expense_ratio": "0.60%",
+        "aum_fallback": "$12.8M",
+        "nav_fallback": "$28.45",
         "jurisdictions": ["US", "Europe"],
         "holdings": [
             {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 9.1},
@@ -159,7 +168,10 @@ ETF_STATIC_FALLBACKS = {
         ]
     },
     "BETZ.L": {
+        "price_fallback": 5.85,
         "expense_ratio": "0.69%",
+        "aum_fallback": "£25.6M",
+        "nav_fallback": "£5.82",
         "jurisdictions": ["Europe", "Global"],
         "holdings": [
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.2},
@@ -176,7 +188,7 @@ ETF_STATIC_FALLBACKS = {
     }
 }
 
-# --- TARGET COMPANIES ---
+# --- UNCOMPRESSED TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
         "name": "Flutter Entertainment", 
@@ -579,7 +591,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- OTC MAP ---
+# --- UNCOMPRESSED OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -604,7 +616,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- VERIFIED DATA DICTIONARY ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -624,6 +636,10 @@ VERIFIED_DATA = {
         "net_income": "$162M",
         "ebitda": "$2.36B",
         "fcf": "$941M",
+        "ebitda_margin_qtr": "16.8%",
+        "ebitda_margin_h2": "16.5%",
+        "ebitda_margin_fy": "16.8%",
+        "ebitda_margin_yoy": "+120 bps",
         "jurisdictions": [
             "US", 
             "UK", 
@@ -647,6 +663,10 @@ VERIFIED_DATA = {
         "net_income": "-$507M",
         "ebitda": "$181M",
         "fcf": "$270M",
+        "ebitda_margin_qtr": "13.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "3.8%",
+        "ebitda_margin_yoy": "+450 bps",
         "jurisdictions": [
             "US", 
             "Ontario", 
@@ -670,6 +690,10 @@ VERIFIED_DATA = {
         "net_income": "-£681M",
         "ebitda": "£1.16B",
         "fcf": "£151M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "21.8%",
+        "ebitda_margin_fy": "21.8%",
+        "ebitda_margin_yoy": "-50 bps",
         "jurisdictions": [
             "UK", 
             "Italy", 
@@ -696,6 +720,10 @@ VERIFIED_DATA = {
         "net_income": "€1.24B",
         "ebitda": "€1.56B",
         "fcf": "€250M",
+        "ebitda_margin_qtr": "70.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "70.5%",
+        "ebitda_margin_yoy": "+100 bps",
         "jurisdictions": [
             "Europe", 
             "North America", 
@@ -718,6 +746,10 @@ VERIFIED_DATA = {
         "net_income": "$157M",
         "ebitda": "$528M",
         "fcf": "$300M",
+        "ebitda_margin_qtr": "12.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Macau", 
@@ -740,6 +772,10 @@ VERIFIED_DATA = {
         "net_income": "-$72M",
         "ebitda": "$900M",
         "fcf": "$150M",
+        "ebitda_margin_qtr": "32.1%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Canada", 
@@ -761,6 +797,10 @@ VERIFIED_DATA = {
         "net_income": "$15M",
         "ebitda": "$350M",
         "fcf": "$80M",
+        "ebitda_margin_qtr": "21.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Canada"
@@ -780,6 +820,10 @@ VERIFIED_DATA = {
         "net_income": "$450M",
         "ebitda": "$1.2B",
         "fcf": "$600M",
+        "ebitda_margin_qtr": "41.4%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Macau", 
             "Singapore"
@@ -800,6 +844,10 @@ VERIFIED_DATA = {
         "net_income": "$327.3M",
         "ebitda": "$2.22B",
         "fcf": "$800M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Macau", 
@@ -826,6 +874,10 @@ VERIFIED_DATA = {
         "net_income": "-£191M",
         "ebitda": "£312M",
         "fcf": "£20M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "17.8%",
+        "ebitda_margin_fy": "17.8%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "UK", 
             "Italy", 
@@ -849,6 +901,10 @@ VERIFIED_DATA = {
         "net_income": "$35M",
         "ebitda": "$55M",
         "fcf": "$40M",
+        "ebitda_margin_qtr": "19.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "18.2%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Global B2B", 
             "US", 
@@ -873,6 +929,10 @@ VERIFIED_DATA = {
         "net_income": "€45M",
         "ebitda": "€75M",
         "fcf": "€50M",
+        "ebitda_margin_qtr": "28.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "28.0%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Nordics", 
             "LatAm", 
@@ -896,6 +956,10 @@ VERIFIED_DATA = {
         "net_income": "£165M",
         "ebitda": "£400.4M",
         "fcf": "£85M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "26.3%",
+        "ebitda_margin_fy": "26.3%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "UK", 
             "Italy", 
@@ -915,6 +979,10 @@ VERIFIED_DATA = {
         "net_income": "$90M",
         "ebitda": "$300M",
         "fcf": "$120M",
+        "ebitda_margin_qtr": "40.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ]
@@ -935,6 +1003,10 @@ VERIFIED_DATA = {
         "net_income": "$45M",
         "ebitda": "$280M",
         "fcf": "$100M",
+        "ebitda_margin_qtr": "35.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "34.5%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Australia", 
@@ -957,6 +1029,10 @@ VERIFIED_DATA = {
         "net_income": "A$600M",
         "ebitda": "A$1.1B",
         "fcf": "A$750M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "34.4%",
+        "ebitda_margin_fy": "34.4%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Australia", 
@@ -980,6 +1056,10 @@ VERIFIED_DATA = {
         "net_income": "$35M",
         "ebitda": "$75M",
         "fcf": "$45M",
+        "ebitda_margin_qtr": "20.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Canada", 
             "Africa", 
@@ -1003,6 +1083,10 @@ VERIFIED_DATA = {
         "net_income": "$15M",
         "ebitda": "$40M",
         "fcf": "$20M",
+        "ebitda_margin_qtr": "16.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Colombia", 
@@ -1026,6 +1110,10 @@ VERIFIED_DATA = {
         "net_income": "-$1M",
         "ebitda": "$4M",
         "fcf": "$1M",
+        "ebitda_margin_qtr": "14.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Europe", 
@@ -1050,6 +1138,10 @@ VERIFIED_DATA = {
         "net_income": "€5M",
         "ebitda": "€15M",
         "fcf": "€8M",
+        "ebitda_margin_qtr": "33.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Global B2B", 
             "US", 
@@ -1070,6 +1162,10 @@ VERIFIED_DATA = {
         "net_income": "HK$5.2B",
         "ebitda": "HK$8.1B",
         "fcf": "HK$3.5B",
+        "ebitda_margin_qtr": "25.7%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Macau"
         ]
@@ -1089,6 +1185,10 @@ VERIFIED_DATA = {
         "net_income": "$185M",
         "ebitda": "$1.43B",
         "fcf": "$250M",
+        "ebitda_margin_qtr": "27.7%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Macau", 
             "Philippines", 
@@ -1109,6 +1209,10 @@ VERIFIED_DATA = {
         "net_income": "-HK$429M",
         "ebitda": "HK$3.2B",
         "fcf": "-HK$200M",
+        "ebitda_margin_qtr": "11.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Macau"
         ]
@@ -1127,6 +1231,10 @@ VERIFIED_DATA = {
         "net_income": "$320M",
         "ebitda": "$900M",
         "fcf": "$450M",
+        "ebitda_margin_qtr": "29.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Macau"
         ]
@@ -1144,6 +1252,10 @@ VERIFIED_DATA = {
         "net_income": "S$390.3M",
         "ebitda": "S$815.8M",
         "fcf": "S$450M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "33.3%",
+        "ebitda_margin_fy": "33.3%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Singapore"
         ]
@@ -1162,6 +1274,10 @@ VERIFIED_DATA = {
         "net_income": "€425M",
         "ebitda": "€670M",
         "fcf": "€380M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "23.7%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "France", 
             "Ireland"
@@ -1184,6 +1300,10 @@ VERIFIED_DATA = {
         "net_income": "€180M",
         "ebitda": "€580M",
         "fcf": "€250M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "33.1%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Italy"
         ]
@@ -1202,6 +1322,10 @@ VERIFIED_DATA = {
         "net_income": "£25M",
         "ebitda": "£120M",
         "fcf": "£45M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "16.3%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "UK", 
             "Spain"
@@ -1223,6 +1347,10 @@ VERIFIED_DATA = {
         "net_income": "€50M",
         "ebitda": "€110M",
         "fcf": "€65M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "31.4%",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Europe", 
             "US"
@@ -1243,6 +1371,10 @@ VERIFIED_DATA = {
         "net_income": "-€16.5M",
         "ebitda": "€10.6M",
         "fcf": "€4M",
+        "ebitda_margin_qtr": "67.9%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Europe"
@@ -1262,6 +1394,10 @@ VERIFIED_DATA = {
         "net_income": "-$180M",
         "ebitda": "$510M",
         "fcf": "-$50M",
+        "ebitda_margin_qtr": "21.2%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "UK"
@@ -1280,6 +1416,10 @@ VERIFIED_DATA = {
         "net_income": "$520M",
         "ebitda": "$1.3B",
         "fcf": "$600M",
+        "ebitda_margin_qtr": "34.2%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ]
@@ -1297,6 +1437,10 @@ VERIFIED_DATA = {
         "net_income": "$250M",
         "ebitda": "$750M",
         "fcf": "$320M",
+        "ebitda_margin_qtr": "41.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Nevada (US)"
         ]
@@ -1314,6 +1458,10 @@ VERIFIED_DATA = {
         "net_income": "$80M",
         "ebitda": "$260M",
         "fcf": "$110M",
+        "ebitda_margin_qtr": "23.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ]
@@ -1331,6 +1479,10 @@ VERIFIED_DATA = {
         "net_income": "$90M",
         "ebitda": "$170M",
         "fcf": "$80M",
+        "ebitda_margin_qtr": "32.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ]
@@ -1350,6 +1502,10 @@ VERIFIED_DATA = {
         "net_income": "-$35M",
         "ebitda": "$110M",
         "fcf": "$25M",
+        "ebitda_margin_qtr": "20.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Canada", 
@@ -1371,6 +1527,10 @@ VERIFIED_DATA = {
         "net_income": "$15M",
         "ebitda": "$55M",
         "fcf": "$20M",
+        "ebitda_margin_qtr": "13.4%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Global B2B"
         ]
@@ -1390,6 +1550,10 @@ VERIFIED_DATA = {
         "net_income": "$220M",
         "ebitda": "$1.2B",
         "fcf": "$600M",
+        "ebitda_margin_qtr": "45.2%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Italy", 
@@ -1415,6 +1579,10 @@ VERIFIED_DATA = {
         "net_income": "-$4.5M",
         "ebitda": "$100M",
         "fcf": "$35M",
+        "ebitda_margin_qtr": "31.2%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "UK", 
             "North America"
@@ -1433,6 +1601,10 @@ VERIFIED_DATA = {
         "net_income": "-A$1.2B",
         "ebitda": "A$280M",
         "fcf": "-A$150M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "15.5%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Australia"
         ]
@@ -1453,6 +1625,10 @@ VERIFIED_DATA = {
         "net_income": "RM 600M",
         "ebitda": "RM 3.1B",
         "fcf": "RM 1.2B",
+        "ebitda_margin_qtr": "30.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Malaysia", 
             "UK", 
@@ -1477,6 +1653,10 @@ VERIFIED_DATA = {
         "net_income": "$1.8B",
         "ebitda": "$2.9B",
         "fcf": "$2.1B",
+        "ebitda_margin_qtr": "80.5%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Canada"
@@ -1495,6 +1675,31 @@ VERIFIED_DATA = {
         "net_income": "$650M",
         "ebitda": "$1.2B",
         "fcf": "$800M",
+        "ebitda_margin_qtr": "85.7%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
+        "jurisdictions": [
+            "US"
+        ]
+    },
+    "FLL": {
+        "rev_label": "REV",
+        "revenue_fy": "$300M (FY '25)",
+        "revenue_interim": "$75.5M (Q4 '25)",
+        "focus": "US Regional Casinos",
+        "map_codes": [
+            "US"
+        ],
+        "eps_actual": -0.34,
+        "eps_forecast": -0.23,
+        "net_income": "-$10M",
+        "ebitda": "$48.1M",
+        "fcf": "$5M",
+        "ebitda_margin_qtr": "16.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ]
@@ -1513,6 +1718,10 @@ VERIFIED_DATA = {
         "net_income": "€420M",
         "ebitda": "€750M",
         "fcf": "€500M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "34.0%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Greece", 
             "Cyprus"
@@ -1532,6 +1741,10 @@ VERIFIED_DATA = {
         "net_income": "€30M",
         "ebitda": "€45M",
         "fcf": "€35M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "32.1%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Germany"
         ]
@@ -1551,6 +1764,10 @@ VERIFIED_DATA = {
         "net_income": "£5M",
         "ebitda": "£10M",
         "fcf": "£7M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "35.7%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "UK"
@@ -1570,6 +1787,10 @@ VERIFIED_DATA = {
         "net_income": "€25M",
         "ebitda": "€85M",
         "fcf": "€40M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "19.1%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "France", 
             "Switzerland"
@@ -1589,6 +1810,10 @@ VERIFIED_DATA = {
         "net_income": "-€5M",
         "ebitda": "€2M",
         "fcf": "-€1M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "3.3%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "DACH Region"
         ]
@@ -1608,6 +1833,10 @@ VERIFIED_DATA = {
         "net_income": "-$26.9M",
         "ebitda": "$15.5M",
         "fcf": "$36.3M",
+        "ebitda_margin_qtr": "33.5%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "UK"
@@ -1628,6 +1857,10 @@ VERIFIED_DATA = {
         "net_income": "$175M",
         "ebitda": "$220M",
         "fcf": "N/A",
+        "ebitda_margin_qtr": "7.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Ontario", 
@@ -1647,6 +1880,10 @@ VERIFIED_DATA = {
         "net_income": "$51.3M",
         "ebitda": "$210.1M",
         "fcf": "$150.9M",
+        "ebitda_margin_qtr": "15.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US"
         ],
@@ -1672,6 +1909,10 @@ VERIFIED_DATA = {
         "net_income": "€1M",
         "ebitda": "€15M",
         "fcf": "€5M",
+        "ebitda_margin_qtr": "9.9%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Spain", 
             "LatAm"
@@ -1690,6 +1931,10 @@ VERIFIED_DATA = {
         "net_income": "A$280M",
         "ebitda": "A$700M",
         "fcf": "A$500M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "20.0%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Australia"
         ]
@@ -1707,6 +1952,10 @@ VERIFIED_DATA = {
         "net_income": "₩328B",
         "ebitda": "₩400B",
         "fcf": "₩250B",
+        "ebitda_margin_qtr": "27.4%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "South Korea"
         ]
@@ -1724,6 +1973,10 @@ VERIFIED_DATA = {
         "net_income": "¥10B",
         "ebitda": "¥18B",
         "fcf": "¥12B",
+        "ebitda_margin_qtr": "15.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Japan"
         ]
@@ -1742,6 +1995,10 @@ VERIFIED_DATA = {
         "net_income": "NZ$45M",
         "ebitda": "NZ$280M",
         "fcf": "NZ$150M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "30.2%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "New Zealand", 
             "Australia"
@@ -1761,6 +2018,10 @@ VERIFIED_DATA = {
         "net_income": "¥25B",
         "ebitda": "¥40B",
         "fcf": "¥20B",
+        "ebitda_margin_qtr": "27.0%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Japan", 
             "Philippines"
@@ -1781,6 +2042,10 @@ VERIFIED_DATA = {
         "net_income": "A$45M",
         "ebitda": "A$65M",
         "fcf": "A$50M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "43.9%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Australia", 
             "UK", 
@@ -1802,6 +2067,10 @@ VERIFIED_DATA = {
         "net_income": "A$15M",
         "ebitda": "A$40M",
         "fcf": "A$20M",
+        "ebitda_margin_qtr": "N/A",
+        "ebitda_margin_h2": "14.1%",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Australia", 
             "US", 
@@ -1822,6 +2091,10 @@ VERIFIED_DATA = {
         "net_income": "₹120 Cr",
         "ebitda": "₹180 Cr",
         "fcf": "₹100 Cr",
+        "ebitda_margin_qtr": "25.3%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "India", 
             "Nepal"
@@ -1842,6 +2115,10 @@ VERIFIED_DATA = {
         "net_income": "-$1.4M",
         "ebitda": "$15.7M",
         "fcf": "$12.6M",
+        "ebitda_margin_qtr": "8.8%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "US", 
             "Balkans", 
@@ -1861,6 +2138,10 @@ VERIFIED_DATA = {
         "net_income": "€18M",
         "ebitda": "€45M",
         "fcf": "€25M",
+        "ebitda_margin_qtr": "17.6%",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Portugal"
         ]
@@ -1879,6 +2160,10 @@ VERIFIED_DATA = {
         "net_income": "-$25M",
         "ebitda": "-$10M",
         "fcf": "-$5M",
+        "ebitda_margin_qtr": "Neg",
+        "ebitda_margin_h2": "N/A",
+        "ebitda_margin_fy": "N/A",
+        "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
             "Malta", 
             "US"
@@ -2000,7 +2285,7 @@ def get_stock_fundamentals(ticker, fx_rates):
                 mc_usd_val = mc_raw * fx_rate
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
-                    mc_display = f"{mc_native} ({mc_usd_str})"
+                    mc_display = f"{mc_native} <span class='text-gray-400 text-[10px]'>({mc_usd_str})</span>"
                 else: 
                     mc_display = mc_native
         except Exception: 
@@ -2206,10 +2491,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. **CRITICAL:** If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by more than 10 points (a spike or drop), you MUST explicitly explain the rationale for this momentum shift in one of the bullet points.
+        1. "summary": A list of 3 string bullet points summarizing the news. 
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'.
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. CRITICAL: If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by 20 points or more (a spike or drop), you MUST add a dedicated section inside the reading room starting with "<strong>Sentiment Spike Rationale:</strong>" explicitly explaining the reason for this sudden shift.
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2245,26 +2530,31 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
 
 def get_etf_fundamentals(ticker, fx_rates):
     price, nav_val, aum_val = 0, 0, 0
-    price_str, mc_display, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A", "N/A"
+    price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
     daily_change_pct = "N/A"
     sym, currency = "$", "USD"
     holdings = []
     
     try:
-        # Check Fallbacks first for rock-solid ER/Holdings
         fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
-        
         ytk = yf.Ticker(ticker)
         
         try:
-            price = ytk.fast_info['lastPrice']
-            currency = ytk.fast_info['currency']
-            prev_close = ytk.fast_info.get('previousClose')
+            price = ytk.fast_info.get('lastPrice')
+            if price is None or price == 0:
+                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
+                
+            currency = ytk.fast_info.get('currency') or ytk.info.get('currency', 'USD')
+            prev_close = ytk.fast_info.get('previousClose') or ytk.info.get('previousClose')
+            
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
         except Exception: 
             pass
-        
+            
+        if (price is None or price == 0) and fallback_data:
+            price = fallback_data.get('price_fallback', 0)
+            
         if currency == "GBp": 
             sym = "GBp "
         elif currency == "GBP": 
@@ -2282,10 +2572,14 @@ def get_etf_fundamentals(ticker, fx_rates):
             nav = info.get('navPrice')
             if nav: 
                 nav_str = f"{sym}{round(nav, 2)}"
+            elif fallback_data and fallback_data.get('nav_fallback'):
+                nav_str = fallback_data['nav_fallback']
             
             aum = info.get('totalAssets') or info.get('netAssets')
             if aum: 
                 aum_str = format_money(aum, sym)
+            elif fallback_data and fallback_data.get('aum_fallback'):
+                aum_str = fallback_data['aum_fallback']
             
             exp = info.get('expenseRatio')
             if exp: 
@@ -2295,6 +2589,8 @@ def get_etf_fundamentals(ticker, fx_rates):
         except Exception: 
             if fallback_data:
                 exp_ratio_str = fallback_data["expense_ratio"]
+                aum_str = fallback_data.get("aum_fallback", "N/A")
+                nav_str = fallback_data.get("nav_fallback", "N/A")
         
         try:
             fd = ytk.funds_data
@@ -2315,18 +2611,18 @@ def get_etf_fundamentals(ticker, fx_rates):
         except Exception: 
             pass
 
-        # Apply fallback holdings if API failed
         if not holdings and fallback_data:
             holdings = fallback_data["holdings"]
             
         jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
-        
         history = fetch_stock_history(ticker, price)
         
         return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
+        
     except Exception:
         fb = ETF_STATIC_FALLBACKS.get(ticker)
-        return "N/A", 0, "N/A", fb["expense_ratio"] if fb else "N/A", "N/A", "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
+        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
@@ -2347,6 +2643,10 @@ def run_pipeline():
             "net_income": "N/A", 
             "ebitda": "N/A", 
             "fcf": "N/A", 
+            "ebitda_margin_qtr": "N/A",
+            "ebitda_margin_h2": "N/A",
+            "ebitda_margin_fy": "N/A",
+            "ebitda_margin_yoy": "N/A",
             "jurisdictions": [],
             "focus": "Diversified Gaming", 
             "map_codes": [], 
