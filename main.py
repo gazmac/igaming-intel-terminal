@@ -103,7 +103,7 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS (Sourced directly from Provider Sites)
+# ETF STATIC FALLBACKS
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 16.85,
@@ -2218,9 +2218,16 @@ def get_stock_fundamentals(ticker, fx_rates):
             pass
         
         try:
-            price = ytk.fast_info['lastPrice']
-            currency = ytk.fast_info['currency']
-            prev_close = ytk.fast_info.get('previousClose')
+            fast = ytk.fast_info
+            if hasattr(fast, 'get'):
+                price = fast.get('lastPrice', 0)
+                currency = fast.get('currency', 'USD')
+                prev_close = fast.get('previousClose')
+            else:
+                price = fast['lastPrice']
+                currency = fast['currency']
+                prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
+                
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
             if daily_change_pct == "N/A" and price > 0:
@@ -2264,7 +2271,8 @@ def get_stock_fundamentals(ticker, fx_rates):
             price_str = f"{sym}{round(price, 2)}"
             
         try:
-            mc_raw = ytk.fast_info['marketCap']
+            fast = ytk.fast_info
+            mc_raw = fast.get('marketCap') if hasattr(fast, 'get') else fast['marketCap']
             if mc_raw and mc_raw > 0:
                 mc_native = format_money(mc_raw, sym)
                 fx_rate = fx_rates.get(currency, 1.0)
@@ -2477,10 +2485,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (e.g., a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'.
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2513,6 +2521,110 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             "reading_room": f"<p>Latency issue.</p>", 
             "quotes": []
         }
+
+def get_etf_fundamentals(ticker, fx_rates):
+    price, nav_val, aum_val = 0, 0, 0
+    price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
+    daily_change_pct = "N/A"
+    sym, currency = "$", "USD"
+    holdings = []
+    
+    try:
+        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
+        
+        ytk = yf.Ticker(ticker)
+        
+        try:
+            fast = ytk.fast_info
+            if hasattr(fast, 'get'):
+                price = fast.get('lastPrice')
+                currency = fast.get('currency', 'USD')
+                prev_close = fast.get('previousClose')
+            else:
+                price = fast['lastPrice']
+                currency = fast['currency']
+                prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
+                
+            if price is None or price == 0:
+                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
+                
+            if price and prev_close and prev_close > 0:
+                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+        except Exception: 
+            pass
+            
+        if (price is None or price == 0) and fallback_data:
+            price = fallback_data.get('price_fallback', 0)
+            
+        if currency == "GBp": 
+            sym = "GBp "
+        elif currency == "GBP": 
+            sym = "£"
+        elif currency == "EUR": 
+            sym = "€"
+        else: 
+            sym = "$"
+        
+        if price > 0: 
+            price_str = f"{sym}{round(price, 2)}"
+        
+        info = ytk.info
+        try:
+            nav = info.get('navPrice')
+            if nav: 
+                nav_str = f"{sym}{round(nav, 2)}"
+            elif fallback_data and fallback_data.get('nav_fallback'):
+                nav_str = fallback_data['nav_fallback']
+            
+            aum = info.get('totalAssets') or info.get('netAssets')
+            if aum: 
+                aum_str = format_money(aum, sym)
+            elif fallback_data and fallback_data.get('aum_fallback'):
+                aum_str = fallback_data['aum_fallback']
+            
+            exp = info.get('expenseRatio')
+            if exp: 
+                exp_ratio_str = f"{round(exp * 100, 2)}%"
+            elif fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
+        except Exception: 
+            if fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
+                aum_str = fallback_data.get("aum_fallback", "N/A")
+                nav_str = fallback_data.get("nav_fallback", "N/A")
+        
+        try:
+            fd = ytk.funds_data
+            if fd and hasattr(fd, 'top_holdings'):
+                th = fd.top_holdings
+                if th is not None and not th.empty:
+                    for idx, row in th.head(10).iterrows():
+                        w = row.get('Weight', 0)
+                        if pd.isna(w): 
+                            w = 0
+                        else: 
+                            w = float(w) * 100
+                        holdings.append({
+                            "ticker": str(idx),
+                            "name": str(row.get('Name', idx)),
+                            "weight": round(w, 2)
+                        })
+        except Exception: 
+            pass
+
+        if not holdings and fallback_data:
+            holdings = fallback_data["holdings"]
+            
+        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
+        history = fetch_stock_history(ticker, price)
+        
+        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
+        
+    except Exception as err:
+        print(f"  ⚠️ Error fetching ETF {ticker}: {err}")
+        fb = ETF_STATIC_FALLBACKS.get(ticker)
+        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
+        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
@@ -2650,7 +2762,12 @@ def run_pipeline():
     for e in TARGET_ETFS:
         ticker = e['ticker']
         print(f"  Fetching {ticker}...")
-        p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = get_etf_fundamentals(ticker, fx_rates)
+        try:
+            p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = get_etf_fundamentals(ticker, fx_rates)
+        except Exception as ex:
+            print(f"  ⚠️ Error calling fundamentals for ETF {ticker}: {ex}")
+            p_str, p_raw, d_change, exp, aum, nav, juris, holds, hist = "N/A", 0, "N/A", "N/A", "N/A", "N/A", ["Global"], [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+            
         etf_db.append({
             "name": e['name'],
             "ticker": ticker,
