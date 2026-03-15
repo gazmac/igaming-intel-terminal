@@ -31,6 +31,8 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .hub-tab { border-bottom: 2px solid transparent; cursor: pointer; padding-bottom: 8px; font-weight: bold; color: #64748b; }
         .hub-tab-active { border-bottom: 2px solid #3b82f6; color: #1e293b; }
+
+        /* TRENDING MARQUEE ANIMATION */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; width: 100%; display: flex; align-items: center; }
         .marquee-content { display: inline-flex; animation: marquee 30s linear infinite; }
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
@@ -754,7 +756,7 @@
                                     <span class="font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${catBadge.color}" style="font-size: 9px;">${catBadge.name}</span>
                                     <span class="text-gray-400 font-medium bg-gray-50 px-1.5 py-0.5 rounded border border-gray-100" style="font-size: 10px;">${s.base_country}</span>
                                 </div>
-                                <p class="text-slate-500 pr-2 mt-1.5" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
+                                <p class="text-slate-500 pr-2 mt-1.5 font-medium" style="font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="${s.focus || ''}">${s.focus || 'Diversified Gaming'}</p>
                             </div>
                             
                             <div class="flex justify-between items-center mb-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-100">
@@ -778,8 +780,8 @@
                                 <div class="flex items-center gap-1 z-10 relative">
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                      ${sentimentSpikeHtml}
-                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border border-slate-300 rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
-                                         <i class="fas fa-satellite-dish text-xs ${isRadarOn ? 'animate-pulse' : ''}"></i>
+                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white border-slate-300 hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
+                                         <i class="fas fa-satellite-dish text-sm ${isRadarOn ? 'animate-pulse' : ''}"></i>
                                      </button>
                                 </div>
                             </div>
@@ -790,7 +792,6 @@
             }).join('');
         }
 
-        // --- ETF HUB LOGIC ---
         function openEtfModal() {
             document.getElementById('etf-modal').classList.remove('hidden');
             if (etfDb.length === 0) {
@@ -839,11 +840,13 @@
             
             let holdingsHtml = '';
             let categoryWeights = {};
+            let totalWeight = 0;
             
             if (etf.holdings && etf.holdings.length > 0) {
                 holdingsHtml = etf.holdings.map((h, i) => {
                     const cat = getIndustryCategory(h.ticker).name;
                     categoryWeights[cat] = (categoryWeights[cat] || 0) + h.weight;
+                    totalWeight += h.weight;
                     
                     return `
                     <tr class="border-b border-slate-50 hover:bg-slate-50">
@@ -853,6 +856,10 @@
                     </tr>
                     `;
                 }).join('');
+                
+                if (totalWeight < 100) {
+                    categoryWeights['Remaining Constituents'] = 100 - totalWeight;
+                }
             } else {
                 holdingsHtml = `<tr><td colspan="3" class="text-center py-8 text-slate-400">Holdings data unavailable</td></tr>`;
             }
@@ -913,7 +920,7 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i>Sector Allocation (Top 10)</h4>
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="fas fa-chart-pie text-indigo-500 mr-2"></i>Sector Allocation</h4>
                         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center justify-center h-full min-h-[300px]">
                             <div id="etf-pie-chart" class="w-full"></div>
                         </div>
@@ -932,7 +939,7 @@
                         series: pieSeries,
                         labels: pieLabels,
                         chart: { type: 'donut', height: 320, fontFamily: 'inherit' },
-                        colors: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#64748b'],
+                        colors: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#e2e8f0', '#64748b'],
                         plotOptions: { donut: { size: '65%' } },
                         dataLabels: { enabled: false },
                         legend: { position: 'bottom', fontSize: '11px', fontWeight: 'bold' },
@@ -975,7 +982,6 @@
             etfMainChart.render();
         }
 
-        // --- PORTFOLIO HUB LOGIC ---
         function openHubModal() {
             document.getElementById('hub-modal').classList.remove('hidden');
             switchHubTab('portfolio');
@@ -1288,7 +1294,6 @@
             switchHubTab('alerts');
         }
 
-        // --- MAIN MODAL LOGIC ---
         function toggleMethodology() {
             const el = document.getElementById('methodology-overlay');
             if (el) {
@@ -1430,6 +1435,11 @@
                     modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
                 }
 
+                let syncTimeString = "Unknown";
+                if (s.last_updated) {
+                    syncTimeString = new Date(s.last_updated).toLocaleString();
+                }
+
                 safeSetText('modal-title', s.company || 'Unknown Company');
                 safeSetHTML('modal-ticker', `
                     <span class="text-gray-800 font-bold font-mono text-sm">${ticker} | <span class="text-gray-500 font-medium">${s.base_country || 'Unknown'} Based</span></span>
@@ -1440,12 +1450,24 @@
                     </div>
                 `);
                 
-                // Display FULL description in Modal
                 const descContainer = document.getElementById('modal-description');
                 if (descContainer) {
+                    let descHtml = s.description || 'Company description unavailable.';
+                    let words = descHtml.split(' ');
+                    
+                    if (words.length > 50) {
+                        let first50 = words.slice(0, 50).join(' ');
+                        let rest = words.slice(50).join(' ');
+                        descHtml = `
+                            <span id="desc-short">${first50}...</span>
+                            <span id="desc-full" class="hidden">${words.join(' ')}</span>
+                            <button onclick="document.getElementById('desc-short').classList.toggle('hidden'); document.getElementById('desc-full').classList.toggle('hidden'); this.innerText = this.innerText === 'Read More' ? 'Close' : 'Read More';" class="text-blue-500 hover:text-blue-700 font-bold text-xs ml-1 focus:outline-none">Read More</button>
+                        `;
+                    }
+                    
                     descContainer.innerHTML = `
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Company Overview</h4>
-                        <p class="text-sm text-slate-700 leading-relaxed">${s.description || 'Company description unavailable.'}</p>
+                        <p class="text-sm text-slate-700 leading-relaxed">${descHtml}</p>
                     `;
                     descContainer.classList.remove('hidden');
                 }
@@ -1488,6 +1510,11 @@
                     <div class="min-w-[100px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">${revLabel} (FY)</div><div class="font-mono text-sm font-bold text-blue-600">${s.actuals?.revenue_fy || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA</div><div class="font-mono text-sm font-bold">${s.actuals?.ebitda || 'N/A'}</div></div>
                     <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">FCF</div><div class="font-mono text-sm font-bold">${s.actuals?.fcf || 'N/A'}</div></div>
+                    <div class="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (Qtr)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_qtr || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (H2)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_h2 || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA Mgn (FY)</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_fy || 'N/A'}</div></div>
+                    <div class="min-w-[80px]"><div class="font-bold text-gray-400 uppercase tracking-widest" style="font-size: 10px;">EBITDA YoY</div><div class="font-mono text-sm font-bold text-gray-800">${s.actuals?.ebitda_margin_yoy || 'N/A'}</div></div>
                 `);
 
                 let newsHtml = '<li class="text-gray-500 italic">No news available.</li>';
