@@ -2182,7 +2182,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
                 "quotes": []
             }
             
-    except Exception e:
+    except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
         return {
             "summary": [f"News Error: Gathering delayed."], 
