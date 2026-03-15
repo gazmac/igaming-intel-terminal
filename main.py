@@ -20,7 +20,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks ignored by YF
+# DEFAULT CALENDAR OVERRIDES
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -100,22 +100,20 @@ TARGET_ETFS = [
         "name": "Pacer BlueStar Digital Entertainment ETF",
         "ticker": "ODDS",
         "logo": "https://logo.clearbit.com/paceretfs.com"
-    },
-    {
-        "name": "HANetf Sports Betting & iGaming UCITS ETF",
-        "ticker": "BETZ.L",
-        "logo": "https://logo.clearbit.com/hanetf.com"
     }
 ]
 
-# ETF STATIC FALLBACKS (Sourced from Provider Sites for reliability if YF fails)
+# ETF STATIC FALLBACKS (Sourced directly from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 16.85,
         "expense_ratio": "0.75%",
         "aum_fallback": "$115.4M",
         "nav_fallback": "$16.82",
-        "jurisdictions": ["Global", "US Focus"],
+        "jurisdictions": [
+            "Global", 
+            "US Focus"
+        ],
         "holdings": [
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.5},
             {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 8.2},
@@ -134,7 +132,11 @@ ETF_STATIC_FALLBACKS = {
         "expense_ratio": "0.65%",
         "aum_fallback": "$65.2M",
         "nav_fallback": "$45.15",
-        "jurisdictions": ["Global", "Macau", "US"],
+        "jurisdictions": [
+            "Global", 
+            "Macau", 
+            "US"
+        ],
         "holdings": [
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.9},
             {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 7.8},
@@ -153,7 +155,10 @@ ETF_STATIC_FALLBACKS = {
         "expense_ratio": "0.60%",
         "aum_fallback": "$12.8M",
         "nav_fallback": "$28.45",
-        "jurisdictions": ["US", "Europe"],
+        "jurisdictions": [
+            "US", 
+            "Europe"
+        ],
         "holdings": [
             {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 9.1},
             {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 8.5},
@@ -165,25 +170,6 @@ ETF_STATIC_FALLBACKS = {
             {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 4.2},
             {"ticker": "CHDN", "name": "Churchill Downs", "weight": 3.8},
             {"ticker": "BETS-B.ST", "name": "Betsson AB", "weight": 3.5}
-        ]
-    },
-    "BETZ.L": {
-        "price_fallback": 5.85,
-        "expense_ratio": "0.69%",
-        "aum_fallback": "£25.6M",
-        "nav_fallback": "£5.82",
-        "jurisdictions": ["Europe", "Global"],
-        "holdings": [
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 9.2},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 8.0},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.5},
-            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 6.1},
-            {"ticker": "LNW", "name": "Light & Wonder", "weight": 5.2},
-            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 4.8},
-            {"ticker": "PTEC.L", "name": "Playtech PLC", "weight": 4.3},
-            {"ticker": "BETS-B.ST", "name": "Betsson AB", "weight": 4.0},
-            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 3.7},
-            {"ticker": "EVOK.L", "name": "Evoke PLC", "weight": 3.5}
         ]
     }
 }
@@ -616,7 +602,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2285,7 +2271,7 @@ def get_stock_fundamentals(ticker, fx_rates):
                 mc_usd_val = mc_raw * fx_rate
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
-                    mc_display = f"{mc_native} <span class='text-gray-400 text-[10px]'>({mc_usd_str})</span>"
+                    mc_display = f"{mc_native} <span class='text-gray-400 text-[10px] font-bold'>({mc_usd_str})</span>"
                 else: 
                     mc_display = mc_native
         except Exception: 
@@ -2491,10 +2477,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. 
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (e.g., a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. CRITICAL: If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by 20 points or more (a spike or drop), you MUST add a dedicated section inside the reading room starting with "<strong>Sentiment Spike Rationale:</strong>" explicitly explaining the reason for this sudden shift.
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2527,102 +2513,6 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             "reading_room": f"<p>Latency issue.</p>", 
             "quotes": []
         }
-
-def get_etf_fundamentals(ticker, fx_rates):
-    price, nav_val, aum_val = 0, 0, 0
-    price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
-    daily_change_pct = "N/A"
-    sym, currency = "$", "USD"
-    holdings = []
-    
-    try:
-        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
-        ytk = yf.Ticker(ticker)
-        
-        try:
-            price = ytk.fast_info.get('lastPrice')
-            if price is None or price == 0:
-                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
-                
-            currency = ytk.fast_info.get('currency') or ytk.info.get('currency', 'USD')
-            prev_close = ytk.fast_info.get('previousClose') or ytk.info.get('previousClose')
-            
-            if price and prev_close and prev_close > 0:
-                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-        except Exception: 
-            pass
-            
-        if (price is None or price == 0) and fallback_data:
-            price = fallback_data.get('price_fallback', 0)
-            
-        if currency == "GBp": 
-            sym = "GBp "
-        elif currency == "GBP": 
-            sym = "£"
-        elif currency == "EUR": 
-            sym = "€"
-        else: 
-            sym = "$"
-        
-        if price > 0: 
-            price_str = f"{sym}{round(price, 2)}"
-        
-        info = ytk.info
-        try:
-            nav = info.get('navPrice')
-            if nav: 
-                nav_str = f"{sym}{round(nav, 2)}"
-            elif fallback_data and fallback_data.get('nav_fallback'):
-                nav_str = fallback_data['nav_fallback']
-            
-            aum = info.get('totalAssets') or info.get('netAssets')
-            if aum: 
-                aum_str = format_money(aum, sym)
-            elif fallback_data and fallback_data.get('aum_fallback'):
-                aum_str = fallback_data['aum_fallback']
-            
-            exp = info.get('expenseRatio')
-            if exp: 
-                exp_ratio_str = f"{round(exp * 100, 2)}%"
-            elif fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-        except Exception: 
-            if fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-                aum_str = fallback_data.get("aum_fallback", "N/A")
-                nav_str = fallback_data.get("nav_fallback", "N/A")
-        
-        try:
-            fd = ytk.funds_data
-            if fd and hasattr(fd, 'top_holdings'):
-                th = fd.top_holdings
-                if th is not None and not th.empty:
-                    for idx, row in th.head(10).iterrows():
-                        w = row.get('Weight', 0)
-                        if pd.isna(w): 
-                            w = 0
-                        else: 
-                            w = float(w) * 100
-                        holdings.append({
-                            "ticker": str(idx),
-                            "name": str(row.get('Name', idx)),
-                            "weight": round(w, 2)
-                        })
-        except Exception: 
-            pass
-
-        if not holdings and fallback_data:
-            holdings = fallback_data["holdings"]
-            
-        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
-        history = fetch_stock_history(ticker, price)
-        
-        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
-        
-    except Exception:
-        fb = ETF_STATIC_FALLBACKS.get(ticker)
-        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
-        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
