@@ -21,7 +21,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES
+# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -114,7 +114,7 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS
+# ETF STATIC FALLBACKS (Provider Site Data)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 18.11,
@@ -708,7 +708,7 @@ TARGET_COMPANIES = [
     }
 ]
 
-# --- UNCOMPRESSED OTC MAP ---
+# --- OTC MAP ---
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
@@ -733,7 +733,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
+# --- VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2564,98 +2564,6 @@ def fetch_stock_history(ticker, native_price_raw):
     
     return history
 
-def classify_news_article(title, summary, source_domain):
-    text = f"{title} {summary}".lower()
-    
-    if "gamblinginsider.com" in source_domain:
-        if any(k in text for k in ['finance', 'stock', 'share', 'earnings', 'revenue', 'q1', 'q2', 'q3', 'q4', 'fy', 'merger', 'acquisition', 'm&a', 'b2b']):
-            return "Finance & B2B"
-        elif any(k in text for k in ['supplier', 'studio', 'b2b tech', 'provider', 'aggregator', 'platform']):
-            return "Suppliers & B2B"
-        elif any(k in text for k in ['operator', 'ceo', 'appoint', 'hire', 'launch']):
-            return "Operators"
-        elif any(k in text for k in ['sportsbook', 'betting', 'handle', 'parlay']):
-            return "Sportsbooks"
-        elif any(k in text for k in ['casino', 'slots', 'table games', 'dealer', 'jackpot']):
-            return "Casino & Slots"
-        elif any(k in text for k in ['affiliate', 'acquisition', 'marketing', 'seo']):
-            return "Affiliates"
-        elif any(k in text for k in ['nfl', 'football']):
-            return "NFL"
-        elif any(k in text for k in ['nba', 'basketball']):
-            return "NBA"
-        elif any(k in text for k in ['mlb', 'baseball']):
-            return "MLB"
-        elif any(k in text for k in ['nhl', 'hockey']):
-            return "NHL"
-        elif any(k in text for k in ['soccer', 'premier league', 'fifa']):
-            return "Soccer"
-        else:
-            return "General News"
-    return "General News"
-
-def fetch_global_news_feed():
-    print(f"\n📰 Fetching Global News Feed from {len(NEWS_SOURCES)} sources...")
-    all_articles = []
-    
-    for source in NEWS_SOURCES:
-        try:
-            feed = feedparser.parse(source['url'])
-            for entry in feed.entries[:30]:
-                title = entry.title if hasattr(entry, 'title') else 'No Title'
-                link = entry.link if hasattr(entry, 'link') else '#'
-                author = getattr(entry, 'author', source['name'])
-                
-                pub_date = ""
-                if hasattr(entry, 'published'):
-                    try:
-                        parsed_date = email.utils.parsedate_to_datetime(entry.published)
-                        pub_date = parsed_date.strftime('%b %d, %Y')
-                    except Exception:
-                        pub_date = entry.published
-                
-                image_url = ""
-                if hasattr(entry, 'media_content') and len(entry.media_content) > 0:
-                    image_url = entry.media_content[0].get('url', '')
-                elif hasattr(entry, 'links'):
-                    for l in entry.links:
-                        if 'image' in l.get('type', ''):
-                            image_url = l.get('href', '')
-                            break
-                
-                summary = ""
-                if hasattr(entry, 'summary'):
-                    summary = re.sub('<[^<]+>', '', entry.summary)
-                    
-                if not image_url and hasattr(entry, 'description'):
-                    img_match = re.search(r'<img[^>]+src="([^">]+)"', entry.description)
-                    if img_match:
-                        image_url = img_match.group(1)
-                        
-                category = classify_news_article(title, summary, source['domain'])
-                
-                all_articles.append({
-                    "title": title,
-                    "link": link,
-                    "author": author,
-                    "date": pub_date,
-                    "summary": summary,
-                    "image": image_url,
-                    "source_name": source['name'],
-                    "source_domain": source['domain'],
-                    "priority": source['priority'],
-                    "category": category,
-                    "timestamp": time.time()
-                })
-        except Exception as e:
-            print(f"  ⚠️ Error fetching from {source['name']}: {e}")
-            
-    all_articles.sort(key=lambda x: (x['priority'], -x['timestamp']))
-    
-    with open('news_feed_live.json', 'w') as f:
-        json.dump(all_articles, f, indent=4)
-    print(f"✅ Generated News Feed with {len(all_articles)} articles.")
-
 def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
@@ -2711,10 +2619,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. 
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
-        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. CRITICAL INSTRUCTION: If the new sentiment score you calculate differs from the Previous Sentiment Score ({prev_sent}) by 20 points or more (a spike or drop), you MUST include a distinct, separate section at the very top of your reading_room HTML output that looks EXACTLY like this: <div class='mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl shadow-sm'><h4 class='text-purple-700 font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2'><i class='fas fa-satellite-dish animate-pulse'></i> Sentiment Spike Rationale</h4><p class='text-sm text-purple-900 font-medium leading-relaxed'>[Insert your detailed explanation of the news driving the sudden 20+ point sentiment shift here]</p></div>
+        4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
@@ -2753,104 +2661,87 @@ def get_etf_fundamentals(ticker, fx_rates):
     price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
     daily_change_pct = "N/A"
     sym, currency = "$", "USD"
-    holdings = []
     
+    fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
+    
+    # 1. FETCH LIVE PRICE & CHART HISTORY FIRST
+    history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     try:
-        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
-        
         ytk = yf.Ticker(ticker)
+        fast = ytk.fast_info
         
-        try:
-            fast = ytk.fast_info
-            if hasattr(fast, 'get'):
-                price = fast.get('lastPrice')
-                currency = fast.get('currency', 'USD')
-                prev_close = fast.get('previousClose')
-            else:
-                price = fast['lastPrice']
-                currency = fast['currency']
-                prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
-                
-            if price is None or price == 0:
-                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
-                
-            if price and prev_close and prev_close > 0:
-                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-        except Exception: 
-            pass
+        if hasattr(fast, 'get'):
+            price = fast.get('lastPrice')
+            currency = fast.get('currency', 'USD')
+            prev_close = fast.get('previousClose')
+        else:
+            price = fast['lastPrice']
+            currency = fast['currency']
+            prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
             
-        if (price is None or price == 0) and fallback_data:
-            price = fallback_data.get('price_fallback', 0)
+        if price is None or price == 0:
+            price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
             
-        if currency == "GBp": 
-            sym = "GBp "
-        elif currency == "GBP": 
-            sym = "£"
-        elif currency == "EUR": 
-            sym = "€"
-        else: 
-            sym = "$"
-        
-        if price > 0: 
-            price_str = f"{sym}{round(price, 2)}"
-        
-        info = ytk.info
-        try:
-            nav = info.get('navPrice')
-            if nav: 
-                nav_str = f"{sym}{round(nav, 2)}"
-            elif fallback_data and fallback_data.get('nav_fallback'):
-                nav_str = fallback_data['nav_fallback']
+        if price and prev_close and prev_close > 0:
+            daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
             
-            aum = info.get('totalAssets') or info.get('netAssets')
-            if aum: 
-                aum_str = format_money(aum, sym)
-            elif fallback_data and fallback_data.get('aum_fallback'):
-                aum_str = fallback_data['aum_fallback']
+        if price and price > 0:
+            history = fetch_stock_history(ticker, price)
             
-            exp = info.get('expenseRatio')
-            if exp: 
-                exp_ratio_str = f"{round(exp * 100, 2)}%"
-            elif fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-        except Exception: 
-            if fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-                aum_str = fallback_data.get("aum_fallback", "N/A")
-                nav_str = fallback_data.get("nav_fallback", "N/A")
-        
-        try:
-            fd = ytk.funds_data
-            if fd and hasattr(fd, 'top_holdings'):
-                th = fd.top_holdings
-                if th is not None and not th.empty:
-                    for idx, row in th.head(10).iterrows():
-                        w = row.get('Weight', 0)
-                        if pd.isna(w): 
-                            w = 0
-                        else: 
-                            w = float(w) * 100
-                        holdings.append({
-                            "ticker": str(idx),
-                            "name": str(row.get('Name', idx)),
-                            "weight": round(w, 2)
-                        })
-        except Exception: 
-            pass
+    except Exception as e:
+        print(f"  ⚠️ YF Price/History warning for {ticker}: {e}")
 
-        if not holdings and fallback_data:
-            holdings = fallback_data["holdings"]
-            
-        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
-        history = fetch_stock_history(ticker, price)
+    # Safely apply price fallback if YF failed
+    if (price is None or price == 0) and fallback_data:
+        price = fallback_data.get('price_fallback', 0)
         
-        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
+    if currency == "GBp": 
+        sym = "GBp "
+    elif currency == "GBP": 
+        sym = "£"
+    elif currency == "EUR": 
+        sym = "€"
+    else: 
+        sym = "$"
         
-    except Exception as err:
-        print(f"  ⚠️ Error fetching ETF {ticker}: {err}")
-        fb = ETF_STATIC_FALLBACKS.get(ticker)
-        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
-        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+    if price > 0: 
+        price_str = f"{sym}{round(price, 2)}"
+        
+    # 2. NAV, AUM, EXPENSE RATIO (YF first, then Fallback)
+    try:
+        info = ytk.info
+        nav = info.get('navPrice')
+        if nav: 
+            nav_str = f"{sym}{round(nav, 2)}"
+        elif fallback_data and fallback_data.get('nav_fallback'):
+            nav_str = fallback_data['nav_fallback']
+        
+        aum = info.get('totalAssets') or info.get('netAssets')
+        if aum: 
+            aum_str = format_money(aum, sym)
+        elif fallback_data and fallback_data.get('aum_fallback'):
+            aum_str = fallback_data['aum_fallback']
+        
+        exp = info.get('expenseRatio')
+        if exp: 
+            exp_ratio_str = f"{round(exp * 100, 2)}%"
+        elif fallback_data:
+            exp_ratio_str = fallback_data["expense_ratio"]
+    except Exception:
+        if fallback_data:
+            exp_ratio_str = fallback_data.get("expense_ratio", "N/A")
+            aum_str = fallback_data.get("aum_fallback", "N/A")
+            nav_str = fallback_data.get("nav_fallback", "N/A")
+
+    # 3. HOLDINGS & JURISDICTIONS (STRICTLY PROVIDER FALLBACKS TO ENSURE WEIGHTS)
+    if fallback_data:
+        holdings = fallback_data.get("holdings", [])
+        jurisdictions = fallback_data.get("jurisdictions", ["Global"])
+    else:
+        holdings = []
+        jurisdictions = ["Global"]
+
+    return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
 
 def run_pipeline():
     master_db = []
@@ -3018,8 +2909,6 @@ def run_pipeline():
             "history": hist,
             "last_updated": run_time_utc
         })
-        
-    fetch_global_news_feed()
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
