@@ -614,7 +614,7 @@ TARGET_COMPANIES = [
         "ticker": "FLL", 
         "domain": "fullhouseresorts.com", 
         "base_country": "USA", 
-        "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/full-house-resorts-inc-logo.png"
     },
     {
         "name": "Accel Entertainment", 
@@ -705,6 +705,13 @@ TARGET_COMPANIES = [
         "domain": "esportsentertainmentgroup.com", 
         "base_country": "Malta", 
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"
+    },
+    {
+        "name": "Tabcorp Holdings", 
+        "ticker": "TAH.AX", 
+        "domain": "tabcorp.com.au", 
+        "base_country": "Australia", 
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tabcorp.png"
     }
 ]
 
