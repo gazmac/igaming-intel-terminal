@@ -100,17 +100,17 @@ TARGET_ETFS = [
     {
         "name": "Roundhill Sports Betting & iGaming ETF",
         "ticker": "BETZ",
-        "logo": "https://logo.clearbit.com/roundhillinvestments.com"
+        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/roundhill.png"
     },
     {
         "name": "VanEck Gaming ETF",
         "ticker": "BJK",
-        "logo": "https://logo.clearbit.com/vaneck.com"
+        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/vaneck.png"
     },
     {
         "name": "Pacer BlueStar Digital Entertainment ETF",
         "ticker": "ODDS",
-        "logo": "https://logo.clearbit.com/paceretfs.com"
+        "logo": "hhttps://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/pacer_bluestar.png"
     }
 ]
 
