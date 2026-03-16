@@ -579,6 +579,8 @@
         let currentSort = 'earnings';
         let currentSpeech = null;
         let currentVertical = 'Casino'; 
+        let brandHandleChart = null;
+        let brandRevChart = null;
 
         // LOCAL STORAGE ARRAYS
         let watchlist = JSON.parse(localStorage.getItem('igaming_watchlist')) || [];
@@ -1132,7 +1134,7 @@
                                 <div class="flex items-center gap-1 z-10 relative">
                                      <span class="font-bold text-gray-400" style="font-size: 10px;">${s.sentiment || 50}%</span>
                                      ${sentimentSpikeHtml}
-                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-300' : 'text-slate-400 bg-white border-slate-300 hover:text-purple-500 hover:bg-purple-50 hover:border-purple-200'}">
+                                     <button onclick="toggleRadar('${s.ticker}', event)" class="ml-1 p-1.5 border-2 rounded-md shadow-sm transition-colors ${isRadarOn ? 'text-purple-600 bg-purple-100 border-purple-400' : 'text-slate-400 bg-slate-50 border-slate-300 hover:text-purple-500 hover:bg-purple-50'}">
                                          <i class="fas fa-satellite-dish text-sm ${isRadarOn ? 'animate-pulse' : ''}"></i>
                                      </button>
                                 </div>
@@ -1201,11 +1203,11 @@
                     totalWeight += h.weight;
                     
                     return `
-                    <tr class="border-b border-slate-50 hover:bg-slate-50">
-                        <td class="p-3 font-bold text-slate-800">${h.ticker}</td>
-                        <td class="p-3 text-xs text-slate-600">${h.name}</td>
-                        <td class="p-3 text-sm font-bold text-right text-indigo-600">${h.weight.toFixed(2)}%</td>
-                    </tr>
+                        <tr class="border-b border-slate-50 hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-800">${h.ticker}</td>
+                            <td class="p-3 text-xs text-slate-600">${h.name}</td>
+                            <td class="p-3 text-sm font-bold text-right text-indigo-600">${h.weight.toFixed(2)}%</td>
+                        </tr>
                     `;
                 }).join('');
                 
@@ -1216,7 +1218,9 @@
                 holdingsHtml = `<tr><td colspan="3" class="text-center py-8 text-slate-400">Holdings data unavailable</td></tr>`;
             }
 
-            const jurisdictionsHtml = etf.jurisdictions ? etf.jurisdictions.map(j => `<span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${j}</span>`).join(' ') : '';
+            const jurisdictionsHtml = etf.jurisdictions ? etf.jurisdictions.map(j => `
+                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${j}</span>
+            `).join(' ') : '';
 
             container.innerHTML = `
                 <div class="flex justify-between items-start mb-6">
@@ -1299,7 +1303,7 @@
                     etfPieChart = new ApexCharts(document.querySelector("#etf-pie-chart"), {
                         series: pieSeries,
                         labels: pieLabels,
-                        chart: { type: 'donut', height: 320, fontFamily: 'inherit' },
+                        chart: { type: 'donut', height: 320, fontFamily: 'inherit', animations: { enabled: false } },
                         colors: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#e2e8f0', '#64748b'],
                         plotOptions: { donut: { size: '65%' } },
                         dataLabels: { enabled: false },
@@ -1332,7 +1336,7 @@
 
             etfMainChart = new ApexCharts(document.querySelector("#etf-main-chart"), {
                 series: [{ name: 'Price', data: seriesData }],
-                chart: { type: 'area', height: 250, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit' },
+                chart: { type: 'area', height: 250, toolbar: { show: false }, zoom: { enabled: false }, fontFamily: 'inherit', animations: { enabled: false } },
                 dataLabels: { enabled: false },
                 stroke: { curve: 'smooth', width: 2.5 },
                 xaxis: { type: 'datetime', labels: { style: { colors: '#9ca3af', fontSize: '11px' } } },
@@ -1412,7 +1416,7 @@
                 if(s && s.sentiment_history && s.sentiment_history.length > 1) {
                     let chart = new ApexCharts(document.querySelector(`#wl-chart-${i}`), {
                         series: [{name: 'Sentiment', data: s.sentiment_history.map(x => ({ x: new Date(x.date).getTime(), y: x.score }))}],
-                        chart: {type: 'area', height: 60, sparkline: {enabled: true}},
+                        chart: {type: 'area', height: 60, sparkline: {enabled: true}, animations: { enabled: false }},
                         colors: ['#9333ea'], 
                         fill: { type: 'gradient', gradient: { opacityFrom: 0.3, opacityTo: 0 } },
                         stroke: { curve: 'smooth', width: 2 },
@@ -1534,7 +1538,7 @@
                 if(s && s.sentiment_history && s.sentiment_history.length > 1) {
                     let chart = new ApexCharts(document.querySelector(`#port-chart-${i}`), {
                         series: [{name: 'Sentiment', data: s.sentiment_history.map(x => ({ x: new Date(x.date).getTime(), y: x.score }))}],
-                        chart: {type: 'area', height: 65, sparkline: {enabled: true}},
+                        chart: {type: 'area', height: 65, sparkline: {enabled: true}, animations: { enabled: false }},
                         colors: ['#a855f7'], 
                         fill: { type: 'gradient', gradient: { opacityFrom: 0.4, opacityTo: 0 } },
                         stroke: { curve: 'smooth', width: 2.5 },
@@ -1845,7 +1849,11 @@
 
                 let chartNoteHtml = '';
                 if (ticker === 'BRSL') {
-                    chartNoteHtml = `<div class="text-gray-500 bg-gray-50 p-2 rounded mt-2 border border-gray-200" style="font-size: 10px;"><strong>Data Note:</strong> Historical chart data prior to July 2, 2025 reflects IGT (International Game Technology). Following the sale of its Gaming & Digital division to Apollo, the remaining public lottery business rebranded to Brightstar Lottery (BRSL).</div>`;
+                    chartNoteHtml = `
+                        <div class="text-gray-500 bg-gray-50 p-2 rounded mt-2 border border-gray-200" style="font-size: 10px;">
+                            <strong>Data Note:</strong> Historical chart data prior to July 2, 2025 reflects IGT (International Game Technology). Following the sale of its Gaming & Digital division to Apollo, the remaining public lottery business rebranded to Brightstar Lottery (BRSL).
+                        </div>
+                    `;
                 }
                 const noteContainer = document.getElementById('chart-note-container');
                 if (noteContainer) noteContainer.innerHTML = chartNoteHtml;
@@ -1994,7 +2002,7 @@
                     if(sentHistChart) sentHistChart.destroy();
                     sentHistChart = new ApexCharts(document.querySelector("#sentiment-history-chart"), {
                         series: [{ name: 'Sentiment', data: s.sentiment_history.map(x => ({ x: new Date(x.date).getTime(), y: x.score })) }],
-                        chart: { type: 'area', height: 40, sparkline: { enabled: true } },
+                        chart: { type: 'area', height: 40, sparkline: { enabled: true }, animations: { enabled: false } },
                         stroke: { curve: 'smooth', width: 2 },
                         fill: { opacity: 0.3 },
                         colors: ['#3b82f6'],
@@ -2157,7 +2165,7 @@
             });
             
             handleEmptyState(false);
-            renderBrandData(); 
+            setTimeout(renderBrandData, 50); 
         }
 
         function handleEmptyState(isEmpty) {
@@ -2184,25 +2192,40 @@
             tbody.innerHTML = data.brands.map(b => `
                 <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
                     <td class="p-4 font-black text-slate-800 whitespace-nowrap">${b.brand}</td>
-                    <td class="p-4 text-slate-600 font-mono text-right">$${b.handle_12m.toLocaleString()}M</td>
-                    <td class="p-4 text-slate-600 font-mono text-right">$${b.revenue_12m.toLocaleString()}M</td>
-                    <td class="p-4 text-slate-600 font-mono text-right">$${b.taxable_12m.toLocaleString()}M</td>
-                    <td class="p-4 text-purple-700 font-black font-mono text-right bg-purple-50/30">$${b.net_rev_12m.toLocaleString()}M</td>
+                    <td class="p-4 text-slate-600 font-mono text-right">$${(b.handle_12m || 0).toLocaleString()}M</td>
+                    <td class="p-4 text-slate-600 font-mono text-right">$${(b.revenue_12m || 0).toLocaleString()}M</td>
+                    <td class="p-4 text-slate-600 font-mono text-right">$${(b.taxable_12m || 0).toLocaleString()}M</td>
+                    <td class="p-4 text-purple-700 font-black font-mono text-right bg-purple-50/30">$${(b.net_rev_12m || 0).toLocaleString()}M</td>
                 </tr>
             `).join('');
 
-            const trend = data.trend; 
-            const labels = trend.map(t => t.month);
-            const handles = trend.map(t => t.handle);
-            const taxables = trend.map(t => t.revenue); 
-            const nets = trend.map(t => t.net_rev);
+            const trend = data.trend || [];
+            const labels = trend.map(t => t.month || '');
+            const handles = trend.map(t => t.handle || 0);
+            const taxables = trend.map(t => t.revenue || 0);
+            const nets = trend.map(t => t.net_rev || 0);
 
-            if (brandHandleChart) brandHandleChart.destroy();
-            if (brandRevChart) brandRevChart.destroy();
+            if (brandHandleChart) {
+                brandHandleChart.destroy();
+                brandHandleChart = null;
+            }
+            if (brandRevChart) {
+                brandRevChart.destroy();
+                brandRevChart = null;
+            }
+            
+            if (trend.length === 0) {
+                document.querySelector("#chart-brand-handle").innerHTML = '<p class="text-sm text-slate-400 text-center mt-8">Trend data unavailable.</p>';
+                document.querySelector("#chart-brand-revenue").innerHTML = '<p class="text-sm text-slate-400 text-center mt-8">Trend data unavailable.</p>';
+                return;
+            }
+            
+            document.querySelector("#chart-brand-handle").innerHTML = '';
+            document.querySelector("#chart-brand-revenue").innerHTML = '';
 
             brandHandleChart = new ApexCharts(document.querySelector("#chart-brand-handle"), {
                 series: [{ name: 'Total Handle ($M)', data: handles }],
-                chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'inherit', zoom: { enabled: false } },
+                chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'inherit', zoom: { enabled: false }, animations: { enabled: false } },
                 colors: ['#8b5cf6'],
                 dataLabels: { enabled: false },
                 stroke: { curve: 'smooth', width: 3 },
@@ -2217,7 +2240,7 @@
                     { name: 'Gross Rev', data: taxables },
                     { name: 'Net Rev (Post-Tax)', data: nets }
                 ],
-                chart: { type: 'bar', height: 220, toolbar: { show: false }, fontFamily: 'inherit' },
+                chart: { type: 'bar', height: 220, toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: false } },
                 colors: ['#cbd5e1', '#8b5cf6'],
                 dataLabels: { enabled: false },
                 plotOptions: { bar: { borderRadius: 2, columnWidth: '60%' } },
