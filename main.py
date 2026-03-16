@@ -100,7 +100,7 @@ TARGET_ETFS = [
     {
         "name": "Roundhill Sports Betting & iGaming ETF",
         "ticker": "BETZ",
-        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/roundhill.png"
+        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/roundhill.jpg"
     },
     {
         "name": "VanEck Gaming ETF",
@@ -110,7 +110,7 @@ TARGET_ETFS = [
     {
         "name": "Pacer BlueStar Digital Entertainment ETF",
         "ticker": "ODDS",
-        "logo": "hhttps://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/pacer_bluestar.png"
+        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/pacer_bluestar.png"
     }
 ]
 
@@ -711,7 +711,7 @@ TARGET_COMPANIES = [
         "ticker": "TAH.AX", 
         "domain": "tabcorp.com.au", 
         "base_country": "Australia", 
-        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tabcorp.png"
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tabcorp_holdings.png"
     }
 ]
 
@@ -737,7 +737,8 @@ OTC_MAP = {
     "PARP.PA": "PARPF",
     "TLC.AX": "TLRCF",
     "SKC.NZ": "SKYCG",
-    "JIN.AX": "JUMBF"
+    "JIN.AX": "JUMBF",
+    "TAH.AX": "TBACF"
 }
 
 # --- VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
