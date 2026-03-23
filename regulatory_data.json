@@ -1588,8 +1588,8 @@
         "summary": {
             "casino_gross": 353.34,
             "casino_net": 258.59,
-            "sports_gross": 236.48,
-            "sports_net": 161.81
+            "sports_gross": 235.66,
+            "sports_net": 161.07
         },
         "Casino": {
             "Michigan": {
@@ -3247,13 +3247,6 @@
             "West Virginia": {
                 "brands": [
                     {
-                        "brand": "Unspecified WV",
-                        "handle_12m": 12.4,
-                        "revenue_12m": 0.82,
-                        "taxable_12m": 0.82,
-                        "net_rev_12m": 0.74
-                    },
-                    {
                         "brand": "Caesars",
                         "handle_12m": 3.18,
                         "revenue_12m": 0.09,
@@ -3264,51 +3257,51 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 2.51,
-                        "revenue": 0.14,
-                        "net_rev": 0.12
+                        "handle": 0.48,
+                        "revenue": -0.0,
+                        "net_rev": -0.0
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 1.9,
-                        "revenue": 0.11,
-                        "net_rev": 0.1
+                        "handle": 0.29,
+                        "revenue": 0.03,
+                        "net_rev": 0.03
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 2.87,
-                        "revenue": 0.16,
-                        "net_rev": 0.14
+                        "handle": 0.74,
+                        "revenue": 0.08,
+                        "net_rev": 0.07
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 2.39,
-                        "revenue": 0.03,
-                        "net_rev": 0.02
+                        "handle": 0.36,
+                        "revenue": -0.08,
+                        "net_rev": -0.07
                     },
                     {
                         "month": "May 2025",
-                        "handle": 2.4,
-                        "revenue": 0.2,
-                        "net_rev": 0.18
+                        "handle": 0.81,
+                        "revenue": 0.08,
+                        "net_rev": 0.07
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 1.5,
-                        "revenue": 0.04,
-                        "net_rev": 0.04
+                        "handle": 0.33,
+                        "revenue": -0.04,
+                        "net_rev": -0.04
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 1.87,
-                        "revenue": 0.22,
-                        "net_rev": 0.2
+                        "handle": 0.16,
+                        "revenue": 0.02,
+                        "net_rev": 0.02
                     },
                     {
                         "month": "Aug 2025",
-                        "handle": 0.14,
-                        "revenue": 0.01,
-                        "net_rev": 0.01
+                        "handle": 0.01,
+                        "revenue": -0.0,
+                        "net_rev": -0.0
                     },
                     {
                         "month": "Sep 2025",
@@ -3425,10 +3418,10 @@
     },
     "DKNG": {
         "summary": {
-            "casino_gross": 1003.5,
-            "casino_net": 759.73,
-            "sports_gross": 2256.18,
-            "sports_net": 1485.16
+            "casino_gross": 994.48,
+            "casino_net": 752.1,
+            "sports_gross": 1871.4,
+            "sports_net": 1207.68
         },
         "Casino": {
             "Connecticut": {
@@ -3623,57 +3616,50 @@
                         "revenue_12m": 65.44,
                         "taxable_12m": 65.32,
                         "net_rev_12m": 55.14
-                    },
-                    {
-                        "brand": "Jackpocket",
-                        "handle_12m": 0.0,
-                        "revenue_12m": 9.01,
-                        "taxable_12m": 9.05,
-                        "net_rev_12m": 7.64
                     }
                 ],
                 "trend": [
                     {
                         "month": "Jan 2025",
                         "handle": 0.0,
-                        "revenue": 55.89,
-                        "net_rev": 47.45
+                        "revenue": 54.61,
+                        "net_rev": 46.37
                     },
                     {
                         "month": "Feb 2025",
                         "handle": 0.0,
-                        "revenue": 51.12,
-                        "net_rev": 43.38
+                        "revenue": 50.11,
+                        "net_rev": 42.52
                     },
                     {
                         "month": "Mar 2025",
                         "handle": 0.0,
-                        "revenue": 62.98,
-                        "net_rev": 53.42
+                        "revenue": 61.52,
+                        "net_rev": 52.17
                     },
                     {
                         "month": "Apr 2025",
                         "handle": 0.0,
-                        "revenue": 58.27,
-                        "net_rev": 49.54
+                        "revenue": 56.87,
+                        "net_rev": 48.34
                     },
                     {
                         "month": "May 2025",
                         "handle": 0.0,
-                        "revenue": 60.3,
-                        "net_rev": 51.33
+                        "revenue": 58.76,
+                        "net_rev": 50.02
                     },
                     {
                         "month": "Jun 2025",
                         "handle": 0.0,
-                        "revenue": 52.13,
-                        "net_rev": 44.51
+                        "revenue": 50.89,
+                        "net_rev": 43.45
                     },
                     {
                         "month": "Jul 2025",
                         "handle": 0.0,
-                        "revenue": 57.67,
-                        "net_rev": 46.29
+                        "revenue": 56.59,
+                        "net_rev": 45.42
                     },
                     {
                         "month": "Aug 2025",
@@ -4108,91 +4094,6 @@
                         "handle": 0.0,
                         "revenue": 0.0,
                         "net_rev": 0.0
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            },
-            "Indiana": {
-                "brands": [
-                    {
-                        "brand": "DraftKings",
-                        "handle_12m": 1081.48,
-                        "revenue_12m": 108.17,
-                        "taxable_12m": 108.16,
-                        "net_rev_12m": 97.89
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 184.89,
-                        "revenue": 20.12,
-                        "net_rev": 18.21
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 150.49,
-                        "revenue": 16.87,
-                        "net_rev": 15.27
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 195.69,
-                        "revenue": 13.37,
-                        "net_rev": 12.1
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 156.51,
-                        "revenue": 14.31,
-                        "net_rev": 12.95
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 158.56,
-                        "revenue": 14.12,
-                        "net_rev": 13.48
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 130.86,
-                        "revenue": 16.8,
-                        "net_rev": 14.51
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 104.48,
-                        "revenue": 12.57,
-                        "net_rev": 11.37
                     },
                     {
                         "month": "Aug 2025",
@@ -5090,91 +4991,6 @@
                     }
                 ]
             },
-            "Ohio": {
-                "brands": [
-                    {
-                        "brand": "DraftKings",
-                        "handle_12m": 1687.26,
-                        "revenue_12m": 161.56,
-                        "taxable_12m": 161.56,
-                        "net_rev_12m": 129.25
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 320.4,
-                        "revenue": 21.99,
-                        "net_rev": 17.59
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 247.15,
-                        "revenue": 23.42,
-                        "net_rev": 18.73
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 315.83,
-                        "revenue": 22.71,
-                        "net_rev": 18.17
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 246.86,
-                        "revenue": 23.09,
-                        "net_rev": 18.47
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 223.85,
-                        "revenue": 27.63,
-                        "net_rev": 22.11
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 172.92,
-                        "revenue": 23.07,
-                        "net_rev": 18.46
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 160.25,
-                        "revenue": 19.66,
-                        "net_rev": 15.73
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            },
             "Oregon": {
                 "brands": [
                     {
@@ -5227,91 +5043,6 @@
                         "handle": 57.27,
                         "revenue": 6.7,
                         "net_rev": 3.35
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            },
-            "Pennsylvania": {
-                "brands": [
-                    {
-                        "brand": "DraftKings",
-                        "handle_12m": 1197.61,
-                        "revenue_12m": 115.05,
-                        "taxable_12m": 76.28,
-                        "net_rev_12m": 50.34
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 218.74,
-                        "revenue": 23.33,
-                        "net_rev": 9.85
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 178.88,
-                        "revenue": 8.65,
-                        "net_rev": -0.12
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 206.97,
-                        "revenue": 13.8,
-                        "net_rev": 5.75
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 184.04,
-                        "revenue": 17.61,
-                        "net_rev": 7.98
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 167.3,
-                        "revenue": 19.36,
-                        "net_rev": 10.23
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 130.51,
-                        "revenue": 17.76,
-                        "net_rev": 9.27
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 111.18,
-                        "revenue": 14.53,
-                        "net_rev": 7.39
                     },
                     {
                         "month": "Aug 2025",
@@ -5431,102 +5162,6 @@
                 ]
             }
         }
-    },
-    "EVOK.L": {
-        "summary": {
-            "casino_gross": 18.4,
-            "casino_net": 8.97,
-            "sports_gross": 0,
-            "sports_net": 0
-        },
-        "Casino": {
-            "Pennsylvania": {
-                "brands": [
-                    {
-                        "brand": "Unibet",
-                        "handle_12m": 385.44,
-                        "revenue_12m": 18.4,
-                        "taxable_12m": 12.75,
-                        "net_rev_12m": 8.97
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 53.36,
-                        "revenue": 2.31,
-                        "net_rev": 1.01
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 51.82,
-                        "revenue": 2.3,
-                        "net_rev": 1.03
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 62.62,
-                        "revenue": 2.72,
-                        "net_rev": 1.3
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 54.39,
-                        "revenue": 2.68,
-                        "net_rev": 1.27
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 60.01,
-                        "revenue": 2.93,
-                        "net_rev": 1.56
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 48.94,
-                        "revenue": 2.64,
-                        "net_rev": 1.4
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 54.3,
-                        "revenue": 2.81,
-                        "net_rev": 1.4
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            }
-        },
-        "Sports": {}
     },
     "FLUT": {
         "summary": {
@@ -7348,8 +6983,8 @@
     },
     "MGM": {
         "summary": {
-            "casino_gross": 831.92,
-            "casino_net": 660.92,
+            "casino_gross": 841.08,
+            "casino_net": 668.6,
             "sports_gross": 418.42,
             "sports_net": 253.81
         },
@@ -7463,6 +7098,13 @@
                         "net_rev_12m": 10.26
                     },
                     {
+                        "brand": "Pala/Stardust",
+                        "handle_12m": 0.0,
+                        "revenue_12m": 9.16,
+                        "taxable_12m": 9.1,
+                        "net_rev_12m": 7.68
+                    },
+                    {
                         "brand": "Wheel of Fortune",
                         "handle_12m": 0.0,
                         "revenue_12m": 4.89,
@@ -7474,44 +7116,44 @@
                     {
                         "month": "Jan 2025",
                         "handle": 0.0,
-                        "revenue": 53.51,
-                        "net_rev": 44.75
+                        "revenue": 54.92,
+                        "net_rev": 45.94
                     },
                     {
                         "month": "Feb 2025",
                         "handle": 0.0,
-                        "revenue": 50.52,
-                        "net_rev": 42.75
+                        "revenue": 51.47,
+                        "net_rev": 43.55
                     },
                     {
                         "month": "Mar 2025",
                         "handle": 0.0,
-                        "revenue": 56.7,
-                        "net_rev": 47.96
+                        "revenue": 58.13,
+                        "net_rev": 49.17
                     },
                     {
                         "month": "Apr 2025",
                         "handle": 0.0,
-                        "revenue": 52.86,
-                        "net_rev": 44.96
+                        "revenue": 54.2,
+                        "net_rev": 46.1
                     },
                     {
                         "month": "May 2025",
                         "handle": 0.0,
-                        "revenue": 55.71,
-                        "net_rev": 47.45
+                        "revenue": 57.05,
+                        "net_rev": 48.59
                     },
                     {
                         "month": "Jun 2025",
                         "handle": 0.0,
-                        "revenue": 52.44,
-                        "net_rev": 43.81
+                        "revenue": 53.91,
+                        "net_rev": 45.04
                     },
                     {
                         "month": "Jul 2025",
                         "handle": 0.0,
-                        "revenue": 53.65,
-                        "net_rev": 43.08
+                        "revenue": 54.85,
+                        "net_rev": 44.04
                     },
                     {
                         "month": "Aug 2025",
@@ -8927,8 +8569,8 @@
         "summary": {
             "casino_gross": 851.68,
             "casino_net": 530.43,
-            "sports_gross": 193.61,
-            "sports_net": 136.08
+            "sports_gross": 619.88,
+            "sports_net": 431.94
         },
         "Casino": {
             "Michigan": {
@@ -9460,6 +9102,13 @@
                         "net_rev_12m": 0.66
                     },
                     {
+                        "brand": "Penalty Box",
+                        "handle_12m": 6.2,
+                        "revenue_12m": 0.91,
+                        "taxable_12m": 0.72,
+                        "net_rev_12m": 0.57
+                    },
+                    {
                         "brand": "Hollywood",
                         "handle_12m": 5.27,
                         "revenue_12m": 0.73,
@@ -9470,39 +9119,39 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 64.85,
-                        "revenue": 5.82,
-                        "net_rev": 4.52
+                        "handle": 66.09,
+                        "revenue": 6.09,
+                        "net_rev": 4.72
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 41.01,
-                        "revenue": 4.16,
-                        "net_rev": 3.39
+                        "handle": 41.92,
+                        "revenue": 4.27,
+                        "net_rev": 3.47
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 55.64,
-                        "revenue": 3.84,
-                        "net_rev": 2.65
+                        "handle": 56.9,
+                        "revenue": 3.98,
+                        "net_rev": 2.74
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 42.99,
-                        "revenue": 4.2,
-                        "net_rev": 3.38
+                        "handle": 43.95,
+                        "revenue": 4.27,
+                        "net_rev": 3.43
                     },
                     {
                         "month": "May 2025",
-                        "handle": 39.36,
-                        "revenue": 3.79,
-                        "net_rev": 2.88
+                        "handle": 40.35,
+                        "revenue": 3.93,
+                        "net_rev": 2.98
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 27.54,
-                        "revenue": 3.01,
-                        "net_rev": 1.93
+                        "handle": 28.39,
+                        "revenue": 3.18,
+                        "net_rev": 1.99
                     },
                     {
                         "month": "Jul 2025",
@@ -9545,6 +9194,20 @@
             "Indiana": {
                 "brands": [
                     {
+                        "brand": "DraftKings",
+                        "handle_12m": 1081.48,
+                        "revenue_12m": 108.17,
+                        "taxable_12m": 108.16,
+                        "net_rev_12m": 97.89
+                    },
+                    {
+                        "brand": "Fanatics",
+                        "handle_12m": 188.25,
+                        "revenue_12m": 14.21,
+                        "taxable_12m": 14.13,
+                        "net_rev_12m": 12.79
+                    },
+                    {
                         "brand": "ESPN Bet",
                         "handle_12m": 97.83,
                         "revenue_12m": 8.69,
@@ -9555,45 +9218,45 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 18.49,
-                        "revenue": 1.46,
-                        "net_rev": 1.3
+                        "handle": 229.71,
+                        "revenue": 23.5,
+                        "net_rev": 21.22
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 15.18,
-                        "revenue": 1.32,
-                        "net_rev": 1.19
+                        "handle": 191.63,
+                        "revenue": 19.76,
+                        "net_rev": 17.88
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 18.73,
-                        "revenue": 0.84,
-                        "net_rev": 0.99
+                        "handle": 252.16,
+                        "revenue": 15.17,
+                        "net_rev": 14.24
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 14.92,
-                        "revenue": 1.65,
-                        "net_rev": 1.28
+                        "handle": 197.61,
+                        "revenue": 18.18,
+                        "net_rev": 15.94
                     },
                     {
                         "month": "May 2025",
-                        "handle": 13.57,
-                        "revenue": 1.33,
-                        "net_rev": 1.27
+                        "handle": 199.66,
+                        "revenue": 18.05,
+                        "net_rev": 17.23
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 9.78,
-                        "revenue": 1.17,
-                        "net_rev": 1.01
+                        "handle": 165.06,
+                        "revenue": 20.94,
+                        "net_rev": 18.06
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 7.16,
-                        "revenue": 0.92,
-                        "net_rev": 0.83
+                        "handle": 131.73,
+                        "revenue": 15.46,
+                        "net_rev": 13.99
                     },
                     {
                         "month": "Aug 2025",
@@ -10317,6 +9980,13 @@
             "Ohio": {
                 "brands": [
                     {
+                        "brand": "DraftKings",
+                        "handle_12m": 1687.26,
+                        "revenue_12m": 161.56,
+                        "taxable_12m": 161.56,
+                        "net_rev_12m": 129.25
+                    },
+                    {
                         "brand": "ESPN Bet",
                         "handle_12m": 221.99,
                         "revenue_12m": 16.55,
@@ -10327,45 +9997,45 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 42.04,
-                        "revenue": 1.87,
-                        "net_rev": 1.92
+                        "handle": 362.43,
+                        "revenue": 23.86,
+                        "net_rev": 19.5
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 35.37,
-                        "revenue": 1.35,
-                        "net_rev": 1.12
+                        "handle": 282.52,
+                        "revenue": 24.77,
+                        "net_rev": 19.85
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 44.98,
-                        "revenue": 2.28,
-                        "net_rev": 1.83
+                        "handle": 360.81,
+                        "revenue": 24.99,
+                        "net_rev": 20.0
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 28.84,
-                        "revenue": 2.38,
-                        "net_rev": 1.94
+                        "handle": 275.71,
+                        "revenue": 25.47,
+                        "net_rev": 20.41
                     },
                     {
                         "month": "May 2025",
-                        "handle": 30.09,
-                        "revenue": 3.42,
-                        "net_rev": 2.73
+                        "handle": 253.94,
+                        "revenue": 31.05,
+                        "net_rev": 24.84
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 21.37,
-                        "revenue": 3.16,
-                        "net_rev": 2.53
+                        "handle": 194.29,
+                        "revenue": 26.23,
+                        "net_rev": 20.98
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 19.29,
-                        "revenue": 2.08,
-                        "net_rev": 1.67
+                        "handle": 179.54,
+                        "revenue": 21.74,
+                        "net_rev": 17.39
                     },
                     {
                         "month": "Aug 2025",
@@ -10402,6 +10072,20 @@
             "Pennsylvania": {
                 "brands": [
                     {
+                        "brand": "DraftKings",
+                        "handle_12m": 1197.61,
+                        "revenue_12m": 115.05,
+                        "taxable_12m": 76.28,
+                        "net_rev_12m": 50.34
+                    },
+                    {
+                        "brand": "Fanatics",
+                        "handle_12m": 352.7,
+                        "revenue_12m": 26.37,
+                        "taxable_12m": 7.6,
+                        "net_rev_12m": 5.02
+                    },
+                    {
                         "brand": "ESPN Bet",
                         "handle_12m": 226.65,
                         "revenue_12m": 15.18,
@@ -10412,45 +10096,45 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 46.01,
-                        "revenue": 1.52,
-                        "net_rev": 0.44
+                        "handle": 318.39,
+                        "revenue": 25.32,
+                        "net_rev": 9.07
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 31.22,
-                        "revenue": 0.36,
-                        "net_rev": -0.43
+                        "handle": 305.26,
+                        "revenue": 12.91,
+                        "net_rev": -0.83
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 38.93,
-                        "revenue": 2.52,
-                        "net_rev": 1.06
+                        "handle": 303.75,
+                        "revenue": 20.25,
+                        "net_rev": 7.55
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 34.94,
-                        "revenue": 2.36,
-                        "net_rev": 1.13
+                        "handle": 260.2,
+                        "revenue": 23.78,
+                        "net_rev": 9.88
                     },
                     {
                         "month": "May 2025",
-                        "handle": 30.33,
-                        "revenue": 3.51,
-                        "net_rev": 2.06
+                        "handle": 239.73,
+                        "revenue": 28.28,
+                        "net_rev": 14.04
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 24.44,
-                        "revenue": 2.6,
-                        "net_rev": 1.45
+                        "handle": 189.97,
+                        "revenue": 25.8,
+                        "net_rev": 12.31
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 20.77,
-                        "revenue": 2.31,
-                        "net_rev": 1.32
+                        "handle": 159.67,
+                        "revenue": 20.26,
+                        "net_rev": 10.36
                     },
                     {
                         "month": "Aug 2025",
@@ -12044,234 +11728,64 @@
     },
     "SGHC": {
         "summary": {
-            "casino_gross": 55.52,
-            "casino_net": 33.26,
-            "sports_gross": 0.93,
-            "sports_net": 0.91
+            "casino_gross": 3.79,
+            "casino_net": 2.99,
+            "sports_gross": 0.07,
+            "sports_net": 0.07
         },
         "Casino": {
             "Michigan": {
                 "brands": [
                     {
-                        "brand": "PointsBet",
+                        "brand": "SI",
                         "handle_12m": 0.0,
-                        "revenue_12m": 7.79,
-                        "taxable_12m": 7.32,
-                        "net_rev_12m": 6.1
+                        "revenue_12m": 3.79,
+                        "taxable_12m": 3.56,
+                        "net_rev_12m": 2.99
                     }
                 ],
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 0.0,
-                        "revenue": 7.79,
-                        "net_rev": 6.1
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    }
-                ]
-            },
-            "New Jersey": {
-                "brands": [
-                    {
-                        "brand": "Betway",
-                        "handle_12m": 0.0,
-                        "revenue_12m": 4.93,
-                        "taxable_12m": 4.92,
-                        "net_rev_12m": 4.15
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 0.0,
-                        "revenue": 0.75,
-                        "net_rev": 0.64
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 0.0,
-                        "revenue": 0.7,
-                        "net_rev": 0.59
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 0.0,
-                        "revenue": 0.74,
-                        "net_rev": 0.63
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 0.0,
-                        "revenue": 0.67,
-                        "net_rev": 0.57
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 0.0,
-                        "revenue": 0.63,
-                        "net_rev": 0.54
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 0.0,
-                        "revenue": 0.81,
-                        "net_rev": 0.69
-                    },
-                    {
-                        "month": "Jul 2025",
                         "handle": 0.0,
                         "revenue": 0.63,
                         "net_rev": 0.5
                     },
                     {
-                        "month": "Aug 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    }
-                ]
-            },
-            "Pennsylvania": {
-                "brands": [
-                    {
-                        "brand": "PlayLive | Betway",
-                        "handle_12m": 1070.88,
-                        "revenue_12m": 42.8,
-                        "taxable_12m": 32.99,
-                        "net_rev_12m": 23.01
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 160.05,
-                        "revenue": 5.32,
-                        "net_rev": 2.71
-                    },
-                    {
                         "month": "Feb 2025",
-                        "handle": 152.06,
-                        "revenue": 5.87,
-                        "net_rev": 3.26
+                        "handle": 0.0,
+                        "revenue": 0.72,
+                        "net_rev": 0.57
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 160.57,
-                        "revenue": 6.88,
-                        "net_rev": 3.68
+                        "handle": 0.0,
+                        "revenue": 0.65,
+                        "net_rev": 0.51
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 152.62,
-                        "revenue": 5.96,
-                        "net_rev": 3.21
+                        "handle": 0.0,
+                        "revenue": 0.64,
+                        "net_rev": 0.5
                     },
                     {
                         "month": "May 2025",
-                        "handle": 148.57,
-                        "revenue": 6.18,
-                        "net_rev": 3.35
+                        "handle": 0.0,
+                        "revenue": 0.65,
+                        "net_rev": 0.51
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 150.11,
-                        "revenue": 6.14,
-                        "net_rev": 3.35
+                        "handle": 0.0,
+                        "revenue": 0.52,
+                        "net_rev": 0.41
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 146.9,
-                        "revenue": 6.45,
-                        "net_rev": 3.45
+                        "handle": 0.0,
+                        "revenue": -0.01,
+                        "net_rev": -0.01
                     },
                     {
                         "month": "Aug 2025",
@@ -12307,320 +11821,58 @@
             }
         },
         "Sports": {
-            "Arizona": {
+            "Michigan": {
                 "brands": [
                     {
-                        "brand": "Sporttrade",
-                        "handle_12m": 6.56,
-                        "revenue_12m": -0.02,
-                        "taxable_12m": 0.08,
+                        "brand": "SI",
+                        "handle_12m": 2.53,
+                        "revenue_12m": 0.07,
+                        "taxable_12m": 0.07,
                         "net_rev_12m": 0.07
                     }
                 ],
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 1.49,
-                        "revenue": 0.08,
-                        "net_rev": 0.07
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 0.99,
-                        "revenue": -0.07,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 1.09,
-                        "revenue": -0.02,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 0.92,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 1.02,
-                        "revenue": -0.03,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 1.05,
-                        "revenue": 0.01,
-                        "net_rev": 0.01
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            },
-            "Iowa": {
-                "brands": [
-                    {
-                        "brand": "Sporttrade",
-                        "handle_12m": 3.81,
-                        "revenue_12m": 0.14,
-                        "taxable_12m": 0.14,
-                        "net_rev_12m": 0.13
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 0.69,
-                        "revenue": 0.01,
-                        "net_rev": 0.01
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 0.51,
-                        "revenue": 0.06,
-                        "net_rev": 0.05
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 0.99,
-                        "revenue": -0.04,
-                        "net_rev": -0.03
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 0.57,
-                        "revenue": 0.08,
-                        "net_rev": 0.07
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 0.39,
+                        "handle": 0.71,
                         "revenue": -0.01,
                         "net_rev": -0.01
                     },
                     {
-                        "month": "Jun 2025",
-                        "handle": 0.29,
+                        "month": "Feb 2025",
+                        "handle": 0.36,
+                        "revenue": 0.01,
+                        "net_rev": 0.01
+                    },
+                    {
+                        "month": "Mar 2025",
+                        "handle": 0.49,
+                        "revenue": -0.0,
+                        "net_rev": -0.0
+                    },
+                    {
+                        "month": "Apr 2025",
+                        "handle": 0.41,
                         "revenue": 0.03,
                         "net_rev": 0.03
                     },
                     {
+                        "month": "May 2025",
+                        "handle": 0.34,
+                        "revenue": 0.02,
+                        "net_rev": 0.02
+                    },
+                    {
+                        "month": "Jun 2025",
+                        "handle": 0.18,
+                        "revenue": 0.02,
+                        "net_rev": 0.02
+                    },
+                    {
                         "month": "Jul 2025",
-                        "handle": 0.37,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    }
-                ]
-            },
-            "New Jersey": {
-                "brands": [
-                    {
-                        "brand": "Sporttrade",
-                        "handle_12m": 11.34,
-                        "revenue_12m": 0.81,
-                        "taxable_12m": 0.81,
-                        "net_rev_12m": 0.71
-                    },
-                    {
-                        "brand": "Betway",
-                        "handle_12m": 0.01,
-                        "revenue_12m": -0.0,
-                        "taxable_12m": -0.0,
-                        "net_rev_12m": -0.0
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 0.91,
-                        "revenue": 0.1,
-                        "net_rev": 0.08
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 2.9,
-                        "revenue": 0.22,
-                        "net_rev": 0.19
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 2.46,
-                        "revenue": 0.16,
-                        "net_rev": 0.14
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 0.06,
+                        "handle": 0.04,
                         "revenue": -0.01,
                         "net_rev": -0.01
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 4.27,
-                        "revenue": 0.43,
-                        "net_rev": 0.38
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 0.36,
-                        "revenue": -0.04,
-                        "net_rev": -0.04
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 0.39,
-                        "revenue": -0.05,
-                        "net_rev": -0.04
-                    },
-                    {
-                        "month": "Aug 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Sep 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Oct 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Nov 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    },
-                    {
-                        "month": "Dec 2025",
-                        "handle": null,
-                        "revenue": null,
-                        "net_rev": null
-                    }
-                ]
-            },
-            "Pennsylvania": {
-                "brands": [
-                    {
-                        "brand": "Betway",
-                        "handle_12m": 0.0,
-                        "revenue_12m": -0.0,
-                        "taxable_12m": -0.0,
-                        "net_rev_12m": -0.0
-                    }
-                ],
-                "trend": [
-                    {
-                        "month": "Jan 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Feb 2025",
-                        "handle": 0.0,
-                        "revenue": -0.0,
-                        "net_rev": -0.0
-                    },
-                    {
-                        "month": "Mar 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Apr 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "May 2025",
-                        "handle": 0.0,
-                        "revenue": -0.0,
-                        "net_rev": -0.0
-                    },
-                    {
-                        "month": "Jun 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
-                    },
-                    {
-                        "month": "Jul 2025",
-                        "handle": 0.0,
-                        "revenue": 0.0,
-                        "net_rev": 0.0
                     },
                     {
                         "month": "Aug 2025",
