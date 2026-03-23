@@ -21,7 +21,7 @@ try:
 except FileNotFoundError:
     VERIFIED_CALENDAR = {}
 
-# DEFAULT CALENDAR OVERRIDES: Fixes the "TBD" issue for international/microcap stocks
+# DEFAULT CALENDAR OVERRIDES
 DEFAULT_CALENDAR = {
     "6425.T": {
         "date": "May 14, 2026", 
@@ -100,21 +100,21 @@ TARGET_ETFS = [
     {
         "name": "Roundhill Sports Betting & iGaming ETF",
         "ticker": "BETZ",
-        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/roundhill.jpg"
+        "logo": "https://logo.clearbit.com/roundhillinvestments.com"
     },
     {
         "name": "VanEck Gaming ETF",
         "ticker": "BJK",
-        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/vaneck.png"
+        "logo": "https://logo.clearbit.com/vaneck.com"
     },
     {
         "name": "Pacer BlueStar Digital Entertainment ETF",
         "ticker": "ODDS",
-        "logo": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/pacer_bluestar.png"
+        "logo": "https://logo.clearbit.com/paceretfs.com"
     }
 ]
 
-# ETF STATIC FALLBACKS (Provider Site Data)
+# ETF STATIC FALLBACKS (Scraped from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 18.11,
@@ -126,56 +126,16 @@ ETF_STATIC_FALLBACKS = {
             "US Focus"
         ],
         "holdings": [
-            {
-                "ticker": "LTMC.MI", 
-                "name": "Lottomatica Group", 
-                "weight": 6.59
-            },
-            {
-                "ticker": "EVO.ST", 
-                "name": "Evolution AB", 
-                "weight": 6.53
-            },
-            {
-                "ticker": "FDJ.PA", 
-                "name": "La Francaise Des Jeux", 
-                "weight": 6.23
-            },
-            {
-                "ticker": "TAH.AX", 
-                "name": "Tabcorp Holdings", 
-                "weight": 5.96
-            },
-            {
-                "ticker": "RSI", 
-                "name": "Rush Street Interactive", 
-                "weight": 5.93
-            },
-            {
-                "ticker": "TLC.AX", 
-                "name": "The Lottery Corp", 
-                "weight": 5.85
-            },
-            {
-                "ticker": "DKNG", 
-                "name": "DraftKings Inc", 
-                "weight": 5.80
-            },
-            {
-                "ticker": "FLUT", 
-                "name": "Flutter Entertainment", 
-                "weight": 5.66
-            },
-            {
-                "ticker": "SGHC", 
-                "name": "Super Group", 
-                "weight": 5.15
-            },
-            {
-                "ticker": "CHDN", 
-                "name": "Churchill Downs", 
-                "weight": 4.73
-            }
+            {"ticker": "LTMC.MI", "name": "Lottomatica Group", "weight": 6.59},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 6.53},
+            {"ticker": "FDJ.PA", "name": "La Francaise Des Jeux", "weight": 6.23},
+            {"ticker": "TAH.AX", "name": "Tabcorp Holdings", "weight": 5.96},
+            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 5.93},
+            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 5.85},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.80},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 5.66},
+            {"ticker": "SGHC", "name": "Super Group", "weight": 5.15},
+            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 4.73}
         ]
     },
     "BJK": {
@@ -189,56 +149,16 @@ ETF_STATIC_FALLBACKS = {
             "US"
         ],
         "holdings": [
-            {
-                "ticker": "VICI", 
-                "name": "Vici Properties Inc", 
-                "weight": 8.24
-            },
-            {
-                "ticker": "ALL.AX", 
-                "name": "Aristocrat Leisure", 
-                "weight": 7.66
-            },
-            {
-                "ticker": "GLPI", 
-                "name": "Gaming And Leisure", 
-                "weight": 6.47
-            },
-            {
-                "ticker": "0027.HK", 
-                "name": "Galaxy Entertainment", 
-                "weight": 5.77
-            },
-            {
-                "ticker": "LVS", 
-                "name": "Las Vegas Sands", 
-                "weight": 5.52
-            },
-            {
-                "ticker": "DKNG", 
-                "name": "DraftKings Inc", 
-                "weight": 5.46
-            },
-            {
-                "ticker": "EVO.ST", 
-                "name": "Evolution AB", 
-                "weight": 4.84
-            },
-            {
-                "ticker": "FLUT", 
-                "name": "Flutter Entertainment", 
-                "weight": 4.40
-            },
-            {
-                "ticker": "WYNN", 
-                "name": "Wynn Resorts", 
-                "weight": 4.10
-            },
-            {
-                "ticker": "TLC.AX", 
-                "name": "The Lottery Corp", 
-                "weight": 4.03
-            }
+            {"ticker": "VICI", "name": "Vici Properties Inc", "weight": 8.24},
+            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 7.66},
+            {"ticker": "GLPI", "name": "Gaming And Leisure", "weight": 6.47},
+            {"ticker": "0027.HK", "name": "Galaxy Entertainment", "weight": 5.77},
+            {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 5.52},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.46},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 4.84},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.40},
+            {"ticker": "WYNN", "name": "Wynn Resorts", "weight": 4.10},
+            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 4.03}
         ]
     },
     "ODDS": {
@@ -251,56 +171,16 @@ ETF_STATIC_FALLBACKS = {
             "Global Digital"
         ],
         "holdings": [
-            {
-                "ticker": "700.HK", 
-                "name": "Tencent Holdings", 
-                "weight": 8.32
-            },
-            {
-                "ticker": "EVO.ST", 
-                "name": "Evolution AB", 
-                "weight": 7.88
-            },
-            {
-                "ticker": "DKNG", 
-                "name": "DraftKings Inc", 
-                "weight": 7.06
-            },
-            {
-                "ticker": "FLUT", 
-                "name": "Flutter Entertainment", 
-                "weight": 4.99
-            },
-            {
-                "ticker": "7974.T", 
-                "name": "Nintendo Co Ltd", 
-                "weight": 4.55
-            },
-            {
-                "ticker": "ENT.L", 
-                "name": "Entain PLC", 
-                "weight": 4.09
-            },
-            {
-                "ticker": "NTES", 
-                "name": "NetEase Inc", 
-                "weight": 4.01
-            },
-            {
-                "ticker": "EA", 
-                "name": "Electronic Arts", 
-                "weight": 3.33
-            },
-            {
-                "ticker": "SGHC", 
-                "name": "Super Group", 
-                "weight": 3.06
-            },
-            {
-                "ticker": "SRAD", 
-                "name": "Sportradar Group", 
-                "weight": 2.98
-            }
+            {"ticker": "700.HK", "name": "Tencent Holdings", "weight": 8.32},
+            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.88},
+            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 7.06},
+            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.99},
+            {"ticker": "7974.T", "name": "Nintendo Co Ltd", "weight": 4.55},
+            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.09},
+            {"ticker": "NTES", "name": "NetEase Inc", "weight": 4.01},
+            {"ticker": "EA", "name": "Electronic Arts", "weight": 3.33},
+            {"ticker": "SGHC", "name": "Super Group", "weight": 3.06},
+            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 2.98}
         ]
     }
 }
@@ -614,7 +494,7 @@ TARGET_COMPANIES = [
         "ticker": "FLL", 
         "domain": "fullhouseresorts.com", 
         "base_country": "USA", 
-        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/full-house-resorts-inc-logo.png"
+        "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"
     },
     {
         "name": "Accel Entertainment", 
@@ -705,13 +585,6 @@ TARGET_COMPANIES = [
         "domain": "esportsentertainmentgroup.com", 
         "base_country": "Malta", 
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"
-    },
-    {
-        "name": "Tabcorp Holdings", 
-        "ticker": "TAH.AX", 
-        "domain": "tabcorp.com.au", 
-        "base_country": "Australia", 
-        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tabcorp_holdings.png"
     }
 ]
 
@@ -737,11 +610,10 @@ OTC_MAP = {
     "PARP.PA": "PARPF",
     "TLC.AX": "TLRCF",
     "SKC.NZ": "SKYCG",
-    "JIN.AX": "JUMBF",
-    "TAH.AX": "TBACF"
+    "JIN.AX": "JUMBF"
 }
 
-# --- VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -1220,8 +1092,8 @@ VERIFIED_DATA = {
     },
     "BRAG": {
         "rev_label": "REV",
-        "revenue_fy": "$105M (FY '25)",
-        "revenue_interim": "$28M (Q3 '25)",
+        "revenue_fy": "€105M (FY '25)",
+        "revenue_interim": "€28M (Q3 '25)",
         "focus": "B2B iGaming Content & PAM",
         "map_codes": [
             "CA", 
@@ -1232,9 +1104,9 @@ VERIFIED_DATA = {
         ],
         "eps_actual": -0.02,
         "eps_forecast": 0.01,
-        "net_income": "-$1M",
-        "ebitda": "$4M",
-        "fcf": "$1M",
+        "net_income": "-€1M",
+        "ebitda": "€4M",
+        "fcf": "€1M",
         "ebitda_margin_qtr": "14.3%",
         "ebitda_margin_h2": "N/A",
         "ebitda_margin_fy": "N/A",
@@ -2372,11 +2244,6 @@ def get_stock_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-            if daily_change_pct == "N/A" and price > 0:
-                hist = ytk.history(period="5d")
-                if len(hist) >= 2:
-                    fallback_prev = hist['Close'].iloc[-2]
-                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
         except Exception: 
             pass 
             
@@ -2669,87 +2536,103 @@ def get_etf_fundamentals(ticker, fx_rates):
     price_str, exp_ratio_str, aum_str, nav_str = "N/A", "N/A", "N/A", "N/A"
     daily_change_pct = "N/A"
     sym, currency = "$", "USD"
+    holdings = []
     
-    fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
-    
-    # 1. FETCH LIVE PRICE & CHART HISTORY FIRST
-    history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
     try:
+        fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
         ytk = yf.Ticker(ticker)
-        fast = ytk.fast_info
         
-        if hasattr(fast, 'get'):
-            price = fast.get('lastPrice')
-            currency = fast.get('currency', 'USD')
-            prev_close = fast.get('previousClose')
-        else:
-            price = fast['lastPrice']
-            currency = fast['currency']
-            prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
+        try:
+            fast = ytk.fast_info
+            if hasattr(fast, 'get'):
+                price = fast.get('lastPrice')
+                currency = fast.get('currency', 'USD')
+                prev_close = fast.get('previousClose')
+            else:
+                price = fast['lastPrice']
+                currency = fast['currency']
+                prev_close = fast.get('previousClose') if hasattr(fast, 'get') else None
+                
+            if price is None or price == 0:
+                price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
+                
+            if price and prev_close and prev_close > 0:
+                daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+        except Exception: 
+            pass
             
-        if price is None or price == 0:
-            price = ytk.info.get('regularMarketPrice') or ytk.info.get('previousClose')
+        if (price is None or price == 0) and fallback_data:
+            price = fallback_data.get('price_fallback', 0)
             
-        if price and prev_close and prev_close > 0:
-            daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-            
-        if price and price > 0:
-            history = fetch_stock_history(ticker, price)
-            
-    except Exception as e:
-        print(f"  ⚠️ YF Price/History warning for {ticker}: {e}")
-
-    # Safely apply price fallback if YF failed
-    if (price is None or price == 0) and fallback_data:
-        price = fallback_data.get('price_fallback', 0)
+        if currency == "GBp": 
+            sym = "GBp "
+        elif currency == "GBP": 
+            sym = "£"
+        elif currency == "EUR": 
+            sym = "€"
+        else: 
+            sym = "$"
         
-    if currency == "GBp": 
-        sym = "GBp "
-    elif currency == "GBP": 
-        sym = "£"
-    elif currency == "EUR": 
-        sym = "€"
-    else: 
-        sym = "$"
+        if price > 0: 
+            price_str = f"{sym}{round(price, 2)}"
         
-    if price > 0: 
-        price_str = f"{sym}{round(price, 2)}"
-        
-    # 2. NAV, AUM, EXPENSE RATIO (YF first, then Fallback)
-    try:
         info = ytk.info
-        nav = info.get('navPrice')
-        if nav: 
-            nav_str = f"{sym}{round(nav, 2)}"
-        elif fallback_data and fallback_data.get('nav_fallback'):
-            nav_str = fallback_data['nav_fallback']
+        try:
+            nav = info.get('navPrice')
+            if nav: 
+                nav_str = f"{sym}{round(nav, 2)}"
+            elif fallback_data and fallback_data.get('nav_fallback'):
+                nav_str = fallback_data['nav_fallback']
+            
+            aum = info.get('totalAssets') or info.get('netAssets')
+            if aum: 
+                aum_str = format_money(aum, sym)
+            elif fallback_data and fallback_data.get('aum_fallback'):
+                aum_str = fallback_data['aum_fallback']
+            
+            exp = info.get('expenseRatio')
+            if exp: 
+                exp_ratio_str = f"{round(exp * 100, 2)}%"
+            elif fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
+        except Exception: 
+            if fallback_data:
+                exp_ratio_str = fallback_data["expense_ratio"]
+                aum_str = fallback_data.get("aum_fallback", "N/A")
+                nav_str = fallback_data.get("nav_fallback", "N/A")
         
-        aum = info.get('totalAssets') or info.get('netAssets')
-        if aum: 
-            aum_str = format_money(aum, sym)
-        elif fallback_data and fallback_data.get('aum_fallback'):
-            aum_str = fallback_data['aum_fallback']
+        try:
+            fd = ytk.funds_data
+            if fd and hasattr(fd, 'top_holdings'):
+                th = fd.top_holdings
+                if th is not None and not th.empty:
+                    for idx, row in th.head(10).iterrows():
+                        w = row.get('Weight', 0)
+                        if pd.isna(w): 
+                            w = 0
+                        else: 
+                            w = float(w) * 100
+                        holdings.append({
+                            "ticker": str(idx),
+                            "name": str(row.get('Name', idx)),
+                            "weight": round(w, 2)
+                        })
+        except Exception: 
+            pass
+
+        if not holdings and fallback_data:
+            holdings = fallback_data["holdings"]
+            
+        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
+        history = fetch_stock_history(ticker, price)
         
-        exp = info.get('expenseRatio')
-        if exp: 
-            exp_ratio_str = f"{round(exp * 100, 2)}%"
-        elif fallback_data:
-            exp_ratio_str = fallback_data["expense_ratio"]
-    except Exception:
-        if fallback_data:
-            exp_ratio_str = fallback_data.get("expense_ratio", "N/A")
-            aum_str = fallback_data.get("aum_fallback", "N/A")
-            nav_str = fallback_data.get("nav_fallback", "N/A")
-
-    # 3. HOLDINGS & JURISDICTIONS (STRICTLY PROVIDER FALLBACKS TO ENSURE WEIGHTS)
-    if fallback_data:
-        holdings = fallback_data.get("holdings", [])
-        jurisdictions = fallback_data.get("jurisdictions", ["Global"])
-    else:
-        holdings = []
-        jurisdictions = ["Global"]
-
-    return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
+        return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
+        
+    except Exception as err:
+        print(f"  ⚠️ Error fetching ETF {ticker}: {err}")
+        fb = ETF_STATIC_FALLBACKS.get(ticker)
+        p_str = f"${fb['price_fallback']}" if fb and fb.get('price_fallback') else "N/A"
+        return p_str, fb.get('price_fallback', 0) if fb else 0, "N/A", fb["expense_ratio"] if fb else "N/A", fb.get('aum_fallback', 'N/A') if fb else "N/A", fb.get('nav_fallback', 'N/A') if fb else "N/A", fb["jurisdictions"] if fb else ["Global"], fb["holdings"] if fb else [], {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
 
 def run_pipeline():
     master_db = []
