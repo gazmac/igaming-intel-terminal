@@ -114,7 +114,7 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS (Scraped from Provider Sites)
+# ETF STATIC FALLBACKS (Sourced from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 18.11,
@@ -613,7 +613,7 @@ OTC_MAP = {
     "JIN.AX": "JUMBF"
 }
 
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2439,6 +2439,98 @@ def fetch_stock_history(ticker, native_price_raw):
     
     return history
 
+def classify_news_article(title, summary, source_domain):
+    text = f"{title} {summary}".lower()
+    
+    if "gamblinginsider.com" in source_domain:
+        if any(k in text for k in ['finance', 'stock', 'share', 'earnings', 'revenue', 'q1', 'q2', 'q3', 'q4', 'fy', 'merger', 'acquisition', 'm&a', 'b2b']):
+            return "Finance & B2B"
+        elif any(k in text for k in ['supplier', 'studio', 'b2b tech', 'provider', 'aggregator', 'platform']):
+            return "Suppliers & B2B"
+        elif any(k in text for k in ['operator', 'ceo', 'appoint', 'hire', 'launch']):
+            return "Operators"
+        elif any(k in text for k in ['sportsbook', 'betting', 'handle', 'parlay']):
+            return "Sportsbooks"
+        elif any(k in text for k in ['casino', 'slots', 'table games', 'dealer', 'jackpot']):
+            return "Casino & Slots"
+        elif any(k in text for k in ['affiliate', 'acquisition', 'marketing', 'seo']):
+            return "Affiliates"
+        elif any(k in text for k in ['nfl', 'football']):
+            return "NFL"
+        elif any(k in text for k in ['nba', 'basketball']):
+            return "NBA"
+        elif any(k in text for k in ['mlb', 'baseball']):
+            return "MLB"
+        elif any(k in text for k in ['nhl', 'hockey']):
+            return "NHL"
+        elif any(k in text for k in ['soccer', 'premier league', 'fifa']):
+            return "Soccer"
+        else:
+            return "General News"
+    return "General News"
+
+def fetch_global_news_feed():
+    print(f"\n📰 Fetching Global News Feed from {len(NEWS_SOURCES)} sources...")
+    all_articles = []
+    
+    for source in NEWS_SOURCES:
+        try:
+            feed = feedparser.parse(source['url'])
+            for entry in feed.entries[:30]:
+                title = entry.title if hasattr(entry, 'title') else 'No Title'
+                link = entry.link if hasattr(entry, 'link') else '#'
+                author = getattr(entry, 'author', source['name'])
+                
+                pub_date = ""
+                if hasattr(entry, 'published'):
+                    try:
+                        parsed_date = email.utils.parsedate_to_datetime(entry.published)
+                        pub_date = parsed_date.strftime('%b %d, %Y')
+                    except Exception:
+                        pub_date = entry.published
+                
+                image_url = ""
+                if hasattr(entry, 'media_content') and len(entry.media_content) > 0:
+                    image_url = entry.media_content[0].get('url', '')
+                elif hasattr(entry, 'links'):
+                    for l in entry.links:
+                        if 'image' in l.get('type', ''):
+                            image_url = l.get('href', '')
+                            break
+                
+                summary = ""
+                if hasattr(entry, 'summary'):
+                    summary = re.sub('<[^<]+>', '', entry.summary)
+                    
+                if not image_url and hasattr(entry, 'description'):
+                    img_match = re.search(r'<img[^>]+src="([^">]+)"', entry.description)
+                    if img_match:
+                        image_url = img_match.group(1)
+                        
+                category = classify_news_article(title, summary, source['domain'])
+                
+                all_articles.append({
+                    "title": title,
+                    "link": link,
+                    "author": author,
+                    "date": pub_date,
+                    "summary": summary,
+                    "image": image_url,
+                    "source_name": source['name'],
+                    "source_domain": source['domain'],
+                    "priority": source['priority'],
+                    "category": category,
+                    "timestamp": time.time()
+                })
+        except Exception as e:
+            print(f"  ⚠️ Error fetching from {source['name']}: {e}")
+            
+    all_articles.sort(key=lambda x: (x['priority'], -x['timestamp']))
+    
+    with open('news_feed_live.json', 'w') as f:
+        json.dump(all_articles, f, indent=4)
+    print(f"✅ Generated News Feed with {len(all_articles)} articles.")
+
 def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
@@ -2494,7 +2586,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include a distinct, separate section at the very top of your reading_room HTML output that looks EXACTLY like this: <div class='mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl shadow-sm'><h4 class='text-purple-700 font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2'><i class='fas fa-satellite-dish animate-pulse'></i> Sentiment Spike Rationale</h4><p class='text-sm text-purple-900 font-medium leading-relaxed'>[Insert your detailed explanation of the news driving the sudden 20+ point sentiment shift here]</p></div>
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
         4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
@@ -2540,6 +2632,7 @@ def get_etf_fundamentals(ticker, fx_rates):
     
     try:
         fallback_data = ETF_STATIC_FALLBACKS.get(ticker)
+        
         ytk = yf.Ticker(ticker)
         
         try:
@@ -2800,6 +2893,8 @@ def run_pipeline():
             "history": hist,
             "last_updated": run_time_utc
         })
+        
+    fetch_global_news_feed()
 
     if master_db:
         with open('gambling_stocks_live.json', 'w') as f:
