@@ -114,7 +114,7 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS (Sourced from Provider Sites)
+# ETF STATIC FALLBACKS (Sourced directly from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 18.11,
@@ -140,7 +140,7 @@ ETF_STATIC_FALLBACKS = {
     },
     "BJK": {
         "price_fallback": 35.50,
-        "expense_ratio": "0.51%",
+        "expense_ratio": "0.65%",
         "aum_fallback": "$17.75M",
         "nav_fallback": "$35.50",
         "jurisdictions": [
@@ -163,7 +163,7 @@ ETF_STATIC_FALLBACKS = {
     },
     "ODDS": {
         "price_fallback": 24.10,
-        "expense_ratio": "0.51%",
+        "expense_ratio": "0.60%",
         "aum_fallback": "$3.88M",
         "nav_fallback": "$24.26",
         "jurisdictions": [
@@ -2244,6 +2244,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+            if daily_change_pct == "N/A" and price > 0:
+                hist = ytk.history(period="5d")
+                if len(hist) >= 2:
+                    fallback_prev = hist['Close'].iloc[-2]
+                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
         except Exception: 
             pass 
             
@@ -2586,7 +2591,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include a distinct, separate section at the very top of your reading_room HTML output that looks EXACTLY like this: <div class='mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl shadow-sm'><h4 class='text-purple-700 font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2'><i class='fas fa-satellite-dish animate-pulse'></i> Sentiment Spike Rationale</h4><p class='text-sm text-purple-900 font-medium leading-relaxed'>[Insert your detailed explanation of the news driving the sudden 20+ point sentiment shift here]</p></div>
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
         4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
@@ -2670,53 +2675,29 @@ def get_etf_fundamentals(ticker, fx_rates):
             price_str = f"{sym}{round(price, 2)}"
         
         info = ytk.info
-        try:
-            nav = info.get('navPrice')
-            if nav: 
-                nav_str = f"{sym}{round(nav, 2)}"
-            elif fallback_data and fallback_data.get('nav_fallback'):
-                nav_str = fallback_data['nav_fallback']
-            
-            aum = info.get('totalAssets') or info.get('netAssets')
-            if aum: 
-                aum_str = format_money(aum, sym)
-            elif fallback_data and fallback_data.get('aum_fallback'):
-                aum_str = fallback_data['aum_fallback']
-            
-            exp = info.get('expenseRatio')
-            if exp: 
-                exp_ratio_str = f"{round(exp * 100, 2)}%"
-            elif fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-        except Exception: 
-            if fallback_data:
-                exp_ratio_str = fallback_data["expense_ratio"]
-                aum_str = fallback_data.get("aum_fallback", "N/A")
-                nav_str = fallback_data.get("nav_fallback", "N/A")
         
-        try:
-            fd = ytk.funds_data
-            if fd and hasattr(fd, 'top_holdings'):
-                th = fd.top_holdings
-                if th is not None and not th.empty:
-                    for idx, row in th.head(10).iterrows():
-                        w = row.get('Weight', 0)
-                        if pd.isna(w): 
-                            w = 0
-                        else: 
-                            w = float(w) * 100
-                        holdings.append({
-                            "ticker": str(idx),
-                            "name": str(row.get('Name', idx)),
-                            "weight": round(w, 2)
-                        })
-        except Exception: 
-            pass
+        # EXCLUSIVELY USE FALLBACK FOR ETF METRICS TO PREVENT YFINANCE CORRUPTION
+        if fallback_data:
+            nav_str = fallback_data.get('nav_fallback', 'N/A')
+            aum_str = fallback_data.get('aum_fallback', 'N/A')
+            exp_ratio_str = fallback_data.get('expense_ratio', 'N/A')
+            holdings = fallback_data.get('holdings', [])
+            jurisdictions = fallback_data.get('jurisdictions', ["Global"])
+        else:
+            try:
+                nav = info.get('navPrice')
+                if nav: 
+                    nav_str = f"{sym}{round(nav, 2)}"
+                aum = info.get('totalAssets') or info.get('netAssets')
+                if aum: 
+                    aum_str = format_money(aum, sym)
+                exp = info.get('expenseRatio')
+                if exp: 
+                    exp_ratio_str = f"{round(exp * 100, 2)}%"
+            except Exception:
+                pass
+            jurisdictions = ["Global"]
 
-        if not holdings and fallback_data:
-            holdings = fallback_data["holdings"]
-            
-        jurisdictions = fallback_data.get("jurisdictions", ["Global"]) if fallback_data else ["Global"]
         history = fetch_stock_history(ticker, price)
         
         return price_str, price, daily_change_pct, exp_ratio_str, aum_str, nav_str, jurisdictions, holdings, history
