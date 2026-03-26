@@ -464,6 +464,7 @@
         let newsDb = []; 
         let activeTicker = null;
         let activeEtfTicker = null;
+        
         let chartInstance = null;
         let sentHistChart = null;
         let etfMainChart = null;
@@ -1787,7 +1788,7 @@
                             const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                             const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                             const sign = diff > 0 ? '+' : '';
-                            spikeBadgeContainer.innerHTML = `<button onclick="document.getElementById('sentiment-history-container').classList.toggle('hidden'); if(sentHistChart){sentHistChart.render();}" class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border animate-pulse hover:bg-opacity-70 transition-all cursor-pointer shadow-sm"><i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}</button>`;
+                            spikeBadgeContainer.innerHTML = `<button onclick="document.getElementById('sentiment-history-container').classList.toggle('hidden'); if(sentHistChart){sentHistChart.render();}" class="text-[10px] font-black uppercase tracking-widest ${spikeColor} px-2 py-1 rounded border shadow-sm hover:opacity-80 transition-opacity cursor-pointer animate-pulse"><i class="fas ${spikeIcon} mr-1"></i> Spike ${sign}${diff}</button>`;
                         }
                     }
                 }
