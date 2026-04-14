@@ -1995,13 +1995,6 @@
                         "revenue_12m": 17.2,
                         "taxable_12m": 12.89,
                         "net_rev_12m": 11.61
-                    },
-                    {
-                        "brand": "CAZ",
-                        "handle_12m": 0.0,
-                        "revenue_12m": 0.0,
-                        "taxable_12m": 0.0,
-                        "net_rev_12m": 0.0
                     }
                 ],
                 "trend": [
@@ -3535,8 +3528,8 @@
     },
     "DKNG": {
         "summary": {
-            "casino_gross": 1720.53,
-            "casino_net": 1179.92,
+            "casino_gross": 1003.5,
+            "casino_net": 759.73,
             "sports_gross": 2256.18,
             "sports_net": 1485.16
         },
@@ -3820,13 +3813,6 @@
             "Pennsylvania": {
                 "brands": [
                     {
-                        "brand": "Hollywood | DraftKings | BetMGM | Barstool | PointsBet",
-                        "handle_12m": 20924.22,
-                        "revenue_12m": 717.03,
-                        "taxable_12m": 586.35,
-                        "net_rev_12m": 420.19
-                    },
-                    {
                         "brand": "Golden Nugget",
                         "handle_12m": 1752.65,
                         "revenue_12m": 55.77,
@@ -3837,45 +3823,45 @@
                 "trend": [
                     {
                         "month": "Jan 2025",
-                        "handle": 3185.39,
-                        "revenue": 106.63,
-                        "net_rev": 61.87
+                        "handle": 230.62,
+                        "revenue": 8.17,
+                        "net_rev": 5.01
                     },
                     {
                         "month": "Feb 2025",
-                        "handle": 3072.39,
-                        "revenue": 102.6,
-                        "net_rev": 60.6
+                        "handle": 213.79,
+                        "revenue": 7.94,
+                        "net_rev": 5.1
                     },
                     {
                         "month": "Mar 2025",
-                        "handle": 3477.48,
-                        "revenue": 117.76,
-                        "net_rev": 70.12
+                        "handle": 252.87,
+                        "revenue": 8.78,
+                        "net_rev": 5.45
                     },
                     {
                         "month": "Apr 2025",
-                        "handle": 3323.4,
-                        "revenue": 112.09,
-                        "net_rev": 64.79
+                        "handle": 268.24,
+                        "revenue": 8.47,
+                        "net_rev": 5.17
                     },
                     {
                         "month": "May 2025",
-                        "handle": 3362.33,
-                        "revenue": 118.54,
-                        "net_rev": 68.89
+                        "handle": 269.92,
+                        "revenue": 8.58,
+                        "net_rev": 5.01
                     },
                     {
                         "month": "Jun 2025",
-                        "handle": 3176.0,
-                        "revenue": 103.92,
-                        "net_rev": 60.88
+                        "handle": 253.9,
+                        "revenue": 5.56,
+                        "net_rev": 3.19
                     },
                     {
                         "month": "Jul 2025",
-                        "handle": 3079.89,
-                        "revenue": 111.27,
-                        "net_rev": 66.98
+                        "handle": 263.31,
+                        "revenue": 8.28,
+                        "net_rev": 5.0
                     },
                     {
                         "month": "Aug 2025",
@@ -7369,8 +7355,8 @@
     },
     "MGM": {
         "summary": {
-            "casino_gross": 827.03,
-            "casino_net": 656.82,
+            "casino_gross": 831.92,
+            "casino_net": 660.92,
             "sports_gross": 418.42,
             "sports_net": 253.81
         },
@@ -7482,50 +7468,57 @@
                         "revenue_12m": 12.22,
                         "taxable_12m": 12.16,
                         "net_rev_12m": 10.26
+                    },
+                    {
+                        "brand": "Wheel of Fortune",
+                        "handle_12m": 0.0,
+                        "revenue_12m": 4.89,
+                        "taxable_12m": 4.86,
+                        "net_rev_12m": 4.1
                     }
                 ],
                 "trend": [
                     {
                         "month": "Jan 2025",
                         "handle": 0.0,
-                        "revenue": 52.65,
-                        "net_rev": 44.04
+                        "revenue": 53.51,
+                        "net_rev": 44.75
                     },
                     {
                         "month": "Feb 2025",
                         "handle": 0.0,
-                        "revenue": 49.89,
-                        "net_rev": 42.22
+                        "revenue": 50.52,
+                        "net_rev": 42.75
                     },
                     {
                         "month": "Mar 2025",
                         "handle": 0.0,
-                        "revenue": 55.92,
-                        "net_rev": 47.31
+                        "revenue": 56.7,
+                        "net_rev": 47.96
                     },
                     {
                         "month": "Apr 2025",
                         "handle": 0.0,
-                        "revenue": 52.1,
-                        "net_rev": 44.31
+                        "revenue": 52.86,
+                        "net_rev": 44.96
                     },
                     {
                         "month": "May 2025",
                         "handle": 0.0,
-                        "revenue": 55.05,
-                        "net_rev": 46.89
+                        "revenue": 55.71,
+                        "net_rev": 47.45
                     },
                     {
                         "month": "Jun 2025",
                         "handle": 0.0,
-                        "revenue": 51.84,
-                        "net_rev": 43.3
+                        "revenue": 52.44,
+                        "net_rev": 43.81
                     },
                     {
                         "month": "Jul 2025",
                         "handle": 0.0,
-                        "revenue": 53.03,
-                        "net_rev": 42.58
+                        "revenue": 53.65,
+                        "net_rev": 43.08
                     },
                     {
                         "month": "Aug 2025",
@@ -8939,8 +8932,8 @@
     },
     "PENN": {
         "summary": {
-            "casino_gross": 134.65,
-            "casino_net": 110.24,
+            "casino_gross": 851.68,
+            "casino_net": 530.43,
             "sports_gross": 194.52,
             "sports_net": 136.66
         },
@@ -9112,6 +9105,91 @@
                         "handle": null,
                         "revenue": null,
                         "net_rev": null
+                    }
+                ]
+            },
+            "Pennsylvania": {
+                "brands": [
+                    {
+                        "brand": "Hollywood | DraftKings | BetMGM | Barstool | PointsBet",
+                        "handle_12m": 20924.22,
+                        "revenue_12m": 717.03,
+                        "taxable_12m": 586.35,
+                        "net_rev_12m": 420.19
+                    }
+                ],
+                "trend": [
+                    {
+                        "month": "Jan 2025",
+                        "handle": 2954.77,
+                        "revenue": 98.46,
+                        "net_rev": 56.86
+                    },
+                    {
+                        "month": "Feb 2025",
+                        "handle": 2858.59,
+                        "revenue": 94.66,
+                        "net_rev": 55.5
+                    },
+                    {
+                        "month": "Mar 2025",
+                        "handle": 3224.61,
+                        "revenue": 108.97,
+                        "net_rev": 64.67
+                    },
+                    {
+                        "month": "Apr 2025",
+                        "handle": 3055.16,
+                        "revenue": 103.62,
+                        "net_rev": 59.62
+                    },
+                    {
+                        "month": "May 2025",
+                        "handle": 3092.41,
+                        "revenue": 109.96,
+                        "net_rev": 63.88
+                    },
+                    {
+                        "month": "Jun 2025",
+                        "handle": 2922.1,
+                        "revenue": 98.36,
+                        "net_rev": 57.69
+                    },
+                    {
+                        "month": "Jul 2025",
+                        "handle": 2816.57,
+                        "revenue": 103.0,
+                        "net_rev": 61.97
+                    },
+                    {
+                        "month": "Aug 2025",
+                        "handle": 0.0,
+                        "revenue": 0.0,
+                        "net_rev": 0.0
+                    },
+                    {
+                        "month": "Sep 2025",
+                        "handle": 0.0,
+                        "revenue": 0.0,
+                        "net_rev": 0.0
+                    },
+                    {
+                        "month": "Oct 2025",
+                        "handle": 0.0,
+                        "revenue": 0.0,
+                        "net_rev": 0.0
+                    },
+                    {
+                        "month": "Nov 2025",
+                        "handle": 0.0,
+                        "revenue": 0.0,
+                        "net_rev": 0.0
+                    },
+                    {
+                        "month": "Dec 2025",
+                        "handle": 0.0,
+                        "revenue": 0.0,
+                        "net_rev": 0.0
                     }
                 ]
             },
@@ -11980,21 +12058,14 @@
     },
     "SGHC": {
         "summary": {
-            "casino_gross": 58.18,
-            "casino_net": 35.96,
+            "casino_gross": 47.73,
+            "casino_net": 27.16,
             "sports_gross": -0.0,
             "sports_net": -0.0
         },
         "Casino": {
             "New Jersey": {
                 "brands": [
-                    {
-                        "brand": "Jackpot City",
-                        "handle_12m": 0.0,
-                        "revenue_12m": 10.45,
-                        "taxable_12m": 10.43,
-                        "net_rev_12m": 8.8
-                    },
                     {
                         "brand": "Betway",
                         "handle_12m": 0.0,
@@ -12007,44 +12078,44 @@
                     {
                         "month": "Jan 2025",
                         "handle": 0.0,
-                        "revenue": 2.04,
-                        "net_rev": 1.73
+                        "revenue": 0.75,
+                        "net_rev": 0.64
                     },
                     {
                         "month": "Feb 2025",
                         "handle": 0.0,
-                        "revenue": 2.09,
-                        "net_rev": 1.76
+                        "revenue": 0.7,
+                        "net_rev": 0.59
                     },
                     {
                         "month": "Mar 2025",
                         "handle": 0.0,
-                        "revenue": 1.94,
-                        "net_rev": 1.64
+                        "revenue": 0.74,
+                        "net_rev": 0.63
                     },
                     {
                         "month": "Apr 2025",
                         "handle": 0.0,
-                        "revenue": 1.86,
-                        "net_rev": 1.58
+                        "revenue": 0.67,
+                        "net_rev": 0.57
                     },
                     {
                         "month": "May 2025",
                         "handle": 0.0,
-                        "revenue": 2.43,
-                        "net_rev": 2.07
+                        "revenue": 0.63,
+                        "net_rev": 0.54
                     },
                     {
                         "month": "Jun 2025",
                         "handle": 0.0,
-                        "revenue": 2.95,
-                        "net_rev": 2.51
+                        "revenue": 0.81,
+                        "net_rev": 0.69
                     },
                     {
                         "month": "Jul 2025",
                         "handle": 0.0,
-                        "revenue": 2.06,
-                        "net_rev": 1.66
+                        "revenue": 0.63,
+                        "net_rev": 0.5
                     },
                     {
                         "month": "Aug 2025",
