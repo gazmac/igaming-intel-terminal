@@ -65,13 +65,6 @@
         #article-view-container.active {
             transform: translateX(0);
         }
-
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-        }
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
@@ -500,16 +493,20 @@
 
         async function init() {
             try {
-                // Fetch Main Stocks with specific error trapping
+                // Fetch Main Stocks with specific error trapping and Python NaN fix
                 const response = await fetch('gambling_stocks_live.json?v=' + Date.now());
                 if (!response.ok) throw new Error(`Stocks fetch failed: ${response.status} ${response.statusText}`);
 
                 let text = await response.text();
+                // BULLETPROOF FIX: Python occasionally writes unquoted NaN. Javascript JSON.parse fails on unquoted NaN.
+                // This neutralizes Python NaNs to standard JSON nulls before parsing.
+                text = text.replace(/:\s*NaN/g, ': null').replace(/:\s*Infinity/g, ': null').replace(/:\s*-Infinity/g, ': null');
+                
                 try {
                     db = JSON.parse(text);
                 } catch (err) {
                     console.error("Stocks JSON parse failed. First 200 chars:", text.slice(0, 200));
-                    throw new Error(`Stocks JSON parse error: ${err.message}`);
+                    throw new Error(`JSON Parse error: ${err.message}`);
                 }
                 
                 // Fetch ETFs
@@ -517,6 +514,7 @@
                     const etfResp = await fetch('etf_data_live.json?v=' + Date.now());
                     if (etfResp.ok) {
                         let etfText = await etfResp.text();
+                        etfText = etfText.replace(/:\s*NaN/g, ': null').replace(/:\s*Infinity/g, ': null').replace(/:\s*-Infinity/g, ': null');
                         etfDb = JSON.parse(etfText);
                     }
                 } catch(e) { console.warn("ETF JSON missing or invalid.", e); }
@@ -553,8 +551,16 @@
                 updateDashboardView(); 
             } catch (e) { 
                 console.error("Initialization Crash: ", e);
-                document.getElementById('last-update').innerText = 'Error: ' + e.message.substring(0, 30);
-                document.getElementById('stock-grid').innerHTML = `<div class="col-span-full text-center py-12 bg-red-50 rounded-xl border border-red-200"><i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3"></i><h3 class="text-lg font-bold text-red-700">System Error Loading Data</h3><p class="text-sm text-red-600 mt-2">${e.message}</p><p class="text-xs text-red-400 mt-4">Check the browser console for the raw response text.</p></div>`;
+                document.getElementById('last-update').innerText = 'Error: Data fetch failed.';
+                document.getElementById('stock-grid').innerHTML = `
+                    <div class="col-span-full flex justify-center py-12">
+                        <div class="bg-red-50 border border-red-200 text-center p-8 rounded-xl max-w-lg shadow-sm">
+                            <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-red-800 mb-2">System Error Loading Data</h3>
+                            <p class="text-sm text-red-600 mb-4">Stocks JSON parse error: ${e.message}</p>
+                            <p class="text-xs text-red-400 font-medium">Check the browser console for the raw response text.</p>
+                        </div>
+                    </div>`;
             }
         }
 
@@ -1683,11 +1689,6 @@
                     const sign = pct > 0 ? '+' : '';
                     const changeColor = pct >= 0 ? 'text-green-500' : 'text-red-500';
                     modalChangeHtml = `<span class="text-sm font-bold ${changeColor}">${sign}${pct.toFixed(2)}%</span>`;
-                }
-
-                let syncTimeString = "Unknown";
-                if (s.last_updated) {
-                    syncTimeString = new Date(s.last_updated).toLocaleString();
                 }
 
                 safeSetText('modal-title', s.company || 'Unknown Company');
