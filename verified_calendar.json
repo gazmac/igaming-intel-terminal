@@ -30,7 +30,7 @@
         "call_time": "5:00 PM EST"
     },
     "PENN": {
-        "date": "May 7, 2026",
+        "date": "August 07, 2026",
         "report_time": "7:00 AM EST",
         "call_time": "9:00 AM EST"
     },
@@ -105,7 +105,7 @@
         "call_time": "6:30 PM HKT"
     },
     "MLCO": {
-        "date": "May 7, 2026",
+        "date": "August 07, 2026",
         "report_time": "Pre-Market",
         "call_time": "8:30 AM EST"
     },
@@ -225,7 +225,7 @@
         "call_time": "4:00 PM EET (Next Day)"
     },
     "TIMA.F": {
-        "date": "May 7, 2026",
+        "date": "August 07, 2026",
         "report_time": "7:30 AM CET",
         "call_time": "10:00 AM CET"
     },
