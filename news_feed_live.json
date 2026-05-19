@@ -1,18 +1,5 @@
 [
     {
-        "title": "Colorado Legislators Voted To Strengthen Responsible Gambling Rules; Some Warn of Unintended Consequences",
-        "link": "https://www.gamblinginsider.com/news/160239/colorado-legislators-voted-to-strengthen-responsible-gambling-rules-some-warn-of-unintended-consequences",
-        "author": "Robyn McNeil",
-        "date": "May 14, 2026",
-        "summary": "Colorado passed a multi-pronged responsible gambling bill that, among other things, makes it the first state to ban gambling-related push notifications and text messages from operators. Some have warned the restrictions could prompt players to choose unregulated sportsbooks A bipartisan bill to strengthen Colorado\u2019s sports betting and responsible gambling protections passed the state legislature on [&#8230;]\nThe post Colorado Legislators Voted To Strengthen Responsible Gambling Rules; Some Warn of Unintended Consequences appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Operators",
-        "timestamp": 1779185045.450558
-    },
-    {
         "title": "Oklahoma Override, Minnesota Prediction Market Ban Lead This Week\u2019s Gambling Bills That Mattered",
         "link": "https://www.gamblinginsider.com/news/160263/oklahoma-minnesota-prediction-market-sweeps-bills-week",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1779185045.4505045
+        "timestamp": 1779203905.9683611
     },
     {
         "title": "Bally\u2019s Selected for Rhode Island\u2019s Second Online Sportsbook License",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1779185045.4504468
+        "timestamp": 1779203905.968306
     },
     {
         "title": "Gambling.com Cuts 25% of Jobs in AI-First Shift as Q1 Earnings Hurt By Rising Costs",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1779185045.4503942
+        "timestamp": 1779203905.9682586
     },
     {
         "title": "Kalshi Pushes to Tie New York Prediction Market Cases Together as AG Alleges \u201cGamesmanship\u201d",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1779185045.4503558
+        "timestamp": 1779203905.9682243
     },
     {
         "title": "Who Prediction Market Traders Really Are: More DeFi Enthusiast, Less Sports Bettor",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1779185045.4502861
+        "timestamp": 1779203905.968156
     },
     {
         "title": "Dana White, Donald Trump and a Sports Betting Anniversary Highlight This Week\u2019s Bingos & Busts",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1779185045.4502413
+        "timestamp": 1779203905.9681158
     },
     {
         "title": "Prediction Markets, State Bills Lead Gambling Stories to Watch This Week",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1779185045.450182
+        "timestamp": 1779203905.9680603
     },
     {
         "title": "DraftKings Shutters Wrigley Field Location as In-Venue Sportsbooks Wane",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1779185045.4501042
+        "timestamp": 1779203905.967987
     },
     {
         "title": "North Carolina Tax Talks Highlight Growing Pressure on Sports Betting Operators",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1779185045.4500387
+        "timestamp": 1779203905.967933
+    },
+    {
+        "title": "Bally\u2019s Q1 Intralot-Fueled Revenue Surges 28% But Refinancing Costs Weigh",
+        "link": "https://www.gamblinginsider.com/news/160756/ballys-q1-intralot-fueled-revenue-surges-28-but-refinancing-costs-weigh",
+        "author": "Gary McFarlane",
+        "date": "May 19, 2026",
+        "summary": "Bally&#8217;s revenue rockets as its online casino business in the UK and Spain surges, yet its deleveraging efforts led to a $161.9 million loss. Bally\u2019s has reported strong Q1 2026 net revenue of $755.72 million, a 28.3% year-over-year surge compared to Q1 2025 ($611.07 million), driven primarily by Intralot-fueled interactive digital expansion and property consolidation. [&#8230;]\nThe post Bally&#8217;s Q1 Intralot-Fueled Revenue Surges 28% But Refinancing Costs Weigh appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1779203905.9678762
     }
 ]
