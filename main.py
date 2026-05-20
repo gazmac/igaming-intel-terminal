@@ -24,48 +24,48 @@ except FileNotFoundError:
 # DEFAULT CALENDAR OVERRIDES
 DEFAULT_CALENDAR = {
     "6425.T": {
-        "date": "May 14, 2026", 
-        "report_time": "After Market", 
+        "date": "May 14, 2026",
+        "report_time": "After Market",
         "call_time": "TBD"
     },
     "2767.T": {
-        "date": "May 12, 2026", 
-        "report_time": "After Market", 
+        "date": "May 12, 2026",
+        "report_time": "After Market",
         "call_time": "TBD"
     },
     "TLC.AX": {
-        "date": "Aug 20, 2026", 
-        "report_time": "Pre Market", 
+        "date": "Aug 20, 2026",
+        "report_time": "Pre Market",
         "call_time": "10:00 AM AEST"
     },
     "SKC.NZ": {
-        "date": "Aug 21, 2026", 
-        "report_time": "Pre Market", 
+        "date": "Aug 21, 2026",
+        "report_time": "Pre Market",
         "call_time": "TBD"
     },
     "JIN.AX": {
-        "date": "Aug 25, 2026", 
-        "report_time": "Pre Market", 
+        "date": "Aug 25, 2026",
+        "report_time": "Pre Market",
         "call_time": "TBD"
     },
     "ESON.LS": {
-        "date": "May 25, 2026", 
-        "report_time": "After Market", 
+        "date": "May 25, 2026",
+        "report_time": "After Market",
         "call_time": "TBD"
     },
     "GMBL": {
-        "date": "May 15, 2026", 
-        "report_time": "TBD", 
+        "date": "May 15, 2026",
+        "report_time": "TBD",
         "call_time": "TBD"
     },
     "DELTACORP.NS": {
-        "date": "Apr 28, 2026", 
-        "report_time": "After Market", 
+        "date": "Apr 28, 2026",
+        "report_time": "After Market",
         "call_time": "TBD"
     },
     "AGI.AX": {
-        "date": "Aug 26, 2026", 
-        "report_time": "Pre Market", 
+        "date": "Aug 26, 2026",
+        "report_time": "Pre Market",
         "call_time": "TBD"
     }
 }
@@ -88,9 +88,9 @@ except Exception as e:
 # --- EXCLUSIVE NEWS FEED SOURCE ---
 NEWS_SOURCES = [
     {
-        "url": "https://www.gamblinginsider.com/rss/", 
-        "domain": "gamblinginsider.com", 
-        "name": "Gambling Insider", 
+        "url": "https://www.gamblinginsider.com/rss/",
+        "domain": "gamblinginsider.com",
+        "name": "Gambling Insider",
         "priority": 1
     }
 ]
@@ -114,7 +114,7 @@ TARGET_ETFS = [
     }
 ]
 
-# ETF STATIC FALLBACKS (Sourced directly from Provider Sites)
+# ETF STATIC FALLBACKS (Scraped from Provider Sites)
 ETF_STATIC_FALLBACKS = {
     "BETZ": {
         "price_fallback": 18.11,
@@ -122,65 +122,185 @@ ETF_STATIC_FALLBACKS = {
         "aum_fallback": "$52.01M",
         "nav_fallback": "$18.25",
         "jurisdictions": [
-            "Global", 
+            "Global",
             "US Focus"
         ],
         "holdings": [
-            {"ticker": "LTMC.MI", "name": "Lottomatica Group", "weight": 6.59},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 6.53},
-            {"ticker": "FDJ.PA", "name": "La Francaise Des Jeux", "weight": 6.23},
-            {"ticker": "TAH.AX", "name": "Tabcorp Holdings", "weight": 5.96},
-            {"ticker": "RSI", "name": "Rush Street Interactive", "weight": 5.93},
-            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 5.85},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.80},
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 5.66},
-            {"ticker": "SGHC", "name": "Super Group", "weight": 5.15},
-            {"ticker": "CHDN", "name": "Churchill Downs", "weight": 4.73}
+            {
+                "ticker": "LTMC.MI",
+                "name": "Lottomatica Group",
+                "weight": 6.59
+            },
+            {
+                "ticker": "EVO.ST",
+                "name": "Evolution AB",
+                "weight": 6.53
+            },
+            {
+                "ticker": "FDJ.PA",
+                "name": "La Francaise Des Jeux",
+                "weight": 6.23
+            },
+            {
+                "ticker": "TAH.AX",
+                "name": "Tabcorp Holdings",
+                "weight": 5.96
+            },
+            {
+                "ticker": "RSI",
+                "name": "Rush Street Interactive",
+                "weight": 5.93
+            },
+            {
+                "ticker": "TLC.AX",
+                "name": "The Lottery Corp",
+                "weight": 5.85
+            },
+            {
+                "ticker": "DKNG",
+                "name": "DraftKings Inc",
+                "weight": 5.80
+            },
+            {
+                "ticker": "FLUT",
+                "name": "Flutter Entertainment",
+                "weight": 5.66
+            },
+            {
+                "ticker": "SGHC",
+                "name": "Super Group",
+                "weight": 5.15
+            },
+            {
+                "ticker": "CHDN",
+                "name": "Churchill Downs",
+                "weight": 4.73
+            }
         ]
     },
     "BJK": {
         "price_fallback": 35.50,
-        "expense_ratio": "0.65%",
+        "expense_ratio": "0.51%",
         "aum_fallback": "$17.75M",
         "nav_fallback": "$35.50",
         "jurisdictions": [
-            "Global", 
-            "Macau", 
+            "Global",
+            "Macau",
             "US"
         ],
         "holdings": [
-            {"ticker": "VICI", "name": "Vici Properties Inc", "weight": 8.24},
-            {"ticker": "ALL.AX", "name": "Aristocrat Leisure", "weight": 7.66},
-            {"ticker": "GLPI", "name": "Gaming And Leisure", "weight": 6.47},
-            {"ticker": "0027.HK", "name": "Galaxy Entertainment", "weight": 5.77},
-            {"ticker": "LVS", "name": "Las Vegas Sands", "weight": 5.52},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 5.46},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 4.84},
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.40},
-            {"ticker": "WYNN", "name": "Wynn Resorts", "weight": 4.10},
-            {"ticker": "TLC.AX", "name": "The Lottery Corp", "weight": 4.03}
+            {
+                "ticker": "VICI",
+                "name": "Vici Properties Inc",
+                "weight": 8.24
+            },
+            {
+                "ticker": "ALL.AX",
+                "name": "Aristocrat Leisure",
+                "weight": 7.66
+            },
+            {
+                "ticker": "GLPI",
+                "name": "Gaming And Leisure",
+                "weight": 6.47
+            },
+            {
+                "ticker": "0027.HK",
+                "name": "Galaxy Entertainment",
+                "weight": 5.77
+            },
+            {
+                "ticker": "LVS",
+                "name": "Las Vegas Sands",
+                "weight": 5.52
+            },
+            {
+                "ticker": "DKNG",
+                "name": "DraftKings Inc",
+                "weight": 5.46
+            },
+            {
+                "ticker": "EVO.ST",
+                "name": "Evolution AB",
+                "weight": 4.84
+            },
+            {
+                "ticker": "FLUT",
+                "name": "Flutter Entertainment",
+                "weight": 4.40
+            },
+            {
+                "ticker": "WYNN",
+                "name": "Wynn Resorts",
+                "weight": 4.10
+            },
+            {
+                "ticker": "TLC.AX",
+                "name": "The Lottery Corp",
+                "weight": 4.03
+            }
         ]
     },
     "ODDS": {
         "price_fallback": 24.10,
-        "expense_ratio": "0.60%",
+        "expense_ratio": "0.51%",
         "aum_fallback": "$3.88M",
         "nav_fallback": "$24.26",
         "jurisdictions": [
-            "US", 
+            "US",
             "Global Digital"
         ],
         "holdings": [
-            {"ticker": "700.HK", "name": "Tencent Holdings", "weight": 8.32},
-            {"ticker": "EVO.ST", "name": "Evolution AB", "weight": 7.88},
-            {"ticker": "DKNG", "name": "DraftKings Inc", "weight": 7.06},
-            {"ticker": "FLUT", "name": "Flutter Entertainment", "weight": 4.99},
-            {"ticker": "7974.T", "name": "Nintendo Co Ltd", "weight": 4.55},
-            {"ticker": "ENT.L", "name": "Entain PLC", "weight": 4.09},
-            {"ticker": "NTES", "name": "NetEase Inc", "weight": 4.01},
-            {"ticker": "EA", "name": "Electronic Arts", "weight": 3.33},
-            {"ticker": "SGHC", "name": "Super Group", "weight": 3.06},
-            {"ticker": "SRAD", "name": "Sportradar Group", "weight": 2.98}
+            {
+                "ticker": "700.HK",
+                "name": "Tencent Holdings",
+                "weight": 8.32
+            },
+            {
+                "ticker": "EVO.ST",
+                "name": "Evolution AB",
+                "weight": 7.88
+            },
+            {
+                "ticker": "DKNG",
+                "name": "DraftKings Inc",
+                "weight": 7.06
+            },
+            {
+                "ticker": "FLUT",
+                "name": "Flutter Entertainment",
+                "weight": 4.99
+            },
+            {
+                "ticker": "7974.T",
+                "name": "Nintendo Co Ltd",
+                "weight": 4.55
+            },
+            {
+                "ticker": "ENT.L",
+                "name": "Entain PLC",
+                "weight": 4.09
+            },
+            {
+                "ticker": "NTES",
+                "name": "NetEase Inc",
+                "weight": 4.01
+            },
+            {
+                "ticker": "EA",
+                "name": "Electronic Arts",
+                "weight": 3.33
+            },
+            {
+                "ticker": "SGHC",
+                "name": "Super Group",
+                "weight": 3.06
+            },
+            {
+                "ticker": "SRAD",
+                "name": "Sportradar Group",
+                "weight": 2.98
+            }
         ]
     }
 }
@@ -188,402 +308,402 @@ ETF_STATIC_FALLBACKS = {
 # --- UNCOMPRESSED TARGET COMPANIES ---
 TARGET_COMPANIES = [
     {
-        "name": "Flutter Entertainment", 
-        "ticker": "FLUT", 
-        "domain": "flutter.com", 
+        "name": "Flutter Entertainment",
+        "ticker": "FLUT",
+        "domain": "flutter.com",
         "base_country": "Ireland"
     },
     {
-        "name": "DraftKings", 
-        "ticker": "DKNG", 
-        "domain": "draftkings.com", 
+        "name": "DraftKings",
+        "ticker": "DKNG",
+        "domain": "draftkings.com",
         "base_country": "USA"
     },
     {
-        "name": "Entain PLC", 
-        "ticker": "ENT.L", 
-        "domain": "entaingroup.com", 
+        "name": "Entain PLC",
+        "ticker": "ENT.L",
+        "domain": "entaingroup.com",
         "base_country": "UK"
     },
     {
-        "name": "Evolution AB", 
-        "ticker": "EVO.ST", 
-        "domain": "evolution.com", 
+        "name": "Evolution AB",
+        "ticker": "EVO.ST",
+        "domain": "evolution.com",
         "base_country": "Sweden"
     },
     {
-        "name": "MGM Resorts", 
-        "ticker": "MGM", 
-        "domain": "mgmresorts.com", 
+        "name": "MGM Resorts",
+        "ticker": "MGM",
+        "domain": "mgmresorts.com",
         "base_country": "USA"
     },
     {
-        "name": "Caesars Entertainment", 
-        "ticker": "CZR", 
-        "domain": "caesars.com", 
+        "name": "Caesars Entertainment",
+        "ticker": "CZR",
+        "domain": "caesars.com",
         "base_country": "USA"
     },
     {
-        "name": "Penn Entertainment", 
-        "ticker": "PENN", 
-        "domain": "pennentertainment.com", 
+        "name": "Penn Entertainment",
+        "ticker": "PENN",
+        "domain": "pennentertainment.com",
         "base_country": "USA"
     },
     {
-        "name": "Las Vegas Sands", 
-        "ticker": "LVS", 
-        "domain": "sands.com", 
+        "name": "Las Vegas Sands",
+        "ticker": "LVS",
+        "domain": "sands.com",
         "base_country": "USA"
     },
     {
-        "name": "Wynn Resorts", 
-        "ticker": "WYNN", 
-        "domain": "wynnresorts.com", 
+        "name": "Wynn Resorts",
+        "ticker": "WYNN",
+        "domain": "wynnresorts.com",
         "base_country": "USA"
     },
     {
-        "name": "Evoke plc", 
-        "ticker": "EVOK.L", 
-        "domain": "evokeplc.com", 
+        "name": "Evoke plc",
+        "ticker": "EVOK.L",
+        "domain": "evokeplc.com",
         "base_country": "UK"
     },
     {
-        "name": "Sportradar", 
-        "ticker": "SRAD", 
-        "domain": "sportradar.com", 
+        "name": "Sportradar",
+        "ticker": "SRAD",
+        "domain": "sportradar.com",
         "base_country": "Switzerland"
     },
     {
-        "name": "Betsson AB", 
-        "ticker": "BETS-B.ST", 
-        "domain": "betssongroup.com", 
+        "name": "Betsson AB",
+        "ticker": "BETS-B.ST",
+        "domain": "betssongroup.com",
         "base_country": "Sweden"
     },
     {
-        "name": "Playtech", 
-        "ticker": "PTEC.L", 
-        "domain": "playtech.com", 
+        "name": "Playtech",
+        "ticker": "PTEC.L",
+        "domain": "playtech.com",
         "base_country": "UK"
     },
     {
-        "name": "Churchill Downs", 
-        "ticker": "CHDN", 
-        "domain": "churchilldownsincorporated.com", 
+        "name": "Churchill Downs",
+        "ticker": "CHDN",
+        "domain": "churchilldownsincorporated.com",
         "base_country": "USA"
     },
     {
-        "name": "Light & Wonder", 
-        "ticker": "LNW", 
-        "domain": "lnw.com", 
+        "name": "Light & Wonder",
+        "ticker": "LNW",
+        "domain": "lnw.com",
         "base_country": "USA"
     },
     {
-        "name": "Aristocrat Leisure", 
-        "ticker": "ALL.AX", 
-        "domain": "aristocrat.com", 
+        "name": "Aristocrat Leisure",
+        "ticker": "ALL.AX",
+        "domain": "aristocrat.com",
         "base_country": "Australia"
     },
     {
-        "name": "Super Group", 
-        "ticker": "SGHC", 
-        "domain": "supergroup.com", 
+        "name": "Super Group",
+        "ticker": "SGHC",
+        "domain": "supergroup.com",
         "base_country": "Guernsey"
     },
     {
-        "name": "Rush Street Interactive", 
-        "ticker": "RSI", 
-        "domain": "rushstreetinteractive.com", 
+        "name": "Rush Street Interactive",
+        "ticker": "RSI",
+        "domain": "rushstreetinteractive.com",
         "base_country": "USA"
     },
     {
-        "name": "Bragg Gaming Group", 
-        "ticker": "BRAG", 
-        "domain": "bragg.group", 
+        "name": "Bragg Gaming Group",
+        "ticker": "BRAG",
+        "domain": "bragg.group",
         "base_country": "Canada"
     },
     {
-        "name": "Kambi Group", 
-        "ticker": "KAMBI.ST", 
-        "domain": "kambi.com", 
+        "name": "Kambi Group",
+        "ticker": "KAMBI.ST",
+        "domain": "kambi.com",
         "base_country": "Malta"
     },
     {
-        "name": "Galaxy Entertainment", 
-        "ticker": "0027.HK", 
-        "domain": "galaxyentertainment.com", 
+        "name": "Galaxy Entertainment",
+        "ticker": "0027.HK",
+        "domain": "galaxyentertainment.com",
         "base_country": "Hong Kong"
     },
     {
-        "name": "Melco Resorts", 
-        "ticker": "MLCO", 
-        "domain": "cityofdreamsmacau.com", 
+        "name": "Melco Resorts",
+        "ticker": "MLCO",
+        "domain": "cityofdreamsmacau.com",
         "base_country": "Hong Kong"
-    }, 
+    },
     {
-        "name": "SJM Holdings", 
-        "ticker": "1980.HK", 
-        "domain": "sjmresorts.com", 
+        "name": "SJM Holdings",
+        "ticker": "1980.HK",
+        "domain": "sjmresorts.com",
         "base_country": "Hong Kong"
-    }, 
+    },
     {
-        "name": "Wynn Macau", 
-        "ticker": "1128.HK", 
-        "domain": "wynnresorts.com", 
+        "name": "Wynn Macau",
+        "ticker": "1128.HK",
+        "domain": "wynnresorts.com",
         "base_country": "Macau"
-    }, 
+    },
     {
-        "name": "Genting Singapore", 
-        "ticker": "G13.SI", 
-        "domain": "gentingsingapore.com", 
+        "name": "Genting Singapore",
+        "ticker": "G13.SI",
+        "domain": "gentingsingapore.com",
         "base_country": "Singapore"
     },
     {
-        "name": "La Française des Jeux", 
-        "ticker": "FDJ.PA", 
-        "domain": "groupefdj.com", 
+        "name": "La Française des Jeux",
+        "ticker": "FDJ.PA",
+        "domain": "groupefdj.com",
         "base_country": "France"
     },
     {
-        "name": "Lottomatica Group", 
-        "ticker": "LTMC.MI", 
-        "domain": "lottomaticagroup.com", 
+        "name": "Lottomatica Group",
+        "ticker": "LTMC.MI",
+        "domain": "lottomaticagroup.com",
         "base_country": "Italy"
     },
     {
-        "name": "Rank Group", 
-        "ticker": "RNK.L", 
-        "domain": "rank.com", 
+        "name": "Rank Group",
+        "ticker": "RNK.L",
+        "domain": "rank.com",
         "base_country": "UK"
     },
     {
-        "name": "Better Collective", 
-        "ticker": "BETCO.ST", 
-        "domain": "bettercollective.com", 
+        "name": "Better Collective",
+        "ticker": "BETCO.ST",
+        "domain": "bettercollective.com",
         "base_country": "Denmark"
     },
     {
-        "name": "Catena Media", 
-        "ticker": "CTM.ST", 
-        "domain": "catenamedia.com", 
-        "base_country": "Malta", 
+        "name": "Catena Media",
+        "ticker": "CTM.ST",
+        "domain": "catenamedia.com",
+        "base_country": "Malta",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/catena_media.png"
-    }, 
+    },
     {
-        "name": "Bally's Corporation", 
-        "ticker": "BALY", 
-        "domain": "ballys.com", 
+        "name": "Bally's Corporation",
+        "ticker": "BALY",
+        "domain": "ballys.com",
         "base_country": "USA"
     },
     {
-        "name": "Boyd Gaming", 
-        "ticker": "BYD", 
-        "domain": "boydgaming.com", 
+        "name": "Boyd Gaming",
+        "ticker": "BYD",
+        "domain": "boydgaming.com",
         "base_country": "USA"
     },
     {
-        "name": "Red Rock Resorts", 
-        "ticker": "RRR", 
-        "domain": "stationcasinos.com", 
-        "base_country": "USA"
-    }, 
-    {
-        "name": "Golden Entertainment", 
-        "ticker": "GDEN", 
-        "domain": "goldenent.com", 
+        "name": "Red Rock Resorts",
+        "ticker": "RRR",
+        "domain": "stationcasinos.com",
         "base_country": "USA"
     },
     {
-        "name": "Monarch Casino", 
-        "ticker": "MCRI", 
-        "domain": "monarchcasino.com", 
+        "name": "Golden Entertainment",
+        "ticker": "GDEN",
+        "domain": "goldenent.com",
         "base_country": "USA"
     },
     {
-        "name": "Century Casinos", 
-        "ticker": "CNTY", 
-        "domain": "cnty.com", 
+        "name": "Monarch Casino",
+        "ticker": "MCRI",
+        "domain": "monarchcasino.com",
         "base_country": "USA"
     },
     {
-        "name": "Genius Sports", 
-        "ticker": "GENI", 
-        "domain": "geniussports.com", 
+        "name": "Century Casinos",
+        "ticker": "CNTY",
+        "domain": "cnty.com",
+        "base_country": "USA"
+    },
+    {
+        "name": "Genius Sports",
+        "ticker": "GENI",
+        "domain": "geniussports.com",
         "base_country": "UK"
     },
     {
-        "name": "Brightstar Lottery (fka IGT)", 
-        "ticker": "BRSL", 
-        "domain": "brightstarlottery.com", 
+        "name": "Brightstar Lottery (fka IGT)",
+        "ticker": "BRSL",
+        "domain": "brightstarlottery.com",
         "base_country": "UK"
     },
     {
-        "name": "Inspired Entertainment", 
-        "ticker": "INSE", 
-        "domain": "inseinc.com", 
+        "name": "Inspired Entertainment",
+        "ticker": "INSE",
+        "domain": "inseinc.com",
         "base_country": "USA"
     },
     {
-        "name": "Star Entertainment", 
-        "ticker": "SGR.AX", 
-        "domain": "starentertainmentgroup.com.au", 
+        "name": "Star Entertainment",
+        "ticker": "SGR.AX",
+        "domain": "starentertainmentgroup.com.au",
         "base_country": "Australia"
     },
     {
-        "name": "Genting Malaysia", 
-        "ticker": "GENM.KL", 
-        "domain": "gentingmalaysia.com", 
+        "name": "Genting Malaysia",
+        "ticker": "GENM.KL",
+        "domain": "gentingmalaysia.com",
         "base_country": "Malaysia"
     },
     {
-        "name": "VICI Properties", 
-        "ticker": "VICI", 
-        "domain": "viciproperties.com", 
+        "name": "VICI Properties",
+        "ticker": "VICI",
+        "domain": "viciproperties.com",
         "base_country": "USA"
     },
     {
-        "name": "Gaming & Leisure Prop", 
-        "ticker": "GLPI", 
-        "domain": "glpropinc.com", 
+        "name": "Gaming & Leisure Prop",
+        "ticker": "GLPI",
+        "domain": "glpropinc.com",
         "base_country": "USA"
     },
     {
-        "name": "OPAP S.A.", 
-        "ticker": "OPAP.AT", 
-        "domain": "opap.gr", 
+        "name": "OPAP S.A.",
+        "ticker": "OPAP.AT",
+        "domain": "opap.gr",
         "base_country": "Greece"
     },
     {
-        "name": "Zeal Network", 
-        "ticker": "TIMA.F", 
-        "domain": "zealnetwork.de", 
+        "name": "Zeal Network",
+        "ticker": "TIMA.F",
+        "domain": "zealnetwork.de",
         "base_country": "Germany"
     },
     {
-        "name": "Gaming Realms", 
-        "ticker": "GMR.L", 
-        "domain": "gamingrealms.com", 
+        "name": "Gaming Realms",
+        "ticker": "GMR.L",
+        "domain": "gamingrealms.com",
         "base_country": "UK"
     },
     {
-        "name": "Groupe Partouche", 
-        "ticker": "PARP.PA", 
-        "domain": "groupepartouche.com", 
+        "name": "Groupe Partouche",
+        "ticker": "PARP.PA",
+        "domain": "groupepartouche.com",
         "base_country": "France"
     },
     {
-        "name": "Bet-at-home", 
-        "ticker": "ACX.DE", 
-        "domain": "bet-at-home.ag", 
+        "name": "Bet-at-home",
+        "ticker": "ACX.DE",
+        "domain": "bet-at-home.ag",
         "base_country": "Germany"
     },
     {
-        "name": "Gambling.com Group", 
-        "ticker": "GAMB", 
-        "domain": "gambling.com", 
+        "name": "Gambling.com Group",
+        "ticker": "GAMB",
+        "domain": "gambling.com",
         "base_country": "Jersey",
         "logo_override": "https://logo.clearbit.com/gambling.com"
     },
     {
-        "name": "BetMGM (MGM/Entain JV)", 
-        "ticker": "BETMGM", 
-        "domain": "betmgm.com", 
+        "name": "BetMGM (MGM/Entain JV)",
+        "ticker": "BETMGM",
+        "domain": "betmgm.com",
         "base_country": "USA"
     },
     {
-        "name": "Full House Resorts", 
-        "ticker": "FLL", 
-        "domain": "fullhouseresorts.com", 
-        "base_country": "USA", 
+        "name": "Full House Resorts",
+        "ticker": "FLL",
+        "domain": "fullhouseresorts.com",
+        "base_country": "USA",
         "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"
     },
     {
-        "name": "Accel Entertainment", 
-        "ticker": "ACEL", 
-        "domain": "accelentertainment.com", 
-        "base_country": "USA", 
+        "name": "Accel Entertainment",
+        "ticker": "ACEL",
+        "domain": "accelentertainment.com",
+        "base_country": "USA",
         "logo_override": "https://logo.clearbit.com/accelentertainment.com"
     },
     {
-        "name": "Codere Online", 
-        "ticker": "CDRO", 
-        "domain": "codere.com", 
-        "base_country": "Luxembourg", 
+        "name": "Codere Online",
+        "ticker": "CDRO",
+        "domain": "codere.com",
+        "base_country": "Luxembourg",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/codere_online.png"
     },
     {
-        "name": "The Lottery Corporation", 
-        "ticker": "TLC.AX", 
-        "domain": "thelotterycorporation.com.au", 
-        "base_country": "Australia", 
+        "name": "The Lottery Corporation",
+        "ticker": "TLC.AX",
+        "domain": "thelotterycorporation.com.au",
+        "base_country": "Australia",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/the_lottery_corp.png"
     },
     {
-        "name": "Kangwon Land", 
-        "ticker": "035250.KS", 
-        "domain": "kangwonland.com", 
-        "base_country": "South Korea", 
+        "name": "Kangwon Land",
+        "ticker": "035250.KS",
+        "domain": "kangwonland.com",
+        "base_country": "South Korea",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/kangwon_land.png"
     },
     {
-        "name": "Tsuburaya Fields", 
-        "ticker": "2767.T", 
-        "domain": "tsuburaya-fields.co.jp", 
-        "base_country": "Japan", 
+        "name": "Tsuburaya Fields",
+        "ticker": "2767.T",
+        "domain": "tsuburaya-fields.co.jp",
+        "base_country": "Japan",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/tsuburaya_fields.png"
     },
     {
-        "name": "SkyCity Entertainment", 
-        "ticker": "SKC.NZ", 
-        "domain": "skycityentertainmentgroup.com", 
+        "name": "SkyCity Entertainment",
+        "ticker": "SKC.NZ",
+        "domain": "skycityentertainmentgroup.com",
         "base_country": "New Zealand"
     },
     {
-        "name": "Universal Entertainment", 
-        "ticker": "6425.T", 
-        "domain": "universal-777.com", 
-        "base_country": "Japan", 
+        "name": "Universal Entertainment",
+        "ticker": "6425.T",
+        "domain": "universal-777.com",
+        "base_country": "Japan",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/universal_entertainment.jpg"
     },
     {
-        "name": "Jumbo Interactive", 
-        "ticker": "JIN.AX", 
-        "domain": "jumbointeractive.com", 
-        "base_country": "Australia", 
+        "name": "Jumbo Interactive",
+        "ticker": "JIN.AX",
+        "domain": "jumbointeractive.com",
+        "base_country": "Australia",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/jumbo_interactive.png"
     },
     {
-        "name": "Ainsworth Game Tech", 
-        "ticker": "AGI.AX", 
-        "domain": "agtslots.com", 
-        "base_country": "Australia", 
+        "name": "Ainsworth Game Tech",
+        "ticker": "AGI.AX",
+        "domain": "agtslots.com",
+        "base_country": "Australia",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/ainsworth_game_tech.png"
     },
     {
-        "name": "Delta Corp", 
-        "ticker": "DELTACORP.NS", 
-        "domain": "deltacorp.in", 
-        "base_country": "India", 
+        "name": "Delta Corp",
+        "ticker": "DELTACORP.NS",
+        "domain": "deltacorp.in",
+        "base_country": "India",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/delta_corp.png"
     },
     {
-        "name": "Golden Matrix Group", 
-        "ticker": "GMGI", 
-        "domain": "goldenmatrix.com", 
-        "base_country": "USA", 
+        "name": "Golden Matrix Group",
+        "ticker": "GMGI",
+        "domain": "goldenmatrix.com",
+        "base_country": "USA",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/golden_matrix_group.png"
     },
     {
-        "name": "Estoril Sol", 
-        "ticker": "ESON.LS", 
-        "domain": "estoril-solsgps.com", 
-        "base_country": "Portugal", 
+        "name": "Estoril Sol",
+        "ticker": "ESON.LS",
+        "domain": "estoril-solsgps.com",
+        "base_country": "Portugal",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/estoril_sol.png"
     },
     {
-        "name": "Esports Entertainment", 
-        "ticker": "GMBL", 
-        "domain": "esportsentertainmentgroup.com", 
-        "base_country": "Malta", 
+        "name": "Esports Entertainment",
+        "ticker": "GMBL",
+        "domain": "esportsentertainmentgroup.com",
+        "base_country": "Malta",
         "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/esports_entertainment.png"
     }
 ]
@@ -592,9 +712,9 @@ TARGET_COMPANIES = [
 OTC_MAP = {
     "ENT.L": "GMVHF",
     "EVO.ST": "EVVTY",
-    "EVOK.L": "EIHDF", 
+    "EVOK.L": "EIHDF",
     "BETS-B.ST": "BTSBF",
-    "PTEC.L": "PYTCF", 
+    "PTEC.L": "PYTCF",
     "ALL.AX": "ARLUF",
     "KAMBI.ST": "KMBIF",
     "0027.HK": "GXYEF",
@@ -612,8 +732,7 @@ OTC_MAP = {
     "SKC.NZ": "SKYCG",
     "JIN.AX": "JUMBF"
 }
-
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -621,11 +740,11 @@ VERIFIED_DATA = {
         "revenue_interim": "$3.79B (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
         "map_codes": [
-            "US", 
-            "GB", 
-            "IE", 
-            "AU", 
-            "IT", 
+            "US",
+            "GB",
+            "IE",
+            "AU",
+            "IT",
             "BR"
         ],
         "eps_actual": 1.74,
@@ -638,10 +757,10 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "16.8%",
         "ebitda_margin_yoy": "+120 bps",
         "jurisdictions": [
-            "US", 
-            "UK", 
-            "Ireland", 
-            "Australia", 
+            "US",
+            "UK",
+            "Ireland",
+            "Australia",
             "Italy"
         ]
     },
@@ -651,8 +770,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$1.39B (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
         "map_codes": [
-            "US", 
-            "CA", 
+            "US",
+            "CA",
             "PR"
         ],
         "eps_actual": 0.25,
@@ -665,8 +784,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "3.8%",
         "ebitda_margin_yoy": "+450 bps",
         "jurisdictions": [
-            "US", 
-            "Ontario", 
+            "US",
+            "Ontario",
             "Puerto Rico"
         ]
     },
@@ -676,10 +795,10 @@ VERIFIED_DATA = {
         "revenue_interim": "£2.70B (H2 '25)",
         "focus": "B2C Sportsbook, iGaming & Retail",
         "map_codes": [
-            "GB", 
-            "IT", 
-            "BR", 
-            "AU", 
+            "GB",
+            "IT",
+            "BR",
+            "AU",
             "ES"
         ],
         "eps_actual": 0.62,
@@ -692,9 +811,9 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "21.8%",
         "ebitda_margin_yoy": "-50 bps",
         "jurisdictions": [
-            "UK", 
-            "Italy", 
-            "Brazil", 
+            "UK",
+            "Italy",
+            "Brazil",
             "Australia"
         ]
     },
@@ -704,12 +823,12 @@ VERIFIED_DATA = {
         "revenue_interim": "€625M (Q4 '25)",
         "focus": "B2B Live Casino Technology",
         "map_codes": [
-            "SE", 
-            "US", 
-            "CA", 
-            "MT", 
-            "LV", 
-            "GE", 
+            "SE",
+            "US",
+            "CA",
+            "MT",
+            "LV",
+            "GE",
             "RO"
         ],
         "eps_actual": 1.54,
@@ -722,9 +841,9 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "70.5%",
         "ebitda_margin_yoy": "+100 bps",
         "jurisdictions": [
-            "Europe", 
-            "North America", 
-            "LatAm", 
+            "Europe",
+            "North America",
+            "LatAm",
             "Asia"
         ]
     },
@@ -734,8 +853,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$4.3B (Q4 '25)",
         "focus": "Land-based Resorts & B2C Digital",
         "map_codes": [
-            "US", 
-            "CN", 
+            "US",
+            "CN",
             "JP"
         ],
         "eps_actual": -1.10,
@@ -748,8 +867,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Macau", 
+            "US",
+            "Macau",
             "Japan"
         ]
     },
@@ -759,9 +878,9 @@ VERIFIED_DATA = {
         "revenue_interim": "$2.8B (Q4 '25)",
         "focus": "Land-based Resorts & B2C Digital",
         "map_codes": [
-            "US", 
-            "CA", 
-            "GB", 
+            "US",
+            "CA",
+            "GB",
             "AE"
         ],
         "eps_actual": -0.34,
@@ -774,9 +893,9 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Canada", 
-            "UK", 
+            "US",
+            "Canada",
+            "UK",
             "UAE"
         ]
     },
@@ -786,7 +905,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$1.6B (Q4 '25)",
         "focus": "Land-based Casinos & B2C Digital",
         "map_codes": [
-            "US", 
+            "US",
             "CA"
         ],
         "eps_actual": 0.07,
@@ -799,7 +918,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "Canada"
         ]
     },
@@ -809,7 +928,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$2.9B (Q4 '25)",
         "focus": "Land-based Casino Resorts",
         "map_codes": [
-            "CN", 
+            "CN",
             "SG"
         ],
         "eps_actual": 0.65,
@@ -822,7 +941,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Macau", 
+            "Macau",
             "Singapore"
         ]
     },
@@ -832,8 +951,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$1.87B (Q4 '25)",
         "focus": "Luxury Land-based Resorts",
         "map_codes": [
-            "US", 
-            "CN", 
+            "US",
+            "CN",
             "AE"
         ],
         "eps_actual": 0.82,
@@ -846,8 +965,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Macau", 
+            "US",
+            "Macau",
             "UAE"
         ],
         "fallback_price": "$105.40",
@@ -861,9 +980,9 @@ VERIFIED_DATA = {
         "revenue_interim": "£850M (H2 '25)",
         "focus": "B2C Sportsbook, iGaming & Retail",
         "map_codes": [
-            "GB", 
-            "IT", 
-            "ES", 
+            "GB",
+            "IT",
+            "ES",
             "RO"
         ],
         "eps_actual": -0.05,
@@ -876,35 +995,35 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "17.8%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "UK", 
-            "Italy", 
+            "UK",
+            "Italy",
             "Spain"
         ]
     },
     "SRAD": {
         "rev_label": "REV",
-        "revenue_fy": "$980M (FY '25)",
-        "revenue_interim": "$280M (Q4 '25)",
+        "revenue_fy": "€1.29B (TTM)",
+        "revenue_interim": "€347M (Q1 '26)",
         "focus": "B2B Sports Data & Technology",
         "map_codes": [
-            "CH", 
-            "US", 
-            "GB", 
-            "DE", 
+            "CH",
+            "US",
+            "GB",
+            "DE",
             "AT"
         ],
-        "eps_actual": 0.14,
-        "eps_forecast": 0.10,
-        "net_income": "$35M",
-        "ebitda": "$55M",
-        "fcf": "$40M",
-        "ebitda_margin_qtr": "19.6%",
+        "eps_actual": -0.02,
+        "eps_forecast": 0.05,
+        "net_income": "-€6M",
+        "ebitda": "€66M",
+        "fcf": "€44M",
+        "ebitda_margin_qtr": "19.0%",
         "ebitda_margin_h2": "N/A",
         "ebitda_margin_fy": "18.2%",
-        "ebitda_margin_yoy": "N/A",
+        "ebitda_margin_yoy": "+12% EBITDA",
         "jurisdictions": [
-            "Global B2B", 
-            "US", 
+            "Global B2B",
+            "US",
             "Europe"
         ]
     },
@@ -914,11 +1033,11 @@ VERIFIED_DATA = {
         "revenue_interim": "€260M (Q4 '25)",
         "focus": "B2C & B2B iGaming/Sportsbook",
         "map_codes": [
-            "SE", 
-            "MT", 
-            "IT", 
-            "AR", 
-            "CO", 
+            "SE",
+            "MT",
+            "IT",
+            "AR",
+            "CO",
             "PE"
         ],
         "eps_actual": 0.35,
@@ -931,8 +1050,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "28.0%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Nordics", 
-            "LatAm", 
+            "Nordics",
+            "LatAm",
             "CEECA"
         ]
     },
@@ -942,10 +1061,10 @@ VERIFIED_DATA = {
         "revenue_interim": "£800M (H2 '25)",
         "focus": "B2B iGaming & Sportsbook Tech",
         "map_codes": [
-            "GB", 
-            "IT", 
-            "BG", 
-            "UA", 
+            "GB",
+            "IT",
+            "BG",
+            "UA",
             "EE"
         ],
         "eps_actual": 0.71,
@@ -958,8 +1077,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "26.3%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "UK", 
-            "Italy", 
+            "UK",
+            "Italy",
             "LatAm"
         ]
     },
@@ -990,9 +1109,9 @@ VERIFIED_DATA = {
         "revenue_interim": "$800M (Q4 '25)",
         "focus": "B2B Gaming Machines & iGaming",
         "map_codes": [
-            "US", 
-            "AU", 
-            "GB", 
+            "US",
+            "AU",
+            "GB",
             "SE"
         ],
         "eps_actual": 0.45,
@@ -1005,8 +1124,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "34.5%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Australia", 
+            "US",
+            "Australia",
             "UK"
         ]
     },
@@ -1016,9 +1135,9 @@ VERIFIED_DATA = {
         "revenue_interim": "A$3.2B (H2 '25)",
         "focus": "B2B Slots, Social Casino & iGaming",
         "map_codes": [
-            "AU", 
-            "US", 
-            "GB", 
+            "AU",
+            "US",
+            "GB",
             "IL"
         ],
         "eps_actual": 0.95,
@@ -1031,8 +1150,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "34.4%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Australia", 
+            "US",
+            "Australia",
             "Global"
         ]
     },
@@ -1042,10 +1161,10 @@ VERIFIED_DATA = {
         "revenue_interim": "$360M (Q3 '25)",
         "focus": "B2C Sportsbook & iGaming",
         "map_codes": [
-            "ZA", 
-            "CA", 
-            "GB", 
-            "MT", 
+            "ZA",
+            "CA",
+            "GB",
+            "MT",
             "FR"
         ],
         "eps_actual": 0.08,
@@ -1058,8 +1177,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Canada", 
-            "Africa", 
+            "Canada",
+            "Africa",
             "Europe"
         ]
     },
@@ -1069,10 +1188,10 @@ VERIFIED_DATA = {
         "revenue_interim": "$250M (Q3 '25)",
         "focus": "B2C Casino-First iGaming",
         "map_codes": [
-            "US", 
-            "CO", 
-            "MX", 
-            "CA", 
+            "US",
+            "CO",
+            "MX",
+            "CA",
             "PE"
         ],
         "eps_actual": 0.12,
@@ -1085,8 +1204,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Colombia", 
+            "US",
+            "Colombia",
             "Mexico"
         ]
     },
@@ -1096,10 +1215,10 @@ VERIFIED_DATA = {
         "revenue_interim": "€28M (Q3 '25)",
         "focus": "B2B iGaming Content & PAM",
         "map_codes": [
-            "CA", 
-            "US", 
-            "NL", 
-            "BR", 
+            "CA",
+            "US",
+            "NL",
+            "BR",
             "FI"
         ],
         "eps_actual": -0.02,
@@ -1112,8 +1231,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Europe", 
+            "US",
+            "Europe",
             "Canada"
         ]
     },
@@ -1123,11 +1242,11 @@ VERIFIED_DATA = {
         "revenue_interim": "€45M (Q4 '25)",
         "focus": "B2B Sportsbook Technology",
         "map_codes": [
-            "MT", 
-            "SE", 
-            "GB", 
-            "US", 
-            "RO", 
+            "MT",
+            "SE",
+            "GB",
+            "US",
+            "RO",
             "CO"
         ],
         "eps_actual": 0.18,
@@ -1140,8 +1259,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Global B2B", 
-            "US", 
+            "Global B2B",
+            "US",
             "LatAm"
         ]
     },
@@ -1151,7 +1270,7 @@ VERIFIED_DATA = {
         "revenue_interim": "HK$8.5B (Q4 '25)",
         "focus": "Macau Casino Resorts",
         "map_codes": [
-            "CN", 
+            "CN",
             "HK"
         ],
         "eps_actual": 1.20,
@@ -1173,8 +1292,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$1.29B (Q4 '25)",
         "focus": "Macau & Asia Resorts",
         "map_codes": [
-            "CN", 
-            "PH", 
+            "CN",
+            "PH",
             "CY"
         ],
         "eps_actual": 0.16,
@@ -1187,8 +1306,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Macau", 
-            "Philippines", 
+            "Macau",
+            "Philippines",
             "Cyprus"
         ]
     },
@@ -1198,7 +1317,7 @@ VERIFIED_DATA = {
         "revenue_interim": "HK$7.2B (Q4 '25)",
         "focus": "Macau Casino Resorts",
         "map_codes": [
-            "CN", 
+            "CN",
             "HK"
         ],
         "eps_actual": -0.15,
@@ -1220,7 +1339,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$800M (Q4 '25)",
         "focus": "Macau Luxury Resorts",
         "map_codes": [
-            "CN", 
+            "CN",
             "HK"
         ],
         "eps_actual": 0.35,
@@ -1263,7 +1382,7 @@ VERIFIED_DATA = {
         "revenue_interim": "€1.86B (H1 '25)",
         "focus": "European Lottery & iGaming",
         "map_codes": [
-            "FR", 
+            "FR",
             "IE"
         ],
         "eps_actual": 1.35,
@@ -1276,7 +1395,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "23.7%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "France", 
+            "France",
             "Ireland"
         ],
         "fallback_price": "€25.84",
@@ -1311,7 +1430,7 @@ VERIFIED_DATA = {
         "revenue_interim": "£382M (H1 '25)",
         "focus": "UK Retail Casinos & Digital",
         "map_codes": [
-            "GB", 
+            "GB",
             "ES"
         ],
         "eps_actual": 0.05,
@@ -1324,7 +1443,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "16.3%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "UK", 
+            "UK",
             "Spain"
         ]
     },
@@ -1334,9 +1453,9 @@ VERIFIED_DATA = {
         "revenue_interim": "€180M (H1 '25)",
         "focus": "Global Sports Media Affiliate",
         "map_codes": [
-            "DK", 
-            "US", 
-            "GB", 
+            "DK",
+            "US",
+            "GB",
             "SE"
         ],
         "eps_actual": 0.40,
@@ -1349,7 +1468,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "31.4%",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Europe", 
+            "Europe",
             "US"
         ]
     },
@@ -1359,8 +1478,8 @@ VERIFIED_DATA = {
         "revenue_interim": "€15.6M (Q4 '25)",
         "focus": "iGaming Lead Generation",
         "map_codes": [
-            "MT", 
-            "US", 
+            "MT",
+            "US",
             "SE"
         ],
         "eps_actual": -0.15,
@@ -1373,7 +1492,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "Europe"
         ]
     },
@@ -1383,7 +1502,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$620M (Q4 '25)",
         "focus": "US Regional Casinos & iGaming",
         "map_codes": [
-            "US", 
+            "US",
             "GB"
         ],
         "eps_actual": -0.55,
@@ -1396,7 +1515,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "UK"
         ]
     },
@@ -1490,8 +1609,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$140M (Q4 '25)",
         "focus": "International Regional Casinos",
         "map_codes": [
-            "US", 
-            "CA", 
+            "US",
+            "CA",
             "PL"
         ],
         "eps_actual": -0.20,
@@ -1504,8 +1623,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Canada", 
+            "US",
+            "Canada",
             "Poland"
         ]
     },
@@ -1515,8 +1634,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$120M (Q4 '25)",
         "focus": "B2B Sports Data Rights",
         "map_codes": [
-            "GB", 
-            "US", 
+            "GB",
+            "US",
             "CO"
         ],
         "eps_actual": 0.05,
@@ -1538,8 +1657,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$668M (Q4 '25)",
         "focus": "Pure-Play Global Lottery",
         "map_codes": [
-            "US", 
-            "IT", 
+            "US",
+            "IT",
             "GB"
         ],
         "eps_actual": 0.45,
@@ -1552,8 +1671,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Italy", 
+            "US",
+            "Italy",
             "Global"
         ],
         "fallback_price": "$16.47",
@@ -1567,8 +1686,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$80M (Q3 '25)",
         "focus": "VLTs & Virtual Sports",
         "map_codes": [
-            "US", 
-            "GB", 
+            "US",
+            "GB",
             "GR"
         ],
         "eps_actual": -0.18,
@@ -1581,7 +1700,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "UK", 
+            "UK",
             "North America"
         ]
     },
@@ -1612,9 +1731,9 @@ VERIFIED_DATA = {
         "revenue_interim": "RM 2.6B (Q4 '25)",
         "focus": "Asian Integrated Resorts",
         "map_codes": [
-            "MY", 
-            "US", 
-            "GB", 
+            "MY",
+            "US",
+            "GB",
             "BS"
         ],
         "eps_actual": 0.15,
@@ -1627,8 +1746,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Malaysia", 
-            "UK", 
+            "Malaysia",
+            "UK",
             "US"
         ],
         "fallback_price": "RM 2.65",
@@ -1642,7 +1761,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$950M (Q4 '25)",
         "focus": "Gaming & Hospitality REIT",
         "map_codes": [
-            "US", 
+            "US",
             "CA"
         ],
         "eps_actual": 0.65,
@@ -1655,7 +1774,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "Canada"
         ]
     },
@@ -1707,7 +1826,7 @@ VERIFIED_DATA = {
         "revenue_interim": "€1.1B (H1 '25)",
         "focus": "Greek Lottery & Betting Monopoly",
         "map_codes": [
-            "GR", 
+            "GR",
             "CY"
         ],
         "eps_actual": 1.15,
@@ -1720,7 +1839,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Greece", 
+            "Greece",
             "Cyprus"
         ]
     },
@@ -1730,7 +1849,7 @@ VERIFIED_DATA = {
         "revenue_interim": "€75M (H1 '25)",
         "focus": "Online Lottery Broker",
         "map_codes": [
-            "DE", 
+            "DE",
             "GB"
         ],
         "eps_actual": 0.85,
@@ -1752,8 +1871,8 @@ VERIFIED_DATA = {
         "revenue_interim": "£15M (H1 '25)",
         "focus": "Mobile Slingo & iGaming Content",
         "map_codes": [
-            "GB", 
-            "US", 
+            "GB",
+            "US",
             "CA"
         ],
         "eps_actual": 0.03,
@@ -1766,7 +1885,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "UK"
         ]
     },
@@ -1776,7 +1895,7 @@ VERIFIED_DATA = {
         "revenue_interim": "€225M (H1 '25)",
         "focus": "French Casino Operator",
         "map_codes": [
-            "FR", 
+            "FR",
             "CH"
         ],
         "eps_actual": 0.45,
@@ -1789,7 +1908,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "France", 
+            "France",
             "Switzerland"
         ]
     },
@@ -1799,7 +1918,7 @@ VERIFIED_DATA = {
         "revenue_interim": "€30M (H1 '25)",
         "focus": "European Sportsbook",
         "map_codes": [
-            "DE", 
+            "DE",
             "AT"
         ],
         "eps_actual": -0.15,
@@ -1821,8 +1940,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$46.2M (Q4 '25)",
         "focus": "iGaming Performance Marketing",
         "map_codes": [
-            "US", 
-            "GB", 
+            "US",
+            "GB",
             "IE"
         ],
         "eps_actual": 0.30,
@@ -1835,7 +1954,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
+            "US",
             "UK"
         ]
     },
@@ -1845,8 +1964,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$780M (Q4 '25)",
         "focus": "B2C Sportsbook & iGaming",
         "map_codes": [
-            "US", 
-            "CA", 
+            "US",
+            "CA",
             "PR"
         ],
         "eps_actual": 0,
@@ -1859,8 +1978,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Ontario", 
+            "US",
+            "Ontario",
             "Puerto Rico"
         ]
     },
@@ -1895,10 +2014,10 @@ VERIFIED_DATA = {
         "revenue_interim": "€43M (Q4 '25)",
         "focus": "LatAm & Euro Sportsbook",
         "map_codes": [
-            "ES", 
-            "MX", 
-            "CO", 
-            "PA", 
+            "ES",
+            "MX",
+            "CO",
+            "PA",
             "AR"
         ],
         "eps_actual": -0.05,
@@ -1911,7 +2030,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Spain", 
+            "Spain",
             "LatAm"
         ]
     },
@@ -1984,7 +2103,7 @@ VERIFIED_DATA = {
         "revenue_interim": "NZ$450M (H1 '25)",
         "focus": "NZ & Aussie Casino Resorts",
         "map_codes": [
-            "NZ", 
+            "NZ",
             "AU"
         ],
         "eps_actual": 0.12,
@@ -1997,7 +2116,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "New Zealand", 
+            "New Zealand",
             "Australia"
         ]
     },
@@ -2007,7 +2126,7 @@ VERIFIED_DATA = {
         "revenue_interim": "¥35B (Q4 '25)",
         "focus": "Pachinko & Philippine Resort",
         "map_codes": [
-            "JP", 
+            "JP",
             "PH"
         ],
         "eps_actual": 225.0,
@@ -2020,7 +2139,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Japan", 
+            "Japan",
             "Philippines"
         ]
     },
@@ -2030,8 +2149,8 @@ VERIFIED_DATA = {
         "revenue_interim": "A$72M (H1 '25)",
         "focus": "Digital Lottery Retailing",
         "map_codes": [
-            "AU", 
-            "GB", 
+            "AU",
+            "GB",
             "CA"
         ],
         "eps_actual": 0.65,
@@ -2044,8 +2163,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Australia", 
-            "UK", 
+            "Australia",
+            "UK",
             "Canada"
         ]
     },
@@ -2055,8 +2174,8 @@ VERIFIED_DATA = {
         "revenue_interim": "A$140M (H1 '25)",
         "focus": "B2B Slot Machines",
         "map_codes": [
-            "AU", 
-            "US", 
+            "AU",
+            "US",
             "AR"
         ],
         "eps_actual": 0.05,
@@ -2069,8 +2188,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Australia", 
-            "US", 
+            "Australia",
+            "US",
             "LatAm"
         ]
     },
@@ -2080,7 +2199,7 @@ VERIFIED_DATA = {
         "revenue_interim": "₹151 Cr (Q4 '25)",
         "focus": "Indian Offshore Casinos",
         "map_codes": [
-            "IN", 
+            "IN",
             "NP"
         ],
         "eps_actual": 5.57,
@@ -2093,7 +2212,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "India", 
+            "India",
             "Nepal"
         ]
     },
@@ -2103,8 +2222,8 @@ VERIFIED_DATA = {
         "revenue_interim": "$43M (Q4 '25)",
         "focus": "B2B iGaming & Sports",
         "map_codes": [
-            "US", 
-            "RS", 
+            "US",
+            "RS",
             "MX"
         ],
         "eps_actual": -0.05,
@@ -2117,8 +2236,8 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "US", 
-            "Balkans", 
+            "US",
+            "Balkans",
             "LatAm"
         ]
     },
@@ -2149,7 +2268,7 @@ VERIFIED_DATA = {
         "revenue_interim": "$3M (Q3 '25)",
         "focus": "Esports Betting & Events",
         "map_codes": [
-            "US", 
+            "US",
             "MT"
         ],
         "eps_actual": -1.50,
@@ -2162,7 +2281,7 @@ VERIFIED_DATA = {
         "ebitda_margin_fy": "N/A",
         "ebitda_margin_yoy": "N/A",
         "jurisdictions": [
-            "Malta", 
+            "Malta",
             "US"
         ]
     }
@@ -2171,40 +2290,40 @@ VERIFIED_DATA = {
 def get_live_fx_rates():
     rates = {'USD': 1.0, '$': 1.0}
     pairs = {
-        'GBP': 'GBPUSD=X', 
-        'GBp': 'GBPUSD=X', 
-        'EUR': 'EURUSD=X', 
+        'GBP': 'GBPUSD=X',
+        'GBp': 'GBPUSD=X',
+        'EUR': 'EURUSD=X',
         'SEK': 'SEKUSD=X',
-        'AUD': 'AUDUSD=X', 
-        'CAD': 'CADUSD=X', 
-        'HKD': 'HKDUSD=X', 
+        'AUD': 'AUDUSD=X',
+        'CAD': 'CADUSD=X',
+        'HKD': 'HKDUSD=X',
         'SGD': 'SGDUSD=X',
-        'MYR': 'MYRUSD=X', 
-        'KRW': 'KRWUSD=X', 
-        'JPY': 'JPYUSD=X', 
-        'NZD': 'NZDUSD=X', 
+        'MYR': 'MYRUSD=X',
+        'KRW': 'KRWUSD=X',
+        'JPY': 'JPYUSD=X',
+        'NZD': 'NZDUSD=X',
         'INR': 'INRUSD=X'
     }
     for currency, ticker in pairs.items():
         try:
             val = yf.Ticker(ticker).fast_info['lastPrice']
-            if currency == 'GBp': 
-                val = val / 100.0 
+            if currency == 'GBp':
+                val = val / 100.0
             rates[currency] = val
         except Exception:
-            rates[currency] = 1.0 
+            rates[currency] = 1.0
     return rates
 
 def format_money(raw_val, sym):
-    if pd.isna(raw_val): 
+    if pd.isna(raw_val):
         return "N/A"
     is_neg = raw_val < 0
     abs_val = abs(raw_val)
-    if abs_val >= 1e9: 
+    if abs_val >= 1e9:
         res = f"{sym}{round(abs_val/1e9, 2)}B"
-    elif abs_val >= 1e6: 
+    elif abs_val >= 1e6:
         res = f"{sym}{round(abs_val/1e6, 2)}M"
-    else: 
+    else:
         res = f"{sym}{round(abs_val, 2)}"
     return f"-{res}" if is_neg else res
 
@@ -2225,7 +2344,7 @@ def get_stock_fundamentals(ticker, fx_rates):
         try:
             info = ytk.info
             description = info.get('longBusinessSummary', description)
-        except Exception: 
+        except Exception:
             pass
         
         try:
@@ -2244,44 +2363,39 @@ def get_stock_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-            if daily_change_pct == "N/A" and price > 0:
-                hist = ytk.history(period="5d")
-                if len(hist) >= 2:
-                    fallback_prev = hist['Close'].iloc[-2]
-                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
-        except Exception: 
-            pass 
+        except Exception:
+            pass
             
-        if currency == "GBp": 
+        if currency == "GBp":
             sym = "GBp "
-        elif currency == "GBP": 
+        elif currency == "GBP":
             sym = "£"
-        elif currency == "SEK": 
+        elif currency == "SEK":
             sym = "SEK "
-        elif currency == "EUR": 
+        elif currency == "EUR":
             sym = "€"
-        elif currency == "AUD": 
+        elif currency == "AUD":
             sym = "A$"
-        elif currency == "CAD": 
+        elif currency == "CAD":
             sym = "C$"
-        elif currency == "HKD": 
+        elif currency == "HKD":
             sym = "HK$"
-        elif currency == "SGD": 
+        elif currency == "SGD":
             sym = "S$"
-        elif currency == "MYR": 
+        elif currency == "MYR":
             sym = "RM "
-        elif currency == "KRW": 
-            sym = "₩" 
-        elif currency == "JPY": 
-            sym = "¥"  
-        elif currency == "NZD": 
-            sym = "NZ$" 
-        elif currency == "INR": 
-            sym = "₹"  
-        else: 
+        elif currency == "KRW":
+            sym = "₩"
+        elif currency == "JPY":
+            sym = "¥"
+        elif currency == "NZD":
+            sym = "NZ$"
+        elif currency == "INR":
+            sym = "₹"
+        else:
             sym = "$"
         
-        if price > 0: 
+        if price > 0:
             price_str = f"{sym}{round(price, 2)}"
             
         try:
@@ -2294,51 +2408,51 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if currency not in ["USD", "$"]:
                     mc_usd_str = format_money(mc_usd_val, "$")
                     mc_display = f"{mc_native} <span class='text-slate-400 text-[10px] font-bold'>(US{mc_usd_str})</span>"
-                else: 
+                else:
                     mc_display = mc_native
-        except Exception: 
+        except Exception:
             pass
 
         try:
             pe_r = info.get('trailingPE') or info.get('forwardPE')
-            if pe_r is not None and pe_r > 0: 
+            if pe_r is not None and pe_r > 0:
                 pe_raw = pe_r
                 pe_str = f"{round(pe_raw, 2)}"
             else:
                 eps = info.get('trailingEps')
                 if eps is not None:
-                    if eps <= 0: 
+                    if eps <= 0:
                         pe_str = "Neg EPS"
                     elif price > 0:
                         pe_raw = price / eps
-                        pe_str = f"{round(pe_raw, 2)}" 
+                        pe_str = f"{round(pe_raw, 2)}"
 
             de_r = info.get('debtToEquity')
-            if de_r is not None: 
+            if de_r is not None:
                 de_raw = de_r
                 de_str = f"{round(de_raw, 2)}%"
             else:
                 total_debt = info.get('totalDebt')
-                total_equity = info.get('totalStockholderEquity') 
+                total_equity = info.get('totalStockholderEquity')
                 if total_debt is not None and total_equity is not None:
-                    if total_equity <= 0: 
-                        de_str = "Neg Equity" 
+                    if total_equity <= 0:
+                        de_str = "Neg Equity"
                     else:
                         de_raw = (total_debt / total_equity) * 100
-                        de_str = f"{round(de_raw, 2)}%" 
+                        de_str = f"{round(de_raw, 2)}%"
                 elif total_debt == 0:
                     de_raw = 0
                     de_str = "0.00%"
-        except Exception: 
-            pass 
+        except Exception:
+            pass
 
         try:
             income_annual = ytk.income_stmt
             if not income_annual.empty:
                 raw_rev_fy = None
-                if 'Total Revenue' in income_annual.index: 
+                if 'Total Revenue' in income_annual.index:
                     raw_rev_fy = income_annual.loc['Total Revenue'].iloc[0]
-                elif 'Operating Revenue' in income_annual.index: 
+                elif 'Operating Revenue' in income_annual.index:
                     raw_rev_fy = income_annual.loc['Operating Revenue'].iloc[0]
                 if pd.notna(raw_rev_fy):
                     fy_year = pd.to_datetime(income_annual.columns[0]).year
@@ -2349,22 +2463,22 @@ def get_stock_fundamentals(ticker, fx_rates):
                     if key in income_annual.index:
                         raw_ebitda = income_annual.loc[key].iloc[0]
                         break
-                if pd.notna(raw_ebitda): 
+                if pd.notna(raw_ebitda):
                     dyn_ebitda = format_money(raw_ebitda, sym)
-        except Exception: 
+        except Exception:
             pass
 
         try:
             cf = ytk.cashflow
             if not cf.empty:
                 raw_fcf = None
-                if 'Free Cash Flow' in cf.index: 
+                if 'Free Cash Flow' in cf.index:
                     raw_fcf = cf.loc['Free Cash Flow'].iloc[0]
                 elif 'Operating Cash Flow' in cf.index and 'Capital Expenditure' in cf.index:
                     raw_fcf = cf.loc['Operating Cash Flow'].iloc[0] + cf.loc['Capital Expenditure'].iloc[0]
-                if pd.notna(raw_fcf): 
+                if pd.notna(raw_fcf):
                     dyn_fcf = format_money(raw_fcf, sym)
-        except Exception: 
+        except Exception:
             pass
         
         try:
@@ -2374,7 +2488,7 @@ def get_stock_fundamentals(ticker, fx_rates):
                 if not past_ed.empty:
                     dyn_eps_act = past_ed['Reported EPS'].iloc[0]
                     dyn_eps_est = past_ed['Estimate EPS'].iloc[0]
-        except Exception: 
+        except Exception:
             pass
         
         try:
@@ -2383,11 +2497,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 dates = cal_data['Earnings Date']
                 if isinstance(dates, list) and len(dates) > 0:
                     first_date = dates[0]
-                    if hasattr(first_date, 'strftime'): 
+                    if hasattr(first_date, 'strftime'):
                         dyn_date = first_date.strftime('%b %d, %Y')
-                    else: 
+                    else:
                         dyn_date = pd.to_datetime(first_date).strftime('%b %d, %Y')
-        except Exception: 
+        except Exception:
             pass
             
         return price_str, price, mc_display, mc_usd_val, pe_str, de_str, fy_rev_str, interim_rev_str, dyn_net_inc, dyn_ebitda, dyn_fcf, dyn_eps_act, dyn_eps_est, dyn_date, daily_change_pct, pe_raw, de_raw, description
@@ -2398,7 +2512,15 @@ def get_stock_fundamentals(ticker, fx_rates):
 def fetch_stock_history(ticker, native_price_raw):
     is_otc = ticker in OTC_MAP
     fetch_ticker = OTC_MAP.get(ticker, ticker)
-    history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
+    history = {
+        "1d": [],
+        "1w": [],
+        "1m": [],
+        "3m": [],
+        "6m": [],
+        "1y": [],
+        "5y": []
+    }
     
     try:
         ytk = yf.Ticker(fetch_ticker)
@@ -2411,10 +2533,10 @@ def fetch_stock_history(ticker, native_price_raw):
 
         df_1d = ytk.history(period="1d", interval="15m")
         if df_1d.empty:
-            df_1d = ytk.history(period="5d", interval="1d") 
+            df_1d = ytk.history(period="5d", interval="1d")
 
         if not df_1d.empty:
-            history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_1d.iterrows()]
+            history["1d"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_1d.iterrows() if pd.notna(row['Close'])]
 
         df_5y = ytk.history(period="5y", interval="1d")
         if not df_5y.empty:
@@ -2422,7 +2544,7 @@ def fetch_stock_history(ticker, native_price_raw):
             def slice_data(days):
                 cutoff = df_5y.index[-1] - pd.Timedelta(days=days)
                 sliced = df_5y[df_5y.index >= cutoff]
-                return [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in sliced.iterrows()]
+                return [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in sliced.iterrows() if pd.notna(row['Close'])]
             
             history["1w"] = slice_data(7)
             history["1m"] = slice_data(30)
@@ -2431,7 +2553,7 @@ def fetch_stock_history(ticker, native_price_raw):
             history["1y"] = slice_data(365)
             
             df_5y_weekly = df_5y.resample('W').last().dropna()
-            history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_5y_weekly.iterrows()]
+            history["5y"] = [[int(pd.Timestamp(idx).timestamp() * 1000), float(row['Close'])] for idx, row in df_5y_weekly.iterrows() if pd.notna(row['Close'])]
             
         if is_otc and native_price_raw and history["1m"]:
             latest_otc = history["1m"][-1][1]
@@ -2540,10 +2662,10 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {
-            "summary": ["System Error: API key missing."], 
-            "sentiment": 50, 
-            "rating": "Hold", 
-            "reading_room": "<p>API Key required.</p>", 
+            "summary": ["System Error: API key missing."],
+            "sentiment": 50,
+            "rating": "Hold",
+            "reading_room": "<p>API Key required.</p>",
             "quotes": []
         }
         
@@ -2560,7 +2682,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             try:
                 feed = feedparser.parse(fallback_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
-            except Exception: 
+            except Exception:
                 pass
 
         if not headlines:
@@ -2569,15 +2691,15 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             try:
                 feed = feedparser.parse(google_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
-            except Exception: 
+            except Exception:
                 pass
             
         if not headlines:
             return {
-                "summary": [f"No recent news found for {company_name}."], 
-                "sentiment": 50, 
-                "rating": "Hold", 
-                "reading_room": "<p>Awaiting fresh press releases.</p>", 
+                "summary": [f"No recent news found for {company_name}."],
+                "sentiment": 50,
+                "rating": "Hold",
+                "reading_room": "<p>Awaiting fresh press releases.</p>",
                 "quotes": []
             }
 
@@ -2591,14 +2713,14 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         
         Generate a strictly valid JSON response. 
         Format exactly with these five keys:
-        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include an additional bullet point at the very top of this list starting exactly with "SENTIMENT SPIKE RATIONALE:" and explicitly explain the specific news driving this sudden momentum shift.
+        1. "summary": A list of 3 string bullet points summarizing the news. CRITICAL INSTRUCTION: Compare your calculated sentiment score to the Previous Sentiment Score ({prev_sent}). If the difference is 20 points or greater (a spike up or drop down), you MUST include a distinct, separate section at the very top of your reading_room HTML output that looks EXACTLY like this: <div class='mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl shadow-sm'><h4 class='text-purple-700 font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2'><i class='fas fa-satellite-dish animate-pulse'></i> Sentiment Spike Rationale</h4><p class='text-sm text-purple-900 font-medium leading-relaxed'>[Insert your detailed explanation of the news driving the sudden 20+ point sentiment shift here]</p></div>
         2. "sentiment": An integer from 0 to 100 representing market sentiment strictly based on the recent news headlines.
         3. "rating": A stock rating (Choose exactly one: "Strong Buy", "Buy", "Hold", "Sell", "Strong Sell"). You MUST calculate this rating by weighing BOTH the fundamental health (Revenue, FCF, P/E, EPS Beats) AND the sentiment/momentum from the recent news headlines.
         4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         ai_resp = client.models.generate_content(
-            model='gemini-2.5-flash', 
+            model='gemini-2.5-flash',
             contents=prompt,
             config={"response_mime_type": "application/json"}
         )
@@ -2606,25 +2728,25 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         raw_text = ai_resp.text.strip()
         try:
             match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
-            if match: 
+            if match:
                 return json.loads(match.group(1))
             return json.loads(raw_text)
         except json.JSONDecodeError:
             return {
-                "summary": ["Data temporarily unavailable."], 
-                "sentiment": 50, 
-                "rating": "Hold", 
-                "reading_room": "<p>AI parse error.</p>", 
+                "summary": ["Data temporarily unavailable."],
+                "sentiment": 50,
+                "rating": "Hold",
+                "reading_room": "<p>AI parse error.</p>",
                 "quotes": []
             }
             
     except Exception as e:
         print(f"  ⚠️ AI process failed for {ticker}: {e}")
         return {
-            "summary": [f"News Error: Gathering delayed."], 
-            "sentiment": 50, 
-            "rating": "Hold", 
-            "reading_room": f"<p>Latency issue.</p>", 
+            "summary": [f"News Error: Gathering delayed."],
+            "sentiment": 50,
+            "rating": "Hold",
+            "reading_room": f"<p>Latency issue.</p>",
             "quotes": []
         }
 
@@ -2656,22 +2778,22 @@ def get_etf_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
-        except Exception: 
+        except Exception:
             pass
             
         if (price is None or price == 0) and fallback_data:
             price = fallback_data.get('price_fallback', 0)
             
-        if currency == "GBp": 
+        if currency == "GBp":
             sym = "GBp "
-        elif currency == "GBP": 
+        elif currency == "GBP":
             sym = "£"
-        elif currency == "EUR": 
+        elif currency == "EUR":
             sym = "€"
-        else: 
+        else:
             sym = "$"
         
-        if price > 0: 
+        if price > 0:
             price_str = f"{sym}{round(price, 2)}"
         
         info = ytk.info
@@ -2686,13 +2808,13 @@ def get_etf_fundamentals(ticker, fx_rates):
         else:
             try:
                 nav = info.get('navPrice')
-                if nav: 
+                if nav:
                     nav_str = f"{sym}{round(nav, 2)}"
                 aum = info.get('totalAssets') or info.get('netAssets')
-                if aum: 
+                if aum:
                     aum_str = format_money(aum, sym)
                 exp = info.get('expenseRatio')
-                if exp: 
+                if exp:
                     exp_ratio_str = f"{round(exp * 100, 2)}%"
             except Exception:
                 pass
@@ -2722,26 +2844,26 @@ def run_pipeline():
         print(f"\nProcessing {co['name']} ({ticker})...")
         
         fin = VERIFIED_DATA.get(ticker, {
-            "eps_actual": 0, 
-            "eps_forecast": 0, 
-            "net_income": "N/A", 
-            "ebitda": "N/A", 
-            "fcf": "N/A", 
+            "eps_actual": 0,
+            "eps_forecast": 0,
+            "net_income": "N/A",
+            "ebitda": "N/A",
+            "fcf": "N/A",
             "ebitda_margin_qtr": "N/A",
             "ebitda_margin_h2": "N/A",
             "ebitda_margin_fy": "N/A",
             "ebitda_margin_yoy": "N/A",
             "jurisdictions": [],
-            "focus": "Diversified Gaming", 
-            "map_codes": [], 
-            "rev_label": "REV", 
-            "revenue_fy": "N/A", 
+            "focus": "Diversified Gaming",
+            "map_codes": [],
+            "rev_label": "REV",
+            "revenue_fy": "N/A",
             "revenue_interim": "N/A"
         })
         
         cal = VERIFIED_CALENDAR.get(ticker, {
-            "date": "TBD", 
-            "report_time": "TBD", 
+            "date": "TBD",
+            "report_time": "TBD",
             "call_time": "TBD"
         })
             
@@ -2759,8 +2881,26 @@ def run_pipeline():
             fin["ebitda"] = dyn_ebitda if dyn_ebitda != "N/A" else fin.get("ebitda", "N/A")
             fin["fcf"] = dyn_fcf if dyn_fcf != "N/A" else fin.get("fcf", "N/A")
             
-            if cal.get("date", "TBD") == "TBD" and dyn_date and dyn_date != "N/A":
-                cal["date"] = dyn_date
+            # THE AUTO-PURGE CALENDAR FIX
+            existing_date_str = cal.get("date", "TBD")
+            if existing_date_str != "TBD":
+                try:
+                    existing_date_obj = datetime.strptime(existing_date_str, '%b %d, %Y').date()
+                    if existing_date_obj < datetime.utcnow().date():
+                        cal["date"] = "TBD"
+                        cal["report_time"] = "TBD"
+                        cal["call_time"] = "TBD"
+                except Exception:
+                    pass
+            
+            if dyn_date and dyn_date != "N/A":
+                try:
+                    dyn_obj = datetime.strptime(dyn_date, '%b %d, %Y').date()
+                    if dyn_obj >= datetime.utcnow().date():
+                        cal["date"] = dyn_date
+                except Exception:
+                    if cal.get("date", "TBD") == "TBD":
+                        cal["date"] = dyn_date
             
             beat_miss = 0
             if dyn_eps_act is not None and dyn_eps_est is not None and dyn_eps_est != 0:
@@ -2788,10 +2928,10 @@ def run_pipeline():
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
             intel = {
-                "summary": [f"System Error: {str(e)[:50]}"], 
-                "sentiment": 50, 
-                "rating": "Hold", 
-                "reading_room": "<p>Error</p>", 
+                "summary": [f"System Error: {str(e)[:50]}"],
+                "sentiment": 50,
+                "rating": "Hold",
+                "reading_room": "<p>Error</p>",
                 "quotes": []
             }
             history = {"1d": [], "1w": [], "1m": [], "3m": [], "6m": [], "1y": [], "5y": []}
@@ -2809,13 +2949,13 @@ def run_pipeline():
         master_db.append({
             "ticker": ticker,
             "company": co["name"],
-            "domain": co["domain"], 
+            "domain": co["domain"],
             "logo": final_logo,
             "base_country": co["base_country"],
-            "focus": fin.get("focus", "Diversified Gaming"), 
+            "focus": fin.get("focus", "Diversified Gaming"),
             "description": description,
-            "map_codes": fin.get("map_codes", []),           
-            "calendar": cal, 
+            "map_codes": fin.get("map_codes", []),
+            "calendar": cal,
             "last_price": last_price_str,
             "raw_price": price_raw,
             "daily_change_pct": daily_change_pct,
@@ -2888,7 +3028,7 @@ def run_pipeline():
         print(f"✅ ETF Pipeline Complete. Saved {len(etf_db)} ETFs.")
 
 if __name__ == "__main__":
-    try: 
+    try:
         run_pipeline()
-    except Exception: 
+    except Exception:
         sys.exit(1)
