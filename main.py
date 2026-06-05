@@ -7,13 +7,12 @@ import re
 import sys
 import feedparser
 import urllib.parse
-from google import genai
+from openai import OpenAI
 from datetime import datetime
 import email.utils
 
 # --- 1. CONFIGURATION ---
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
-client = genai.Client(api_key=GEMINI_API_KEY)
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "YOUR_ACTUAL_API_KEY_HERE")
 
 try:
     with open('verified_calendar.json', 'r') as f:
@@ -461,7 +460,8 @@ TARGET_COMPANIES = [
         "name": "La Française des Jeux",
         "ticker": "FDJ.PA",
         "domain": "groupefdj.com",
-        "base_country": "France"
+        "base_country": "France",
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/la_francaise_des_jeux.png"
     },
     {
         "name": "Lottomatica Group",
@@ -732,7 +732,7 @@ OTC_MAP = {
     "SKC.NZ": "SKYCG",
     "JIN.AX": "JUMBF"
 }
-# --- UNCOMPRESSED VERIFIED DATA DICTIONARY WITH EBITDA MARGINS ---
+# --- UNCOMPRESSED VERIFIED DATA DICTIONARY ---
 VERIFIED_DATA = {
     "FLUT": {
         "rev_label": "NGR",
@@ -2363,6 +2363,11 @@ def get_stock_fundamentals(ticker, fx_rates):
                 
             if price and prev_close and prev_close > 0:
                 daily_change_pct = round(((price - prev_close) / prev_close) * 100, 2)
+            if daily_change_pct == "N/A" and price > 0:
+                hist = ytk.history(period="5d")
+                if len(hist) >= 2:
+                    fallback_prev = hist['Close'].iloc[-2]
+                    daily_change_pct = round(((price - fallback_prev) / fallback_prev) * 100, 2)
         except Exception:
             pass
             
@@ -2659,7 +2664,7 @@ def fetch_global_news_feed():
     print(f"✅ Generated News Feed with {len(all_articles)} articles.")
 
 def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
-    api_key = os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("DEEPSEEK_API_KEY")
     if not api_key or api_key == "YOUR_ACTUAL_API_KEY_HERE":
         return {
             "summary": ["System Error: API key missing."],
@@ -2703,7 +2708,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
                 "quotes": []
             }
 
-        client = genai.Client(api_key=api_key)
+        client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
         
         prompt = f"""Act as an expert iGaming financial analyst. 
         Company: {company_name} ({ticker})
@@ -2719,13 +2724,16 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         4. "reading_room": An HTML formatted string using <p>, <strong>, <ul>, and <li> tags. Provide an 'Executive Analyst Briefing'. 
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
-        ai_resp = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-            config={"response_mime_type": "application/json"}
+        response = client.chat.completions.create(
+            model="deepseek-v4-flash",
+            messages=[
+                {"role": "system", "content": "You are an expert iGaming financial analyst. You must respond in strictly valid JSON format."},
+                {"role": "user", "content": prompt}
+            ],
+            response_format={"type": "json_object"}
         )
         
-        raw_text = ai_resp.text.strip()
+        raw_text = response.choices[0].message.content.strip()
         try:
             match = re.search(r'(\{.*\})', raw_text, re.DOTALL)
             if match:
