@@ -31,17 +31,17 @@ jobs:
 
     - name: Run Regulatory Data Scraper
       env:
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       run: python regulatory_scraper.py
 
     - name: Run AI Calendar Agent
       env:
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       run: python calendar_agent.py
 
     - name: Run Main Financial & AI Pipeline
       env:
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       run: python main.py
 
     - name: Commit and Push Updated JSONs
