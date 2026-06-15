@@ -614,7 +614,7 @@ TARGET_COMPANIES = [
         "ticker": "FLL",
         "domain": "fullhouseresorts.com",
         "base_country": "USA",
-        "logo_override": "https://logo.clearbit.com/fullhouseresorts.com"
+        "logo_override": "https://raw.githubusercontent.com/gazmac/igaming-intel-terminal/main/logos/full_house_resorts.png"
     },
     {
         "name": "Accel Entertainment",
@@ -2725,7 +2725,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         5. "quotes": A list of exactly 2 distinct string sentences containing strategic management quotes attributed to real names."""
         
         response = client.chat.completions.create(
-            model="deepseek-v4-flash",
+            model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "You are an expert iGaming financial analyst. You must respond in strictly valid JSON format."},
                 {"role": "user", "content": prompt}
