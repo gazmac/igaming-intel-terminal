@@ -1,18 +1,5 @@
 [
     {
-        "title": "CFTC\u2019s Proposed Rules Seek to Clarify the Prediction Market Contracts Exchanges Can Offer",
-        "link": "https://www.gamblinginsider.com/news/166266/cftc-proposed-rules-prediction-market-contracts-exchanges",
-        "author": "Andrew O'Malley",
-        "date": "Jun 10, 2026",
-        "summary": "The CFTC is preparing new rules for prediction markets that would outline how platforms can offer contracts on sports, politics, and other real-world events, while setting limits on markets that regulators believe could harm the public interest. The CFTC is proposing new rules for prediction markets, advancing a regulatory framework that would clarify the event [&#8230;]\nThe post CFTC&#8217;s Proposed Rules Seek to Clarify the Prediction Market Contracts Exchanges Can Offer appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1781495911.1828132
-    },
-    {
         "title": "Prediction Market Lawsuits Advance in Wisconsin, Rhode Island, Illinois, and New Mexico",
         "link": "https://www.gamblinginsider.com/news/166391/prediction-market-lawsuits-wisconsin-rhode-island-illinois-new-mexico",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1781495911.1827712
+        "timestamp": 1781526060.2976208
     },
     {
         "title": "Texas AG Says Skill Game Machines Remain Illegal If Chance Is Involved",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1781495911.1827123
+        "timestamp": 1781526060.2975626
     },
     {
         "title": "Judge Asks for NBA\u2019s Input About Terry Rozier\u2019s Future in League",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NBA",
-        "timestamp": 1781495911.1826754
+        "timestamp": 1781526060.2975233
     },
     {
         "title": "GamCare Warns World Cup Could Trigger Rise in Online Gambling Harm",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Soccer",
-        "timestamp": 1781495911.1826174
+        "timestamp": 1781526060.2974641
     },
     {
         "title": "World Cup 2026 Offers Brands, Regulators, Safer Gambling Advocates the Chance to Champion RG",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1781495911.182555
+        "timestamp": 1781526060.2974033
     },
     {
         "title": "Massachusetts Leads the Way, But Work Remains to Create Fair and Sustainable Sports Betting Ecosystem",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1781495911.1824985
+        "timestamp": 1781526060.2973459
     },
     {
         "title": "Macquarie: 2026 World Cup Could Generate More Than $50B in Global Wagers",
@@ -101,7 +88,20 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1781495911.182452
+        "timestamp": 1781526060.2972975
+    },
+    {
+        "title": "ProphetX Gets CFTC Approval to Operate Prediction Market",
+        "link": "https://www.gamblinginsider.com/news/166600/prophetx-gets-cftc-approval-to-operate-prediction-market",
+        "author": "Steve Bittenbender",
+        "date": "Jun 12, 2026",
+        "summary": "Move from sweepstakes comes as questions remain over prediction markets and market share ProphetX is ready to transform again. The former state-licensed sports betting operator (then known as Prophet Exchange) that became a peer-to-peer sweepstakes exchange two years ago announced on Thursday it will now venture into the prediction market realm. This comes after the [&#8230;]\nThe post ProphetX Gets CFTC Approval to Operate Prediction Market appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1781526060.2972455
     },
     {
         "title": "Flutter to Delist From London Stock Exchange in Latest Strategic Shift",
@@ -114,7 +114,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1781495911.1823835
+        "timestamp": 1781526060.2972016
     },
     {
         "title": "World Cup Wagering, CFTC\u2019s Rulemaking, Knicks\u2019 Comeback Highlight This Week\u2019s Gambling Industry Bingos & Busts",
@@ -127,6 +127,6 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1781495911.182334
+        "timestamp": 1781526060.297146
     }
 ]
