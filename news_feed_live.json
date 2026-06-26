@@ -1,18 +1,5 @@
 [
     {
-        "title": "CFTC Sues Kentucky, Kalshi Challenges Illinois After States Move Against Prediction Markets",
-        "link": "https://www.gamblinginsider.com/news/168300/cftc-sues-kentucky-kalshi-challenges-illinois",
-        "author": "Chavdar Vasilev",
-        "date": "Jun 24, 2026",
-        "summary": "The filings target the states&#8217; recently enacted measures to tax certain prediction market contracts. The Commodity Futures Trading Commission (CFTC) sued Kentucky on Monday following the state&#8217;s recent enforcement actions against Kalshi and Polymarket. Separately, Kalshi filed suit against Illinois after lawmakers enacted a measure that taxes and regulates sports-event contracts. Both lawsuits argue that [&#8230;]\nThe post CFTC Sues Kentucky, Kalshi Challenges Illinois After States Move Against Prediction Markets appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "General News",
-        "timestamp": 1782465240.052211
-    },
-    {
         "title": "Lumbee Tribe Rejects Casino Amendment, Stalling North Carolina Gaming Plans",
         "link": "https://www.gamblinginsider.com/news/168365/lumbee-tribe-rejects-casino-amendment-north-carolina",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1782465240.052149
+        "timestamp": 1782484278.465784
     },
     {
         "title": "Zuckerberg Bets on \u201cArena\u201d as Meta Explores Prediction Markets",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1782465240.0520995
+        "timestamp": 1782484278.4657345
     },
     {
         "title": "NFL Declines Supplemental Draft, Rejects Brendan Sorsby\u2019s Petition",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1782465240.052045
+        "timestamp": 1782484278.4656847
     },
     {
         "title": "Sweepstakes Casino Monthly Update June 2026: Operators Exit Indiana Ahead of Ban",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1782465240.0519645
+        "timestamp": 1782484278.4656248
     },
     {
         "title": "Caesars Lands Deals for Three of Maine\u2019s Four iGaming Skins",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1782465240.0519183
+        "timestamp": 1782484278.4655786
     },
     {
         "title": "North Carolina Tax Bill Would Require Sportsbooks to Report Bettors With $2,000 in Winnings",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1782465240.051862
+        "timestamp": 1782484278.46552
     },
     {
         "title": "AIBM Webinar Explores \u2018Gamblification\u2019 of American Lives, Culture and Economy",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1782465240.0518126
+        "timestamp": 1782484278.465469
     },
     {
         "title": "Should Meta Buy a Prediction Market? ProphetX\u2019s Dean Sisun Has Ideas",
@@ -114,19 +101,32 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1782465240.0517566
+        "timestamp": 1782484278.4654112
     },
     {
         "title": "No Betting Allowed at 2027 NFL Draft in Washington, DC",
         "link": "https://www.gamblinginsider.com/news/168602/no-betting-allowed-2027-nfl-draft-washington-dc",
         "author": "Brant James",
         "date": "Jun 25, 2026",
-        "summary": "The 2027 NFL Draft will be held on federal land, where gambling is prohibited.\u00a0\u00a0 The National Football League promises a grand spectacle when the NFL Draft unfurls on the National Mall in Washington, DC, from April 29-May 1, 2027. The Washington Monument and The Capitol will help provide it, offering a rousing backdrop for revelers [&#8230;]\nThe post No Betting Allowed at 2027 NFL Draft in Washington, DC appeared first on Gambling Insider.",
+        "summary": "The 2027 NFL Draft will be held on federal land, where gambling is prohibited.&#160;&#160; The National Football League promises a grand spectacle when the NFL Draft unfurls on the National Mall in Washington, DC, from April 29-May 1, 2027. The Washington Monument and The Capitol will help provide it, offering a rousing backdrop for revelers [&#8230;]\nThe post No Betting Allowed at 2027 NFL Draft in Washington, DC appeared first on Gambling Insider.",
         "image": "",
         "source_name": "Gambling Insider",
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1782465240.051691
+        "timestamp": 1782484278.4653509
+    },
+    {
+        "title": "Prediction Markets Weekly Roundup: Litigation Spreads as Congress Joins the Fight",
+        "link": "https://www.gamblinginsider.com/news/168633/prediction-markets-weekly-roundup-cftc-kentucky-congress-bill",
+        "author": "Chavdar Vasilev",
+        "date": "Jun 26, 2026",
+        "summary": "New lawsuits, tribal intervention, and the first federal prediction market bill to advance from committee made for another eventful week. Prediction market litigation continued to expand across the U.S. this week, with the Commodity Futures Trading Commission (CFTC) suing Kentucky, Kalshi challenging Illinois&#8217; recently enacted regulatory framework, and a federal judge remanding Michigan&#8217;s case against [&#8230;]\nThe post Prediction Markets Weekly Roundup: Litigation Spreads as Congress Joins the Fight appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "General News",
+        "timestamp": 1782484278.4652853
     }
 ]
