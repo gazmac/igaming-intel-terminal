@@ -1,18 +1,5 @@
 [
     {
-        "title": "North Carolina Tax Bill Would Require Sportsbooks to Report Bettors With $2,000 in Winnings",
-        "link": "https://www.gamblinginsider.com/news/168545/north-carolina-tax-bill-sportsbook-reporting-2000-winnings",
-        "author": "Andrew O'Malley",
-        "date": "Jun 25, 2026",
-        "summary": "North Carolina lawmakers have passed a tax bill that would require sportsbooks to report bettors with more than $2,000 in annual winnings to the state. The measure has drawn criticism from players over the state&#8217;s gambling tax rules. The North Carolina General Assembly has passed a wide-ranging tax bill that would affect sports bettors, tech [&#8230;]\nThe post North Carolina Tax Bill Would Require Sportsbooks to Report Bettors With $2,000 in Winnings appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Sportsbooks",
-        "timestamp": 1782812538.8760014
-    },
-    {
         "title": "AIBM Webinar Explores \u2018Gamblification\u2019 of American Lives, Culture and Economy",
         "link": "https://www.gamblinginsider.com/news/168457/aibm-webinar-explores-gamblification-of-american-lives-culture-economy",
         "author": "Robyn McNeil",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1782812538.8759508
+        "timestamp": 1782829581.0919595
     },
     {
         "title": "Should Meta Buy a Prediction Market? ProphetX\u2019s Dean Sisun Has Ideas",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1782812538.8758993
+        "timestamp": 1782829581.0919087
     },
     {
         "title": "No Betting Allowed at 2027 NFL Draft in Washington, DC",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1782812538.8758492
+        "timestamp": 1782829581.0918593
     },
     {
         "title": "Prediction Markets Weekly Roundup: Litigation Spreads as Congress Joins the Fight",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1782812538.875803
+        "timestamp": 1782829581.0918138
     },
     {
         "title": "More Than Two Dozen Prediction Market Bills Reflect Congressional Attention Not Agreement, Law Experts Say",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1782812538.8757396
+        "timestamp": 1782829581.0917528
     },
     {
         "title": "NC Sticks it to Bettors, World Cup Trading Booms, Kalshi Coffers Fatten in This Week\u2019s Bingos & Busts",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1782812538.8756738
+        "timestamp": 1782829581.091687
     },
     {
         "title": "Indiana Gaming Commission Delays Decision on Banning College Player Prop Bets",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1782812538.875614
+        "timestamp": 1782829581.0916047
     },
     {
         "title": "Former NBAers Malik Beasley, Ed Davis Among 6 Indicted as Gambling Scandal Widens",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NBA",
-        "timestamp": 1782812538.8755386
+        "timestamp": 1782829581.0915325
     },
     {
         "title": "Gambling Loss Deductions Allowed Under Proposed North Carolina Budget",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1782812538.8754663
+        "timestamp": 1782829581.0914726
+    },
+    {
+        "title": "Judge Orders Kalshi to Stop Offering Sports Markets in Michigan",
+        "link": "https://www.gamblinginsider.com/news/168862/judge-orders-kalshi-to-stop-offering-sports-markets-in-michigan",
+        "author": "Steve Bittenbender",
+        "date": "Jun 30, 2026",
+        "summary": "Prediction market operator faces daily six-figure fine if it cannot meet temporary restraining order&#8217;s geolocation requirement A Michigan judge on Monday approved a temporary restraining order against Kalshi, requiring the prediction exchange to halt offering contracts on sporting events in the state. In the four-page document, Ingham Circuit Court Judge Rosemarie E. Aquilina agreed with [&#8230;]\nThe post Judge Orders Kalshi to Stop Offering Sports Markets in Michigan appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Operators",
+        "timestamp": 1782829581.0913966
     }
 ]
