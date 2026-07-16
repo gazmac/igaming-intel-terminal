@@ -1,18 +1,5 @@
 [
     {
-        "title": "Will Alberta\u2019s Online Gambling Launch Motivate Other Provinces to Follow Suit?",
-        "link": "https://www.gamblinginsider.com/news/173681/will-alberta-online-gambling-launch-motivate-other-provinces",
-        "author": "Robyn McNeil",
-        "date": "Jul 13, 2026",
-        "summary": "As Alberta launches its regulated online gambling market, will it be the tipping point that prompts other provinces and territories to legalize? Alberta\u2019s expanded online gambling market is open as of today, July 13, 2026. In making the shift, it joins Ontario as one of only two provinces to welcome private operators into their regulated [&#8230;]\nThe post Will Alberta&#8217;s Online Gambling Launch Motivate Other Provinces to Follow Suit? appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Operators",
-        "timestamp": 1784190125.964815
-    },
-    {
         "title": "Alberta\u2019s iGaming Market Opens With 22 Platforms, Dozens More Await Launch",
         "link": "https://www.gamblinginsider.com/news/174507/alberta-igaming-market-opens-22-platforms-dozens-more-await-launch",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1784190125.9647684
+        "timestamp": 1784209772.56048
     },
     {
         "title": "Michigan Extends Kalshi Sports Contract Ban, Gives Company Until Aug. 12 to Geofence State",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1784190125.9647233
+        "timestamp": 1784209772.560433
     },
     {
         "title": "Sen. Nathan Manning, Ohio Gambling Supporter, to Leave Legislature for Judicial Post",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1784190125.9646626
+        "timestamp": 1784209772.5603716
     },
     {
         "title": "DraftKings Launches Multi-State Poker in Michigan, New Jersey and Pennsylvania After MGCB Approval",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1784190125.9646144
+        "timestamp": 1784209772.5603194
     },
     {
         "title": "Ed Davis Pleads Not Guilty in NBA Gambling Corruption Case",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NBA",
-        "timestamp": 1784190125.9645793
+        "timestamp": 1784209772.5602806
     },
     {
         "title": "CFTC Orders Kalshi to Honor Michigan Trades, Escalating Fight With States Over Prediction Markets",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1784190125.9645169
+        "timestamp": 1784209772.5602171
     },
     {
         "title": "Illinois Congressman Probes Polymarket\u2019s Ties to Election-Denial Influencers",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1784190125.9644508
+        "timestamp": 1784209772.56015
     },
     {
         "title": "Evolution Agrees to \u00a34.75m Settlement With UKGC, Ending License Review",
@@ -114,19 +101,32 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1784190125.9643965
+        "timestamp": 1784209772.560095
     },
     {
         "title": "Plannatech Gets Approval to Operate Prime Sports in Ohio",
         "link": "https://www.gamblinginsider.com/news/175158/plannatech-approval-ohio-prime-sports",
         "author": "Steve Bittenbender",
         "date": "Jul 15, 2026",
-        "summary": "Plannatech purchased online sportsbook that filed for Chapter 11 reorganization COLUMBUS, Ohio \u2013 Prime Sports will soon be back up and running in Ohio. That\u2019s thanks to state regulators approving a mobile sports betting license for the Prime\u2019s new owner on Wednesday. Plannatech received its license during the Ohio Casino Control Commission meeting. The company [&#8230;]\nThe post Plannatech Gets Approval to Operate Prime Sports in Ohio appeared first on Gambling Insider.",
+        "summary": "Plannatech purchased online sportsbook that filed for Chapter 11 reorganization COLUMBUS, Ohio \u2013 Prime Sports will soon be back up and running in Ohio. That\u2019s thanks to state regulators approving a mobile sports betting license for Prime\u2019s new owner on Wednesday. Plannatech received its license during the Ohio Casino Control Commission meeting. The company served [&#8230;]\nThe post Plannatech Gets Approval to Operate Prime Sports in Ohio appeared first on Gambling Insider.",
         "image": "",
         "source_name": "Gambling Insider",
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1784190125.9643335
+        "timestamp": 1784209772.5600348
+    },
+    {
+        "title": "Lawmakers Introduce Facial Recognition Bill for Sportsbooks and Prediction Markets With Kalshi\u2019s Support",
+        "link": "https://www.gamblinginsider.com/news/175254/facial-recognition-bill-sportsbooks-prediction-markets",
+        "author": "Chavdar Vasilev",
+        "date": "Jul 16, 2026",
+        "summary": "The bipartisan proposal, backed by Kalshi, comes as prediction markets face growing scrutiny over underage trading and renewed calls for federal gambling standards. Rep. Josh Gottheimer, D-N.J., introduced bipartisan legislation Wednesday that would require online sportsbooks and prediction markets to use facial recognition technology to verify users&#8217; ages before they can place bets or trades. [&#8230;]\nThe post Lawmakers Introduce Facial Recognition Bill for Sportsbooks and Prediction Markets With Kalshi&#8217;s Support appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1784209772.559934
     }
 ]
