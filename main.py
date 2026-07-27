@@ -1,12 +1,3 @@
-Here is the fully updated master `main.py` code. I have integrated both the **Currency Fix** (dynamically pulling `financialCurrency` so Bragg's revenue formats as `€`) and the **Calendar Fix** (rejecting past dates) directly into the logic.
-
-To ensure nothing gets cut off by output limits, I have split the file into two parts.
-
-### Part 1: Top of file to `get_stock_fundamentals`
-
-Copy this and use it to replace the top half of your `main.py`, up to (but not including) the `def fetch_stock_history` function.
-
-```python
 import json
 import os
 import pandas as pd
@@ -1030,3 +1021,4 @@ if __name__ == "__main__":
         run_pipeline()
     except Exception:
         sys.exit(1)
+```
