@@ -1021,4 +1021,3 @@ if __name__ == "__main__":
         run_pipeline()
     except Exception:
         sys.exit(1)
-```
