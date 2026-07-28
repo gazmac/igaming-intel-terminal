@@ -468,6 +468,25 @@ def get_stock_fundamentals(ticker, fx_rates):
                     dyn_ebitda = format_money(raw_ebitda, fin_sym)
         except Exception:
             pass
+            
+        # --- NEW: DYNAMIC QUARTERLY REVENUE EXTRACTION ---
+        try:
+            income_quarterly = ytk.quarterly_income_stmt
+            if not income_quarterly.empty:
+                raw_rev_qtr = None
+                if 'Total Revenue' in income_quarterly.index:
+                    raw_rev_qtr = income_quarterly.loc['Total Revenue'].iloc[0]
+                elif 'Operating Revenue' in income_quarterly.index:
+                    raw_rev_qtr = income_quarterly.loc['Operating Revenue'].iloc[0]
+                    
+                if pd.notna(raw_rev_qtr):
+                    qtr_date = pd.to_datetime(income_quarterly.columns[0])
+                    # Calculate calendar quarter (1-4)
+                    qtr_num = (qtr_date.month - 1) // 3 + 1
+                    qtr_label = f"Q{qtr_num} '{str(qtr_date.year)[-2:]}"
+                    interim_rev_str = f"{format_money(raw_rev_qtr, fin_sym)} ({qtr_label})"
+        except Exception:
+            pass
 
         try:
             cf = ytk.cashflow
@@ -667,7 +686,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
         }
         
     try:
-        feed_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}"
+        feed_url = f"[https://feeds.finance.yahoo.com/rss/2.0/headline?s=](https://feeds.finance.yahoo.com/rss/2.0/headline?s=){ticker}"
         try:
             feed = feedparser.parse(feed_url)
             headlines = [entry.title for entry in feed.entries[:5]]
@@ -675,7 +694,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
             headlines = []
             
         if not headlines:
-            fallback_url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={company_name.split()[0]}"
+            fallback_url = f"[https://feeds.finance.yahoo.com/rss/2.0/headline?s=](https://feeds.finance.yahoo.com/rss/2.0/headline?s=){company_name.split()[0]}"
             try:
                 feed = feedparser.parse(fallback_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
@@ -684,7 +703,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
 
         if not headlines:
             safe_name = urllib.parse.quote(f"{company_name} stock")
-            google_url = f"https://news.google.com/rss/search?q={safe_name}&hl=en-US&gl=US&ceid=US:en"
+            google_url = f"[https://news.google.com/rss/search?q=](https://news.google.com/rss/search?q=){safe_name}&hl=en-US&gl=US&ceid=US:en"
             try:
                 feed = feedparser.parse(google_url)
                 headlines = [entry.title for entry in feed.entries[:5]]
@@ -700,7 +719,7 @@ def ai_process_intelligence(company_name, ticker, fundamentals, prev_sent):
                 "quotes": []
             }
 
-        client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+        client = OpenAI(api_key=api_key, base_url="[https://api.deepseek.com](https://api.deepseek.com)")
         
         prompt = f"""Act as an expert iGaming financial analyst. 
         Company: {company_name} ({ticker})
@@ -910,7 +929,7 @@ def run_pipeline():
             intel = ai_process_intelligence(co['name'], ticker, fund_data_for_ai, prev_sent)
 
             history = fetch_stock_history(ticker, price_raw)
-            final_logo = co.get("logo_override", f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128")
+            final_logo = co.get("logo_override", f"[https://www.google.com/s2/favicons?domain=](https://www.google.com/s2/favicons?domain=){co['domain']}&sz=128")
             
         except Exception as e:
             print(f"  ⚠️ Critical loop failure for {ticker}: {e}")
@@ -925,7 +944,7 @@ def run_pipeline():
             last_price_str, mc_str, mc_usd, pe_ratio, debt_equity = "N/A", "N/A", 0, "N/A", "N/A"
             beat_miss, daily_change_pct, pe_raw, de_raw, description = 0, "N/A", None, None, "Description unavailable."
             currency_symbol = "$" # Fallback
-            final_logo = f"https://www.google.com/s2/favicons?domain={co['domain']}&sz=128"
+            final_logo = f"[https://www.google.com/s2/favicons?domain=](https://www.google.com/s2/favicons?domain=){co['domain']}&sz=128"
 
         curr_sentiment = intel.get("sentiment", 50)
         sent_history = PREV_DATA.get(ticker, {}).get("sentiment_history", [])
