@@ -1,18 +1,5 @@
 [
     {
-        "title": "Ole Miss Asks State to Fund Problem Gambling Research Center and Treatment Clinic",
-        "link": "https://www.gamblinginsider.com/news/181860/ole-miss-asks-state-fund-college-focused-problem-gambling-research-center-treatment-clinic",
-        "author": "Robyn McNeil",
-        "date": "Aug 05, 2026",
-        "summary": "The University of Mississippi has requested that state lawmakers allocate $2 million in annual funding toward its new Center on Collegiate Gambling and future Mississippi Gambling Clinic to address problem gambling. Online sports betting legislation seems to have stalled in Mississippi for the third year in a row. Still, problems associated with online gambling are [&#8230;]\nThe post Ole Miss Asks State to Fund Problem Gambling Research Center and Treatment Clinic appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Sportsbooks",
-        "timestamp": 1786386609.7733023
-    },
-    {
         "title": "Sam Schwartz Shares His Journey to Prediction Market Newsletter Author in Gambling Insider Q&A",
         "link": "https://www.gamblinginsider.com/news/182038/sam-schwartz-prediction-market-newsletter-author",
         "author": "Marcus DiNitto",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786386609.773255
+        "timestamp": 1786408075.5503209
     },
     {
         "title": "Flutter Margins Hit as US Sportsbook Falters, Guidance Cut, Peter Jackson Leaves End Sept",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786386609.7732162
+        "timestamp": 1786408075.5502799
     },
     {
         "title": "Tribal Leaders Warn Congress Prediction Markets Bypass IGRA",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786386609.773182
+        "timestamp": 1786408075.5502427
     },
     {
         "title": "Genius Sports Expands Prediction Market Push With Kalshi, Polymarket Deals",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786386609.7731385
+        "timestamp": 1786408075.5501978
     },
     {
         "title": "Prosecutors Accuse Terry Rozier\u2019s Co-Defendant of Witness Tampering in NBA Betting Case",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1786386609.7730951
+        "timestamp": 1786408075.5501516
     },
     {
         "title": "PENN Posts Record Retail Q2 as Digital Losses Narrow to $9.5 Million",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786386609.7730403
+        "timestamp": 1786408075.5500946
     },
     {
         "title": "DraftKings Q2 Profitability Falls but Predictions Growth Outpaces Expectations",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786386609.7729979
+        "timestamp": 1786408075.5500517
     },
     {
         "title": "Kalshi Geofencing, Earnings, NFL Preseason Lead Gambling Stories to Watch This Week",
@@ -114,19 +101,32 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786386609.7729337
+        "timestamp": 1786408075.550005
     },
     {
-        "title": "The CFTC Warns Prediction Markets to Drop Sportsbook-Style Odds",
+        "title": "CFTC Warns Prediction Markets to Drop Sportsbook-Style Odds",
         "link": "https://www.gamblinginsider.com/news/185168/cftc-prediction-markets-sportsbook-american-odds",
         "author": "Andrew O'Malley",
         "date": "Aug 10, 2026",
-        "summary": "The federal regulator says pricing displays that obscure market depth or mislead traders could violate federal rules against manipulative practices. The Commodity Futures Trading Commission (CFTC) has warned the prediction market industry against displaying event-contract prices using the American odds format made familiar by sportsbooks. This is the latest flashpoint as the agency defends federally [&#8230;]\nThe post The CFTC Warns Prediction Markets to Drop Sportsbook-Style Odds appeared first on Gambling Insider.",
+        "summary": "The federal regulator says pricing displays that obscure market depth or mislead traders could violate federal rules against manipulative practices. The Commodity Futures Trading Commission (CFTC) has warned the prediction market industry against displaying event-contract prices using the American odds format made familiar by sportsbooks. This is the latest flashpoint as the agency defends federally [&#8230;]\nThe post CFTC Warns Prediction Markets to Drop Sportsbook-Style Odds appeared first on Gambling Insider.",
         "image": "",
         "source_name": "Gambling Insider",
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1786386609.7728837
+        "timestamp": 1786408075.5499613
+    },
+    {
+        "title": "Kalshi Relationship Surfaces Concerns About NCPG\u2019s Legitimacy",
+        "link": "https://www.gamblinginsider.com/news/184168/kalshi-relationship-prompts-questions-ncpg-legitimacy",
+        "author": "Robyn McNeil",
+        "date": "Aug 10, 2026",
+        "summary": "The National Council on Problem Gambling defends its Kalshi partnership by calling prediction markets the &#8216;latest evolution of gambling-like platforms.&#8217; Almost three months after the National Council on Problem Gambling (NCPG) announced Kalshi as the first member of its new Financial Services &#38; Trading vertical, questions mount about the Council&#8217;s authenticity. In a July 28 [&#8230;]\nThe post Kalshi Relationship Surfaces Concerns About NCPG&#8217;s Legitimacy appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Suppliers & B2B",
+        "timestamp": 1786408075.5498753
     }
 ]
