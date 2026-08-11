@@ -1,18 +1,5 @@
 [
     {
-        "title": "Sam Schwartz Shares His Journey to Prediction Market Newsletter Author in Gambling Insider Q&A",
-        "link": "https://www.gamblinginsider.com/news/182038/sam-schwartz-prediction-market-newsletter-author",
-        "author": "Marcus DiNitto",
-        "date": "Aug 05, 2026",
-        "summary": "From Georgetown to investment banking to prediction market startup to industry newsletter, Sam Schwartz sits down for a wide-ranging conversation. Prediction markets caught the eye of Sam Schwartz soon after he left his investment banking analyst position with HSBC in June 2024, not necessarily knowing what was next. \u201cI was excited about pursuing different opportunities [&#8230;]\nThe post Sam Schwartz Shares His Journey to Prediction Market Newsletter Author in Gambling Insider Q&amp;A appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1786429898.720237
-    },
-    {
         "title": "Flutter Margins Hit as US Sportsbook Falters, Guidance Cut, Peter Jackson Leaves End Sept",
         "link": "https://www.gamblinginsider.com/news/182106/flutter-margins-hit-as-us-sportsbook-falters-guidance-cut-peter-jackson-leaves-end-sept",
         "author": "Gary McFarlane",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786429898.7201936
+        "timestamp": 1786451389.2792833
     },
     {
         "title": "Tribal Leaders Warn Congress Prediction Markets Bypass IGRA",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786429898.7201548
+        "timestamp": 1786451389.2792437
     },
     {
         "title": "Genius Sports Expands Prediction Market Push With Kalshi, Polymarket Deals",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786429898.7201076
+        "timestamp": 1786451389.279198
     },
     {
         "title": "Prosecutors Accuse Terry Rozier\u2019s Co-Defendant of Witness Tampering in NBA Betting Case",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1786429898.720035
+        "timestamp": 1786451389.2791505
     },
     {
         "title": "PENN Posts Record Retail Q2 as Digital Losses Narrow to $9.5 Million",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786429898.7199771
+        "timestamp": 1786451389.2790923
     },
     {
         "title": "DraftKings Q2 Profitability Falls but Predictions Growth Outpaces Expectations",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786429898.7199318
+        "timestamp": 1786451389.2790468
     },
     {
         "title": "Kalshi Geofencing, Earnings, NFL Preseason Lead Gambling Stories to Watch This Week",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786429898.719884
+        "timestamp": 1786451389.278998
     },
     {
         "title": "CFTC Warns Prediction Markets to Drop Sportsbook-Style Odds",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1786429898.7198398
+        "timestamp": 1786451389.2789547
     },
     {
         "title": "Kalshi Relationship Surfaces Concerns About NCPG\u2019s Legitimacy",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786429898.7197714
+        "timestamp": 1786451389.2788951
+    },
+    {
+        "title": "Connecticut Judge Finds Kalshi Sports Contracts Are Not Swaps, Rejects Preemption Bid",
+        "link": "https://www.gamblinginsider.com/news/185342/kalshi-connecticut-sports-contracts-swaps-preemption",
+        "author": "Chavdar Vasilev",
+        "date": "Aug 11, 2026",
+        "summary": "The federal court decides that Kalshi is unlikely to prevail on either of its central legal arguments, while noting that sports generated up to 90% of the prediction market\u2019s revenue. A Connecticut federal judge has denied Kalshi\u2019s request to block the state from enforcing its gambling laws against the prediction market, finding that its sports [&#8230;]\nThe post Connecticut Judge Finds Kalshi Sports Contracts Are Not Swaps, Rejects Preemption Bid appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1786451389.27882
     }
 ]
