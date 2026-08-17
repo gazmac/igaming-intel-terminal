@@ -1,18 +1,5 @@
 [
     {
-        "title": "NYC Council Probes Prediction Markets Over Alleged Deceptive Marketing",
-        "link": "https://www.gamblinginsider.com/news/185965/nyc-council-prediction-markets-marketing-probe",
-        "author": "Chavdar Vasilev",
-        "date": "Aug 12, 2026",
-        "summary": "Polymarket, Kalshi, Coinbase and Gemini Titan have been asked to disclose details about their users, advertising practices and influencer marketing. The New York City Council has launched an investigation into four major prediction market platforms over their advertising practices and potential targeting of minors, adding another front to New York\u2019s ongoing battle with the industry. [&#8230;]\nThe post NYC Council Probes Prediction Markets Over Alleged Deceptive Marketing appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Suppliers & B2B",
-        "timestamp": 1786947801.5619926
-    },
-    {
         "title": "Caesars Details Why It Chose Fertitta Deal Despite Higher Icahn Offer",
         "link": "https://www.gamblinginsider.com/news/186776/caesars-fertitta-deal-icahn-higher-offer",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786947801.561944
+        "timestamp": 1786969140.0284078
     },
     {
         "title": "Chicago City Council Demands Bally\u2019s Resume Casino Construction",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1786947801.5619035
+        "timestamp": 1786969140.0283663
     },
     {
         "title": "iGaming No Longer the Sure Bet It Once was Considered \u2014 In New York or Elsewhere",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1786947801.5618482
+        "timestamp": 1786969140.0283105
     },
     {
         "title": "Prediction Markets Flag Dozens of Suspected Insider Traders as CFTC Enforcement Lags",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786947801.5617912
+        "timestamp": 1786969140.028253
     },
     {
         "title": "Fliff, Onyx Seek FCM Registration in Pivot From Sweeps to Prediction Markets",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1786947801.5617466
+        "timestamp": 1786969140.028209
     },
     {
         "title": "Prediction Markets Weekly Roundup: CFTC Escalates New York Fight as State Challenges Mount",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1786947801.5616972
+        "timestamp": 1786969140.0281582
     },
     {
         "title": "Baltimore Sues Kalshi, Polymarket After Sportsbook, Sweepstakes Cases",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1786947801.5616376
+        "timestamp": 1786969140.028099
     },
     {
         "title": "CFTC Looking Into Mention Markets, Horse Racing Controversy, Vegas Dave Highlight This Week\u2019s Gambling Industry Bingos & Busts",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1786947801.5615847
+        "timestamp": 1786969140.0280445
     },
     {
         "title": "Entain Says UK Gambling Tax Hike Is Helping It Gain Market Share",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1786947801.5615158
+        "timestamp": 1786969140.0279598
+    },
+    {
+        "title": "Connecticut Judge Says CFTC Cannot Override Court, Denies Kalshi Injunction",
+        "link": "https://www.gamblinginsider.com/news/187482/connecticut-kalshi-cftc-emergency-order-injunction",
+        "author": "Chavdar Vasilev",
+        "date": "Aug 17, 2026",
+        "summary": "The CFTC \u201clacks the authority to dictate an order that conflicts with this Court\u2019s decision,\u201d according to the denial. A Connecticut judge has denied Kalshi\u2019s emergency motion for an injunction pending appeal, rejecting the company\u2019s attempt to use the Commodity Futures Trading Commission\u2019s (CFTC) \u201cmarket emergency\u201d order in New York to shield itself from state [&#8230;]\nThe post Connecticut Judge Says CFTC Cannot Override Court, Denies Kalshi Injunction appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "NFL",
+        "timestamp": 1786969140.0279016
     }
 ]
