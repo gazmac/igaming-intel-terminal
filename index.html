@@ -709,7 +709,7 @@
             const container = document.getElementById('marquee-content');
             if(!container) return;
             
-            let spikeSorted = db.map(s => ({...s, spike: getSpikeValue(s)})).filter(s => Math.abs(s.spike) >= 20);
+            let spikeSorted = db.map(s => ({...s, spike: getSpikeValue(s)})).filter(s => Math.abs(s.spike) >= 10);
             let upSpikes = spikeSorted.filter(s => s.spike > 0).sort((a,b) => b.spike - a.spike).slice(0, 5);
             let downSpikes = spikeSorted.filter(s => s.spike < 0).sort((a,b) => a.spike - b.spike).slice(0, 5);
             let topSpikes = [...upSpikes, ...downSpikes];
@@ -962,7 +962,7 @@
                 if (s.sentiment_history && s.sentiment_history.length > 1) {
                     const diff = getSpikeValue(s);
 
-                    if (Math.abs(diff) >= 20) {
+                    if (Math.abs(diff) >= 10) {
                         const spikeColor = diff > 0 ? 'text-green-600 bg-green-50 border-green-200' : 'text-red-600 bg-red-50 border-red-200';
                         const spikeIcon = diff > 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
                         const sign = diff > 0 ? '+' : '';
