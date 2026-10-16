@@ -1,18 +1,5 @@
 [
     {
-        "title": "Maine Gaming Regulator Points to Q1 2027 iGaming Launch",
-        "link": "https://www.gamblinginsider.com/news/196828/maine-igaming-launch-q1-2027",
-        "author": "Chavdar Vasilev",
-        "date": "Oct 08, 2026",
-        "summary": "Maine still needs to complete a legal review, hire six staff members and launch a licensing portal. Maine\u2019s online casino market is more likely to launch in the first quarter of 2027 than before the end of 2026, according to Gambling Control Unit Executive Director Milton Champion, as the state continues working through its rules [&#8230;]\nThe post Maine Gaming Regulator Points to Q1 2027 iGaming Launch appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1792131850.8341293
-    },
-    {
         "title": "From Single-Leg Bets to Parlays: Why Are Bettors Changing How They Wager?",
         "link": "https://www.gamblinginsider.com/news/196822/why-bettors-changing-to-parlays",
         "author": "Lynnae Williams",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792131850.834087
+        "timestamp": 1792153406.7424595
     },
     {
         "title": "The Gambling Wire: NFL Urges Supreme Court to Review Kalshi Case; Seminole Tribe Sues DraftKings",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1792131850.8340337
+        "timestamp": 1792153406.7424064
     },
     {
         "title": "Kalshi Courts Tribal Partners While Others Fight Its Business in Court",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1792131850.8339725
+        "timestamp": 1792153406.7423446
     },
     {
         "title": "The Gambling Wire: CFTC Clarifies Sports Betting Rules, NBA Seeks Prediction Market Data",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792131850.833932
+        "timestamp": 1792153406.742305
     },
     {
         "title": "The Gambling Wire: Prediction Markets Top $10 Billion as Election Betting Faces Public Opposition",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792131850.833872
+        "timestamp": 1792153406.7422502
     },
     {
         "title": "States Review Sportsbook Draft Bets, But Not Kalshi\u2019s 598,464 Contracts on Cardinals\u2019 Pick",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792131850.8337944
+        "timestamp": 1792153406.7421942
     },
     {
         "title": "The Gambling Wire: FTC Eyes Sportsbooks as Kalshi Tribal Deal Faces Dispute",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792131850.8337374
+        "timestamp": 1792153406.7421389
     },
     {
         "title": "BetMGM Needs a Record Q4 to Hit 2026 Guidance After Doubling Q3 Adjusted EBITDA to $86M",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1792131850.8336744
+        "timestamp": 1792153406.7420793
     },
     {
         "title": "The Gambling Wire: SEC Clears Cboe Corporate Options as Kentucky Cases Face Remand",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792131850.8336172
+        "timestamp": 1792153406.742032
+    },
+    {
+        "title": "The Gambling Wire: Louisiana Delays DraftKings License Renewal as Polymarket Trading Raises Questions",
+        "link": "https://www.gamblinginsider.com/news/197157/draftkings-louisiana-license-polymarket-suspicious-trading",
+        "author": "Chavdar Vasilev",
+        "date": "Oct 16, 2026",
+        "summary": "Louisiana joins a growing number of regulators scrutinizing DraftKings\u2019 use of AI, while a WIRED investigation raises questions about wash trading and activity farming on Polymarket. The fallout from DraftKings\u2019 alleged use of AI to target losing bettors has spread to Louisiana, where regulators have delayed a full license renewal to investigate the matter. Meanwhile, [&#8230;]\nThe post The Gambling Wire: Louisiana Delays DraftKings License Renewal as Polymarket Trading Raises Questions appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "General News",
+        "timestamp": 1792153406.7419477
     }
 ]
