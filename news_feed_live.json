@@ -1,18 +1,5 @@
 [
     {
-        "title": "The Gambling Wire: CFTC Clarifies Sports Betting Rules, NBA Seeks Prediction Market Data",
-        "link": "https://www.gamblinginsider.com/news/196922/cftc-sports-betting-rules-nba-prediction-markets",
-        "author": "Chavdar Vasilev",
-        "date": "Oct 12, 2026",
-        "summary": "The CFTC seeks to distinguish sportsbook bets from event contracts. Meanwhile, the NBA calls for national regulatory consistency, in contrast to the NFL\u2019s support for state oversight. The Commodity Futures Trading Commission (CFTC) released two rulemakings on Friday, seeking to establish why a sports wager placed at a licensed sportsbook should be treated differently from [&#8230;]\nThe post The Gambling Wire: CFTC Clarifies Sports Betting Rules, NBA Seeks Prediction Market Data appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Sportsbooks",
-        "timestamp": 1792477445.2028701
-    },
-    {
         "title": "The Gambling Wire: Prediction Markets Top $10 Billion as Election Betting Faces Public Opposition",
         "link": "https://www.gamblinginsider.com/news/196959/prediction-markets-record-volume-election-betting-poll",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792477445.202816
+        "timestamp": 1792499052.3348024
     },
     {
         "title": "States Review Sportsbook Draft Bets, But Not Kalshi\u2019s 598,464 Contracts on Cardinals\u2019 Pick",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792477445.2027612
+        "timestamp": 1792499052.3347692
     },
     {
         "title": "The Gambling Wire: FTC Eyes Sportsbooks as Kalshi Tribal Deal Faces Dispute",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792477445.2027078
+        "timestamp": 1792499052.334737
     },
     {
         "title": "BetMGM Needs a Record Q4 to Hit 2026 Guidance After Doubling Q3 Adjusted EBITDA to $86M",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1792477445.2026525
+        "timestamp": 1792499052.3347037
     },
     {
         "title": "The Gambling Wire: SEC Clears Cboe Corporate Options as Kentucky Cases Face Remand",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792477445.2026107
+        "timestamp": 1792499052.3346806
     },
     {
         "title": "The Gambling Wire: Louisiana Delays DraftKings License Renewal as Polymarket Trading Raises Questions",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792477445.2025416
+        "timestamp": 1792499052.334634
     },
     {
         "title": "Beyond Swaps and Preemption: Six Arguments in Kalshi\u2019s Supreme Court Fight",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792477445.20247
+        "timestamp": 1792499052.3345864
     },
     {
         "title": "Exclusive: Kalshi\u2019s Own ETH Perp Data, Tested Against Spot Prices, Undercuts Its Explanation for $9.81B in Trades",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792477445.2024097
+        "timestamp": 1792499052.3345492
     },
     {
         "title": "The Gambling Wire: NBA Tightens Betting Rules as Prediction Markets Challenge Missouri",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792477445.2023206
+        "timestamp": 1792499052.3344939
+    },
+    {
+        "title": "The Gambling Wire: Polymarket Takes Ohio to Court, CFTC Opens the Floor and Kalshi Hits Snooze on SCOTUS",
+        "link": "https://www.gamblinginsider.com/news/197267/polymarket-ohio-court-cftc-kalshi-scotus",
+        "author": "Suswati Basu",
+        "date": "Oct 20, 2026",
+        "summary": "Polymarket takes its fight with Ohio to constitutional grounds, the CFTC weighs the future of event contracts and Kalshi buys more time in its Supreme Court battle, while regulators on both sides of the border hold their ground. Polymarket has a new constitutional argument, the CFTC wants everyone&#8217;s opinion and Kalshi is in no hurry [&#8230;]\nThe post The Gambling Wire: Polymarket Takes Ohio to Court, CFTC Opens the Floor and Kalshi Hits Snooze on SCOTUS appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "General News",
+        "timestamp": 1792499052.33445
     }
 ]
