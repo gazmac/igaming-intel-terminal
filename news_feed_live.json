@@ -1,18 +1,5 @@
 [
     {
-        "title": "Exclusive: Kalshi\u2019s Own ETH Perp Data, Tested Against Spot Prices, Undercuts Its Explanation for $9.81B in Trades",
-        "link": "https://www.gamblinginsider.com/news/197128/kalshi-ether-perps-fixed-size-trades-sniping-spot-data",
-        "author": "Gary McFarlane",
-        "date": "Oct 16, 2026",
-        "summary": "Gambling Insider&#8217;s analysis of Kalshi ether perps found that unusually concentrated fixed-size transactions showed a much smaller pricing advantage than other trades, challenging the exchange&#8217;s explanation for the activity. An economist who advanced a similar theory says he is now reconsidering it. A Gambling Insider investigation of 5.35 million trades found that traders responsible for [&#8230;]\nThe post Exclusive: Kalshi\u2019s Own ETH Perp Data, Tested Against Spot Prices, Undercuts Its Explanation for $9.81B in Trades appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "General News",
-        "timestamp": 1792930905.5074494
-    },
-    {
         "title": "The Gambling Wire: NBA Tightens Betting Rules as Prediction Markets Challenge Missouri",
         "link": "https://www.gamblinginsider.com/news/197232/nba-tightens-prop-bets-rules-prediction-markets-missouri-lawsuits",
         "author": "Suswati Basu",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1792930905.507377
+        "timestamp": 1792952442.8402586
     },
     {
         "title": "The Gambling Wire: Polymarket Takes Ohio to Court, CFTC Opens the Floor and Kalshi Hits Snooze on SCOTUS",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792930905.5073287
+        "timestamp": 1792952442.8402297
     },
     {
         "title": "$963K FedEx Trading Card Theft Highlights Booming Collectibles Market Amid Gambling Scrutiny",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792930905.5072668
+        "timestamp": 1792952442.8401895
     },
     {
         "title": "The Gambling Wire: Utah Sues Kalshi as Flutter Plans 1,400 Job Cuts",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1792930905.507201
+        "timestamp": 1792952442.8401492
     },
     {
         "title": "Breaker Says TikTok Rep Tied Reinstatement to Fanatics; Contract Makes \u2018No Representation\u2019 on TikTok",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NBA",
-        "timestamp": 1792930905.507147
+        "timestamp": 1792952442.8401225
     },
     {
         "title": "Who Counts as an Insider When Prediction Markets Bet on Human Behavior?",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1792930905.5070577
+        "timestamp": 1792952442.8400795
     },
     {
         "title": "The Gambling Wire: Ohio Warns Gaming Licensees Over Prediction Market Ties",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1792930905.5070148
+        "timestamp": 1792952442.8400493
     },
     {
         "title": "The Gambling Wire: Pentagon Restricts Prediction Market Trading as Congress Targets VIP Programs",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792930905.506956
+        "timestamp": 1792952442.8400187
     },
     {
         "title": "PrizePicks Packs: Do Instant Buybacks Blur the Line Between Collecting and Gambling?",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1792930905.5068638
+        "timestamp": 1792952442.839966
+    },
+    {
+        "title": "New York Gaming Commission Asks Court To Force Kalshi To Comply With Subpoenas",
+        "link": "https://www.gamblinginsider.com/news/197514/new-york-gaming-commission-kalshi-subpoenas-court",
+        "author": "Adam Roarty",
+        "date": "Oct 25, 2026",
+        "summary": "The New York State Gaming Commission has asked a Manhattan court to force Kalshi to hand over records on its sports-event contracts, its users under 21 and its advertising, as the regulator weighs civil penalties against the prediction market operator. New York&#8217;s gaming regulator has opened a new front in its long-running dispute with Kalshi, [&#8230;]\nThe post New York Gaming Commission Asks Court To Force Kalshi To Comply With Subpoenas appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Operators",
+        "timestamp": 1792952442.8399143
     }
 ]
