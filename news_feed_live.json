@@ -1,18 +1,5 @@
 [
     {
-        "title": "The Gambling Wire: CFTC Sues Utah as NBA Enters Prediction Markets",
-        "link": "https://www.gamblinginsider.com/news/197628/cftc-sues-utah-nba-kalshi-polymarket-prediction-markets",
-        "author": "Chavdar Vasilev",
-        "date": "Oct 27, 2026",
-        "summary": "Utah faces a new federal challenge despite its earlier victory over Kalshi, while the NBA becomes the latest major sports league to strike prediction market deals. The Commodity Futures Trading Commission (CFTC) sued Utah on Monday, seeking to block the state\u2019s crackdown on federally regulated prediction markets. On the same day, the regulator signed an [&#8230;]\nThe post The Gambling Wire: CFTC Sues Utah as NBA Enters Prediction Markets appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "NBA",
-        "timestamp": 1793622022.9441152
-    },
-    {
         "title": "The Gambling Wire: Kalshi Sues Missouri as Crypto.com Challenges Utah",
         "link": "https://www.gamblinginsider.com/news/197645/kalshi-missouri-lawsuit-crypto-com-utah-prediction-markets",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793622022.9440594
+        "timestamp": 1793643488.351382
     },
     {
         "title": "Rush Street Beats Q3 Profit Forecasts But Slower Growth Tests Outlook",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1793622022.944013
+        "timestamp": 1793643488.351332
     },
     {
         "title": "The Gambling Wire: Utah Charges Kalshi Founders as Rutgers Flags Teen Gambling Risks",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1793622022.9439752
+        "timestamp": 1793643488.3512928
     },
     {
         "title": "George Santos Claims Kalshi Told Paid Influencers to Conceal Political Promotions",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1793622022.9438987
+        "timestamp": 1793643488.351225
     },
     {
         "title": "Sweepstakes Casino Monthly Update October 2026: Oklahoma Exits Accelerate Ahead of Ban",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1793622022.9438446
+        "timestamp": 1793643488.3511689
     },
     {
         "title": "Federal Government Asks Court To Halt Utah\u2019s Criminal Case Against Kalshi",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793622022.9437926
+        "timestamp": 1793643488.3511155
     },
     {
         "title": "Sweden Bans Duel.com Operator Immortal Snail After It Refuses To Drop Swedish",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793622022.9437468
+        "timestamp": 1793643488.3510656
     },
     {
         "title": "Three Northeast Indiana Counties Vote Tuesday On Casino Referendum",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1793622022.9437003
+        "timestamp": 1793643488.3510184
     },
     {
         "title": "The Gambling Wire: Illinois Blocked From Enforcing Prediction Market Laws, Operators Exit Utah",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793622022.943635
+        "timestamp": 1793643488.350964
+    },
+    {
+        "title": "Prediction Markets Exploded, but Sportsbooks Held Their Ground in September",
+        "link": "https://www.gamblinginsider.com/news/200921/prediction-markets-sportsbook-handle-september-2026",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 02, 2026",
+        "summary": "September sportsbook handle was virtually flat year over year across 15 states, even as prediction markets shattered trading records as football returned. Prediction markets set trading records as football returned in September but sportsbook handle in 15 major states was nearly flat year over year, suggesting traditional operators held steady even as a fast-growing rival [&#8230;]\nThe post Prediction Markets Exploded, but Sportsbooks Held Their Ground in September appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Operators",
+        "timestamp": 1793643488.3509016
     }
 ]
