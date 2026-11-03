@@ -1,18 +1,5 @@
 [
     {
-        "title": "Rush Street Beats Q3 Profit Forecasts But Slower Growth Tests Outlook",
-        "link": "https://www.gamblinginsider.com/news/197668/rush-street-interactive-q3-2026-revenue-miss-ebitda-beat",
-        "author": "Gary McFarlane",
-        "date": "Oct 29, 2026",
-        "summary": "The BetRivers operator recorded a 73% adjusted EBITDA increase, yet missed revenue expectations for the first time in four years. Rush Street Interactive grew profit 73% in the third quarter but missed sales forecasts for the first time in four years, exposing a North American iGaming slowdown that Latin American growth could not conceal. Revenue [&#8230;]\nThe post Rush Street Beats Q3 Profit Forecasts But Slower Growth Tests Outlook appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1793686846.8915098
-    },
-    {
         "title": "The Gambling Wire: Utah Charges Kalshi Founders as Rutgers Flags Teen Gambling Risks",
         "link": "https://www.gamblinginsider.com/news/197663/utah-kalshi-criminal-charges-rutgers-teen-gambling-uk-tax",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1793686846.8914697
+        "timestamp": 1793708355.1762633
     },
     {
         "title": "George Santos Claims Kalshi Told Paid Influencers to Conceal Political Promotions",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1793686846.891401
+        "timestamp": 1793708355.1761956
     },
     {
         "title": "Sweepstakes Casino Monthly Update October 2026: Oklahoma Exits Accelerate Ahead of Ban",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1793686846.8913445
+        "timestamp": 1793708355.17614
     },
     {
         "title": "Federal Government Asks Court To Halt Utah\u2019s Criminal Case Against Kalshi",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793686846.8912902
+        "timestamp": 1793708355.1760864
     },
     {
         "title": "Sweden Bans Duel.com Operator Immortal Snail After It Refuses To Drop Swedish",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793686846.891215
+        "timestamp": 1793708355.176037
     },
     {
         "title": "Three Northeast Indiana Counties Vote Tuesday On Casino Referendum",
@@ -88,20 +75,20 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1793686846.891163
+        "timestamp": 1793708355.1759906
     },
     {
         "title": "The Gambling Wire: Illinois Blocked From Enforcing Prediction Market Laws, Operators Exit Utah",
         "link": "https://www.gamblinginsider.com/news/197731/illinois-prediction-market-injunction-utah-operators-exit",
         "author": "Chavdar Vasilev",
         "date": "Nov 02, 2026",
-        "summary": "The Illinois injunction extends to licensing, taxation and enforcement, raising the stakes in the legal battle over sports-event contracts as more operators retreat from Utah. A federal judge in Illinois has entered a preliminary injunction barring state officials from enforcing gambling laws against prediction CFTC-regulated markets, including licensing requirements and taxes. Meanwhile, DraftKings, FanDuel, Fanatics, [&#8230;]\nThe post The Gambling Wire: Illinois Blocked From Enforcing Prediction Market Laws, Operators Exit Utah appeared first on Gambling Insider.",
+        "summary": "The Illinois injunction extends to licensing, taxation and enforcement, raising the stakes in the legal battle over sports-event contracts as more operators retreat from Utah. A federal judge in Illinois has entered a preliminary injunction barring state officials from enforcing gambling laws against CFTC-regulated prediction markets, including licensing requirements and taxes. Meanwhile, DraftKings, FanDuel, Fanatics, [&#8230;]\nThe post The Gambling Wire: Illinois Blocked From Enforcing Prediction Market Laws, Operators Exit Utah appeared first on Gambling Insider.",
         "image": "",
         "source_name": "Gambling Insider",
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793686846.8911097
+        "timestamp": 1793708355.175939
     },
     {
         "title": "Prediction Markets Exploded, but Sportsbooks Held Their Ground in September",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793686846.8910565
+        "timestamp": 1793708355.1758866
     },
     {
         "title": "Election Odds Can Still Be Moved for $3,500 as Midterm Betting Hits $431 Million",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1793686846.890992
+        "timestamp": 1793708355.175824
+    },
+    {
+        "title": "The Gambling Wire: New York\u2019s Legal Battle With Kalshi Expands With New Subpoena Action",
+        "link": "https://www.gamblinginsider.com/news/201156/new-york-kalshi-advertising-subpoena-sporttrade-cftc-approval",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 03, 2026",
+        "summary": "New York\u2019s latest court filing targets Kalshi\u2019s advertising and \u201cno-house\u201d claims, adding to a growing regulatory and legal scrutiny against the prediction market operator. New York\u2019s legal fight with Kalshi continues to grow, with Attorney General Letitia James filing a petition in state court seeking a court order to force the company to comply with [&#8230;]\nThe post The Gambling Wire: New York\u2019s Legal Battle With Kalshi Expands With New Subpoena Action appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Operators",
+        "timestamp": 1793708355.1757178
     }
 ]
