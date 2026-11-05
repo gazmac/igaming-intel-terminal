@@ -1,18 +1,5 @@
 [
     {
-        "title": "Three Northeast Indiana Counties Vote Tuesday On Casino Referendum",
-        "link": "https://www.gamblinginsider.com/news/197716/indiana-casino-referendum-allen-dekalb-steuben",
-        "author": "Ryan Mitchell",
-        "date": "Nov 02, 2026",
-        "summary": "Voters in Allen, DeKalb and Steuben counties will decide on Tuesday whether inland casino gambling should be permitted in their county, the first step in a state process that could end with one new license for a casino resort worth at least $500 million in northeast Indiana. Three northeast Indiana counties vote on November 3 [&#8230;]\nThe post Three Northeast Indiana Counties Vote Tuesday On Casino Referendum appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Casino & Slots",
-        "timestamp": 1793859646.003321
-    },
-    {
         "title": "The Gambling Wire: Illinois Blocked From Enforcing Prediction Market Laws, Operators Exit Utah",
         "link": "https://www.gamblinginsider.com/news/197731/illinois-prediction-market-injunction-utah-operators-exit",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793859646.003271
+        "timestamp": 1793881172.5263588
     },
     {
         "title": "Prediction Markets Exploded, but Sportsbooks Held Their Ground in September",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793859646.0032232
+        "timestamp": 1793881172.5263114
     },
     {
         "title": "Election Odds Can Still Be Moved for $3,500 as Midterm Betting Hits $431 Million",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1793859646.003174
+        "timestamp": 1793881172.5262654
     },
     {
         "title": "The Gambling Wire: New York\u2019s Legal Battle With Kalshi Expands With New Subpoena Action",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1793859646.0031195
+        "timestamp": 1793881172.5262148
     },
     {
         "title": "Sportradar Says Prediction Markets Begin Driving Growth in Q3",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1793859646.0030591
+        "timestamp": 1793881172.5261605
     },
     {
         "title": "The Gambling Wire: Nebraska Voters Reject Online Sports Betting",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1793859646.0029924
+        "timestamp": 1793881172.526113
     },
     {
         "title": "Flutter Cuts 2026 Guidance Again as FanDuel EBITDA Falls 94% to $3 Million",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1793859646.0029368
+        "timestamp": 1793881172.5260603
     },
     {
         "title": "Texas Elections Remove Major Gambling Roadblock, but Legalization Still Faces Hurdles",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1793859646.0028837
+        "timestamp": 1793881172.5260098
     },
     {
         "title": "Democrats Win Midterms, but Prediction Markets\u2019 Biggest Threat May Come From Texas and Georgia",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1793859646.002796
+        "timestamp": 1793881172.5259078
+    },
+    {
+        "title": "The Gambling Wire: Arkansas Sues Kalshi and VGW Over Alleged Illegal Gambling",
+        "link": "https://www.gamblinginsider.com/news/201846/arkansas-sues-kalshi-vgw-illegal-gambling",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 05, 2026",
+        "summary": "Arkansas becomes the latest state to enter the legal battle between states and prediction markets, while Kalshi suffers another appellate setback and Flutter cuts its full-year outlook. Arkansas Attorney General Tim Griffin has targeted online gambling alternatives, suing prediction market operator Kalshi and sweepstakes casino giant VGW for allegedly operating illegal gambling businesses in the [&#8230;]\nThe post The Gambling Wire: Arkansas Sues Kalshi and VGW Over Alleged Illegal Gambling appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Operators",
+        "timestamp": 1793881172.5257962
     }
 ]
