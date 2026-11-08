@@ -1,18 +1,5 @@
 [
     {
-        "title": "Flutter Cuts 2026 Guidance Again as FanDuel EBITDA Falls 94% to $3 Million",
-        "link": "https://www.gamblinginsider.com/news/201816/flutter-q3-2026-results-fanduel-ebitda-falls-guidance-cut",
-        "author": "Gary McFarlane",
-        "date": "Nov 04, 2026",
-        "summary": "Dan Taylor\u2019s first results as CEO showed FanDuel hitting its breakeven target, but a revenue miss, a $160 million profit downgrade and a paused buyback suggest the turnaround has far to run. Flutter Entertainment (FLUT) cut its full-year profit guidance for the third consecutive quarter on Wednesday as its U.S. arm, FanDuel, earned just $3 [&#8230;]\nThe post Flutter Cuts 2026 Guidance Again as FanDuel EBITDA Falls 94% to $3 Million appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1794140306.6527545
-    },
-    {
         "title": "Texas Elections Remove Major Gambling Roadblock, but Legalization Still Faces Hurdles",
         "link": "https://www.gamblinginsider.com/news/201825/texas-gambling-expansion-2027-elections",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794140306.6527178
+        "timestamp": 1794161883.3664095
     },
     {
         "title": "Democrats Win Midterms, but Prediction Markets\u2019 Biggest Threat May Come From Texas and Georgia",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794140306.6526508
+        "timestamp": 1794161883.3663678
     },
     {
         "title": "The Gambling Wire: Arkansas Sues Kalshi and VGW Over Alleged Illegal Gambling",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794140306.6525698
+        "timestamp": 1794161883.3663263
     },
     {
         "title": "Trading Cards Draw Growing Attention Amid Texas Gambling Bust, FanDuel Rips Trial",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794140306.652527
+        "timestamp": 1794161883.3663008
     },
     {
         "title": "The Gambling Wire: California Tribes Win Kalshi Injunction as CFTC Challenges Geographic Restrictions",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794140306.6524856
+        "timestamp": 1794161883.3662753
     },
     {
         "title": "PENN Q3 Revenue Hits $1.84B as Texas Opportunities Emerge, Interactive Losses Narrow",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794140306.6524398
+        "timestamp": 1794161883.3662457
     },
     {
         "title": "DraftKings CEO Defends $1B Prediction Markets Bet Despite Supreme Court Risk",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794140306.6523983
+        "timestamp": 1794161883.3662207
     },
     {
         "title": "Did Kalshi\u2019s Federal Court Strategy Push Utah Toward Criminal Prosecution?",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794140306.6523578
+        "timestamp": 1794161883.366199
     },
     {
         "title": "Macquarie Backs Inspired Entertainment as Q3 Beats Low Expectations",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794140306.6522756
+        "timestamp": 1794161883.3661532
+    },
+    {
+        "title": "Robinhood, Coinbase Among Four More Prediction Market Firms Agreeing to Halt Ohio Sports Contracts",
+        "link": "https://www.gamblinginsider.com/news/202535/robinhood-coinbase-gemini-moomoo-financial-halt-ohio-sports-contracts",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 08, 2026",
+        "summary": "Half of the companies that Ohio targeted through cease-and-desist orders have now complied. Two others have sued the state, and three are in discussion with the OCCC. Four prediction companies, including Robinhood and Coinbase, have agreed to stop offering sports event contracts in Ohio, joining Plus500US after the state sent them cease-and-desist orders in early [&#8230;]\nThe post Robinhood, Coinbase Among Four More Prediction Market Firms Agreeing to Halt Ohio Sports Contracts appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "NBA",
+        "timestamp": 1794161883.366125
     }
 ]
