@@ -1,18 +1,5 @@
 [
     {
-        "title": "The Gambling Wire: Polymarket Confirms Job Cuts as Texas Targets Prediction Markets",
-        "link": "https://www.gamblinginsider.com/news/203635/polymarket-layoffs-texas-prediction-market-rules",
-        "author": "Chavdar Vasilev",
-        "date": "Nov 12, 2026",
-        "summary": "However, Polymarket denies social media claims of a 30% staff reduction. Elsewhere, Brazil\u2019s betting ban faces delays, and digital card rips emerge as a $2 billion market. After rumors circulated on social media last week, Polymarket has confirmed layoffs amid reorganization. Prediction markets were also in focus in Texas, where a new bill proposes a [&#8230;]\nThe post The Gambling Wire: Polymarket Confirms Job Cuts as Texas Targets Prediction Markets appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Sportsbooks",
-        "timestamp": 1794853084.6207693
-    },
-    {
         "title": "Plaee Adds Underdog as Third Prediction Market Exchange Partner",
         "link": "https://www.gamblinginsider.com/news/203779/plaee-underdog-prediction-market-exchange-partnership",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794853084.6207345
+        "timestamp": 1794875122.96926
     },
     {
         "title": "Digital Card Rips Are a $2 Billion Business, and Gambling Companies Want In",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794853084.6207042
+        "timestamp": 1794875122.9692137
     },
     {
         "title": "Wall Street\u2019s Legal Challenge May Overlook Kalshi\u2019s Biggest Threat, Economist Warns",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794853084.6206756
+        "timestamp": 1794875122.969167
     },
     {
         "title": "The Gambling Wire: Louisiana Wins TRO Against Prediction Markets as CFTC Sues Arkansas",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794853084.6206505
+        "timestamp": 1794875122.9691226
     },
     {
         "title": "Pennsylvania Skill Games Crackdown Exposes New Concerns Over Sweepstakes Machines",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794853084.6206152
+        "timestamp": 1794875122.9690678
     },
     {
         "title": "California Tribe Opens Sportsbook Despite Statewide Betting Ban",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794853084.6205635
+        "timestamp": 1794875122.9689903
     },
     {
         "title": "Kalshi Accuses Louisiana of Denying Due Process, but Court Filings Tell a More Complicated Story",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794853084.6205232
+        "timestamp": 1794875122.9689302
     },
     {
         "title": "The Gambling Wire: CFTC, Operators Fight Louisiana Ban as Meta Tests Prediction Market App",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794853084.6204717
+        "timestamp": 1794875122.9688554
     },
     {
         "title": "Alabama Senator Says Election Results Could Revive Casino, Sports Betting Push",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1794853084.6204214
+        "timestamp": 1794875122.9687953
+    },
+    {
+        "title": "PENN\u2019s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data",
+        "link": "https://www.gamblinginsider.com/news/204047/pennsylvania-casino-skill-games-customer-migration-data",
+        "author": "Suswati Basu",
+        "date": "Nov 16, 2026",
+        "summary": "PENN Entertainment says Pennsylvania&#8217;s skill-game crackdown is bringing customers into casinos, but two sources question the evidence behind a projected $21 million earnings boost. PENN Entertainment believes Pennsylvania&#8217;s skill-game crackdown is already paying off. Wall Street has put a potential $21 million figure on the opportunity, but proving that former skill-game customers are behind the [&#8230;]\nThe post PENN&#8217;s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1794875122.968727
     }
 ]
