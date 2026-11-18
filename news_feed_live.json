@@ -1,18 +1,5 @@
 [
     {
-        "title": "Wall Street\u2019s Legal Challenge May Overlook Kalshi\u2019s Biggest Threat, Economist Warns",
-        "link": "https://www.gamblinginsider.com/news/203847/kalshis-index-perpetuals-single-stock-lawsuit",
-        "author": "Suswati Basu",
-        "date": "Nov 13, 2026",
-        "summary": "Economist Rajiv Sethi says Kalshi\u2019s leveraged index contracts could eventually compete for money that investors currently keep in conventional brokerage accounts. Wall Street has gone to court over Kalshi\u2019s single-stock perpetuals. But economist Rajiv Sethi thinks the products worth watching are the ones tied to stock market indexes, which could eventually tempt investors to move [&#8230;]\nThe post Wall Street\u2019s Legal Challenge May Overlook Kalshi\u2019s Biggest Threat, Economist Warns appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1794961487.5740433
-    },
-    {
         "title": "The Gambling Wire: Louisiana Wins TRO Against Prediction Markets as CFTC Sues Arkansas",
         "link": "https://www.gamblinginsider.com/news/203952/louisiana-prediction-markets-tro-cftc-arkansas",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794961487.5740135
+        "timestamp": 1794982852.616551
     },
     {
         "title": "Pennsylvania Skill Games Crackdown Exposes New Concerns Over Sweepstakes Machines",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794961487.5739753
+        "timestamp": 1794982852.6164997
     },
     {
         "title": "California Tribe Opens Sportsbook Despite Statewide Betting Ban",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794961487.5739214
+        "timestamp": 1794982852.6164293
     },
     {
         "title": "Kalshi Accuses Louisiana of Denying Due Process, but Court Filings Tell a More Complicated Story",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794961487.5738811
+        "timestamp": 1794982852.616375
     },
     {
         "title": "The Gambling Wire: CFTC, Operators Fight Louisiana Ban as Meta Tests Prediction Market App",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794961487.573846
+        "timestamp": 1794982852.6163266
     },
     {
         "title": "Alabama Senator Says Election Results Could Revive Casino, Sports Betting Push",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1794961487.5738063
+        "timestamp": 1794982852.616274
     },
     {
         "title": "PENN\u2019s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794961487.5737665
+        "timestamp": 1794982852.6162214
     },
     {
         "title": "The Gambling Wire: Senators Challenge CFTC Geofencing Order as Louisiana, Ohio Litigation Intensifies",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794961487.5737274
+        "timestamp": 1794982852.6161742
     },
     {
         "title": "Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794961487.5736532
+        "timestamp": 1794982852.6160953
+    },
+    {
+        "title": "Kalshi\u2019s AI Push Tests Whether Prediction Markets Can Become Real Finance",
+        "link": "https://www.gamblinginsider.com/news/204270/kalshi-ai-futures-prediction-markets-gpu-pricing",
+        "author": "Suswati Basu",
+        "date": "Nov 17, 2026",
+        "summary": "Kalshi wants businesses to hedge their AI computing costs through futures contracts. Experts tell Gambling Insider why the fledgling GPU market may not be ready. Kalshi is attempting to turn prediction markets into the foundation of a new commodity market, using contracts tied to artificial intelligence computing costs as a starting point. But the exchange&#8217;s [&#8230;]\nThe post Kalshi&#8217;s AI Push Tests Whether Prediction Markets Can Become Real Finance appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1794982852.6160367
     }
 ]
