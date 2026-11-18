@@ -1,18 +1,5 @@
 [
     {
-        "title": "The Gambling Wire: Louisiana Wins TRO Against Prediction Markets as CFTC Sues Arkansas",
-        "link": "https://www.gamblinginsider.com/news/203952/louisiana-prediction-markets-tro-cftc-arkansas",
-        "author": "Chavdar Vasilev",
-        "date": "Nov 13, 2026",
-        "summary": "A Louisiana judge blocks 10 prediction market operators, while the CFTC challenges Arkansas\u2019 authority to regulate federally supervised exchanges. State and federal authorities moved in opposite directions on Thursday in the growing prediction market legal battle. Louisiana sued and secured a sweeping temporary restraining order in state court against 10 operators on the same day. [&#8230;]\nThe post The Gambling Wire: Louisiana Wins TRO Against Prediction Markets as CFTC Sues Arkansas appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Operators",
-        "timestamp": 1794982852.616551
-    },
-    {
         "title": "Pennsylvania Skill Games Crackdown Exposes New Concerns Over Sweepstakes Machines",
         "link": "https://www.gamblinginsider.com/news/203967/pennsylvania-skill-games-crackdown-sweepstakes-machines",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794982852.6164997
+        "timestamp": 1795004352.3475611
     },
     {
         "title": "California Tribe Opens Sportsbook Despite Statewide Betting Ban",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794982852.6164293
+        "timestamp": 1795004352.347509
     },
     {
         "title": "Kalshi Accuses Louisiana of Denying Due Process, but Court Filings Tell a More Complicated Story",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1794982852.616375
+        "timestamp": 1795004352.3474698
     },
     {
         "title": "The Gambling Wire: CFTC, Operators Fight Louisiana Ban as Meta Tests Prediction Market App",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Suppliers & B2B",
-        "timestamp": 1794982852.6163266
+        "timestamp": 1795004352.3474357
     },
     {
         "title": "Alabama Senator Says Election Results Could Revive Casino, Sports Betting Push",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Sportsbooks",
-        "timestamp": 1794982852.616274
+        "timestamp": 1795004352.3473976
     },
     {
         "title": "PENN\u2019s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794982852.6162214
+        "timestamp": 1795004352.3473597
     },
     {
         "title": "The Gambling Wire: Senators Challenge CFTC Geofencing Order as Louisiana, Ohio Litigation Intensifies",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1794982852.6161742
+        "timestamp": 1795004352.347314
     },
     {
         "title": "Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794982852.6160953
+        "timestamp": 1795004352.3472579
     },
     {
         "title": "Kalshi\u2019s AI Push Tests Whether Prediction Markets Can Become Real Finance",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1794982852.6160367
+        "timestamp": 1795004352.347225
+    },
+    {
+        "title": "The Gambling Wire: Fourth Circuit Sides With Maryland Against Kalshi",
+        "link": "https://www.gamblinginsider.com/news/204285/fourth-circuit-kalshi-maryland-prediction-market-ruling",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 18, 2026",
+        "summary": "Three judges all reached different conclusions in Kalshi\u2019s latest appellate defeat. Elsewhere, Utah sued sweepstakes casino Stake, while litigation in Louisiana intensified. A divided Fourth Circuit panel upheld the denial of Kalshi\u2019s request for a preliminary injunction against Maryland, with all three judges reaching different conclusions on the Commodity Futures Trading Commission\u2019s (CFTC) authority over [&#8230;]\nThe post The Gambling Wire: Fourth Circuit Sides With Maryland Against Kalshi appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Casino & Slots",
+        "timestamp": 1795004352.347183
     }
 ]
