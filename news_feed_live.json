@@ -1,18 +1,5 @@
 [
     {
-        "title": "PENN\u2019s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data",
-        "link": "https://www.gamblinginsider.com/news/204047/pennsylvania-casino-skill-games-customer-migration-data",
-        "author": "Suswati Basu",
-        "date": "Nov 16, 2026",
-        "summary": "PENN Entertainment links stronger October casino revenue to Pennsylvania&#8217;s skill-game crackdown, but experts question whether displaced players explain the gains. PENN Entertainment believes Pennsylvania&#8217;s skill-game crackdown is already paying off. Wall Street has put a potential $21 million figure on the opportunity, but proving that former skill-game customers are behind the gains is another matter. [&#8230;]\nThe post PENN&#8217;s Projected $21 Million Casino Windfall Has a Problem: Missing Skill Game Data appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1795177173.0600665
-    },
-    {
         "title": "The Gambling Wire: Senators Challenge CFTC Geofencing Order as Louisiana, Ohio Litigation Intensifies",
         "link": "https://www.gamblinginsider.com/news/204072/senators-cftc-geofencing-prediction-market-lawsuits",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795177173.060036
+        "timestamp": 1795198745.739215
     },
     {
         "title": "Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795177173.059983
+        "timestamp": 1795198745.739146
     },
     {
         "title": "Kalshi\u2019s AI Push Tests Whether Prediction Markets Can Become Real Finance",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795177173.059954
+        "timestamp": 1795198745.739101
     },
     {
         "title": "The Gambling Wire: Fourth Circuit Sides With Maryland Against Kalshi",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795177173.059926
+        "timestamp": 1795198745.7390478
     },
     {
         "title": "As Sweepstakes Rivals Embrace Digital Card Rips, VGW Turns to Horse Racing Model",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1795177173.0598838
+        "timestamp": 1795198745.7389922
     },
     {
         "title": "The Gambling Wire: D.C. Advances Online Casino Bill as Florida Targets DraftKings",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795177173.0598466
+        "timestamp": 1795198745.7389445
     },
     {
         "title": "CFTC Sports Contract Rule Draws Just 140 Comments as Tribal Groups Lead Opposition",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1795177173.0598023
+        "timestamp": 1795198745.7388897
     },
     {
         "title": "Source Calls Kalshi Founders\u2019 Utah Prosecution a Publicity Tactic as Louisiana Strategy Shifts",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795177173.0597498
+        "timestamp": 1795198745.7388277
     },
     {
         "title": "The Gambling Wire: Federal Judge Remands Kalshi\u2019s New York Case to State Court",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795177173.0596704
+        "timestamp": 1795198745.7387545
+    },
+    {
+        "title": "Kalshi and Novig Seek States\u2019 Help on Self-Exclusion Amid Legal Battles",
+        "link": "https://www.gamblinginsider.com/news/204864/alshi-novig-state-self-exclusion-national-register",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 20, 2026",
+        "summary": "The prediction market operators are asking state gambling regulators to share self-exclusion lists. Could that help efforts toward nationwide lists? Kalshi and Novig are seeking help from state gambling regulators, some of whom they may also be fighting in court, asking 35 states to share their self-exclusion databases to prevent vulnerable customers from accessing prediction [&#8230;]\nThe post Kalshi and Novig Seek States\u2019 Help on Self-Exclusion Amid Legal Battles appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "Finance & B2B",
+        "timestamp": 1795198745.738672
     }
 ]
