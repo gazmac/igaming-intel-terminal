@@ -1,18 +1,5 @@
 [
     {
-        "title": "The Gambling Wire: Senators Challenge CFTC Geofencing Order as Louisiana, Ohio Litigation Intensifies",
-        "link": "https://www.gamblinginsider.com/news/204072/senators-cftc-geofencing-prediction-market-lawsuits",
-        "author": "Chavdar Vasilev",
-        "date": "Nov 17, 2026",
-        "summary": "Senators question the CFTC\u2019s prediction market policy as new legal challenges emerge in Louisiana and Ohio. Meanwhile, Kalshi prepares to enter traditional securities trading. Nine Democratic senators have called on the Commodity Futures Trading Commission (CFTC) to withdraw its directive ordering prediction markets to end geographic restrictions across the U.S. The dispute comes as Louisiana [&#8230;]\nThe post The Gambling Wire: Senators Challenge CFTC Geofencing Order as Louisiana, Ohio Litigation Intensifies appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "General News",
-        "timestamp": 1795263524.206655
-    },
-    {
         "title": "Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
         "link": "https://www.gamblinginsider.com/news/204079/ballys-q3-2026-results-missed-liquidity-requirement",
         "author": "Chavdar Vasilev",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795263524.2065837
+        "timestamp": 1795285029.651124
     },
     {
         "title": "Kalshi\u2019s AI Push Tests Whether Prediction Markets Can Become Real Finance",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795263524.2065315
+        "timestamp": 1795285029.6510997
     },
     {
         "title": "The Gambling Wire: Fourth Circuit Sides With Maryland Against Kalshi",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795263524.2064776
+        "timestamp": 1795285029.6510751
     },
     {
         "title": "As Sweepstakes Rivals Embrace Digital Card Rips, VGW Turns to Horse Racing Model",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1795263524.2064207
+        "timestamp": 1795285029.6510375
     },
     {
         "title": "The Gambling Wire: D.C. Advances Online Casino Bill as Florida Targets DraftKings",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795263524.2063646
+        "timestamp": 1795285029.6510062
     },
     {
         "title": "CFTC Sports Contract Rule Draws Just 140 Comments as Tribal Groups Lead Opposition",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1795263524.2063076
+        "timestamp": 1795285029.6509686
     },
     {
         "title": "Source Calls Kalshi Founders\u2019 Utah Prosecution a Publicity Tactic as Louisiana Strategy Shifts",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795263524.2062438
+        "timestamp": 1795285029.6509256
     },
     {
         "title": "The Gambling Wire: Federal Judge Remands Kalshi\u2019s New York Case to State Court",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795263524.2061672
+        "timestamp": 1795285029.6508734
     },
     {
         "title": "Kalshi and Novig Seek States\u2019 Help on Self-Exclusion Amid Legal Battles",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795263524.2060807
+        "timestamp": 1795285029.65082
+    },
+    {
+        "title": "Federal Judge Denies CFTC Emergency Bid to Block New York Action Against Kalshi",
+        "link": "https://www.gamblinginsider.com/news/204997/cftc-emergency-tro-denied-new-york-kalshi",
+        "author": "Chavdar Vasilev",
+        "date": "Nov 21, 2026",
+        "summary": "A federal judge declined to grant the CFTC an emergency bid for a temporary restraining order against New York. A federal judge has rejected the Commodity Futures Trading Commission\u2019s (CFTC) emergency request to block New York from pursuing enforcement action against Kalshi. The ruling clears the way for a state court hearing on Monday that [&#8230;]\nThe post Federal Judge Denies CFTC Emergency Bid to Block New York Action Against Kalshi appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "General News",
+        "timestamp": 1795285029.6507692
     }
 ]
