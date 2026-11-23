@@ -1,18 +1,5 @@
 [
     {
-        "title": "Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments",
-        "link": "https://www.gamblinginsider.com/news/204079/ballys-q3-2026-results-missed-liquidity-requirement",
-        "author": "Chavdar Vasilev",
-        "date": "Nov 17, 2026",
-        "summary": "The casino operator reported a $117 million consolidated quarterly loss and warned of another potential covenant breach by year-end, even as it works to strengthen its finances. While it reported a 21.7% increase in third-quarter revenue, Bally\u2019s Corporation has disclosed that it failed to meet a minimum liquidity requirement at the end of September. The [&#8230;]\nThe post Bally\u2019s Reveals Q3 Liquidity Shortfall, Secures $560M in Financing Commitments appeared first on Gambling Insider.",
-        "image": "",
-        "source_name": "Gambling Insider",
-        "source_domain": "gamblinginsider.com",
-        "priority": 1,
-        "category": "Finance & B2B",
-        "timestamp": 1795393562.478011
-    },
-    {
         "title": "Kalshi\u2019s AI Push Tests Whether Prediction Markets Can Become Real Finance",
         "link": "https://www.gamblinginsider.com/news/204270/kalshi-ai-futures-prediction-markets-gpu-pricing",
         "author": "Suswati Basu",
@@ -23,7 +10,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795393562.47797
+        "timestamp": 1795414969.8238392
     },
     {
         "title": "The Gambling Wire: Fourth Circuit Sides With Maryland Against Kalshi",
@@ -36,7 +23,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795393562.4779289
+        "timestamp": 1795414969.8238122
     },
     {
         "title": "As Sweepstakes Rivals Embrace Digital Card Rips, VGW Turns to Horse Racing Model",
@@ -49,7 +36,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Operators",
-        "timestamp": 1795393562.477872
+        "timestamp": 1795414969.8237712
     },
     {
         "title": "The Gambling Wire: D.C. Advances Online Casino Bill as Florida Targets DraftKings",
@@ -62,7 +49,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Casino & Slots",
-        "timestamp": 1795393562.4778216
+        "timestamp": 1795414969.8237371
     },
     {
         "title": "CFTC Sports Contract Rule Draws Just 140 Comments as Tribal Groups Lead Opposition",
@@ -75,7 +62,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "NFL",
-        "timestamp": 1795393562.4777591
+        "timestamp": 1795414969.8236957
     },
     {
         "title": "Source Calls Kalshi Founders\u2019 Utah Prosecution a Publicity Tactic as Louisiana Strategy Shifts",
@@ -88,7 +75,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795393562.4776819
+        "timestamp": 1795414969.8236482
     },
     {
         "title": "The Gambling Wire: Federal Judge Remands Kalshi\u2019s New York Case to State Court",
@@ -101,7 +88,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795393562.4776087
+        "timestamp": 1795414969.8235924
     },
     {
         "title": "Kalshi and Novig Seek States\u2019 Help on Self-Exclusion Amid Legal Battles",
@@ -114,7 +101,7 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "Finance & B2B",
-        "timestamp": 1795393562.4775367
+        "timestamp": 1795414969.8235416
     },
     {
         "title": "Federal Judge Denies CFTC Emergency Bid to Block New York Action Against Kalshi",
@@ -127,6 +114,19 @@
         "source_domain": "gamblinginsider.com",
         "priority": 1,
         "category": "General News",
-        "timestamp": 1795393562.4774778
+        "timestamp": 1795414969.8235033
+    },
+    {
+        "title": "Exclusive: New York Could Restrict Kalshi Nationwide Without Closing Exchange, Legal Expert Says",
+        "link": "https://www.gamblinginsider.com/news/205004/kalshis-new-york-nationwide-shutdown-daniel-wallach",
+        "author": "Suswati Basu",
+        "date": "Nov 22, 2026",
+        "summary": "Gaming attorney Daniel Wallach challenges Kalshi&#8217;s nationwide shutdown warning as New York disputes the company&#8217;s interpretation of its proposed injunction ahead of Monday&#8217;s hearing. New York could stop Kalshi from offering certain event contracts nationwide without shutting down its entire exchange, gaming attorney Daniel Wallach has told Gambling Insider. This could prove costly for Kalshi, [&#8230;]\nThe post Exclusive: New York Could Restrict Kalshi Nationwide Without Closing Exchange, Legal Expert Says appeared first on Gambling Insider.",
+        "image": "",
+        "source_name": "Gambling Insider",
+        "source_domain": "gamblinginsider.com",
+        "priority": 1,
+        "category": "General News",
+        "timestamp": 1795414969.823438
     }
 ]
